@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_placeholders",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_placeholders",
+  "parent":{
+    "name":"PokemonRogueLike",
+    "path":"PokemonRogueLike.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_pokemon_batalha_api",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_pokemon_batalha_api",
+  "parent":{
+    "name":"PokemonRogueLike",
+    "path":"PokemonRogueLike.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,638 @@
+﻿CATALOGO GERAL DE TIPOS, ARQUETIPOS E HABILIDADES
+Projeto: PokemonRogueLike
+Gerado em: 2026-06-08
+
+REGRA DE DESIGN
+- Cada tipo possui exatamente 3 caminhos de build. Os outros arquétipos citados foram mesclados como efeitos secundarios.
+- O jogador deve sentir combo com 2 habilidades, mas a build nao deve depender exclusivamente disso.
+- Numeros usam a escala atual do auto-battler: dano 18-34 no inicio, 36-58 no meio, 60-78 em finalizadores de CD alto.
+- Habilidades de efeito recebem dano baixo quando possivel, para nao travar o ritmo do combate automatico.
+- Para Pokemon de dois tipos, o arquétipo fica mais brando: uma habilidade de cada tipo ja deve formar um nucleo funcional.
+
+GRASS JA IMPLEMENTADO NO CODIGO
+- Os tres caminhos finais sao Parasita, Energia Solar e Florescencia Critica.
+- Esporos de Cura virou subefeito do Parasita. Seiva Protetora virou subefeito defensivo/overflow da Energia Solar.
+
+
+=== GRASS ===
+Marca central: Regeneracao de vida
+Arquetipos finais: 1) Parasita | 2) Energia Solar | 3) Florescencia Critica
+Notas: Grass conversa muito bem com Poison: Enraizado segura o alvo, Envenenado aumenta finalizadores e drenos.
+[Parasita] Lv  1 | Absorver                 | Dano  18 | CD  4.0s | cura 10% do dano causado
+[Parasita] Lv 10 | Enraizar                 | Dano   8 | CD  7.0s | aplica Enraizado por 4s
+[Parasita] Lv 15 | Mega Dreno               | Dano  28 | CD  5.0s | cura 15%; cura 25% se alvo Enraizado; combo Enraizado +25%
+[Energia Solar] Lv 10 | Crescimento              | Dano   6 | CD  8.0s | aplica Crescimento no usuario por 8s
+[Energia Solar] Lv 25 | Sintese                  | Dano   6 | CD 10.0s | cura 8% HP max; aplica Fotossintese
+[Energia Solar] Lv 30 | Raio Solar               | Dano  68 | CD 11.0s | +22% dano se usuario com Fotossintese
+[Florescencia Critica] Lv 10 | Folhagem                 | Dano  24 | CD  3.1s | dano rapido sem setup
+[Florescencia Critica] Lv 15 | Folha Navalha            | Dano  32 | CD  4.4s | +10% dano se usuario com Crescimento
+[Florescencia Critica] Lv 25 | Lamina de Folha          | Dano  50 | CD  6.4s | +16% dano se usuario com Crescimento
+Core 2 skills: Enraizar + Mega Dreno; Sintese + Raio Solar; Crescimento + Folha Navalha.
+
+=== FIRE ===
+Marca central: Derretimento de defesa
+Arquetipos finais: 1) Incandescencia | 2) Explosao Termica | 3) Fenix Veloz
+Notas: Chama Veloz e Fenix foram unidos: velocidade no inicio, risco quando perde defesa.
+[Incandescencia] Lv  1 | Brasa                    | Dano  24 | CD  4.4s | aplica Queimando por 5s
+[Incandescencia] Lv 10 | Marca Incandescente      | Dano  10 | CD  7.0s | reduz Defesa do alvo em 4%; acumula ate 3
+[Incandescencia] Lv 20 | Lanca-Chamas             | Dano  46 | CD  7.2s | +12% dano se alvo Queimando ou Armadura Derretida
+[Explosao Termica] Lv 10 | Estouro de Calor         | Dano  34 | CD  6.5s | ignora 8% da Defesa
+[Explosao Termica] Lv 25 | Explosao Termica         | Dano  62 | CD 10.0s | ignora 15% da Defesa; CD alto
+[Explosao Termica] Lv 30 | Inferno Concentrado      | Dano  76 | CD 12.0s | +18% dano contra alvo com Defesa reduzida
+[Fenix Veloz] Lv 10 | Chama Veloz              | Dano  26 | CD  3.4s | +8% crit se alvo sem Armadura Derretida
+[Fenix Veloz] Lv 20 | Asa Ardente              | Dano  42 | CD  5.8s | +10% Ataque se usuario abaixo de 50% HP
+[Fenix Veloz] Lv 30 | Fenix                    | Dano  54 | CD  8.0s | quanto menor a Defesa atual do usuario, maior o dano ate +25%
+Core 2 skills: Brasa + Lanca-Chamas; Marca Incandescente + Explosao Termica; Chama Veloz + Fenix.
+
+=== WATER ===
+Marca central: Controle de cooldown
+Arquetipos finais: 1) Fluxo Acelerado | 2) Mare Protelatoria | 3) Pressao Hidraulica
+Notas: Escudo por corrente entra como recompensa de resetar cooldown, nao como caminho separado.
+[Fluxo Acelerado] Lv  1 | Jato d'Agua              | Dano  24 | CD  4.0s | aplica Molhado por 5s
+[Fluxo Acelerado] Lv 10 | Corrente Rapida          | Dano  26 | CD  3.6s | reduz proprio CD atual em 0.4s ao acertar alvo Molhado
+[Fluxo Acelerado] Lv 20 | Aqua Jet                 | Dano  38 | CD  5.0s | se alvo Molhado, reduz CD de todas skills do usuario em 0.3s
+[Mare Protelatoria] Lv 10 | Bolha Lenta              | Dano  16 | CD  6.8s | aumenta proximo CD do alvo em 0.5s
+[Mare Protelatoria] Lv 20 | Nevoa Estagnante         | Dano  12 | CD  8.0s | reduz velocidade de cooldown do alvo em 8% por 5s
+[Mare Protelatoria] Lv 30 | Mar Revolto              | Dano  50 | CD  9.5s | aumenta CD do alvo em 1.0s se Molhado
+[Pressao Hidraulica] Lv 15 | Pulso d'Agua             | Dano  36 | CD  6.0s | +10% dano se alvo tem CD alto carregando
+[Pressao Hidraulica] Lv 25 | Hidro Bomba              | Dano  64 | CD 10.5s | dano escala com CD atual do alvo ate +25%
+[Pressao Hidraulica] Lv 30 | Muralha de Mare          | Dano  18 | CD 11.0s | gera escudo 10% HP max ao resetar um golpe
+Core 2 skills: Jato d'Agua + Corrente Rapida; Bolha Lenta + Hidro Bomba; Molhado + Mar Revolto.
+
+=== ELECTRIC ===
+Marca central: Erro, cegueira e falha
+Arquetipos finais: 1) Curto-Circuito | 2) Sobrecarga | 3) Conducao
+Notas: Polaridade vira efeito raro de Conducao, nao caminho inteiro.
+[Curto-Circuito] Lv  1 | Choque                   | Dano  24 | CD  4.1s | aplica Cegado 4s, baixa chance de erro
+[Curto-Circuito] Lv 10 | Flash Eletrico           | Dano   8 | CD  7.2s | forca 12% chance do proximo golpe inimigo falhar
+[Curto-Circuito] Lv 20 | Curto-Circuito           | Dano  42 | CD  7.0s | se alvo Cegado, chance extra de pular proximo ataque
+[Sobrecarga] Lv 10 | Carga Estatica           | Dano  20 | CD  5.0s | aplica Estatica no usuario por 6s
+[Sobrecarga] Lv 20 | Sobrecarga               | Dano  40 | CD  6.4s | causa dano extra quando alvo falha
+[Sobrecarga] Lv 30 | Tempestade Voltica       | Dano  64 | CD 10.0s | +20% dano se alvo falhou nos ultimos 4s
+[Conducao] Lv 15 | Faísca em Cadeia         | Dano  34 | CD  5.6s | +10% dano se alvo possui qualquer debuff
+[Conducao] Lv 25 | Raio Condutor            | Dano  50 | CD  7.8s | ricochete conceitual; no 1v1 aplica Cegado
+[Conducao] Lv 30 | Polaridade               | Dano  22 | CD 11.5s | inverte um buff do alvo em penalidade leve
+Core 2 skills: Choque + Curto-Circuito; Flash Eletrico + Sobrecarga; Faísca em Cadeia + Raio Condutor.
+
+=== POISON ===
+Marca central: DoT e sacrificio de HP
+Arquetipos finais: 1) Peste Gradual | 2) Toxina Autodestrutiva | 3) Corrosao
+Notas: Contaminacao e antidoto reverso viram respostas dentro dos tres caminhos.
+[Peste Gradual] Lv  1 | Agulhao Venenoso         | Dano  18 | CD  3.8s | aplica Envenenado
+[Peste Gradual] Lv 10 | Po de Veneno             | Dano   7 | CD  8.5s | aplica Envenenado; dano baixo de setup
+[Peste Gradual] Lv 15 | Venenochoque             | Dano  36 | CD  6.0s | +22% dano se alvo Envenenado
+[Toxina Autodestrutiva] Lv 10 | Sangue Toxico            | Dano  30 | CD  5.8s | usuario perde 4% HP para +18% dano
+[Toxina Autodestrutiva] Lv 25 | Explosao Toxica          | Dano  62 | CD 10.5s | usuario perde 8% HP; aplica Envenenado forte
+[Toxina Autodestrutiva] Lv 30 | Antidoto Reverso         | Dano  42 | CD  8.5s | se usuario tem debuff, consome e ganha +15% Ataque
+[Corrosao] Lv 10 | Acido Diluidor           | Dano  24 | CD  5.2s | aplica Corroendo
+[Corrosao] Lv 20 | Lodo                     | Dano  42 | CD  7.0s | +14% dano se alvo Enraizado; +10% se Corroendo
+[Corrosao] Lv 30 | Floracao Toxica          | Dano  56 | CD 10.5s | +20% contra Envenenado; +15% contra Enraizado
+Core 2 skills: Po de Veneno + Venenochoque; Acido Diluidor + Lodo; Enraizado Grass + Floracao Toxica.
+
+=== PSYCHIC ===
+Marca central: Interrupcao mental
+Arquetipos finais: 1) Paralisia Mental | 2) Amnesia Induzida | 3) Inversao Espacial
+Notas: Telepatia e escudo cinetico viram efeitos de resposta situacional.
+[Paralisia Mental] Lv  1 | Confusao                 | Dano  24 | CD  4.3s | aplica Confuso por 4s
+[Paralisia Mental] Lv 10 | Trava Mental             | Dano  10 | CD  8.0s | chance de alvo pular proximo comando
+[Paralisia Mental] Lv 20 | Pulso Psiquico           | Dano  42 | CD  7.0s | +15% dano se alvo Confuso
+[Amnesia Induzida] Lv 10 | Neblina Mental           | Dano  18 | CD  7.5s | bloqueia skill mais forte do alvo por 2s
+[Amnesia Induzida] Lv 25 | Amnesia Induzida         | Dano  28 | CD 10.0s | bloqueio por 3s; dano baixo
+[Amnesia Induzida] Lv 30 | Choque Neural            | Dano  60 | CD  9.5s | +20% se uma skill inimiga esta bloqueada
+[Inversao Espacial] Lv 15 | Troca Psi                | Dano  32 | CD  6.8s | troca Ataque/Defesa do alvo por 3s
+[Inversao Espacial] Lv 25 | Barreira Cinetica        | Dano   8 | CD  9.0s | gera escudo baseado no dano recebido recentemente
+[Inversao Espacial] Lv 30 | Inversao Espacial        | Dano  44 | CD 11.0s | inverte buffs de Ataque/Defesa do alvo em penalidade leve
+Core 2 skills: Confusao + Pulso Psiquico; Neblina Mental + Choque Neural; Troca Psi + Inversao Espacial.
+
+=== FAIRY ===
+Marca central: Carga de burst e purificacao
+Arquetipos finais: 1) Encantamento de Carga | 2) Luz Purificadora | 3) Aura Mistica
+Notas: Fada nao explode sozinha; ela abre janela curta de burst, reduz pressao inimiga e conversa com Psychic/Electric/Dark/Grass.
+[Encantamento de Carga] Lv  1 | Vento Feerico          | Dano  22 | CD  4.2s | aplica BrilhoOfuscante
+[Encantamento de Carga] Lv 10 | Carga Encantada        | Dano   8 | CD  7.2s | ativa EncantoCarga e reduz CD do usuario
+[Encantamento de Carga] Lv 10 | Beijo Drenante         | Dano  24 | CD  5.6s | cura 12% do dano e pune BrilhoOfuscante
+[Encantamento de Carga] Lv 15 | Explosao de Luz        | Dano  42 | CD  7.2s | +16% com EncantoCarga
+[Encantamento de Carga] Lv 20 | Corte Lunar            | Dano  44 | CD  6.6s | bonus em Ofuscado/BrilhoOfuscante
+[Encantamento de Carga] Lv 25 | Feixe Encantado        | Dano  56 | CD  8.4s | bonus com AuraMistica/EncantoCarga
+[Encantamento de Carga] Lv 30 | Estouro Prismatico     | Dano  66 | CD 10.0s | reativa EncantoCarga e finaliza janela
+[Luz Purificadora] Lv  1 | Luz Serena             | Dano  16 | CD  5.2s | LuzPurificadora + cura 4% HP max
+[Luz Purificadora] Lv 10 | Purificar              | Dano   8 | CD  8.0s | LuzPurificadora + cura 7% HP max
+[Luz Purificadora] Lv 10 | Voto Claro             | Dano  26 | CD  5.8s | bonus com LuzPurificadora e contra Poison/Fire
+[Luz Purificadora] Lv 15 | Barreira Feerica       | Dano  12 | CD  8.5s | BarreiraFada + cura 5% HP max
+[Luz Purificadora] Lv 20 | Luz Restauradora       | Dano  30 | CD  7.8s | LuzPurificadora + cura 8% HP max
+[Luz Purificadora] Lv 25 | Bencao Lunar           | Dano  40 | CD  8.8s | AuraMistica + cura 7% HP max
+[Luz Purificadora] Lv 30 | Milagre Feerico        | Dano  52 | CD 11.0s | BarreiraFada + bonus com LuzPurificadora
+[Aura Mistica] Lv  1 | Charme                 | Dano  14 | CD  5.0s | aplica BrilhoOfuscante
+[Aura Mistica] Lv 10 | Canto Mistico          | Dano  22 | CD  6.2s | AuraMistica e bonus em Amedrontado
+[Aura Mistica] Lv 10 | Brilho Ofuscante       | Dano  26 | CD  6.4s | aplica Ofuscado
+[Aura Mistica] Lv 15 | Aura Mistica           | Dano  18 | CD  8.0s | AuraMistica e reduz CD do usuario
+[Aura Mistica] Lv 20 | Laco Encantado         | Dano  38 | CD  6.8s | bonus em MarcadoSombrio/ParalisiaMental/Brilho
+[Aura Mistica] Lv 25 | Guardiao Feerico       | Dano  36 | CD  8.2s | BarreiraFada e bonus com AuraMistica
+[Aura Mistica] Lv 30 | Aura Prismatica        | Dano  58 | CD 10.2s | renova AuraMistica e finaliza setup
+Core 2 skills: Vento Feerico + Carga Encantada; Luz Serena + Voto Claro; Charme + Laco Encantado.
+
+=== STEEL ===
+Marca central: Thorns e defesa convertida em dano
+Arquetipos finais: 1) Espinhos de Ferro | 2) Fortificacao | 3) Impacto Pesado
+Notas: Liga Pesada e blindagem magnetica entram como protecoes dentro da Fortificacao.
+[Espinhos de Ferro] Lv  1 | Arranhao Metalico        | Dano  24 | CD  4.4s | aplica Rebarba no usuario por 5s
+[Espinhos de Ferro] Lv 10 | Espinhos de Ferro        | Dano   8 | CD  8.0s | reflete 8% dano recebido por 5s
+[Espinhos de Ferro] Lv 20 | Contra-Metal             | Dano  38 | CD  6.8s | +15% dano se usuario recebeu dano recentemente
+[Fortificacao] Lv 10 | Blindagem                | Dano   6 | CD  8.5s | aumenta Defesa em 8% por 6s
+[Fortificacao] Lv 25 | Liga Pesada              | Dano  18 | CD 10.0s | reduz criticos recebidos; aumenta Defesa
+[Fortificacao] Lv 30 | Campo Magnetico          | Dano  24 | CD 11.0s | neutraliza parte de projeteis/debuffs por 4s
+[Impacto Pesado] Lv 15 | Cabeçada Metalica        | Dano  34 | CD  6.0s | dano escala 8% com Defesa
+[Impacto Pesado] Lv 25 | Impacto Pesado           | Dano  54 | CD  8.8s | dano escala 18% com Defesa
+[Impacto Pesado] Lv 30 | Prensa de Aco            | Dano  70 | CD 12.0s | CD alto; +25% se Defesa buffada
+Core 2 skills: Blindagem + Impacto Pesado; Espinhos de Ferro + Contra-Metal; Liga Pesada + Prensa de Aco.
+
+=== GHOST ===
+Marca central: Timer de terror
+Arquetipos finais: 1) Assombracao | 2) Intangibilidade | 3) Maldicao
+Notas: Dreno de essencia e susto entram como bonus ao escalar terror.
+[Assombracao] Lv  1 | Lambida Sombria          | Dano  22 | CD  4.3s | aplica Assombrado por 6s
+[Assombracao] Lv 10 | Relogio de Terror        | Dano   8 | CD  8.0s | dano futuro aumenta 1% por segundo de luta
+[Assombracao] Lv 25 | Noite Infinita           | Dano  54 | CD  9.0s | escala com tempo de batalha ate +25%
+[Intangibilidade] Lv 10 | Vulto                    | Dano  18 | CD  6.5s | pequena janela de imunidade apos atacar
+[Intangibilidade] Lv 20 | Sumir                    | Dano   6 | CD  9.5s | imune por 0.5s; dano baixo
+[Intangibilidade] Lv 30 | Susto Abrupto            | Dano  38 | CD  8.5s | chance de resetar barra do alvo
+[Maldicao] Lv 15 | Maldicao Espelhada       | Dano  24 | CD  7.0s | vincula alvo; reflete 8% dano recebido
+[Maldicao] Lv 25 | Dreno de Essencia        | Dano  34 | CD  8.0s | rouba um buff leve do alvo
+[Maldicao] Lv 30 | Pacto Fantasma           | Dano  62 | CD 11.0s | quanto mais vinculos/debuffs, maior dano
+Core 2 skills: Relogio de Terror + Noite Infinita; Vulto + Susto Abrupto; Maldicao Espelhada + Dreno.
+
+=== ROCK ===
+Marca central: Sacrificio de vida por impacto
+Arquetipos finais: 1) Impacto Geologico | 2) Casca de Rocha | 3) Fossil Avalanche
+Notas: Avalanche e Fossil Vivente foram mesclados no caminho defensivo-finalizador.
+[Impacto Geologico] Lv  1 | Pedrada                  | Dano  26 | CD  4.6s | dano fisico consistente
+[Impacto Geologico] Lv 10 | Ruptura                  | Dano  36 | CD  6.5s | usuario perde 3% HP; dano verdadeiro parcial
+[Impacto Geologico] Lv 25 | Terremoto Rochoso        | Dano  68 | CD 10.8s | usuario perde 6% HP; ignora 12% Defesa
+[Casca de Rocha] Lv 10 | Endurecer Rocha          | Dano   6 | CD  8.0s | aumenta Defesa 10%; reduz Speed 4%
+[Casca de Rocha] Lv 20 | Fragmentacao             | Dano  28 | CD  7.5s | alvo sofre dano leve quando ataca
+[Casca de Rocha] Lv 30 | Muralha Antiga           | Dano  22 | CD 11.0s | escudo alto; reduz Speed enquanto ativo
+[Fossil Avalanche] Lv 15 | Avalanche                | Dano  40 | CD  7.0s | chance critica escala com Defesa
+[Fossil Avalanche] Lv 25 | Fossil Vivo              | Dano   8 | CD 12.0s | uma vez por batalha sobrevive com 1 HP
+[Fossil Avalanche] Lv 30 | Queda Colossal           | Dano  72 | CD 12.5s | +20% se Defesa maior que Ataque do alvo
+Core 2 skills: Endurecer Rocha + Avalanche; Ruptura + Terremoto Rochoso; Fossil Vivo + Queda Colossal.
+
+=== FLYING ===
+Marca central: Evasao e velocidade
+Arquetipos finais: 1) Ventania Esquiva | 2) Ataque Rasante | 3) Vento de Cauda
+Notas: Turbulencia e penas leves entram como efeitos de evasao/velocidade.
+[Ventania Esquiva] Lv  1 | Rajada                   | Dano  22 | CD  3.9s | aplica Turbulento por 4s
+[Ventania Esquiva] Lv 10 | Esquiva de Vento         | Dano   8 | CD  7.5s | aumenta evasao 10% por 4s
+[Ventania Esquiva] Lv 20 | Penas Leves              | Dano  28 | CD  6.0s | se esquivar, ganha Speed 6% por 4s
+[Ataque Rasante] Lv 10 | Rasante                  | Dano  34 | CD  4.8s | +20% dano nos primeiros 8s da luta
+[Ataque Rasante] Lv 25 | Mergulho Aereo           | Dano  58 | CD  8.0s | +15% se alvo esta Turbulento
+[Ataque Rasante] Lv 30 | Golpe do Ceu             | Dano  70 | CD 11.0s | finalizador de abertura; perde bonus em lutas longas
+[Vento de Cauda] Lv 15 | Vento de Cauda           | Dano  10 | CD  8.5s | reduz CD global do usuario 6% por 5s
+[Vento de Cauda] Lv 25 | Turbulencia              | Dano  26 | CD  7.0s | reduz precisao do alvo por 5s
+[Vento de Cauda] Lv 30 | Vendaval                 | Dano  50 | CD  9.5s | se alvo falhar, reduz CD do usuario em 1s
+Core 2 skills: Rajada + Mergulho Aereo; Esquiva de Vento + Penas Leves; Vento de Cauda + Vendaval.
+
+=== BUG ===
+Marca central: Enxame e rotacao
+Arquetipos finais: 1) Enxame | 2) Casulo | 3) Fio Debilitante
+Notas: Metamorfose entra como escalada lenta dentro de Casulo.
+[Enxame] Lv  1 | Picada                   | Dano  20 | CD  3.3s | ataque rapido de baixo dano
+[Enxame] Lv 10 | Ataque Multiplo          | Dano  28 | CD  3.8s | cada acerto reduz CD em 0.15s ate 3x
+[Enxame] Lv 25 | Enxame Vivo              | Dano  46 | CD  6.5s | +15% se usuario atacou 3 vezes recentemente
+[Casulo] Lv 10 | Casulo Rigido            | Dano   6 | CD  8.5s | aumenta Defesa enquanto canaliza
+[Casulo] Lv 20 | Metamorfose              | Dano  12 | CD 10.0s | ganha pequeno buff permanente no combate
+[Casulo] Lv 30 | Emergir                  | Dano  60 | CD 10.5s | +20% se Metamorfose ativa
+[Fio Debilitante] Lv 15 | Fio de Seda              | Dano  10 | CD  7.0s | reduz evasao e Speed do alvo
+[Fio Debilitante] Lv 20 | Picada Debilitante       | Dano  32 | CD  6.2s | aumenta CD do alvo em 0.4s
+[Fio Debilitante] Lv 30 | Infestacao               | Dano  48 | CD  8.5s | DoT leve e atraso de cooldown
+Core 2 skills: Picada + Ataque Multiplo; Casulo Rigido + Emergir; Fio de Seda + Picada Debilitante.
+
+=== GROUND ===
+Marca central: Campo e peso fisico
+Arquetipos finais: 1) Magnitude | 2) Areia Movedica | 3) Barreira de Lama
+Notas: Desabamento e aterramento viram utilidades desses caminhos.
+[Magnitude] Lv  1 | Tapa de Lama             | Dano  22 | CD  4.2s | aplica Lama por 5s
+[Magnitude] Lv 10 | Magnitude                | Dano  34 | CD  6.2s | dano escala com Defesa do usuario
+[Magnitude] Lv 25 | Terremoto                | Dano  66 | CD 10.0s | +18% se usuario tem Defesa alta
+[Areia Movedica] Lv 10 | Areia Movedica           | Dano  10 | CD  8.0s | reduz Speed de cooldown do alvo em 7%
+[Areia Movedica] Lv 20 | Desabamento              | Dano  42 | CD  7.5s | interrompe habilidade canalizada do alvo
+[Areia Movedica] Lv 30 | Soterrar                 | Dano  56 | CD 10.0s | +20% se alvo esta com Speed reduzida
+[Barreira de Lama] Lv 15 | Barreira de Lama         | Dano   8 | CD  8.5s | escudo contra dano fisico direto
+[Barreira de Lama] Lv 25 | Aterramento              | Dano  20 | CD  8.0s | limpa 1 status negativo do usuario
+[Barreira de Lama] Lv 30 | Parede de Terra          | Dano  38 | CD 11.0s | escudo grande; dano baseado em Defesa
+Core 2 skills: Magnitude + Terremoto; Areia Movedica + Soterrar; Barreira de Lama + Parede de Terra.
+
+=== FIGHTING ===
+Marca central: Combo crescente
+Arquetipos finais: 1) Impeto | 2) Contra-Golpe | 3) Quebra-Guarda
+Notas: Fcombo vira o ritmo rapido dentro de Impeto.
+[Impeto] Lv  1 | Soco Direto              | Dano  24 | CD  3.7s | dano fisico estavel
+[Impeto] Lv 10 | Sequencia                | Dano  28 | CD  3.2s | cada acerto concede +3% Ataque ate 4x
+[Impeto] Lv 25 | Combo Crescente          | Dano  52 | CD  6.5s | +12% por carga de Impeto, consome cargas
+[Contra-Golpe] Lv 10 | Bloqueio                 | Dano   6 | CD  7.5s | reduz proximo dano recebido
+[Contra-Golpe] Lv 20 | Contra-Golpe             | Dano  40 | CD  5.8s | +20% se recebeu dano recentemente
+[Contra-Golpe] Lv 30 | Espírito de Luta         | Dano  44 | CD  8.5s | roubo de vida aumenta com HP baixo
+[Quebra-Guarda] Lv 15 | Quebra-Guarda            | Dano  34 | CD  6.0s | ignora 10% Defesa
+[Quebra-Guarda] Lv 25 | Chute Demolidor          | Dano  58 | CD  8.5s | ignora 18% Defesa se alvo tem escudo/buff
+[Quebra-Guarda] Lv 30 | Punho Final              | Dano  72 | CD 11.0s | +20% se alvo esta com Defesa reduzida
+Core 2 skills: Sequencia + Combo Crescente; Bloqueio + Contra-Golpe; Quebra-Guarda + Chute Demolidor.
+
+=== ICE ===
+Marca central: Lentidao e fragilidade
+Arquetipos finais: 1) Geada | 2) Estilhacar | 3) Granizo
+Notas: Manto de Gelo protege e alimenta Geada; Zero Absoluto entra como finalizador.
+[Geada] Lv  1 | Neve Cortante            | Dano  22 | CD  4.2s | aplica Frio por 5s
+[Geada] Lv 10 | Geada                    | Dano  12 | CD  7.0s | reduz ritmo do alvo em 6%
+[Geada] Lv 20 | Congelar                 | Dano  34 | CD  8.0s | se alvo esta lento, chance de travar proximo golpe
+[Estilhacar] Lv 10 | Lanca de Gelo            | Dano  30 | CD  5.6s | +10% contra alvo com Frio
+[Estilhacar] Lv 25 | Estilhacar               | Dano  62 | CD  8.8s | +25% contra alvo lento/congelado
+[Estilhacar] Lv 30 | Zero Absoluto            | Dano  48 | CD 12.0s | crit garantido se alvo abaixo de 20% HP
+[Granizo] Lv 15 | Manto de Gelo            | Dano   8 | CD  8.5s | armadura que reduz Speed do atacante
+[Granizo] Lv 25 | Granizo                  | Dano  20 | CD  9.0s | DoT de arena leve por 5s
+[Granizo] Lv 30 | Tempestade Gelida        | Dano  56 | CD 10.0s | +15% se Granizo ativo
+Core 2 skills: Geada + Congelar; Lanca de Gelo + Estilhacar; Granizo + Tempestade Gelida.
+
+=== DRAGON ===
+Marca central: Furia e atributos puros
+Arquetipos finais: 1) Furia Draconica | 2) Escama Imperial | 3) Sopro Ancestral
+Notas: Predador e Ascensao entram como bonus condicionais de dano/tier.
+[Furia Draconica] Lv  1 | Garra Draconica          | Dano  28 | CD  4.8s | dano alto, CD um pouco maior
+[Furia Draconica] Lv 10 | Furia                    | Dano  34 | CD  6.0s | dano escala com HP perdido do usuario
+[Furia Draconica] Lv 25 | Ira Draconica            | Dano  66 | CD  9.5s | +25% se usuario abaixo de 40% HP
+[Escama Imperial] Lv 10 | Escama Imperial          | Dano   8 | CD  8.5s | imune a debuff por 3s no inicio/ativacao
+[Escama Imperial] Lv 20 | Predador                 | Dano  44 | CD  7.0s | +15% se HP atual do usuario > HP do alvo
+[Escama Imperial] Lv 30 | Ascensao                 | Dano  24 | CD 11.5s | aumenta temporariamente tier de uma skill ativa
+[Sopro Ancestral] Lv 15 | Sopro Antigo             | Dano  42 | CD  7.5s | dano pesado consistente
+[Sopro Ancestral] Lv 25 | Pulso Draconico          | Dano  58 | CD  9.0s | ignora debuffs leves no usuario
+[Sopro Ancestral] Lv 30 | Sopro Ancestral          | Dano  78 | CD 13.0s | dano massivo, CD longo
+Core 2 skills: Furia + Ira Draconica; Escama Imperial + Predador; Sopro Antigo + Sopro Ancestral.
+
+=== DARK ===
+Marca central: Trapaca, contra-ataque condicional e punicao de inimigos fora de ritmo.
+Arquetipos finais: 1) Golpe Baixo | 2) Jogo Sujo | 3) Copia Sombria
+Notas: o tipo Sombrio nao tenta ser o maior dano bruto; ele transforma debuffs, cooldown alto, evasao e janelas abertas em dano confiavel.
+[Golpe Baixo] Lv  1 | Mordida                  | Dano  22 | CD  4.0s | aplica MarcadoSombrio e escala com cooldown alto do alvo
+[Golpe Baixo] Lv 10 | Golpe Baixo              | Dano  34 | CD  4.8s | ativa GolpeBaixo, +dano se alvo esta marcado ou com CD alto
+[Golpe Baixo] Lv 10 | Finta Sombria            | Dano  14 | CD  6.8s | atrasa cooldowns do alvo e aplica MarcadoSombrio
+[Golpe Baixo] Lv 15 | Emboscada                | Dano  40 | CD  5.8s | +dano com GolpeBaixo ou Amedrontado
+[Golpe Baixo] Lv 20 | Corte Noturno            | Dano  48 | CD  6.4s | +dano contra MarcadoSombrio ou Ofuscado
+[Golpe Baixo] Lv 25 | Punicao Oportuna         | Dano  58 | CD  7.8s | +dano por CD alto, PosturaQuebrada ou Vulneravel
+[Golpe Baixo] Lv 30 | Xeque Sombrio            | Dano  68 | CD  9.6s | finalizador com GolpeBaixo, MarcadoSombrio e CD alto
+[Jogo Sujo] Lv  1 | Jogo Sujo                | Dano  20 | CD  4.8s | ativa JogoSujo, +dano contra Corroendo/ArmaduraDerretida
+[Jogo Sujo] Lv 10 | Provocacao Suja          | Dano  12 | CD  7.0s | atrasa cooldowns e aplica MarcadoSombrio
+[Jogo Sujo] Lv 10 | Mordida Cruel            | Dano  30 | CD  5.0s | +dano contra Envenenado/Corroendo
+[Jogo Sujo] Lv 15 | Roubo de Forca           | Dano  32 | CD  6.4s | roubo de vida pequeno, +dano contra Vulneravel/JogoSujo
+[Jogo Sujo] Lv 20 | Truque Sujo              | Dano  44 | CD  6.8s | +dano contra MarcadoSombrio e controles psiquicos
+[Jogo Sujo] Lv 25 | Punicao                  | Dano  54 | CD  8.2s | +dano contra armadura quebrada, Fragmentado e PosturaQuebrada
+[Jogo Sujo] Lv 30 | Colapso Moral            | Dano  64 | CD 10.0s | reforca JogoSujo e pune Envenenado/Corroendo/MarcadoSombrio
+[Copia Sombria] Lv  1 | Copia Sombria          | Dano  16 | CD  5.0s | ativa CopiaSombria e aplica MarcadoSombrio
+[Copia Sombria] Lv 10 | Camuflagem             | Dano   8 | CD  7.2s | ativa CamuflagemSombria e reduz CDs do usuario
+[Copia Sombria] Lv 10 | Perseguicao            | Dano  30 | CD  5.2s | +dano contra Evasivo/Intangivel e CD alto
+[Copia Sombria] Lv 15 | Sombra Falsa           | Dano  34 | CD  6.0s | renova CopiaSombria, marca e prepara ilusoes
+[Copia Sombria] Lv 20 | Passo Noturno          | Dano  42 | CD  5.8s | +dano se camuflado ou contra Ofuscado
+[Copia Sombria] Lv 25 | Caca nas Sombras       | Dano  54 | CD  7.8s | ativa PerseguicaoSombria e pune VentoDeCauda/PenasLeves/Evasivo
+[Copia Sombria] Lv 30 | Ilusao Final           | Dano  62 | CD  9.8s | finalizador com CopiaSombria, Camuflagem e MarcadoSombrio
+Core 2 skills: Mordida + Golpe Baixo; Jogo Sujo + Mordida Cruel; Copia Sombria + Perseguicao.
+
+=== NORMAL ===
+Marca central: Adaptacao e consistencia
+Arquetipos finais: 1) Forca Neutra | 2) Estocar | 3) Legado
+Notas: Normal e o tipo de base: bom quando a build veio aleatoria, mas sem grande vantagem elemental.
+[Forca Neutra] Lv  1 | Investida              | Dano  24 | CD  3.8s | ativa ForcaNeutra
+[Forca Neutra] Lv 10 | Ataque Rapido          | Dano  24 | CD  2.9s | +8% com ForcaNeutra
+[Forca Neutra] Lv 10 | Foco Simples           | Dano   8 | CD  7.0s | ativa ForcaNeutra e reduz CD do usuario
+[Forca Neutra] Lv 15 | Golpe Certo            | Dano  36 | CD  5.2s | +12% com ForcaNeutra
+[Forca Neutra] Lv 20 | Forca Neutra           | Dano  46 | CD  6.0s | +14% com ForcaNeutra
+[Forca Neutra] Lv 25 | Ritmo Constante        | Dano  42 | CD  5.4s | renova ForcaNeutra e reduz CD
+[Forca Neutra] Lv 30 | Impacto Perfeito       | Dano  62 | CD  8.8s | finalizador consistente
+[Estocar] Lv  1 | Bater Corpo             | Dano  22 | CD  4.4s | aplica EstoqueDefensivo
+[Estocar] Lv 10 | Estocar                 | Dano   6 | CD  7.2s | EstoqueDefensivo + cura 4% HP max
+[Estocar] Lv 10 | Defesa Curl             | Dano   8 | CD  6.8s | EstoqueDefensivo
+[Estocar] Lv 15 | Liberar                 | Dano  38 | CD  6.8s | +16% com EstoqueDefensivo
+[Estocar] Lv 20 | Agarrar                 | Dano  36 | CD  6.4s | bonus em Enraizado/SedaPresa/Areia
+[Estocar] Lv 25 | Corpo Pesado            | Dano  50 | CD  8.0s | bonus com EstoqueDefensivo/Fortificado
+[Estocar] Lv 30 | Explosao Guardada       | Dano  68 | CD 10.5s | finalizador defensivo
+[Legado] Lv  1 | Mimetismo               | Dano  18 | CD  5.0s | ativa MimetismoAtivo
+[Legado] Lv 10 | Reciclagem              | Dano   8 | CD  8.0s | ReciclagemAtiva e reduz CD
+[Legado] Lv 10 | Eco Adaptavel           | Dano  26 | CD  5.6s | +12% com MimetismoAtivo
+[Legado] Lv 15 | Revezamento             | Dano  28 | CD  7.0s | LegadoAtivo + cura 4% HP max
+[Legado] Lv 20 | Copia de Ritmo          | Dano  34 | CD  6.6s | bonus com ReciclagemAtiva/MarcadoSombrio
+[Legado] Lv 25 | Legado                  | Dano  22 | CD  9.0s | LegadoAtivo + cura 6% HP max
+[Legado] Lv 30 | Heranca Heroica         | Dano  54 | CD 10.0s | finalizador com Legado/Mimetismo
+Core 2 skills: Investida + Ataque Rapido; Bater Corpo + Liberar; Mimetismo + Eco Adaptavel.
+
+SINERGIAS RAPIDAS ENTRE TIPOS DUPLOS
+- Grass/Poison: Enraizado + Envenenado alimenta dreno, venenochoque e finalizadores toxicos.
+- Water/Electric: Molhado aumenta valor de controle de cooldown e torna cegueira/falha mais punitiva.
+- Fire/Rock: Defesa derretida + impacto verdadeiro resolve chefes defensivos.
+- Bug/Grass: alta rotacao de Bug ativa Crescimento/Folha Navalha com pouco setup.
+- Steel/Ground: Defesa alta vira dano em Impacto Pesado e Magnitude.
+- Dark/Poison: debuffs constantes deixam Camuflagem e Jogo Sujo sempre online.
+- Fairy/Psychic: purificacao protege setups de controle mental e burst carregado.
+- Flying/Electric: erro/evasao vira janela para Sobrecarga e Vendaval.
+
+PROXIMO PASSO RECOMENDADO
+- Transformar este catalogo em pools GML por tipo, substituindo gradualmente o pacote generico atual.
+- Comecar pelos tipos mais frequentes nas rotas iniciais: Normal, Bug, Flying, Poison, Grass, Water, Rock.
+
+IMPLEMENTACAO ATUAL - LUTADOR E TERRA
+
+Os valores abaixo foram implementados em scripts/scr_pokemon_data/scr_pokemon_data.gml.
+Relatorio completo em docs/fighting_ground_balance_report.txt.
+
+=== FIGHTING / LUTADOR IMPLEMENTADO ===
+Arquetipos finais: 1) Impeto Ofensivo | 2) Quebra-Guarda | 3) Espirito de Luta
+
+[Impeto Ofensivo] Lv  1 | Jab                   | Dano 20 | CD  3.3s | aplica ImpetoOfensivo no usuario
+[Impeto Ofensivo] Lv 10 | Postura de Foco       | Dano  8 | CD  6.6s | ImpetoOfensivo + reduz cooldowns em 0.20s
+[Impeto Ofensivo] Lv 10 | Rasteira              | Dano 30 | CD  4.6s | aplica PosturaQuebrada; bonus em Enraizado/AreiaMovedica
+[Impeto Ofensivo] Lv 15 | Sequencia Crescente   | Dano 34 | CD  4.2s | +16% com ImpetoOfensivo
+[Impeto Ofensivo] Lv 20 | Quebra-Guarda         | Dano 42 | CD  6.6s | aplica PosturaQuebrada
+[Impeto Ofensivo] Lv 25 | Golpe Ascendente      | Dano 50 | CD  5.8s | bonus em PosturaQuebrada e ImpetoOfensivo
+[Impeto Ofensivo] Lv 30 | Rajada Final          | Dano 62 | CD  8.6s | finalizador de combo
+
+[Quebra-Guarda] Lv  1 | Golpe Karate           | Dano 24 | CD  4.1s | aplica PosturaQuebrada
+[Quebra-Guarda] Lv 10 | Quebra-Tijolo          | Dano 36 | CD  5.6s | +14% em PosturaQuebrada
+[Quebra-Guarda] Lv 10 | Firmar Guarda          | Dano  8 | CD  7.4s | ImpetoOfensivo + cura 3% HP max
+[Quebra-Guarda] Lv 15 | Arremesso Vital        | Dano 40 | CD  6.4s | bonus em PosturaQuebrada/Corroendo
+[Quebra-Guarda] Lv 20 | Corte Cruzado          | Dano 52 | CD  7.0s | aplica PosturaQuebrada
+[Quebra-Guarda] Lv 25 | Combate Proximo        | Dano 62 | CD  8.2s | sacrifica 3% HP; bonus em PosturaQuebrada
+[Quebra-Guarda] Lv 30 | Ruptura de Postura     | Dano 72 | CD 10.0s | finalizador contra defesa quebrada
+
+[Espirito de Luta] Lv  1 | Soco Drenante        | Dano 22 | CD  4.8s | cura 10% do dano
+[Espirito de Luta] Lv 10 | Espirito de Luta     | Dano  8 | CD  7.2s | aplica EspiritoLuta + cura 4% HP max
+[Espirito de Luta] Lv 10 | Contra-Golpe         | Dano 32 | CD  5.4s | +12% com EspiritoLuta
+[Espirito de Luta] Lv 15 | Golpe Vital          | Dano 38 | CD  6.2s | bonus com HP baixo + dreno leve
+[Espirito de Luta] Lv 20 | Palma de Aura        | Dano 44 | CD  6.8s | bonus com EspiritoLuta/Enraizado
+[Espirito de Luta] Lv 25 | Resolucao            | Dano 42 | CD  8.0s | reativa EspiritoLuta + cura
+[Espirito de Luta] Lv 30 | Ultimo Folego        | Dano 66 | CD 10.0s | finalizador com HP baixo e dreno
+
+=== GROUND / TERRA IMPLEMENTADO ===
+Arquetipos finais: 1) Areia Movedica | 2) Barreira de Lama | 3) Desabamento
+
+[Areia Movedica] Lv  1 | Tapa de Lama          | Dano 18 | CD  4.2s | aplica AreiaMovedica e atrasa cooldowns
+[Areia Movedica] Lv 10 | Armadilha de Areia    | Dano 12 | CD  6.8s | setup de areia + atraso
+[Areia Movedica] Lv 10 | Tiro de Lama          | Dano 32 | CD  5.2s | bonus em Molhado + atraso leve
+[Areia Movedica] Lv 15 | Areia Movedica        | Dano 24 | CD  7.4s | bonus em Enraizado + atraso
+[Areia Movedica] Lv 20 | Poder da Terra        | Dano 48 | CD  6.8s | bonus em AreiaMovedica/Molhado
+[Areia Movedica] Lv 25 | Colapso de Areia      | Dano 54 | CD  8.6s | aplica Desabando
+[Areia Movedica] Lv 30 | Trava de Campo        | Dano 64 | CD 10.2s | controle final de cooldowns
+
+[Barreira de Lama] Lv  1 | Guarda de Lama       | Dano 16 | CD  5.0s | aplica BarreiraLama
+[Barreira de Lama] Lv 10 | Muralha de Lama      | Dano 10 | CD  7.4s | BarreiraLama + cura
+[Barreira de Lama] Lv 10 | Pisotear             | Dano 34 | CD  5.8s | aplica AreiaMovedica
+[Barreira de Lama] Lv 15 | Armadura de Barro    | Dano 16 | CD  8.2s | BarreiraLama + cura
+[Barreira de Lama] Lv 20 | Pisao Teimoso        | Dano 44 | CD  6.6s | bonus com BarreiraLama/PosturaQuebrada
+[Barreira de Lama] Lv 25 | Baluarte Terrestre   | Dano 36 | CD  9.0s | aplica Aterrado
+[Barreira de Lama] Lv 30 | Terra Viva           | Dano 60 | CD 10.6s | finalizador defensivo com cura
+
+[Desabamento] Lv  1 | Queda de Rocha          | Dano 28 | CD  5.2s | aplica Desabando
+[Desabamento] Lv 10 | Pisada Pesada           | Dano 38 | CD  6.2s | +12% em Desabando
+[Desabamento] Lv 10 | Fenda Sismica           | Dano 30 | CD  7.8s | aplica Desabando + atraso
+[Desabamento] Lv 15 | Magnitude               | Dano 48 | CD  7.2s | bonus com Aterrado/Desabando
+[Desabamento] Lv 20 | Impacto Esmagador       | Dano 58 | CD  8.0s | bonus em PosturaQuebrada/Desabando
+[Desabamento] Lv 25 | Queda Tectonica         | Dano 66 | CD  9.2s | atraso + bonus em AreiaMovedica
+[Desabamento] Lv 30 | Terremoto               | Dano 78 | CD 11.2s | finalizador contra Desabando/Enraizado
+
+IMPLEMENTACAO ATUAL - VOADOR E PSIQUICO
+
+Os valores abaixo foram implementados em scripts/scr_pokemon_data/scr_pokemon_data.gml.
+Relatorio completo em docs/flying_psychic_balance_report.txt.
+
+=== FLYING / VOADOR IMPLEMENTADO ===
+Arquetipos finais: 1) Ataque Rasante | 2) Turbulencia | 3) Vento de Cauda
+
+[Ataque Rasante] Lv  1 | Rajada                | Dano 18 | CD  3.8s | aplica MarcadoRasante
+[Ataque Rasante] Lv 10 | Rasante              | Dano 30 | CD  4.4s | bonus em MarcadoRasante
+[Ataque Rasante] Lv 10 | Vento de Cauda       | Dano  8 | CD  7.0s | VentoDeCauda + reduz cooldowns
+[Ataque Rasante] Lv 15 | Aero Ace             | Dano 38 | CD  4.8s | bonus com VentoDeCauda
+[Ataque Rasante] Lv 20 | Mergulho Inicial     | Dano 48 | CD  6.2s | bonus em MarcadoRasante/Turbulento
+[Ataque Rasante] Lv 25 | Ave Corajosa         | Dano 62 | CD  8.0s | sacrifica HP + bonus com VentoDeCauda
+[Ataque Rasante] Lv 30 | Queda do Ceu         | Dano 70 | CD  9.8s | finalizador marcado/turbulento
+
+[Turbulencia] Lv  1 | Ataque de Asa           | Dano 20 | CD  4.0s | aplica Turbulento
+[Turbulencia] Lv 10 | Turbulencia             | Dano 10 | CD  6.6s | aplica Turbulento + atraso
+[Turbulencia] Lv 10 | Corte de Ar             | Dano 32 | CD  5.0s | bonus em Turbulento
+[Turbulencia] Lv 15 | Danca de Penas          | Dano  8 | CD  7.0s | PenasLeves + Turbulento
+[Turbulencia] Lv 20 | Ciclone                 | Dano 42 | CD  7.2s | bonus em AreiaMovedica/Turbulento
+[Turbulencia] Lv 25 | Furacao                 | Dano 56 | CD  9.0s | bonus em Molhado/Turbulento
+[Turbulencia] Lv 30 | Trava de Ventos         | Dano 62 | CD 10.0s | atraso forte + bonus em Turbulento/Ofuscado
+
+[Vento de Cauda] Lv  1 | Brisa de Cauda       | Dano 16 | CD  4.2s | aplica VentoDeCauda
+[Vento de Cauda] Lv 10 | Bicada Rapida        | Dano 26 | CD  3.2s | golpe rapido
+[Vento de Cauda] Lv 10 | Penas Leves          | Dano  8 | CD  7.2s | PenasLeves + reduz cooldowns
+[Vento de Cauda] Lv 15 | Seguir o Vento       | Dano 30 | CD  4.4s | bonus com VentoDeCauda
+[Vento de Cauda] Lv 20 | Corrente Ascendente  | Dano 24 | CD  6.4s | VentoDeCauda + Turbulento
+[Vento de Cauda] Lv 25 | Danca do Ceu         | Dano 46 | CD  6.6s | bonus com PenasLeves/VentoDeCauda
+[Vento de Cauda] Lv 30 | Rota de Cauda        | Dano 56 | CD  8.8s | reduz cooldowns + bonus com VentoDeCauda
+
+=== PSYCHIC / PSIQUICO IMPLEMENTADO ===
+Arquetipos finais: 1) Paralisia Mental | 2) Escudo Cinetico | 3) Inversao Espacial
+
+[Paralisia Mental] Lv  1 | Confusao            | Dano 18 | CD  4.2s | aplica ParalisiaMental + atraso
+[Paralisia Mental] Lv 10 | Trava Mental        | Dano 10 | CD  6.8s | controle de cooldown
+[Paralisia Mental] Lv 10 | Psybeam             | Dano 32 | CD  5.2s | bonus em ParalisiaMental
+[Paralisia Mental] Lv 15 | Pulso Hipnotico     | Dano 18 | CD  7.0s | aplica AmnesiaInduzida
+[Paralisia Mental] Lv 20 | Psiquico            | Dano 46 | CD  7.0s | bonus em ParalisiaMental/Amnesia
+[Paralisia Mental] Lv 25 | Quebra Mental       | Dano 54 | CD  8.4s | bonus em Amnesia/Vulneravel
+[Paralisia Mental] Lv 30 | Bloqueio Total      | Dano 62 | CD 10.4s | atraso forte + bonus em ParalisiaMental
+
+[Escudo Cinetico] Lv  1 | Empurrao Cinetico    | Dano 16 | CD  4.8s | aplica EscudoCinetico
+[Escudo Cinetico] Lv 10 | Escudo Cinetico      | Dano  8 | CD  7.6s | EscudoCinetico + cura
+[Escudo Cinetico] Lv 10 | Barreira Pulsante    | Dano 28 | CD  5.8s | bonus com EscudoCinetico
+[Escudo Cinetico] Lv 15 | Tela Mental          | Dano 12 | CD  8.4s | EscudoCinetico + DistorcaoEspacial
+[Escudo Cinetico] Lv 20 | Campo de Forca       | Dano 36 | CD  7.2s | bonus defensivo + atraso
+[Escudo Cinetico] Lv 25 | Guarda Espelhada     | Dano 44 | CD  8.0s | bonus em ParalisiaMental + escudo
+[Escudo Cinetico] Lv 30 | Esmagamento Cinetico | Dano 60 | CD 10.0s | finalizador com escudo/distorcao
+
+[Inversao Espacial] Lv  1 | Torcer Espaco      | Dano 20 | CD  4.6s | aplica DistorcaoEspacial
+[Inversao Espacial] Lv 10 | Amnesia            | Dano  8 | CD  7.2s | aplica AmnesiaInduzida + atraso
+[Inversao Espacial] Lv 10 | Telecinese         | Dano 30 | CD  5.5s | bonus em DistorcaoEspacial
+[Inversao Espacial] Lv 15 | Foco Psiquico      | Dano 10 | CD  7.0s | FocoPsiquico + reduz cooldowns
+[Inversao Espacial] Lv 20 | Psicochoque        | Dano 44 | CD  6.8s | bonus em Distorcao/PosturaQuebrada
+[Inversao Espacial] Lv 25 | Troca Espacial     | Dano 50 | CD  8.8s | aplica Distorcao + escala com cooldown alvo
+[Inversao Espacial] Lv 30 | Colapso Dimensional| Dano 68 | CD 11.0s | finalizador em Distorcao/Amnesia
+
+IMPLEMENTACAO ATUAL - INSETO
+
+Os valores abaixo foram implementados em scripts/scr_pokemon_data/scr_pokemon_data.gml.
+Relatorio completo em docs/bug_balance_report.txt.
+
+=== BUG / INSETO IMPLEMENTADO ===
+Arquetipos finais: 1) Tatica de Enxame | 2) Casulo Rigido | 3) Fio de Seda
+
+[Tatica de Enxame] Lv  1 | Corte Furioso       | Dano 18 | CD  3.2s | aplica EnxameAtivo
+[Tatica de Enxame] Lv 10 | Chamado do Enxame   | Dano  8 | CD  6.4s | EnxameAtivo + reduz cooldowns
+[Tatica de Enxame] Lv 10 | Missil de Espinhos  | Dano 28 | CD  4.0s | bonus com EnxameAtivo
+[Tatica de Enxame] Lv 15 | Agulha Dupla        | Dano 32 | CD  4.4s | bonus em Envenenado + Infestado
+[Tatica de Enxame] Lv 20 | Tesoura X           | Dano 44 | CD  5.8s | bonus em EnxameAtivo/SedaPresa
+[Tatica de Enxame] Lv 25 | Bate e Volta        | Dano 46 | CD  6.2s | reduz cooldowns + VentoDeCauda
+[Tatica de Enxame] Lv 30 | Megacolonia         | Dano 62 | CD  8.6s | finalizador de Enxame/Infestado
+
+[Casulo Rigido] Lv  1 | Investida de Casulo   | Dano 18 | CD  4.8s | aplica CasuloRigido
+[Casulo Rigido] Lv 10 | Casulo Rigido         | Dano  8 | CD  7.4s | CasuloRigido + cura
+[Casulo Rigido] Lv 10 | Mordida Blindada      | Dano 30 | CD  5.4s | bonus com CasuloRigido
+[Casulo Rigido] Lv 15 | Guarda de Pupa        | Dano 12 | CD  8.2s | CasuloRigido + cura
+[Casulo Rigido] Lv 20 | Muda Pesada           | Dano 42 | CD  7.0s | aplica Metamorfose
+[Casulo Rigido] Lv 25 | Esmaga Casulo         | Dano 56 | CD  8.8s | bonus em CasuloRigido/SedaPresa
+[Casulo Rigido] Lv 30 | Muralha de Quitina    | Dano 58 | CD 10.2s | CasuloRigido + cura
+
+[Fio de Seda] Lv  1 | Tiro de Seda            | Dano 16 | CD  4.2s | SedaPresa + atraso leve
+[Fio de Seda] Lv 10 | Laco de Seda            | Dano 12 | CD  6.8s | SedaPresa + atraso medio
+[Fio de Seda] Lv 10 | Larva Drenante          | Dano 26 | CD  5.4s | cura dano + bonus em Enraizado
+[Fio de Seda] Lv 15 | Infestacao              | Dano 28 | CD  7.2s | aplica Infestado + bonus em SedaPresa
+[Fio de Seda] Lv 20 | Armadilha de Seda       | Dano 22 | CD  8.0s | atraso forte + bonus em AreiaMovedica
+[Fio de Seda] Lv 25 | Agulhas de Enxame       | Dano 44 | CD  6.4s | bonus em Infestado/Envenenado
+[Fio de Seda] Lv 30 | Prisao de Teia          | Dano 60 | CD 10.0s | SedaPresa + atraso final
+
+IMPLEMENTACAO ATUAL - PEDRA E FANTASMA
+
+Os valores abaixo foram implementados em scripts/scr_pokemon_data/scr_pokemon_data.gml.
+Relatorio completo em docs/rock_ghost_balance_report.txt.
+
+=== ROCK / PEDRA IMPLEMENTADO ===
+Arquetipos finais: 1) Impacto Geologico | 2) Casca de Rocha | 3) Fragmentacao
+
+[Impacto Geologico] Lv  1 | Impacto Geologico       | Dano 30 | CD  5.2s | sacrifica HP + aplica ImpactoGeologico
+[Impacto Geologico] Lv 10 | Derrubada de Rocha      | Dano 36 | CD  5.8s | aplica Fragmentado
+[Impacto Geologico] Lv 10 | Trinca Propria          | Dano 12 | CD  7.0s | sacrifica HP + prepara impacto
+[Impacto Geologico] Lv 15 | Cabecada Rochosa        | Dano 50 | CD  7.4s | sacrificio + bonus em Fragmentado
+[Impacto Geologico] Lv 20 | Deslizamento            | Dano 48 | CD  7.2s | atraso + Fragmentado
+[Impacto Geologico] Lv 25 | Queda Meteorica         | Dano 66 | CD  9.2s | bonus em Fragmentado/Desabando
+[Impacto Geologico] Lv 30 | Esmagamento Continental | Dano 78 | CD 11.0s | finalizador com sacrificio
+
+[Casca de Rocha] Lv  1 | Casca de Rocha            | Dano 16 | CD  5.0s | aplica CascaRocha
+[Casca de Rocha] Lv 10 | Endurecer Rocha           | Dano  8 | CD  7.4s | CascaRocha + cura
+[Casca de Rocha] Lv 10 | Arremesso Guardado        | Dano 32 | CD  5.6s | bonus com CascaRocha
+[Casca de Rocha] Lv 15 | Guarda Fossil             | Dano 12 | CD  8.4s | FossilVivo + cura
+[Casca de Rocha] Lv 20 | Peso de Pedra             | Dano 46 | CD  7.2s | bonus defensivo/postura
+[Casca de Rocha] Lv 25 | Gume Rochoso              | Dano 58 | CD  8.6s | bonus em Fragmentado/CascaRocha
+[Casca de Rocha] Lv 30 | Corpo de Montanha         | Dano 62 | CD 10.4s | CascaRocha + cura
+
+[Fragmentacao] Lv  1 | Estilhaco de Rocha          | Dano 22 | CD  4.0s | aplica Fragmentado
+[Fragmentacao] Lv 10 | Pedra Afiada                | Dano 28 | CD  4.6s | bonus em Fragmentado
+[Fragmentacao] Lv 10 | Campo de Estilhacos         | Dano 12 | CD  7.2s | atraso + Fragmentado
+[Fragmentacao] Lv 15 | Fragmentacao                | Dano 36 | CD  6.0s | bonus em Fragmentado/Corroendo
+[Fragmentacao] Lv 20 | Ruptura Mineral             | Dano 44 | CD  6.6s | bonus em Fragmentado/Fragil
+[Fragmentacao] Lv 25 | Granizo de Pedras           | Dano 54 | CD  8.2s | atraso + Fragmentado
+[Fragmentacao] Lv 30 | Chuva de Meteoros           | Dano 66 | CD 10.0s | Fragmentado + Enraizado/SedaPresa
+
+=== GHOST / FANTASMA IMPLEMENTADO ===
+Arquetipos finais: 1) Assombracao | 2) Intangibilidade | 3) Dreno de Essencia
+
+[Assombracao] Lv  1 | Toque Sombrio       | Dano 20 | CD  4.2s | aplica Assombrado
+[Assombracao] Lv 10 | Assombracao         | Dano 12 | CD  6.5s | TerrorCrescente + Assombrado
+[Assombracao] Lv 10 | Sombra Crescente    | Dano 30 | CD  5.0s | bonus em Assombrado/TerrorCrescente
+[Assombracao] Lv 15 | Pesadelo            | Dano 38 | CD  7.0s | aplica Amedrontado
+[Assombracao] Lv 20 | Relogio do Terror   | Dano 46 | CD  7.4s | atraso + Assombrado
+[Assombracao] Lv 25 | Espectro Voraz      | Dano 54 | CD  8.4s | bonus em Amedrontado/Maldito
+[Assombracao] Lv 30 | Fim Assombrado      | Dano 66 | CD 10.6s | finalizador de terror
+
+[Intangibilidade] Lv  1 | Sombra Evasiva   | Dano 18 | CD  4.0s | aplica Intangivel
+[Intangibilidade] Lv 10 | Intangivel       | Dano  8 | CD  7.0s | Intangivel + reduz cooldowns
+[Intangibilidade] Lv 10 | Susto Abrupto    | Dano 28 | CD  5.2s | atraso + Amedrontado
+[Intangibilidade] Lv 15 | Passo Fantasma   | Dano 34 | CD  4.4s | bonus com Intangivel
+[Intangibilidade] Lv 20 | Vulto Nulo       | Dano 26 | CD  7.6s | Intangivel + atraso
+[Intangibilidade] Lv 25 | Vazio Espectral  | Dano 50 | CD  8.2s | bonus em Amedrontado/Ofuscado
+[Intangibilidade] Lv 30 | Desaparecer      | Dano 60 | CD  9.8s | Intangivel + finalizador
+
+[Dreno de Essencia] Lv  1 | Dreno de Essencia    | Dano 18 | CD  4.8s | cura dano + Maldito
+[Dreno de Essencia] Lv 10 | Maldicao             | Dano 12 | CD  7.8s | EssenciaDrenada + Maldito
+[Dreno de Essencia] Lv 10 | Roubo de Alma        | Dano 30 | CD  5.6s | cura melhor contra Maldito
+[Dreno de Essencia] Lv 15 | Vinculo Sombrio      | Dano 34 | CD  6.8s | Maldito + Envenenado
+[Dreno de Essencia] Lv 20 | Absorver Medo        | Dano 40 | CD  7.4s | cura contra medo/maldicao
+[Dreno de Essencia] Lv 25 | Maldicao Espelhada   | Dano 50 | CD  8.8s | Maldito + EssenciaDrenada
+[Dreno de Essencia] Lv 30 | Colheita de Alma     | Dano 62 | CD 10.2s | dreno final contra Maldito/Assombrado
+
+IMPLEMENTACAO ATUAL - DRAGON E STEEL
+
+Os valores abaixo foram implementados em scripts/scr_pokemon_data/scr_pokemon_data.gml.
+Relatorio completo em docs/dragon_steel_balance_report.txt.
+
+=== DRAGON / DRAGAO IMPLEMENTADO ===
+Arquetipos finais: 1) Furia Draconica | 2) Escama Imperial | 3) Sopro Ancestral
+
+[Furia Draconica] Lv  1 | Garra Draconica      | Dano 28 | CD  4.8s | aplica FuriaDraconica
+[Furia Draconica] Lv 10 | Furia do Dragao      | Dano 36 | CD  5.6s | bonus com FuriaDraconica/HP baixo
+[Furia Draconica] Lv 10 | Rugido Draconico     | Dano 10 | CD  7.2s | FuriaDraconica + Amedrontado
+[Furia Draconica] Lv 15 | Cauda Quebrante      | Dano 44 | CD  6.4s | bonus em Fragmentado/PosturaQuebrada
+[Furia Draconica] Lv 20 | Sangue de Dragao     | Dano 52 | CD  7.2s | sacrificio + FuriaDraconica
+[Furia Draconica] Lv 25 | Investida Feroz      | Dano 62 | CD  8.6s | finaliza HP baixo
+[Furia Draconica] Lv 30 | Colera Draconica     | Dano 74 | CD 10.6s | finalizador de furia
+
+[Escama Imperial] Lv  1 | Golpe de Escama      | Dano 20 | CD  4.8s | aplica EscamaImperial
+[Escama Imperial] Lv 10 | Escama Imperial      | Dano  8 | CD  7.4s | EscamaImperial + cura
+[Escama Imperial] Lv 10 | Bafo Guardado        | Dano 30 | CD  5.8s | bonus com EscamaImperial
+[Escama Imperial] Lv 15 | Espiral Draconica    | Dano 18 | CD  7.8s | EscamaImperial + Ascensao
+[Escama Imperial] Lv 20 | Cauda Draconica      | Dano 42 | CD  6.8s | EscamaImperial + Amedrontado
+[Escama Imperial] Lv 25 | Esmaga Escamas       | Dano 54 | CD  8.4s | bonus em Escama/Fragmentado
+[Escama Imperial] Lv 30 | Rugido Imperial      | Dano 62 | CD 10.2s | EscamaImperial + Amedrontado
+
+[Sopro Ancestral] Lv  1 | Twister              | Dano 24 | CD  4.6s | aplica AscensaoDraconica
+[Sopro Ancestral] Lv 10 | Sopro Ancestral      | Dano 42 | CD  6.8s | Ascensao + Amedrontado
+[Sopro Ancestral] Lv 10 | Ascensao             | Dano  8 | CD  7.6s | Ascensao + reduz cooldowns
+[Sopro Ancestral] Lv 15 | Pulso do Dragao      | Dano 48 | CD  7.0s | bonus em Ascensao/Assombrado
+[Sopro Ancestral] Lv 20 | Marca Predadora      | Dano 34 | CD  6.4s | Predador + Vulneravel
+[Sopro Ancestral] Lv 25 | Meteoro Draconico    | Dano 68 | CD  9.6s | bonus em Ascensao/Fragil/Fragmentado
+[Sopro Ancestral] Lv 30 | Colapso Ancestral    | Dano 78 | CD 11.4s | atrasa cooldowns + finalizador
+
+=== STEEL / ACO IMPLEMENTADO ===
+Arquetipos finais: 1) Espinhos de Ferro | 2) Fortificacao Rigida | 3) Impacto Pesado
+
+[Espinhos de Ferro] Lv  1 | Espinhos de Ferro    | Dano 16 | CD  4.8s | aplica EspinhosFerro
+[Espinhos de Ferro] Lv 10 | Guarda Espinhosa     | Dano  8 | CD  7.2s | EspinhosFerro + Fortificado
+[Espinhos de Ferro] Lv 10 | Garra Metal          | Dano 30 | CD  4.8s | bonus em Fragmentado
+[Espinhos de Ferro] Lv 15 | Contra Espinhos      | Dano 34 | CD  6.2s | bonus com EspinhosFerro
+[Espinhos de Ferro] Lv 20 | Cabeca de Ferro      | Dano 44 | CD  6.8s | bonus em Fortificado/Postura
+[Espinhos de Ferro] Lv 25 | Tempestade Espinhos  | Dano 52 | CD  8.0s | bonus em Seda/Enraizado
+[Espinhos de Ferro] Lv 30 | Prisao de Ferro      | Dano 60 | CD  9.6s | finalizador defensivo
+
+[Fortificacao Rigida] Lv  1 | Impacto Fortificado | Dano 18 | CD  5.0s | aplica Fortificado
+[Fortificacao Rigida] Lv 10 | Defesa de Ferro     | Dano  8 | CD  7.4s | Fortificado + cura
+[Fortificacao Rigida] Lv 10 | Gyro Ball           | Dano 32 | CD  5.8s | bonus com Fortificado
+[Fortificacao Rigida] Lv 15 | Muralha de Liga     | Dano 12 | CD  8.2s | LigaPesada + Fortificado
+[Fortificacao Rigida] Lv 20 | Prensa de Aco       | Dano 42 | CD  7.0s | LigaPesada/AreiaMovedica
+[Fortificacao Rigida] Lv 25 | Nucleo Registeel    | Dano 48 | CD  8.8s | Fortificado + cura
+[Fortificacao Rigida] Lv 30 | Corpo Imovel        | Dano 58 | CD 10.2s | Fortificado + LigaPesada
+
+[Impacto Pesado] Lv  1 | Impacto Pesado       | Dano 24 | CD  5.0s | aplica ImpactoPesado
+[Impacto Pesado] Lv 10 | Blindagem Magnetica  | Dano  8 | CD  7.0s | Blindagem + reduz cooldowns
+[Impacto Pesado] Lv 10 | Soco Bala            | Dano 26 | CD  3.6s | bonus com ImpactoPesado
+[Impacto Pesado] Lv 15 | Disparo Espelhado    | Dano 36 | CD  5.8s | Ofuscado + Blindagem
+[Impacto Pesado] Lv 20 | Ataque Inteligente   | Dano 44 | CD  6.2s | bonus em Paralisado/Fragmentado
+[Impacto Pesado] Lv 25 | Prensa Pesada        | Dano 58 | CD  8.4s | ImpactoPesado/Fortificado
+[Impacto Pesado] Lv 30 | Soco Meteoro         | Dano 70 | CD 10.0s | Impacto + Blindagem/Fragmentado
+
+
+
+========================================================================
+
+REVISAO DE ARQUETIPOS E SISTEMA DE PASSIVAS (ATUALIZACAO CENTRALIZADA)
+========================================================================
+Com a integracao das Passivas Unicas por Foco (Ataque, Defesa, Velocidade) em todos os Pokemons, a dinamica dos 3 arquetipos existentes foi REPENSADA.
+As passivas agora atuam como funil para os combos:
+
+REGRA GERAL DE REVISAO (Para TODOS OS ARQUETIPOS 1, 2 e 3):
+- A partir de agora, as habilidades de Escalada (Lv 25 e Lv 30) de todos os arquetipos recebem um multiplicador Oculto Sinergico (+20% de Dano ou Mitigacao) caso o status principal da Passiva Nivel 2 do usuario esteja ativado na batalha (ex: se a passiva do usuario precisa do oponente Queimando, o Lanca-Chamas do Arquetipo 1 e a Explosao Termica do Arquetipo 2 recebem bonus imediato se a passiva LVL 2 bater).
+
+ADICAO DO 4º ARQUETIPO (Sinergia de Passiva / Suporte Pessoal):
+Em cada tipagem elemental, um novo quarto caminho (Arquetipo 4) foi conceitualizado. Esse arquetipo nao foca em dano base, mas em prolongar, espalhar ou se beneficiar diretamente dos debuffs necessarios para a ativacao das passivas.
+
+[NOVO] GRASS 4: Jardim Venenoso -> Propaga efeitos de Enraizado/Veneno em Area e concede dreno passivo a aliados.
+[NOVO] FIRE 4: Brasa Persistente -> Prolonga tempo de queima e reduz tempo de cooldown de todo o time focado em Fogo.
+[NOVO] WATER 4: Espelho d'Agua -> Converte atrasos de cooldown (inimigo lento) em curas purificadoras.
+[NOVO] ELECTRIC 4: Rede Eletromagnetica -> Se o alvo for Cegado, repassa o efeito de cegueira e falha para 1 inimigo vizinho.
+[NOVO] POISON 4: Sangue Corrosivo -> Cria pocos no chao quando atingido, multiplicando passivas de controle de grupo.
+[NOVO] PSYCHIC 4: Carga Neural -> Escudos dependem de lentidao inimiga e quebram armaduras psiquicas em volta.
+[NOVO] FAIRY 4: Coro Prismal -> Aumenta em 2x os buffs concedidos pelas passivas Ofuscantes.
+[NOVO] STEEL 4: Liga Protetora -> Escala com os Thorns de outros aliados, garantindo invulnerabilidade breve ao espelhar dano.
+[NOVO] ROCK 4: Fortaleza Viva -> A Passiva do tipo Rocha dobra de eficacia quando ha menos de 2 membros no time.
+[NOVO] FLYING 4: Corrente de Vento -> Espalha evasao e reduz os multiplicadores de ataque fisico do time inimigo.
+[NOVO] BUG 4: Enxame Zangado -> Aumenta a agressividade e tempo de auto-ataque proporcional a quantas vezes a Passiva de Bug rodou.
+[NOVO] GROUND 4: Subsidencia -> Cria zonas mortas; inimigos nessas zonas tomam lentidao dobrada pelas passivas Terrestres.
+[NOVO] FIGHTING 4: Meditacao de Combate -> Acumula as quebras de postura do inimigo para curar toda a front-line aliada.
+[NOVO] ICE 4: Congelamento Perfeito -> Prolonga o congelamento passivo para sempre ate o alvo receber um Dano de Quebra macico.
+[NOVO] DRAGON 4: Linhagem Ancestral -> Ignora metade das imunidades elementais se o HP estiver oscilando.
+[NOVO] DARK 4: Jogo Duplo -> Transfere metade dos debuffs que toma para o oponente, ativando combos Sombrios automaticamente.
+[NOVO] NORMAL 4: Adaptabilidade Constante -> Ganha resistividade acumulativa baseada na passiva aleatoria secundaria adquirida na evolucao.
+[NOVO] GHOST 4: Terror Invasivo -> Se beneficiam diretamente do tempo: quanto mais o inimigo perde ataques por evasao da passiva Fantasma, maior o roubo de HP.
+

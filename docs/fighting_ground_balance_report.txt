@@ -1,0 +1,171 @@
+RELATORIO DE BALANCEAMENTO - LUTADOR E TERRA
+
+Objetivo:
+Adicionar as tipagens Lutador e Terra ao mesmo padrao das tipagens ja finalizadas.
+Cada tipo tem 3 arquetipos, habilidades de nivel 1/10/15/20/25/30, passivas e distribuicao de atributos.
+Os valores foram pensados para builds de 2 habilidades ja funcionarem, sem exigir 4 slots perfeitos.
+
+TIPO LUTADOR
+
+Marca central:
+Combo crescente e quebra de postura.
+
+Arquetipo 1 - Impeto Ofensivo
+Funcao: rotacao rapida, pressao constante, bom para Pokemon ageis.
+Sinergias: Enraizado, AreiaMovedica e PosturaQuebrada.
+Perfil de atributos: menos HP/defesa, mais ataque/velocidade.
+Pokemon principais: Mankey, Primeape, Hitmonlee, Hitmonchan, Tyrogue, Hitmontop, Meditite, Medicham, Monferno, Infernape, Riolu, Lucario, Gallade, Mienfoo, Mienshao, Virizion, Keldeo.
+
+Habilidades:
+- Lv.1 Jab | Dano 20 | CD 3.3s | Aplica ImpetoOfensivo no usuario.
+- Lv.10 Postura de Foco | Dano 8 | CD 6.6s | Aplica ImpetoOfensivo e reduz cooldowns do usuario em 0.20s.
+- Lv.10 Rasteira | Dano 30 | CD 4.6s | Aplica PosturaQuebrada. +10% se o alvo estiver Enraizado e +10% se estiver AreiaMovedica.
+- Lv.15 Sequencia Crescente | Dano 34 | CD 4.2s | +16% se o usuario estiver com ImpetoOfensivo.
+- Lv.20 Quebra-Guarda | Dano 42 | CD 6.6s | Aplica PosturaQuebrada. +8% se o alvo estiver Vulneravel.
+- Lv.25 Golpe Ascendente | Dano 50 | CD 5.8s | +16% em PosturaQuebrada e +10% com ImpetoOfensivo.
+- Lv.30 Rajada Final | Dano 62 | CD 8.6s | +16% com ImpetoOfensivo e +16% em PosturaQuebrada.
+
+Arquetipo 2 - Quebra-Guarda
+Funcao: dano fisico pesado, reduz defesa efetiva do inimigo.
+Sinergias: Corroendo, Vulneravel e ArmaduraDerretida.
+Perfil de atributos: ataque alto, defesa boa, velocidade baixa.
+Pokemon principais: Machop, Machoke, Machamp, Heracross, Makuhita, Hariyama, Timburr, Gurdurr, Conkeldurr, Throh, Sawk, Terrakion.
+
+Habilidades:
+- Lv.1 Golpe Karate | Dano 24 | CD 4.1s | Aplica PosturaQuebrada.
+- Lv.10 Quebra-Tijolo | Dano 36 | CD 5.6s | +14% em PosturaQuebrada.
+- Lv.10 Firmar Guarda | Dano 8 | CD 7.4s | Aplica ImpetoOfensivo e cura 3% do HP maximo.
+- Lv.15 Arremesso Vital | Dano 40 | CD 6.4s | +12% em PosturaQuebrada e +8% em Corroendo.
+- Lv.20 Corte Cruzado | Dano 52 | CD 7.0s | Aplica PosturaQuebrada. +10% em Vulneravel.
+- Lv.25 Combate Proximo | Dano 62 | CD 8.2s | Sacrifica 3% do HP e ganha +18% em PosturaQuebrada.
+- Lv.30 Ruptura de Postura | Dano 72 | CD 10.0s | +20% em PosturaQuebrada e +10% em ArmaduraDerretida.
+
+Arquetipo 3 - Espirito de Luta
+Funcao: bruiser de atrito, recupera vida e vira lutas quando esta ferido.
+Sinergias: Enraizado, HP baixo e EspiritoLuta.
+Perfil de atributos: HP alto, ataque bom, velocidade media-baixa.
+Pokemon principais: Poliwrath, Breloom, Croagunk, Toxicroak, Pignite, Emboar, Scraggy, Scrafty, Cobalion.
+
+Habilidades:
+- Lv.1 Soco Drenante | Dano 22 | CD 4.8s | Cura 10% do dano causado.
+- Lv.10 Espirito de Luta | Dano 8 | CD 7.2s | Aplica EspiritoLuta e cura 4% do HP maximo.
+- Lv.10 Contra-Golpe | Dano 32 | CD 5.4s | +12% com EspiritoLuta.
+- Lv.15 Golpe Vital | Dano 38 | CD 6.2s | +18% se o usuario estiver com 45% HP ou menos. Cura 8% do dano.
+- Lv.20 Palma de Aura | Dano 44 | CD 6.8s | +14% com EspiritoLuta e +8% em alvo Enraizado.
+- Lv.25 Resolucao | Dano 42 | CD 8.0s | Aplica EspiritoLuta, cura 5% HP maximo e ganha +16% se estiver com 50% HP ou menos.
+- Lv.30 Ultimo Folego | Dano 66 | CD 10.0s | +24% com 45% HP ou menos, +14% com EspiritoLuta e cura 12% do dano.
+
+Passivas Lutador:
+- Impeto Ofensivo: sequencias rapidas acumulam pressao.
+- Ritmo de Combo: melhora contra alvos presos, lentos ou quebrados.
+- Leitura de Postura: PosturaQuebrada reduz defesa efetiva.
+- Ruptura Marcial: combina com Corroendo, Vulneravel e ArmaduraDerretida.
+- Folego Teimoso: HP baixo fortalece sustentacao.
+- Punho Resoluto: EspiritoLuta favorece lutas longas.
+
+
+TIPO TERRA
+
+Marca central:
+Controle de campo e peso fisico.
+
+Arquetipo 1 - Areia Movedica
+Funcao: atraso de cooldowns, setup de controle e dano moderado.
+Sinergias: Enraizado, Molhado, Congelando e lutadores que usam Rasteira.
+Perfil de atributos: equilibrado, defesa levemente maior, velocidade media.
+Pokemon principais: Sandshrew, Sandslash, Diglett, Dugtrio, Cubone, Marowak, Gligar, Phanpy, Donphan, Trapinch, Vibrava, Baltoy, Claydol, Hippopotas, Hippowdon, Sandile, Krokorok, Krookodile, Stunfisk, Landorus.
+
+Habilidades:
+- Lv.1 Tapa de Lama | Dano 18 | CD 4.2s | Aplica AreiaMovedica e atrasa cooldowns do alvo em 0.15s.
+- Lv.10 Armadilha de Areia | Dano 12 | CD 6.8s | Aplica AreiaMovedica e atrasa cooldowns em 0.25s.
+- Lv.10 Tiro de Lama | Dano 32 | CD 5.2s | +10% em Molhado e atrasa cooldowns em 0.18s.
+- Lv.15 Areia Movedica | Dano 24 | CD 7.4s | +10% em Enraizado, atrasa cooldowns em 0.35s e reaplica AreiaMovedica.
+- Lv.20 Poder da Terra | Dano 48 | CD 6.8s | +14% em AreiaMovedica e +10% em Molhado.
+- Lv.25 Colapso de Areia | Dano 54 | CD 8.6s | Aplica Desabando. +18% em AreiaMovedica e +10% em Enraizado.
+- Lv.30 Trava de Campo | Dano 64 | CD 10.2s | Atrasa cooldowns em 0.55s. +18% em AreiaMovedica e +8% em Congelando.
+
+Arquetipo 2 - Barreira de Lama
+Funcao: tanque terrestre, segura rota e ganha valor com defesa.
+Sinergias: Aterrado, BarreiraLama e PosturaQuebrada.
+Perfil de atributos: muito HP/defesa, dano e velocidade menores.
+Pokemon principais: Nidoqueen, Nidoking, Geodude, Graveler, Golem, Onix, Rhyhorn, Rhydon, Wooper, Quagsire, Steelix, Swinub, Piloswine, Larvitar, Pupitar, Nincada, Barboach, Whiscash, Groudon, Torterra, Shellos, Gastrodon, Rhyperior, Mamoswine, Palpitoad, Seismitoad.
+
+Habilidades:
+- Lv.1 Guarda de Lama | Dano 16 | CD 5.0s | Aplica BarreiraLama no usuario.
+- Lv.10 Muralha de Lama | Dano 10 | CD 7.4s | Aplica BarreiraLama e cura 4% HP maximo.
+- Lv.10 Pisotear | Dano 34 | CD 5.8s | Aplica AreiaMovedica. +10% com BarreiraLama.
+- Lv.15 Armadura de Barro | Dano 16 | CD 8.2s | Aplica BarreiraLama e cura 5% HP maximo.
+- Lv.20 Pisao Teimoso | Dano 44 | CD 6.6s | +14% com BarreiraLama e +8% em PosturaQuebrada.
+- Lv.25 Baluarte Terrestre | Dano 36 | CD 9.0s | Aplica Aterrado. +12% em AreiaMovedica.
+- Lv.30 Terra Viva | Dano 60 | CD 10.6s | +18% com BarreiraLama, +12% com Aterrado e cura 4% HP maximo.
+
+Arquetipo 3 - Desabamento
+Funcao: golpes lentos e pesados que punem alvo travado.
+Sinergias: AreiaMovedica, Enraizado e PosturaQuebrada.
+Perfil de atributos: ataque alto, HP/defesa bons, velocidade baixa-media.
+Pokemon principais: Numel, Camerupt, Flygon, Gible, Gabite, Garchomp, Drilbur, Excadrill, Golett, Golurk.
+
+Habilidades:
+- Lv.1 Queda de Rocha | Dano 28 | CD 5.2s | Aplica Desabando.
+- Lv.10 Pisada Pesada | Dano 38 | CD 6.2s | +12% em Desabando.
+- Lv.10 Fenda Sismica | Dano 30 | CD 7.8s | Aplica Desabando e atrasa cooldowns em 0.28s.
+- Lv.15 Magnitude | Dano 48 | CD 7.2s | +10% com Aterrado e +12% em Desabando.
+- Lv.20 Impacto Esmagador | Dano 58 | CD 8.0s | +12% em PosturaQuebrada e +14% em Desabando.
+- Lv.25 Queda Tectonica | Dano 66 | CD 9.2s | Atrasa cooldowns em 0.35s e +12% em AreiaMovedica.
+- Lv.30 Terremoto | Dano 78 | CD 11.2s | +20% em Desabando e +10% em Enraizado.
+
+Passivas Terra:
+- Areia Movedica: atraso leve de cooldowns sem travar a luta.
+- Campo Fechado: conversa com Enraizado, Molhado e controle de gelo.
+- Casca de Barro: BarreiraLama aumenta resistencia.
+- Base Aterrada: Aterrado melhora consistencia.
+- Peso Sismico: Desabando pressiona cooldowns e defesa.
+- Impacto de Placa: finalizadores crescem contra alvo lento, preso ou quebrado.
+
+
+NOVOS STATUS E BALANCEAMENTO
+
+ImpetoOfensivo:
+Buff animado no Pokemon. Cada stack aumenta ataque de forma pequena, ate +18%.
+
+EspiritoLuta:
+Buff animado no Pokemon. Ataque aumenta levemente, ou mais se estiver com 45% HP ou menos.
+
+PosturaQuebrada:
+Icone no databox. Reduz defesa efetiva para 84%.
+
+AreiaMovedica:
+Icone no databox. Reduz defesa efetiva levemente para 96% e e usada como setup de controle.
+
+BarreiraLama:
+Buff animado no Pokemon. Aumenta defesa efetiva para 114%.
+
+Desabando:
+Icone no databox. Reduz defesa efetiva para 90% e prepara golpes terrestres.
+
+Aterrado:
+Buff animado no Pokemon. Aumenta ataque em 4% e defesa efetiva em 6%.
+
+
+NOTAS DE SINERGIA
+
+Grass + Fighting:
+Breloom/Virizion podem comecar por Fighting e usar Enraizado como setup para Rasteira, Palma de Aura e Terremoto de cobertura.
+
+Grass + Ground:
+Torterra prefere Terra como identidade defensiva. Enraizado e AreiaMovedica seguram o alvo enquanto a build cresce.
+
+Poison + Fighting:
+Croagunk/Toxicroak aproveitam Corroendo/PosturaQuebrada para abrir defesa sem precisar de dano explosivo demais.
+
+Water + Ground:
+Swampert/Quagsire/Gastrodon usam Molhado para aumentar Poder da Terra e Tiro de Lama, criando controle de cooldown.
+
+Fire + Ground:
+Numel/Camerupt combinam ArmaduraDerretida com Desabamento para dano pesado, mas com cooldown longo.
+
+Electric + Ground:
+Stunfisk pode misturar Ofuscado/Paralisado com AreiaMovedica para controle, mas sem imunidades quebradas.
+
+Ice + Ground:
+Mamoswine usa Gelado/Congelando para amplificar Trava de Campo e manter o alvo lento.

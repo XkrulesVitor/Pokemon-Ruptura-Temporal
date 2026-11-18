@@ -1,0 +1,130 @@
+﻿RELATORIO DE BALANCEAMENTO - TIPO GRASS
+Projeto: PokemonRogueLike
+Gerado em: 2026-06-08
+
+RESUMO DAS MUDANCAS
+- O pacote generico de habilidades GRASS foi substituido por uma pool propria com identidade de drenagem, enraizamento, crescimento, critico e solar.
+- Habilidades de efeito que tinham dano zero ganharam dano baixo (6 a 14) para nao ficarem mortas no auto-battler, mas continuam abaixo dos golpes ofensivos.
+- Pokemon duplo-tipo agora recebem habilidades do tipo primario e do tipo secundario. No tipo secundario, golpes de nivel 1 entram apenas a partir do nivel 10 para preservar a habilidade inicial unica.
+- Grass/Poison agora conversa por status: Enraizado abre combos de drenagem e veneno; Envenenado aumenta bombas/sementes e finalizadores toxicos.
+- O bonus fixo de combo no combate foi reduzido para +25%, e bonus extras por status ficam pequenos (10% a 22%) para evitar IK.
+
+COMO LER E EDITAR
+- Arquivo principal: scripts/scr_pokemon_data/scr_pokemon_data.gml
+- CD = cooldown em segundos. Dano = DanoBase antes de atributo, defesa e tier.
+- Efeitos reconhecidos pelo combate: aplicar_status, aplicar_status_usuario, curar_dano, curar_dano_status, curar_maxhp, bonus_dano_alvo_status, bonus_dano_usuario_status.
+
+HABILIDADES GRASS
+Lv  1 | Absorver               | Tipo GRASS  | Dano  18 | CD  4.0s | Tags [single_target, sustain, drain] | Efeitos: curar_dano:0.10
+Lv 10 | Crescimento            | Tipo GRASS  | Dano   6 | CD  8.0s | Tags [buff, crit, combo_setup] | Efeitos: aplicar_status_usuario:Crescimento
+Lv 10 | Enraizar               | Tipo GRASS  | Dano   8 | CD  7.0s | Tags [control, root, combo_setup] | Efeitos: especial=aplicar_status:Enraizado
+Lv 10 | Folhagem               | Tipo GRASS  | Dano  24 | CD  3.1s | Tags [fast, single_target] | Efeitos: nenhum
+Lv 15 | Folha Navalha          | Tipo GRASS  | Dano  32 | CD  4.4s | Tags [fast, crit] | Efeitos: bonus_dano_usuario_status:Crescimento:0.10
+Lv 15 | Mega Dreno             | Tipo GRASS  | Dano  28 | CD  5.0s | Tags [sustain, drain] | Efeitos: curar_dano:0.15, curar_dano_status:Enraizado:0.25; combo=Enraizado
+Lv 15 | Semente Sanguessuga    | Tipo GRASS  | Dano  14 | CD  8.0s | Tags [debuff, sustain, root] | Efeitos: curar_dano:0.20; especial=aplicar_status:Enraizado
+Lv 20 | Bomba de Semente       | Tipo GRASS  | Dano  42 | CD  5.8s | Tags [burst, single_target] | Efeitos: bonus_dano_alvo_status:Enraizado:0.12, bonus_dano_alvo_status:Envenenado:0.10
+Lv 20 | Cheiro Doce            | Tipo GRASS  | Dano   8 | CD  8.0s | Tags [control, setup] | Efeitos: especial=aplicar_status:Vulneravel
+Lv 20 | Giga Dreno             | Tipo GRASS  | Dano  38 | CD  7.0s | Tags [sustain, drain] | Efeitos: curar_dano:0.20, curar_dano_status:Enraizado:0.30; combo=Enraizado
+Lv 25 | Lamina de Folha        | Tipo GRASS  | Dano  50 | CD  6.4s | Tags [crit, finisher] | Efeitos: bonus_dano_usuario_status:Crescimento:0.16
+Lv 25 | Lamina Solar           | Tipo GRASS  | Dano  48 | CD  7.2s | Tags [solar, burst] | Efeitos: bonus_dano_usuario_status:Fotossintese:0.18
+Lv 25 | Sintese                | Tipo GRASS  | Dano   6 | CD 10.0s | Tags [heal, sustain] | Efeitos: curar_maxhp:0.08, aplicar_status_usuario:Fotossintese
+Lv 30 | Danca das Flores       | Tipo GRASS  | Dano  38 | CD  6.0s | Tags [combo, sustain] | Efeitos: bonus_dano_usuario_status:Crescimento:0.10, bonus_dano_alvo_status:Enraizado:0.10
+Lv 30 | Raio Solar             | Tipo GRASS  | Dano  68 | CD 11.0s | Tags [charged, finisher, solar] | Efeitos: bonus_dano_usuario_status:Fotossintese:0.22
+Lv 30 | Tempestade Floral      | Tipo GRASS  | Dano  58 | CD  9.0s | Tags [multi_target, finisher] | Efeitos: bonus_dano_alvo_status:Envenenado:0.12
+
+HABILIDADES POISON COMPLEMENTARES PARA GRASS/POISON
+Lv  1 | Agulhao Venenoso       | Tipo POISON | Dano  18 | CD  3.8s | Tags [fast, poison] | Efeitos: especial=aplicar_status:Envenenado
+Lv 10 | Acido Diluidor         | Tipo POISON | Dano  24 | CD  5.2s | Tags [debuff, single_target] | Efeitos: especial=aplicar_status:Corroendo
+Lv 10 | Po de Veneno           | Tipo POISON | Dano   7 | CD  8.5s | Tags [debuff, poison, combo_setup] | Efeitos: especial=aplicar_status:Envenenado
+Lv 15 | Esporos Toxicos        | Tipo POISON | Dano  12 | CD  8.8s | Tags [control, poison] | Efeitos: bonus_dano_alvo_status:Enraizado:0.12; especial=aplicar_status:Envenenado
+Lv 15 | Venenochoque           | Tipo POISON | Dano  36 | CD  6.0s | Tags [burst, poison] | Efeitos: bonus_dano_alvo_status:Envenenado:0.22; combo=Envenenado
+Lv 20 | Lodo                   | Tipo POISON | Dano  42 | CD  7.0s | Tags [single_target, poison] | Efeitos: bonus_dano_alvo_status:Enraizado:0.14, bonus_dano_alvo_status:Corroendo:0.10
+Lv 20 | Vinhas Toxicas         | Tipo POISON | Dano  24 | CD  7.8s | Tags [root, poison, combo_setup] | Efeitos: especial=aplicar_status:Enraizado; combo=Envenenado
+Lv 25 | Seiva Toxica           | Tipo POISON | Dano  34 | CD  7.6s | Tags [sustain, poison] | Efeitos: curar_dano_status:Envenenado:0.22, curar_dano_status:Enraizado:0.18
+Lv 30 | Floracao Toxica        | Tipo POISON | Dano  56 | CD 10.5s | Tags [finisher, poison] | Efeitos: bonus_dano_alvo_status:Envenenado:0.20, bonus_dano_alvo_status:Enraizado:0.15
+
+ARQUETIPOS DOS POKEMON GRASS - GERACOES 1 A 5
+Criterio rapido: Grass/Poison vira Parasita; alta defesa/HP ou Grass/Water/Ground/Rock vira Energia Solar; alta speed/ataque, Grass/Bug ou Grass/Flying vira Florescencia Critica.
+#001 Bulbasaur      | GRASS/POISON  | HP  45 Atk  49 Def  49 Spd  45 | Parasita
+#002 Ivysaur        | GRASS/POISON  | HP  60 Atk  62 Def  63 Spd  60 | Parasita
+#003 Venusaur       | GRASS/POISON  | HP  80 Atk  82 Def  83 Spd  80 | Parasita
+#043 Oddish         | GRASS/POISON  | HP  45 Atk  50 Def  55 Spd  30 | Parasita
+#044 Gloom          | GRASS/POISON  | HP  60 Atk  65 Def  70 Spd  40 | Parasita
+#045 Vileplume      | GRASS/POISON  | HP  75 Atk  80 Def  85 Spd  50 | Parasita
+#046 Paras          | BUG/GRASS     | HP  35 Atk  70 Def  55 Spd  25 | Florescencia Critica
+#047 Parasect       | BUG/GRASS     | HP  60 Atk  95 Def  80 Spd  30 | Florescencia Critica
+#069 Bellsprout     | GRASS/POISON  | HP  50 Atk  75 Def  35 Spd  40 | Parasita
+#070 Weepinbell     | GRASS/POISON  | HP  65 Atk  90 Def  50 Spd  55 | Parasita
+#071 Victreebel     | GRASS/POISON  | HP  80 Atk 105 Def  65 Spd  70 | Parasita
+#102 Exeggcute      | GRASS/PSYCHIC | HP  60 Atk  40 Def  80 Spd  40 | Parasita
+#103 Exeggutor      | GRASS/PSYCHIC | HP  95 Atk  95 Def  85 Spd  55 | Energia Solar
+#114 Tangela        | GRASS         | HP  65 Atk  55 Def 115 Spd  60 | Energia Solar
+#152 Chikorita      | GRASS         | HP  45 Atk  49 Def  65 Spd  45 | Parasita
+#153 Bayleef        | GRASS         | HP  60 Atk  62 Def  80 Spd  60 | Parasita
+#154 Meganium       | GRASS         | HP  80 Atk  82 Def 100 Spd  80 | Energia Solar
+#182 Bellossom      | GRASS         | HP  75 Atk  80 Def  95 Spd  50 | Energia Solar
+#187 Hoppip         | GRASS/FLYING  | HP  35 Atk  35 Def  40 Spd  50 | Florescencia Critica
+#188 Skiploom       | GRASS/FLYING  | HP  55 Atk  45 Def  50 Spd  80 | Florescencia Critica
+#189 Jumpluff       | GRASS/FLYING  | HP  75 Atk  55 Def  70 Spd 110 | Florescencia Critica
+#191 Sunkern        | GRASS         | HP  30 Atk  30 Def  30 Spd  30 | Parasita
+#192 Sunflora       | GRASS         | HP  75 Atk  75 Def  55 Spd  30 | Parasita
+#251 Celebi         | PSYCHIC/GRASS | HP 100 Atk 100 Def 100 Spd 100 | Energia Solar
+#252 Treecko        | GRASS         | HP  40 Atk  45 Def  35 Spd  70 | Parasita
+#253 Grovyle        | GRASS         | HP  50 Atk  65 Def  45 Spd  95 | Florescencia Critica
+#254 Sceptile       | GRASS         | HP  70 Atk  85 Def  65 Spd 120 | Florescencia Critica
+#270 Lotad          | WATER/GRASS   | HP  40 Atk  30 Def  30 Spd  30 | Energia Solar
+#271 Lombre         | WATER/GRASS   | HP  60 Atk  50 Def  50 Spd  50 | Energia Solar
+#272 Ludicolo       | WATER/GRASS   | HP  80 Atk  70 Def  70 Spd  70 | Energia Solar
+#273 Seedot         | GRASS         | HP  40 Atk  40 Def  50 Spd  30 | Parasita
+#274 Nuzleaf        | GRASS/DARK    | HP  70 Atk  70 Def  40 Spd  60 | Parasita
+#275 Shiftry        | GRASS/DARK    | HP  90 Atk 100 Def  60 Spd  80 | Florescencia Critica
+#285 Shroomish      | GRASS         | HP  60 Atk  40 Def  60 Spd  35 | Parasita
+#286 Breloom        | GRASS/FIGHTING | HP  60 Atk 130 Def  80 Spd  70 | Florescencia Critica
+#315 Roselia        | GRASS/POISON  | HP  50 Atk  60 Def  45 Spd  65 | Parasita
+#331 Cacnea         | GRASS         | HP  50 Atk  85 Def  40 Spd  35 | Florescencia Critica
+#332 Cacturne       | GRASS/DARK    | HP  70 Atk 115 Def  60 Spd  55 | Florescencia Critica
+#345 Lileep         | ROCK/GRASS    | HP  66 Atk  41 Def  77 Spd  23 | Energia Solar
+#346 Cradily        | ROCK/GRASS    | HP  86 Atk  81 Def  97 Spd  43 | Energia Solar
+#357 Tropius        | GRASS/FLYING  | HP  99 Atk  68 Def  83 Spd  51 | Florescencia Critica
+#387 Turtwig        | GRASS         | HP  55 Atk  68 Def  64 Spd  31 | Parasita
+#388 Grotle         | GRASS         | HP  75 Atk  89 Def  85 Spd  36 | Florescencia Critica
+#389 Torterra       | GRASS/GROUND  | HP  95 Atk 109 Def 105 Spd  56 | Energia Solar
+#406 Budew          | GRASS/POISON  | HP  40 Atk  30 Def  35 Spd  55 | Parasita
+#407 Roserade       | GRASS/POISON  | HP  60 Atk  70 Def  65 Spd  90 | Parasita
+#413 Wormadam       | BUG/GRASS     | HP  60 Atk  59 Def  85 Spd  36 | Florescencia Critica
+#420 Cherubi        | GRASS         | HP  45 Atk  35 Def  45 Spd  35 | Parasita
+#421 Cherrim        | GRASS         | HP  70 Atk  60 Def  70 Spd  85 | Parasita
+#455 Carnivine      | GRASS         | HP  74 Atk 100 Def  72 Spd  46 | Florescencia Critica
+#459 Snover         | GRASS/ICE     | HP  60 Atk  62 Def  50 Spd  40 | Parasita
+#460 Abomasnow      | GRASS/ICE     | HP  90 Atk  92 Def  75 Spd  60 | Florescencia Critica
+#465 Tangrowth      | GRASS         | HP 100 Atk 100 Def 125 Spd  50 | Energia Solar
+#470 Leafeon        | GRASS         | HP  65 Atk 110 Def 130 Spd  95 | Energia Solar
+#492 Shaymin        | GRASS         | HP 100 Atk 100 Def 100 Spd 100 | Energia Solar
+#495 Snivy          | GRASS         | HP  45 Atk  45 Def  55 Spd  63 | Parasita
+#496 Servine        | GRASS         | HP  60 Atk  60 Def  75 Spd  83 | Parasita
+#497 Serperior      | GRASS         | HP  75 Atk  75 Def  95 Spd 113 | Energia Solar
+#511 Pansage        | GRASS         | HP  50 Atk  53 Def  48 Spd  64 | Parasita
+#512 Simisage       | GRASS         | HP  75 Atk  98 Def  63 Spd 101 | Florescencia Critica
+#540 Sewaddle       | BUG/GRASS     | HP  45 Atk  53 Def  70 Spd  42 | Florescencia Critica
+#541 Swadloon       | BUG/GRASS     | HP  55 Atk  63 Def  90 Spd  42 | Florescencia Critica
+#542 Leavanny       | BUG/GRASS     | HP  75 Atk 103 Def  80 Spd  92 | Florescencia Critica
+#546 Cottonee       | GRASS/FAIRY   | HP  40 Atk  27 Def  60 Spd  66 | Parasita
+#547 Whimsicott     | GRASS/FAIRY   | HP  60 Atk  67 Def  85 Spd 116 | Florescencia Critica
+#548 Petilil        | GRASS         | HP  45 Atk  35 Def  50 Spd  30 | Parasita
+#549 Lilligant      | GRASS         | HP  70 Atk  60 Def  75 Spd  90 | Florescencia Critica
+#556 Maractus       | GRASS         | HP  75 Atk  86 Def  67 Spd  60 | Florescencia Critica
+#585 Deerling       | NORMAL/GRASS  | HP  60 Atk  60 Def  50 Spd  75 | Parasita
+#586 Sawsbuck       | NORMAL/GRASS  | HP  80 Atk 100 Def  70 Spd  95 | Florescencia Critica
+#590 Foongus        | GRASS/POISON  | HP  69 Atk  55 Def  45 Spd  15 | Parasita
+#591 Amoonguss      | GRASS/POISON  | HP 114 Atk  85 Def  70 Spd  30 | Parasita
+#597 Ferroseed      | GRASS/STEEL   | HP  44 Atk  50 Def  91 Spd  10 | Parasita
+#598 Ferrothorn     | GRASS/STEEL   | HP  74 Atk  94 Def 131 Spd  20 | Energia Solar
+#640 Virizion       | GRASS/FIGHTING | HP  91 Atk  90 Def  72 Spd 108 | Florescencia Critica
+
+OBSERVACOES DE BALANCEAMENTO
+- Absorver ficou como inicial seguro e fraco: bom sustain, dano baixo.
+- Folhagem e Folha Navalha sao a linha de pressao rapida.
+- Enraizar, Semente Sanguessuga e Vinhas Toxicas sao os motores de combo com Poison.
+- Sintese e Fotossintese nao sao cura gigante; elas preparam Lamina Solar e Raio Solar.
+- Finalizadores de nivel 30 ficam fortes, mas dependem de setup ou cooldown alto.
+

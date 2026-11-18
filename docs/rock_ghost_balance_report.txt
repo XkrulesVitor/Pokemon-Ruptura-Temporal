@@ -1,0 +1,109 @@
+RELATORIO DE BALANCEAMENTO - PEDRA E FANTASMA
+
+Arquivos alterados:
+- scripts/scr_pokemon_data/scr_pokemon_data.gml
+- scripts/scr_pokemon_combate/scr_pokemon_combate.gml
+- scripts/scr_battle_ui/scr_battle_ui.gml
+
+Resumo de design:
+- Pedra virou o tipo de impacto fisico, defesa e rachaduras. Ele conversa com Terra, Gelo, Lutador, Veneno, Inseto e Grama por meio de Fragmentado, Desabando, Fragil, PosturaQuebrada, Corroendo, SedaPresa e Enraizado.
+- Fantasma virou o tipo de timer/terror, evasao curta e dreno. Ele conversa com Psiquico, Veneno, Eletrico, Gelo e Agua por meio de Assombrado, Amedrontado, Maldito, Intangivel, ParalisiaMental, Ofuscado e AmnesiaInduzida.
+- Nenhum dos dois cria imunidade total. Intangivel tem chance curta de evitar golpe e e consumido quando funciona.
+
+=== PEDRA / ROCK ===
+Arquetipos finais: 1) Impacto Geologico | 2) Casca de Rocha | 3) Fragmentacao
+
+[Impacto Geologico] Lv  1 | Impacto Geologico       | Dano 30 | CD  5.2s | sacrifica 3% HP, +10% dano de sacrificio, aplica ImpactoGeologico no usuario
+[Impacto Geologico] Lv 10 | Derrubada de Rocha      | Dano 36 | CD  5.8s | bonus em Turbulento, aplica Fragmentado
+[Impacto Geologico] Lv 10 | Trinca Propria          | Dano 12 | CD  7.0s | sacrifica 4% HP, aplica ImpactoGeologico
+[Impacto Geologico] Lv 15 | Cabecada Rochosa        | Dano 50 | CD  7.4s | sacrifica 5% HP, +18% sacrificio, +10% em Fragmentado
+[Impacto Geologico] Lv 20 | Deslizamento            | Dano 48 | CD  7.2s | atrasa cooldown, +8% em AreiaMovedica, aplica Fragmentado
+[Impacto Geologico] Lv 25 | Queda Meteorica         | Dano 66 | CD  9.2s | +18% em Fragmentado, +12% em Desabando
+[Impacto Geologico] Lv 30 | Esmagamento Continental | Dano 78 | CD 11.0s | sacrifica 6% HP, +20% sacrificio, +18% em Fragmentado
+
+[Casca de Rocha] Lv  1 | Casca de Rocha            | Dano 16 | CD  5.0s | aplica CascaRocha no usuario
+[Casca de Rocha] Lv 10 | Endurecer Rocha           | Dano  8 | CD  7.4s | CascaRocha + cura 3% HP maximo
+[Casca de Rocha] Lv 10 | Arremesso Guardado        | Dano 32 | CD  5.6s | +12% com CascaRocha
+[Casca de Rocha] Lv 15 | Guarda Fossil             | Dano 12 | CD  8.4s | aplica FossilVivo + cura 4% HP maximo
+[Casca de Rocha] Lv 20 | Peso de Pedra             | Dano 46 | CD  7.2s | +14% com CascaRocha, +8% em PosturaQuebrada
+[Casca de Rocha] Lv 25 | Gume Rochoso              | Dano 58 | CD  8.6s | +12% em Fragmentado, +12% com CascaRocha
+[Casca de Rocha] Lv 30 | Corpo de Montanha         | Dano 62 | CD 10.4s | CascaRocha + cura 5% HP maximo, +18% com CascaRocha
+
+[Fragmentacao] Lv  1 | Estilhaco de Rocha          | Dano 22 | CD  4.0s | aplica Fragmentado
+[Fragmentacao] Lv 10 | Pedra Afiada                | Dano 28 | CD  4.6s | +10% em Fragmentado
+[Fragmentacao] Lv 10 | Campo de Estilhacos         | Dano 12 | CD  7.2s | atrasa cooldown, aplica Fragmentado
+[Fragmentacao] Lv 15 | Fragmentacao                | Dano 36 | CD  6.0s | +16% em Fragmentado, +8% em Corroendo
+[Fragmentacao] Lv 20 | Ruptura Mineral             | Dano 44 | CD  6.6s | +14% em Fragmentado, +8% em Fragil
+[Fragmentacao] Lv 25 | Granizo de Pedras           | Dano 54 | CD  8.2s | atrasa cooldown, +16% em Fragmentado
+[Fragmentacao] Lv 30 | Chuva de Meteoros           | Dano 66 | CD 10.0s | +20% em Fragmentado, +10% em Enraizado/SedaPresa
+
+Passivas de Pedra:
+- Impacto Geologico: Peso de Colisao / Falha de Placa.
+- Casca de Rocha: Carapaca Mineral / Fossil Persistente.
+- Fragmentacao: Trinca Aberta / Chuva de Estilhacos.
+
+Distribuicao de arquetipo Pedra:
+Observacao: estes sao os perfis de Pedra cadastrados. Alguns dual-types podem iniciar por outro tipo pela prioridade do banco, mas ainda recebem Pedra como pool secundaria rica quando o outro tipo e a identidade principal.
+- Casca de Rocha: Geodude, Graveler, Golem, Onix, Rhyhorn, Rhydon, Sudowoodo, Shuckle, Corsola, Nosepass, Aron, Lairon, Aggron, Regirock, Shieldon, Bastiodon, Bonsly, Rhyperior, Probopass, Roggenrola, Boldore, Gigalith, Dwebble, Crustle, Tirtouga e Carracosta.
+- Impacto Geologico: Aerodactyl, Larvitar, Pupitar, Tyranitar, Cranidos, Rampardos, Archen, Archeops e Terrakion.
+- Fragmentacao: Omanyte, Omastar, Kabuto, Kabutops, Lunatone, Solrock, Lileep, Cradily, Anorith, Armaldo e Relicanth.
+
+Ideias de build de Pedra:
+- Rock + Ground: Fragmentado prepara Desabamento/AreiaMovedica, enquanto BarreiraLama sustenta CascaRocha.
+- Rock + Bug/Grass: SedaPresa e Enraizado seguram o alvo para Chuva de Meteoros.
+- Rock + Poison/Fire: Corroendo ou ArmaduraDerretida reduzem defesa antes do impacto pesado.
+
+=== FANTASMA / GHOST ===
+Arquetipos finais: 1) Assombracao | 2) Intangibilidade | 3) Dreno de Essencia
+
+[Assombracao] Lv  1 | Toque Sombrio       | Dano 20 | CD  4.2s | aplica Assombrado
+[Assombracao] Lv 10 | Assombracao         | Dano 12 | CD  6.5s | aplica TerrorCrescente no usuario e Assombrado no alvo
+[Assombracao] Lv 10 | Sombra Crescente    | Dano 30 | CD  5.0s | +12% em Assombrado, +10% com TerrorCrescente
+[Assombracao] Lv 15 | Pesadelo            | Dano 38 | CD  7.0s | +10% em ParalisiaMental, +12% em Assombrado, aplica Amedrontado
+[Assombracao] Lv 20 | Relogio do Terror   | Dano 46 | CD  7.4s | atrasa cooldown, +14% em Assombrado
+[Assombracao] Lv 25 | Espectro Voraz      | Dano 54 | CD  8.4s | +14% em Amedrontado, +10% em Maldito
+[Assombracao] Lv 30 | Fim Assombrado      | Dano 66 | CD 10.6s | +20% em Assombrado, +14% com TerrorCrescente, +8% em AmnesiaInduzida
+
+[Intangibilidade] Lv  1 | Sombra Evasiva   | Dano 18 | CD  4.0s | aplica Intangivel no usuario
+[Intangibilidade] Lv 10 | Intangivel       | Dano  8 | CD  7.0s | Intangivel + reduz cooldowns em 18%
+[Intangibilidade] Lv 10 | Susto Abrupto    | Dano 28 | CD  5.2s | atrasa cooldown, aplica Amedrontado
+[Intangibilidade] Lv 15 | Passo Fantasma   | Dano 34 | CD  4.4s | +12% com Intangivel
+[Intangibilidade] Lv 20 | Vulto Nulo       | Dano 26 | CD  7.6s | Intangivel + atrasa cooldown
+[Intangibilidade] Lv 25 | Vazio Espectral  | Dano 50 | CD  8.2s | +16% em Amedrontado, +10% em Ofuscado
+[Intangibilidade] Lv 30 | Desaparecer      | Dano 60 | CD  9.8s | Intangivel, +18% com Intangivel, +10% em Amedrontado
+
+[Dreno de Essencia] Lv  1 | Dreno de Essencia    | Dano 18 | CD  4.8s | cura 12% do dano, aplica Maldito
+[Dreno de Essencia] Lv 10 | Maldicao             | Dano 12 | CD  7.8s | EssenciaDrenada no usuario, Maldito no alvo
+[Dreno de Essencia] Lv 10 | Roubo de Alma        | Dano 30 | CD  5.6s | cura melhor contra Maldito
+[Dreno de Essencia] Lv 15 | Vinculo Sombrio      | Dano 34 | CD  6.8s | aplica Maldito, +8% em Envenenado
+[Dreno de Essencia] Lv 20 | Absorver Medo        | Dano 40 | CD  7.4s | cura melhor contra Amedrontado/Maldito
+[Dreno de Essencia] Lv 25 | Maldicao Espelhada   | Dano 50 | CD  8.8s | +18% em Maldito, aplica EssenciaDrenada
+[Dreno de Essencia] Lv 30 | Colheita de Alma     | Dano 62 | CD 10.2s | cura 16% do dano, +18% em Maldito, +10% em Assombrado
+
+Passivas de Fantasma:
+- Assombracao: Terror Crescente / Relogio da Fenda.
+- Intangibilidade: Vulto Instavel / Passo Fora de Fase.
+- Dreno de Essencia: Alma Sugadora / Eco da Maldicao.
+
+Distribuicao de arquetipo Fantasma:
+Observacao: estes sao os perfis de Fantasma cadastrados. Alguns dual-types podem iniciar por Fire/Water/Electric/Ice quando esse for o estilo mais forte da linha, mas ainda podem receber Fantasma como pool secundaria rica.
+- Assombracao: Gastly, Haunter, Gengar, Misdreavus, Shuppet, Banette, Mismagius, Spiritomb, Giratina, Yamask e Cofagrigus.
+- Intangibilidade: Shedinja, Sableye, Drifloon, Drifblim, Froslass e Rotom.
+- Dreno de Essencia: Duskull, Dusclops, Dusknoir, Frillish, Jellicent, Litwick, Lampent, Chandelure, Golett e Golurk.
+
+Ideias de build de Fantasma:
+- Ghost + Poison: Maldito e Envenenado criam desgaste duplo sem depender de burst.
+- Ghost + Psychic: ParalisiaMental/AmnesiaInduzida deixam Assombracao controlar o ritmo.
+- Ghost + Electric/Flying: Ofuscado, Amedrontado e Intangivel criam builds evasivas de alta rotacao.
+
+Status novos:
+- Fragmentado: debuff; reduz defesa efetiva do alvo em 10%, dura 6s.
+- ImpactoGeologico: aura do usuario; +8% ataque efetivo, dura 4.5s.
+- CascaRocha: aura do usuario; +18% defesa efetiva, dura 5.5s.
+- FossilVivo: aura defensiva; +8% defesa efetiva, dura 5s.
+- Assombrado: debuff; reduz defesa efetiva em 6%, dura 6s.
+- TerrorCrescente: aura; +4% ataque por stack ate +16%, dura 6s.
+- Intangivel: aura; +10% defesa e chance de 20% a 28% de evitar um golpe, consumindo o status no sucesso.
+- Maldito: debuff; reduz defesa efetiva em 8%, dura 6s.
+- EssenciaDrenada: aura; +5% ataque efetivo, dura 5.5s.
+- Amedrontado: debuff; -6% ataque do afetado e -4% defesa quando alvo, dura 4.5s.

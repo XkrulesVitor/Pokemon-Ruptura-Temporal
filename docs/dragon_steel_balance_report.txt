@@ -1,0 +1,151 @@
+RELATORIO DE BALANCEAMENTO - DRAGON E STEEL
+Projeto: PokemonRogueLike
+Arquivo principal: scripts/scr_pokemon_data/scr_pokemon_data.gml
+
+Objetivo
+- Adicionar 3 caminhos de build para Dragon e 3 caminhos de build para Steel.
+- Manter dano alto sob controle com cooldowns maiores, preparos e bonus condicionais.
+- Fazer sinergia com Grass, Poison, Bug, Rock, Ghost, Water, Electric, Ice, Ground, Fighting, Flying e Psychic ja implementados.
+
+============================================================
+DRAGON / DRAGAO
+Marca central: Furia, atributos puros e preparos ancestrais.
+
+Arquetipos finais:
+1. Furia Draconica
+2. Escama Imperial
+3. Sopro Ancestral
+
+Sinergias principais:
+- Fragmentado, PosturaQuebrada e Fragil: abrem dano para golpes pesados.
+- Amedrontado: cria janela para finalizadores de controle.
+- Molhado, Paralisado, Ofuscado e debuffs de cooldown: ajudam Dragon a encaixar golpes longos.
+- FuriaDraconica: aumenta dano quando o usuario esta ferido.
+- AscensaoDraconica: melhora golpes longos e reduz cooldowns em algumas janelas.
+
+[Furia Draconica]
+Perfil: bruiser agressivo, alto ataque, boa velocidade, defesa mais justa.
+Pokemon principais: Bagon, Shelgon, Salamence, Vibrava, Flygon, Gible, Gabite, Garchomp, Axew, Fraxure, Haxorus, Deino, Zweilous, Hydreigon.
+Atributos: HP 0.98x | ATK 1.16x | DEF 0.94x | SPD 1.08x
+Growth: HP 0.98x | ATK 1.12x | DEF 0.94x | SPD 1.06x
+
+Lv  1 | Garra Draconica     | Dano 28 | CD  4.8s | aplica FuriaDraconica
+Lv 10 | Furia do Dragao     | Dano 36 | CD  5.6s | bonus com FuriaDraconica e HP baixo
+Lv 10 | Rugido Draconico    | Dano 10 | CD  7.2s | aplica FuriaDraconica e Amedrontado
+Lv 15 | Cauda Quebrante     | Dano 44 | CD  6.4s | bonus em Fragmentado/PosturaQuebrada
+Lv 20 | Sangue de Dragao    | Dano 52 | CD  7.2s | sacrifica 4% HP, bonus de sacrificio e FuriaDraconica
+Lv 25 | Investida Feroz     | Dano 62 | CD  8.6s | bonus em FuriaDraconica e alvo com HP baixo
+Lv 30 | Colera Draconica    | Dano 74 | CD 10.6s | finalizador com FuriaDraconica e HP baixo
+
+[Escama Imperial]
+Perfil: dragao resistente, bom para luta longa e controle leve.
+Pokemon principais: Dratini, Dragonair, Dragonite, Kingdra, Altaria, Latias, Latios, Dialga, Palkia, Druddigon.
+Atributos: HP 1.10x | ATK 1.04x | DEF 1.10x | SPD 0.90x
+Growth: HP 1.08x | ATK 1.02x | DEF 1.08x | SPD 0.92x
+
+Lv  1 | Golpe de Escama     | Dano 20 | CD  4.8s | aplica EscamaImperial
+Lv 10 | Escama Imperial     | Dano  8 | CD  7.4s | aplica EscamaImperial e cura 3% HP
+Lv 10 | Bafo Guardado       | Dano 30 | CD  5.8s | bonus com EscamaImperial
+Lv 15 | Espiral Draconica   | Dano 18 | CD  7.8s | EscamaImperial + AscensaoDraconica
+Lv 20 | Cauda Draconica     | Dano 42 | CD  6.8s | bonus com EscamaImperial e aplica Amedrontado
+Lv 25 | Esmaga Escamas      | Dano 54 | CD  8.4s | bonus em EscamaImperial/Fragmentado
+Lv 30 | Rugido Imperial     | Dano 62 | CD 10.2s | EscamaImperial + Amedrontado
+
+[Sopro Ancestral]
+Perfil: burst de cooldown longo, setup e controle; muito usado por lendarios/anomalias.
+Pokemon principais: Rayquaza, Giratina, Arceus, Reshiram, Zekrom, Kyurem.
+Atributos: HP 1.04x | ATK 1.14x | DEF 1.02x | SPD 0.98x
+Growth: HP 1.04x | ATK 1.10x | DEF 1.02x | SPD 0.98x
+
+Lv  1 | Twister             | Dano 24 | CD  4.6s | aplica AscensaoDraconica
+Lv 10 | Sopro Ancestral     | Dano 42 | CD  6.8s | bonus com AscensaoDraconica e Amedrontado
+Lv 10 | Ascensao            | Dano  8 | CD  7.6s | AscensaoDraconica + reduz cooldowns
+Lv 15 | Pulso do Dragao     | Dano 48 | CD  7.0s | bonus em AscensaoDraconica/Assombrado
+Lv 20 | Marca Predadora     | Dano 34 | CD  6.4s | aplica Predador e conversa com Vulneravel
+Lv 25 | Meteoro Draconico   | Dano 68 | CD  9.6s | bonus em AscensaoDraconica/Fragil/Fragmentado
+Lv 30 | Colapso Ancestral   | Dano 78 | CD 11.4s | atrasa cooldowns e finaliza com AscensaoDraconica
+
+============================================================
+STEEL / ACO
+Marca central: defesa, espinhos e conversao de peso em dano.
+
+Arquetipos finais:
+1. Espinhos de Ferro
+2. Fortificacao Rigida
+3. Impacto Pesado
+
+Sinergias principais:
+- Enraizado e SedaPresa: seguram o alvo dentro do dano reativo/espinhos.
+- Fragmentado e PosturaQuebrada: abrem dano para golpes metalicos.
+- Paralisado e Ofuscado: ajudam ataques de precisao/controle de Aco.
+- AreiaMovedica: conversa com Prensa de Aco e builds Ground/Steel.
+- Fortificado/LigaPesada/BlindagemMagnetica: transformam defesa em estabilidade e dano moderado.
+
+[Espinhos de Ferro]
+Perfil: tanque reativo, devolve dano e fica excelente com Grass/Bug.
+Pokemon principais: Forretress, Scizor, Skarmory, Wormadam, Vespiquen, Escavalier, Ferroseed, Ferrothorn, Durant, Genesect.
+Atributos: HP 1.06x | ATK 1.00x | DEF 1.16x | SPD 0.84x
+Growth: HP 1.06x | ATK 1.00x | DEF 1.12x | SPD 0.86x
+
+Lv  1 | Espinhos de Ferro   | Dano 16 | CD  4.8s | aplica EspinhosFerro
+Lv 10 | Guarda Espinhosa    | Dano  8 | CD  7.2s | EspinhosFerro + Fortificado
+Lv 10 | Garra Metal         | Dano 30 | CD  4.8s | bonus em Fragmentado
+Lv 15 | Contra Espinhos     | Dano 34 | CD  6.2s | bonus com EspinhosFerro
+Lv 20 | Cabeca de Ferro     | Dano 44 | CD  6.8s | bonus em Fortificado/PosturaQuebrada
+Lv 25 | Tempestade Espinhos | Dano 52 | CD  8.0s | EspinhosFerro + bonus em SedaPresa/Enraizado
+Lv 30 | Prisao de Ferro     | Dano 60 | CD  9.6s | bonus em EspinhosFerro/Fragmentado/Enraizado
+
+[Fortificacao Rigida]
+Perfil: muralha lenta, muita defesa e sustentacao.
+Pokemon principais: Magnemite, Magneton, Onix, Steelix, Aron, Lairon, Aggron, Beldum, Metang, Registeel, Jirachi, Shieldon, Bastiodon, Bronzor, Bronzong, Magnezone, Probopass, Klink, Klang, Klinklang, Cobalion.
+Atributos: HP 1.14x | ATK 0.94x | DEF 1.22x | SPD 0.72x
+Growth: HP 1.12x | ATK 0.94x | DEF 1.16x | SPD 0.78x
+
+Lv  1 | Impacto Fortificado | Dano 18 | CD  5.0s | aplica Fortificado
+Lv 10 | Defesa de Ferro     | Dano  8 | CD  7.4s | Fortificado + cura 3% HP
+Lv 10 | Gyro Ball           | Dano 32 | CD  5.8s | bonus com Fortificado
+Lv 15 | Muralha de Liga     | Dano 12 | CD  8.2s | LigaPesada + Fortificado
+Lv 20 | Prensa de Aco       | Dano 42 | CD  7.0s | bonus em LigaPesada/AreiaMovedica
+Lv 25 | Nucleo Registeel    | Dano 48 | CD  8.8s | Fortificado + cura 4% HP
+Lv 30 | Corpo Imovel        | Dano 58 | CD 10.2s | Fortificado + LigaPesada + bonus defensivo
+
+[Impacto Pesado]
+Perfil: defesa ofensiva; converte peso/defesa em dano e usa campo magnetico.
+Pokemon principais: Mawile, Metagross, Empoleon, Lucario, Dialga, Excadrill, Pawniard, Bisharp.
+Atributos: HP 1.02x | ATK 1.12x | DEF 1.08x | SPD 0.94x
+Growth: HP 1.02x | ATK 1.08x | DEF 1.06x | SPD 0.96x
+
+Lv  1 | Impacto Pesado      | Dano 24 | CD  5.0s | aplica ImpactoPesado
+Lv 10 | Blindagem Magnetica | Dano  8 | CD  7.0s | BlindagemMagnetica + reduz cooldowns
+Lv 10 | Soco Bala           | Dano 26 | CD  3.6s | bonus com ImpactoPesado
+Lv 15 | Disparo Espelhado   | Dano 36 | CD  5.8s | bonus em Ofuscado + BlindagemMagnetica
+Lv 20 | Ataque Inteligente  | Dano 44 | CD  6.2s | bonus em Paralisado/Fragmentado
+Lv 25 | Prensa Pesada       | Dano 58 | CD  8.4s | bonus em ImpactoPesado/Fortificado
+Lv 30 | Soco Meteoro        | Dano 70 | CD 10.0s | ImpactoPesado + bonus em BlindagemMagnetica/Fragmentado
+
+============================================================
+OBSERVACOES DE PRIORIDADE DE TIPOS
+
+A cadeia de perfil da Pokedex agora tenta nesta ordem:
+Grass -> Poison -> Fire -> Water -> Electric -> Ice -> Fighting -> Rock -> Ghost -> Steel -> Dragon -> Ground -> Psychic -> Bug -> Flying.
+
+Motivo:
+- Steel precisa pegar Steelix, Metagross, Ferrothorn, Bronzong, Klinklang e similares antes que Ground/Psychic/Bug roubem a identidade.
+- Dragon precisa pegar Garchomp/Flygon/Dragonite/Salamence/Haxorus/Hydreigon antes que Ground/Flying interfiram.
+- Water continua vindo antes de Dragon, entao Kingdra/Palkia tendem a manter o arquétipo de Water quando a agua for prioridade de design.
+
+============================================================
+EFEITOS IMPLEMENTADOS
+
+Dragon:
+- FuriaDraconica: bonus de ataque leve; maior se o usuario esta com HP baixo.
+- EscamaImperial: aumenta defesa efetiva.
+- AscensaoDraconica: bonus de ataque por stacks e pode reduzir cooldowns.
+- Predador: bonus quando o usuario tem percentual de HP maior que o alvo.
+
+Steel:
+- EspinhosFerro: aumenta defesa e devolve pequena parte do dano recebido.
+- Fortificado: empilha defesa e tambem melhora dano de alguns golpes.
+- BlindagemMagnetica: defesa leve, aceleracao curta e bonus em golpes metalicos.
+- ImpactoPesado: converte defesa em dano moderado.
+- LigaPesada: aumenta defesa e serve de setup para golpes lentos.

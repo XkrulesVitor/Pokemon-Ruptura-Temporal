@@ -1,0 +1,55 @@
+COMO ADICIONAR ARTE ORIGINAL
+============================
+
+O jogo so carrega arte destas pastas (tudo dentro de datafiles/). Se o arquivo nao
+existir, ele desenha um placeholder no lugar, entao da para adicionar aos poucos.
+Depois de colocar um arquivo novo, abra o projeto no GameMaker uma vez (ou rode
+python tools/yyp_util.py add-file <caminho>) para ele entrar nos Included Files.
+
+CRIATURAS  -> datafiles/sprites/criaturas/
+  <id>.png ou <nome>.png            frente (usada na batalha e nos cards)
+  <id>_idle.png / _atk.png / _dmg.png   poses opcionais da batalha
+  costas/<id>.png                   costas (intro)
+  cromatico/<id>.png                variante cromatica
+  icones/<id>.png                   icone pequeno (equipe, bestiario)
+  O id e o nome estao em datafiles/data/criaturas.json. Tambem da para preencher
+  o campo "sprite" de cada criatura com o nome do arquivo.
+  Tamanho de referencia: 96x96, criatura apoiada na borda de baixo.
+
+TREINADORES -> datafiles/sprites/treinadores/
+  professor.png, mae.png
+  lider_tito.png, lider_ondina.png, lider_raia.png, lider_calidus.png, lider_vesper.png
+    (os nomes vem do campo sprite_lider em datafiles/data/mundo.json)
+  jovem.png, estudante.png, excursionista.png, jardineira.png, colecionador.png,
+  motoqueiro.png, nadador.png, campista.png, engenheiro.png, montanhista.png,
+  vidente.png, medium.png, veterano.png, falcoeira.png, lutadora.png, agente_eclipse.png
+  jogador_andando.png   folha 4x4 (colunas = quadros, linhas = baixo/esquerda/direita/cima)
+
+CIDADES -> datafiles/sprites/cidades/
+  vila_alvorada.png, porto_raizes.png, pedralia.png, marevia.png, voltara.png,
+  ilha_brasa.png, cidadela_fenda.png   (campo sprite_cidade em mundo.json)
+  Referencia: 768x413, vista de cima.
+
+ITENS -> datafiles/sprites/itens/<id>.png
+  pokebola, great_ball, ultra_ball, master_ball, potion, super_potion, hyper_potion,
+  full_restore, antidote, burn_heal, awakening, full_heal, oran_berry, cheri_berry,
+  leppa_berry, rare_candy   (sao os IDs internos; o nome na tela e outro)
+
+INTERFACE -> datafiles/sprites/interface/
+  painel.png (9-slice, borda de 8px), caixa_aliado.png, caixa_inimigo.png,
+  icone_capsula.png, tipos.png (19 linhas, uma por tipo), fundo.png,
+  fragmento_tempo.png, raridade/<arquivo da gema>,
+  titulo_fundo.png, titulo_iniciar.png, titulo_splash.png, titulo_cidade.png,
+  cenario_fenda_*, cenario_lab_*, cenario_campo_*, cenario_noite_* (fundo, base0, base1)
+
+EFEITOS -> datafiles/sprites/efeitos/
+  raio_ultra.png (4x1 quadros), cosmo.png (5x3), corte_psiquico.png, explosao.png,
+  eletrico1.png, eletrico2.png, e os efeitos de status da batalha.
+
+FONTES -> datafiles/fonts_jogo/titulo.ttf e corpo.ttf
+  Use fontes com licenca livre (ex.: OFL do Google Fonts). So os caracteres ASCII
+  sao carregados, por isso os textos do jogo nao usam acento.
+
+ARTE QUE JA E DO PROJETO E CONTINUA EM USO
+  datafiles/sprites/overworld/routes/  (temas, efeitos e elementos de rota)
+  datafiles/sprites/cutscene/          (horizonte destruido da intro)

@@ -1,0 +1,101 @@
+RELATORIO DE BALANCEAMENTO - TIPOS FADA E NORMAL
+
+Resumo
+- Fada entrou como tipo de suporte/burst controlado: cria janelas curtas de dano, reduz pressao inimiga e conversa com Psychic, Electric, Dark, Grass, Poison e Fire.
+- Normal entrou como tipo base de consistencia: bom para capturas aleatorias e para builds que precisam funcionar com poucas pecas, sem vantagem elemental forte.
+- Os bonus mecanicos foram mantidos pequenos: a maioria fica entre 3% e 18%, com cooldowns medios para nao alongar demais as lutas.
+
+FADA
+
+Arquetipo: Encantamento de Carga
+Perfil: fadas ofensivas/carismaticas, com ataque e velocidade bons, mas defesa menor.
+Pokemons principais: Jigglypuff, Wigglytuff, Igglybuff, Snubbull, Granbull.
+Build: aplicar BrilhoOfuscante, carregar EncantoCarga e usar um golpe de burst.
+- Lv 1  | Vento Feerico       | Dano 22 | CD 4.2s  | aplica BrilhoOfuscante.
+- Lv 10 | Carga Encantada     | Dano 8  | CD 7.2s  | ativa EncantoCarga e reduz cooldowns.
+- Lv 10 | Beijo Drenante      | Dano 24 | CD 5.6s  | cura 12% do dano; bonus em BrilhoOfuscante.
+- Lv 15 | Explosao de Luz     | Dano 42 | CD 7.2s  | bonus se EncantoCarga estiver ativo.
+- Lv 20 | Corte Lunar         | Dano 44 | CD 6.6s  | bonus em Ofuscado e BrilhoOfuscante.
+- Lv 25 | Feixe Encantado     | Dano 56 | CD 8.4s  | bonus em AuraMistica e EncantoCarga.
+- Lv 30 | Estouro Prismatico  | Dano 66 | CD 10.0s | renova EncantoCarga e finaliza janela.
+
+Arquetipo: Luz Purificadora
+Perfil: fadas defensivas e de sustain, boas contra veneno/queimadura e lutas de atrito.
+Pokemons principais: Clefairy, Clefable, Cleffa, Togepi, Togetic, Marill/Azumarill quando cairem como Fada.
+Build: sustentar com LuzPurificadora/BarreiraFada e bater em alvos com DoT.
+- Lv 1  | Luz Serena          | Dano 16 | CD 5.2s  | LuzPurificadora + cura 4% HP max.
+- Lv 10 | Purificar           | Dano 8  | CD 8.0s  | LuzPurificadora + cura 7% HP max.
+- Lv 10 | Voto Claro          | Dano 26 | CD 5.8s  | bonus com LuzPurificadora e contra Envenenado/Queimando.
+- Lv 15 | Barreira Feerica    | Dano 12 | CD 8.5s  | BarreiraFada + cura 5% HP max.
+- Lv 20 | Luz Restauradora    | Dano 30 | CD 7.8s  | LuzPurificadora + cura 8% HP max.
+- Lv 25 | Bencao Lunar        | Dano 40 | CD 8.8s  | AuraMistica + cura 7% HP max.
+- Lv 30 | Milagre Feerico     | Dano 52 | CD 11.0s | BarreiraFada + bonus com LuzPurificadora.
+
+Arquetipo: Aura Mistica
+Perfil: suporte equilibrado para builds hibridas.
+Pokemons principais: Mr. Mime, Mime Jr., Togekiss e fadas sem perfil claro.
+Build: aplicar Charme/Ofuscado, manter AuraMistica e encaixar Laco Encantado.
+- Lv 1  | Charme              | Dano 14 | CD 5.0s  | aplica BrilhoOfuscante.
+- Lv 10 | Canto Mistico       | Dano 22 | CD 6.2s  | ativa AuraMistica; bonus em Amedrontado.
+- Lv 10 | Brilho Ofuscante    | Dano 26 | CD 6.4s  | aplica Ofuscado.
+- Lv 15 | Aura Mistica        | Dano 18 | CD 8.0s  | ativa AuraMistica e reduz cooldowns.
+- Lv 20 | Laco Encantado      | Dano 38 | CD 6.8s  | bonus em MarcadoSombrio, ParalisiaMental e BrilhoOfuscante.
+- Lv 25 | Guardiao Feerico    | Dano 36 | CD 8.2s  | BarreiraFada + bonus com AuraMistica.
+- Lv 30 | Aura Prismatica     | Dano 58 | CD 10.2s | renova AuraMistica e finaliza setup.
+
+Passivas Fada
+- Encantamento de Carga: Carga Feerica / Brilho de Ruptura.
+- Luz Purificadora: Pulso Purificador / Bencao Serena.
+- Aura Mistica: Aura Mistica / Charme de Fenda.
+
+NORMAL
+
+Arquetipo: Forca Neutra
+Perfil: atacantes consistentes, bons como captura de rota inicial.
+Pokemons principais: Rattata/Raticate, Meowth/Persian, Tauros, Aipom/Ambipom, Zigzagoon/Linoone, Zangoose, Buneary/Lopunny, Patrat/Watchog, Minccino/Cinccino, Bouffalant.
+Build: manter ForcaNeutra e usar cooldowns curtos para DPS estavel.
+- Lv 1  | Investida           | Dano 24 | CD 3.8s  | ativa ForcaNeutra.
+- Lv 10 | Ataque Rapido       | Dano 24 | CD 2.9s  | bonus com ForcaNeutra.
+- Lv 10 | Foco Simples        | Dano 8  | CD 7.0s  | ativa ForcaNeutra e reduz cooldowns.
+- Lv 15 | Golpe Certo         | Dano 36 | CD 5.2s  | bonus com ForcaNeutra.
+- Lv 20 | Forca Neutra        | Dano 46 | CD 6.0s  | golpe estavel de meio de run.
+- Lv 25 | Ritmo Constante     | Dano 42 | CD 5.4s  | renova ForcaNeutra e reduz cooldowns.
+- Lv 30 | Impacto Perfeito    | Dano 62 | CD 8.8s  | finalizador consistente.
+
+Arquetipo: Estocar
+Perfil: tanques e corpos grandes, HP/defesa altos, velocidade baixa.
+Pokemons principais: Lickitung/Lickilicky, Chansey/Blissey, Kangaskhan, Snorlax, Dunsparce, Miltank, Slaking line, Loudred line, Stoutland line, Audino.
+Build: acumular EstoqueDefensivo e liberar dano quando a luta estabilizar.
+- Lv 1  | Bater Corpo         | Dano 22 | CD 4.4s  | aplica EstoqueDefensivo.
+- Lv 10 | Estocar             | Dano 6  | CD 7.2s  | EstoqueDefensivo + cura 4% HP max.
+- Lv 10 | Defesa Curl         | Dano 8  | CD 6.8s  | EstoqueDefensivo.
+- Lv 15 | Liberar             | Dano 38 | CD 6.8s  | bonus com EstoqueDefensivo.
+- Lv 20 | Agarrar             | Dano 36 | CD 6.4s  | bonus em Enraizado, SedaPresa e AreiaMovedica.
+- Lv 25 | Corpo Pesado        | Dano 50 | CD 8.0s  | bonus com EstoqueDefensivo e Fortificado.
+- Lv 30 | Explosao Guardada   | Dano 68 | CD 10.5s | finalizador defensivo.
+
+Arquetipo: Legado
+Perfil: adaptaveis, estranhos e especies com utilidade fora de dano puro.
+Pokemons principais: Ditto, Eevee, Porygon line, Smeargle, Spinda, Castform, Kecleon, Glameow/Purugly, Regigigas, Arceus.
+Build: Mimetismo para sobreviver, Reciclagem para girar, Legado para sustentar build imperfeita.
+- Lv 1  | Mimetismo           | Dano 18 | CD 5.0s  | ativa MimetismoAtivo.
+- Lv 10 | Reciclagem          | Dano 8  | CD 8.0s  | ReciclagemAtiva e reduz cooldowns.
+- Lv 10 | Eco Adaptavel       | Dano 26 | CD 5.6s  | bonus com MimetismoAtivo.
+- Lv 15 | Revezamento         | Dano 28 | CD 7.0s  | LegadoAtivo + cura 4% HP max.
+- Lv 20 | Copia de Ritmo      | Dano 34 | CD 6.6s  | bonus com ReciclagemAtiva e MarcadoSombrio.
+- Lv 25 | Legado              | Dano 22 | CD 9.0s  | LegadoAtivo + cura 6% HP max.
+- Lv 30 | Heranca Heroica     | Dano 54 | CD 10.0s | finalizador com LegadoAtivo e MimetismoAtivo.
+
+Passivas Normal
+- Forca Neutra: Forca Neutra / Ritmo Constante.
+- Estocar: Reserva Defensiva / Corpo Guardado.
+- Legado: Instinto Adaptavel / Ritmo Herdado.
+
+Sinergias importantes
+- Fairy/Psychic: BrilhoOfuscante e Ofuscado protegem ParalisiaMental e AmnesiaInduzida.
+- Fairy/Electric: Ofuscado e ErroEletrico criam alvos seguros para Sobrecarga.
+- Fairy/Dark: BrilhoOfuscante e MarcadoSombrio alimentam Laco Encantado e Jogo Sujo.
+- Fairy/Grass: LuzPurificadora sustenta Parasita/Energia Solar; AuraMistica ajuda Cottonee/Whimsicott.
+- Normal/Grass: Agarrar conversa com Enraizado; Deerling/Sawsbuck podem usar ForcaNeutra com Grass como setup.
+- Normal/Steel/Rock: Estocar conversa com Fortificado, CascaRocha e defesas altas.
+- Normal/Dark: Copia de Ritmo aproveita MarcadoSombrio, criando rota para Kecleon/Smeargle-like builds.

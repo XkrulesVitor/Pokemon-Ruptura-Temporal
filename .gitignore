@@ -1,0 +1,76 @@
+# Windows
+ 
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+ 
+# Dump file
+*.stackdump
+ 
+# Folder config file
+[Dd]esktop.ini
+ 
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+ 
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+ 
+# Windows shortcuts
+*.lnk
+ 
+# Mac
+ 
+## General
+.DS_Store
+.AppleDouble
+.LSOverride
+ 
+## Icon must end with two \r
+Icon
+ 
+## Thumbnails
+._*
+ 
+## Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+ 
+## Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+ 
+# GameMaker temporary files
+*.resource_order
+*.old
+
+# GMRT build directory
+Build
+# Bibliotecas grandes de referencia e caches locais (nao versionar)
+asset_library/
+runtime_assets/
+.gmcache/
+.codex_tools/node_modules/
+.codex_tools/localappdata/
+.codex_tools/npm-cache/
+*.corrupt-backup-*
+
+# Saida do autoteste (screenshots e log)
+autoteste_saida/
+
+# Arte de terceiros guardada so localmente (nao publicar)
+_arquivo_terceiros/

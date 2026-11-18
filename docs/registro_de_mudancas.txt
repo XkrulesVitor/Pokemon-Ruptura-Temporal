@@ -1,0 +1,1138 @@
+REGISTRO DE MUDANCAS - troca do conteudo de Pokemon por conteudo original
+==========================================================================
+Formato: ANTES -> DEPOIS. Gerado por tools/gerar_registro.py.
+A branch local base-original-local (nao enviada ao GitHub) guarda o estado original.
+
+PERSONAGENS E HISTORIA
+----------------------
+  Mewtwo (vilao que rasga o tempo)           ->  Aeonox (psiquico/sombrio, lendario)
+  Mew (guardiao na intro)                    ->  Lumis (psiquico/fada, lendario)
+  Celebi (guardiao na intro)                 ->  Brotempo (grama/psiquico, lendario)
+  Prof. Carvalho                             ->  Prof. Sabia
+  Mae                                        ->  Mae (mantida)
+  Equipe Rocket                              ->  Sindicato Eclipse
+  Giovanni (chefe da equipe e ultimo lider)  ->  Vesper
+  Brock (lider de Pedra)                     ->  Tito Basalto
+  Misty (lider de Agua)                      ->  Ondina
+  Lt. Surge (lider Eletrico)                 ->  Capita Raia
+  Blaine (lider de Fogo)                     ->  Dr. Calidus
+
+LUGARES E ROTAS
+---------------
+  Kanto (regiao)                            ->  Vale de Cronaria
+  Pallet Town                               ->  Vila Alvorada
+  Viridian City (2a cidade)                 ->  Porto Raizes
+  Pewter City                               ->  Pedralia
+  Cerulean City                             ->  Marevia
+  Vermilion City                            ->  Voltara
+  Cinnabar Island                           ->  Ilha Brasa
+  Viridian City (cidade final do Giovanni)  ->  Cidadela Fenda
+  Mart de Viridian                          ->  Mercado do Porto
+  Museu de Pewter                           ->  Museu de Pedralia
+  Ponte Nugget                              ->  Ponte das Gaivotas
+  Porto do S.S. Anne                        ->  Cais dos Cargueiros / Porto do Cargueiro Aurora
+  Base Rocket                               ->  Base do Eclipse
+  Centro Pokemon                            ->  Centro de Cura
+  Liga Pokemon                              ->  Liga do Vale
+  Rota 1                                    ->  Trilha da Alvorada
+  Rota 2 / Viridian Forest                  ->  Bosque Verdejante
+  Rota 22                                   ->  Caminho dos Desafiantes
+  Rota 23                                   ->  Pantano das Fendas
+  Rota 3 & 4 / Mt. Moon                     ->  Gruta do Eco
+  Rota 42                                   ->  Pico Congelado
+  Rota 4 (Fenda de Ferro)                   ->  Fenda de Ferro
+  Rota 5 & 6                                ->  Via Central
+  Rota 115                                  ->  Vale Mistico
+  Rota 9                                    ->  Desfiladeiro Ardente
+  Rota 19 & 20                              ->  Mar Aberto
+  Rota 10                                   ->  Usinas Destruidas
+  Rota 12                                   ->  Abismo das Fendas
+  Rota 21                                   ->  Canal Vulcanico
+
+TERMOS DA INTERFACE
+-------------------
+  Pokemon (na tela)                  ->  monstro / monstros
+  Pokedex                            ->  Bestiario
+  PokeMart / PokeStore               ->  Mercado
+  P$ (Pokedolar)                     ->  M$ (moedas)
+  Shiny                              ->  variante cromatica
+  Titulo: POKEMON ROGUELIKE          ->  RASGO TEMPORAL
+  Filtro 'Geracao 1-5' do Bestiario  ->  Filtro 'Estagio 1-3'
+
+ITENS (o ID interno no codigo continua o mesmo)
+-----------------------------------------------
+  Pokebola                          ->  Capsula Simples
+  Great Ball / Grande Bola          ->  Capsula Reforcada
+  Ultra Ball / Ultra Bola           ->  Capsula Avancada
+  Master Ball / Bola Mestra         ->  Capsula Mestra
+  Potion / Pocao                    ->  Pocao (mantido)
+  Super Potion / Super Pocao        ->  Pocao Forte
+  Hyper Potion / Hiper Pocao        ->  Pocao Maxima
+  Full Restore / Restaurador Total  ->  Elixir Total
+  Full Heal / Cura Total            ->  Tonico Puro
+  Antidote / Antidoto               ->  Antidoto (mantido)
+  Burn Heal / Cura-Queimadura       ->  Pomada Fria
+  Awakening / Despertador           ->  Sal de Despertar
+  Oran Berry                        ->  Fruta Anil
+  Cheri Berry                       ->  Fruta Rubra
+  Leppa Berry                       ->  Fruta Ambar
+  Rare Candy / Doce Raro            ->  Cristal de Nivel
+
+CLASSES DE TREINADOR
+--------------------
+  Youngster / Jovem Treinador        ->  Jovem Treinador
+  Lass                               ->  Estudante
+  Picnicker                          ->  Excursionista
+  Aroma Lady                         ->  Jardineira
+  Bug Catcher / Cacador de Insetos   ->  Colecionador de Insetos
+  Swimmer, Sailor / Nadador          ->  Nadador / Marinheira
+  Camper, Burglar / Campista         ->  Campista
+  Engineer, Scientist / Engenheiro   ->  Engenheiro / Cientista
+  Hiker, Ruin Maniac / Montanhista   ->  Montanhista / Arqueologo
+  Psychic / Psiquico                 ->  Vidente
+  Channeler / Medium                 ->  Medium
+  Cool Trainer / Treinador de Elite  ->  Veterano
+  Bird Keeper / Criador de Passaros  ->  Falcoeira
+  Black Belt / Faixa Preta           ->  Lutadora de Rua
+  Rocket Grunt / Rocket Disfarcado   ->  Agente do Eclipse
+
+PAPEIS DE CRIATURA COM EQUIVALENTE DIRETO
+-----------------------------------------
+  Trio inicial: Bulbasaur, Charmander, Squirtle       ->  Trio Elemental: Brotinho, Fagulho, Gotito
+  Iniciais de Johto (Chikorita, Cyndaquil, Totodile)  ->  Trio da Tempestade: Zapito, Penugem, Flocolino
+  Iniciais de Hoenn (Treecko, Torchic, Mudkip)        ->  Trio da Rocha: Pedrisco, Terrilho, Rebitim
+  Iniciais de Sinnoh (Turtwig, Chimchar, Piplup)      ->  Trio das Sombras: Breuzinho, Vultinho, Peconhim
+  Iniciais de Unova (Snivy, Tepig, Oshawott)          ->  Trio Arcano: Psilume, Encantilho, Escamito
+  Iniciais Especiais (Pikachu, Eevee)                 ->  Trio Selvagem: Pelucio, Larvinha, Socadinho
+  Criatura do lider de Pedra (Geodude nv 10)          ->  Rochedao nv 10
+  Criatura do lider de Agua (Staryu nv 14)            ->  Barbatao nv 14
+  Criatura do lider Eletrico (Pikachu nv 19)          ->  Amperfelino nv 19
+  Criatura do lider de Fogo (Growlithe nv 24)         ->  Brasilobo nv 24
+  Criatura do ultimo lider (Nidoking nv 30)           ->  Sismodonte nv 30
+
+HABILIDADES RENOMEADAS (nomes que vinham de golpes de Pokemon)
+--------------------------------------------------------------
+  Aero Ace             ->  Asa Certeira
+  Aqua Jet             ->  Jato Veloz
+  Bater Corpo          ->  Encontrao
+  Cabeca de Ferro      ->  Testada de Ferro
+  Combate Proximo      ->  Corpo a Corpo
+  Defesa Curl          ->  Enrolar
+  Folha Navalha        ->  Folha Cortante
+  Furia do Dragao      ->  Ira Ancestral
+  Giga Dreno           ->  Dreno Profundo
+  Golpe Karate         ->  Golpe de Mao Aberta
+  Gyro Ball            ->  Giro de Aco
+  Hidro Bomba          ->  Canhao d'Agua
+  Jab                  ->  Estocada
+  Jogo Sujo            ->  Golpe Traicoeiro
+  Lanca-Chamas         ->  Jorro de Chamas
+  Mega Dreno           ->  Dreno Vigoroso
+  Meteoro Draconico    ->  Estrela Draconica
+  Nucleo Registeel     ->  Nucleo Blindado
+  Psicochoque          ->  Impacto Psiquico
+  Psybeam              ->  Raio Mental
+  Pulso do Dragao      ->  Pulso Ancestral
+  Quebra-Tijolo        ->  Quebra-Pedra
+  Raio Solar           ->  Feixe Solar
+  Semente Sanguessuga  ->  Semente Parasita
+  Soco Bala            ->  Soco Projetil
+  Surfar               ->  Onda Montante
+  Tesoura X            ->  Tesoura Cruzada
+  Troca Volt           ->  Recuo Eletrico
+  Twister              ->  Torvelinho
+  Venenochoque         ->  Choque Venenoso
+
+ARTE
+----
+  Sprites de criaturas (black-white, national, icons, Essentials)  ->  placeholder procedural por tipo/estagio; arte nova em datafiles/sprites/criaturas/
+  Treinadores e lideres (Essentials)                               ->  placeholder procedural; arte nova em datafiles/sprites/treinadores/
+  Jogador andando (trainer_run.png)                                ->  placeholder procedural; arte nova em datafiles/sprites/treinadores/jogador_andando.png
+  Icones de itens                                                  ->  placeholder procedural; arte nova em datafiles/sprites/itens/<id>.png
+  Mapas de cidade (redesenhos de Kanto)                            ->  placeholder procedural; arte nova em datafiles/sprites/cidades/
+  Databox, painel, icone de pokebola, tipos (UI de batalha)        ->  painel desenhado por codigo; arte nova em datafiles/sprites/interface/
+  Titulo, battlebacks e animacoes do Essentials                    ->  fundos desenhados por codigo; arte nova em datafiles/sprites/interface/ e efeitos/
+  Fontes Power Clear / Power Red-Blue                              ->  fonte do Windows em desenvolvimento; fonte nova em datafiles/fonts_jogo/
+  Temas, efeitos e elementos de rota (overworld/routes)            ->  MANTIDOS: sao arte original do projeto
+  Horizonte destruido da intro (cutscene)                          ->  MANTIDO: arte original do projeto
+
+ROSTER DE CRIATURAS
+-------------------
+ANTES: 649 especies das geracoes 1 a 5 (nomes, tipos, atributos e evolucoes copiados dos jogos).
+DEPOIS: 129 criaturas originais. Nao existe correspondencia uma-a-uma: o roster antigo foi
+removido inteiro e este foi criado do zero (tipos, atributos e linhas evolutivas novos).
+Fonte editavel: datafiles/data/criaturas.json (gerado por tools/gerar_conteudo.py).
+
+  ID   NOME           TIPOS                RARIDADE  PAPEL       EVOLUCAO
+  1    Pelucio        normal               raro      tanque      
+  2    Pelagudo       normal               raro      tanque      evolui de Pelucio no nv 12
+  3    Mamutao        normal               epico     tanque      evolui de Pelagudo no nv 23
+  4    Fagulho        fogo                 raro      veloz       
+  5    Brasante       fogo                 raro      veloz       evolui de Fagulho no nv 12
+  6    Infernhal      fogo/aco             epico     bruto       evolui de Brasante no nv 23
+  7    Gotito         agua                 raro      equilibrado 
+  8    Marolho        agua                 raro      equilibrado evolui de Gotito no nv 12
+  9    Abissauro      agua/pedra           epico     muralha     evolui de Marolho no nv 23
+  10   Brotinho       grama                raro      tanque      
+  11   Folhagar       grama                raro      tanque      evolui de Brotinho no nv 12
+  12   Selvagorn      grama/terra          epico     tanque      evolui de Folhagar no nv 23
+  13   Zapito         eletrico             raro      veloz       
+  14   Voltrino       eletrico             raro      veloz       evolui de Zapito no nv 12
+  15   Trovarca       eletrico             epico     vidro       evolui de Voltrino no nv 23
+  16   Flocolino      gelo                 raro      equilibrado 
+  17   Geadeiro       gelo                 raro      equilibrado evolui de Flocolino no nv 12
+  18   Glacimonte     gelo/terra           epico     tanque      evolui de Geadeiro no nv 23
+  19   Socadinho      lutador              raro      bruto       
+  20   Pugilar        lutador              raro      bruto       evolui de Socadinho no nv 12
+  21   Campeonix      lutador/aco          epico     bruto       evolui de Pugilar no nv 23
+  22   Peconhim       veneno               raro      equilibrado 
+  23   Viperal        veneno               raro      equilibrado evolui de Peconhim no nv 12
+  24   Toxidrago      veneno/dragao        epico     bruto       evolui de Viperal no nv 23
+  25   Terrilho       terra                raro      bruto       
+  26   Barrancudo     terra                raro      bruto       evolui de Terrilho no nv 12
+  27   Sismodonte     terra/dragao         epico     bruto       evolui de Barrancudo no nv 23
+  28   Penugem        voador               raro      veloz       
+  29   Ventarola      voador               raro      veloz       evolui de Penugem no nv 12
+  30   Gaviarco       voador/lutador       epico     bruto       evolui de Ventarola no nv 23
+  31   Psilume        psiquico             raro      vidro       
+  32   Mentaluz       psiquico             raro      vidro       evolui de Psilume no nv 12
+  33   Oraculyx       psiquico             epico     vidro       evolui de Mentaluz no nv 23
+  34   Larvinha       inseto               raro      equilibrado 
+  35   Casulante      inseto               raro      muralha     evolui de Larvinha no nv 12
+  36   Mariposaria    inseto/voador        epico     veloz       evolui de Casulante no nv 23
+  37   Pedrisco       pedra                raro      muralha     
+  38   Rochedao       pedra                raro      muralha     evolui de Pedrisco no nv 12
+  39   Monolitao      pedra/lutador        epico     muralha     evolui de Rochedao no nv 23
+  40   Vultinho       fantasma             raro      veloz       
+  41   Assombrel      fantasma             raro      veloz       evolui de Vultinho no nv 12
+  42   Espectronio    fantasma/psiquico    epico     vidro       evolui de Assombrel no nv 23
+  43   Escamito       dragao               raro      bruto       
+  44   Dracovento     dragao               raro      bruto       evolui de Escamito no nv 12
+  45   Draconarca     dragao/psiquico      epico     bruto       evolui de Dracovento no nv 23
+  46   Breuzinho      sombrio              raro      vidro       
+  47   Penumbrar      sombrio              raro      vidro       evolui de Breuzinho no nv 12
+  48   Eclipsauro     sombrio/dragao       epico     vidro       evolui de Penumbrar no nv 23
+  49   Rebitim        aco                  raro      muralha     
+  50   Ferrolhao      aco                  raro      muralha     evolui de Rebitim no nv 12
+  51   Couracante     aco                  epico     muralha     evolui de Ferrolhao no nv 23
+  52   Encantilho     fada                 raro      equilibrado 
+  53   Feerica        fada                 raro      equilibrado evolui de Encantilho no nv 12
+  54   Sortilegia     fada/voador          epico     equilibrado evolui de Feerica no nv 23
+  55   Rataco         normal               comum     veloz       
+  56   Ratagao        normal               incomum   bruto       evolui de Rataco no nv 18
+  57   Pardalito      normal/voador        comum     veloz       
+  58   Gaviolento     normal/voador        incomum   veloz       evolui de Pardalito no nv 18
+  59   Orelhudo       normal               comum     veloz       
+  60   Saltorelha     normal/lutador       incomum   veloz       evolui de Orelhudo no nv 18
+  61   Folhoca        grama                comum     equilibrado 
+  62   Ramagem        grama                incomum   tanque      evolui de Folhoca no nv 18
+  63   Cactilho       grama                comum     muralha     
+  64   Cactusao       grama/lutador        incomum   muralha     evolui de Cactilho no nv 18
+  65   Fungito        grama/veneno         comum     tanque      
+  66   Fungardo       grama/veneno         incomum   tanque      evolui de Fungito no nv 18
+  67   Taturinho      inseto               comum     tanque      
+  68   Crisalio       inseto               comum     muralha     evolui de Taturinho no nv 7
+  69   Borbolume      inseto/voador        incomum   veloz       evolui de Crisalio no nv 12
+  70   Formigo        inseto/pedra         comum     bruto       
+  71   Formigao       inseto/pedra         incomum   bruto       evolui de Formigo no nv 18
+  72   Cinzelho       fogo                 incomum   veloz       
+  73   Brasilobo      fogo                 raro      bruto       evolui de Cinzelho no nv 18
+  74   Peixote        agua                 comum     veloz       
+  75   Barbatao       agua                 incomum   bruto       evolui de Peixote no nv 18
+  76   Gaivotela      agua/voador          comum     veloz       
+  77   Gaivotao       agua/voador          incomum   veloz       evolui de Gaivotela no nv 18
+  78   Sapolodo       agua/veneno          comum     equilibrado 
+  79   Sapocetico     agua/veneno          incomum   tanque      evolui de Sapolodo no nv 18
+  80   Estalito       eletrico             incomum   veloz       
+  81   Amperfelino    eletrico             raro      vidro       evolui de Estalito no nv 18
+  82   Pinguito       gelo/agua            incomum   tanque      
+  83   Pinguardiao    gelo/agua            raro      tanque      evolui de Pinguito no nv 18
+  84   Murrinho       lutador              comum     bruto       
+  85   Murraco        lutador              incomum   bruto       evolui de Murrinho no nv 18
+  86   Gosmito        veneno               comum     tanque      
+  87   Gosmaturo      veneno               incomum   tanque      evolui de Gosmito no nv 18
+  88   Toupeiro       terra                comum     bruto       
+  89   Toupeiraco     terra                incomum   bruto       evolui de Toupeiro no nv 18
+  90   Seixinho       pedra/terra          comum     muralha     
+  91   Pedregulhao    pedra/terra          incomum   muralha     evolui de Seixinho no nv 18
+  92   Lencolito      fantasma             incomum   vidro       
+  93   Mortalhao      fantasma             raro      vidro       evolui de Lencolito no nv 18
+  94   Lagartolho     dragao/agua          raro      equilibrado 
+  95   Serpendrago    dragao/agua          epico     equilibrado evolui de Lagartolho no nv 23
+  96   Gatunim        sombrio              incomum   veloz       
+  97   Gatunoir       sombrio              raro      veloz       evolui de Gatunim no nv 18
+  98   Engrenito      aco/eletrico         incomum   muralha     
+  99   Engrenador     aco/eletrico         raro      muralha     evolui de Engrenito no nv 18
+  100  Pirilim        fada/inseto          incomum   veloz       
+  101  Pirilumina     fada/inseto          raro      veloz       evolui de Pirilim no nv 18
+  102  Corujito       psiquico/voador      incomum   equilibrado 
+  103  Corujastral    psiquico/voador      raro      equilibrado evolui de Corujito no nv 18
+  104  Lamacudo       agua/terra           incomum   tanque      
+  105  Bovolt         normal/eletrico      incomum   bruto       
+  106  Ciclopardo     normal/psiquico      incomum   equilibrado 
+  107  Raiomanta      agua/eletrico        raro      veloz       
+  108  Nevasco        gelo/fantasma        raro      vidro       
+  109  Cristalino     pedra/fada           raro      muralha     
+  110  Corvoturno     sombrio/voador       raro      veloz       
+  111  Teiamorte      inseto/fantasma      raro      vidro       
+  112  Sucateiro      aco/sombrio          raro      bruto       
+  113  Espinhaco      grama/lutador        raro      bruto       
+  114  Escorpiareia   terra/veneno         raro      bruto       
+  115  Totemistico    psiquico/pedra       raro      muralha     
+  116  Lanternil      fogo/fantasma        raro      vidro       
+  117  Auroril        gelo/fada            raro      equilibrado 
+  118  Serenissima    agua/fada            raro      equilibrado 
+  119  Gargulao       pedra/voador         raro      muralha     
+  120  Cervalume      grama/fada           raro      veloz       
+  121  Sinoeco        aco/fantasma         raro      muralha     
+  122  Vulcanossauro  fogo/pedra           epico     bruto       
+  123  Draguerreiro   dragao/lutador       epico     bruto       
+  124  Furacauda      voador/dragao        epico     veloz       
+  125  Martelaco      aco/lutador          epico     bruto       
+  126  Mandibrum      agua/sombrio         epico     bruto       
+  127  Aeonox         psiquico/sombrio     lendario  vidro       
+  128  Lumis          psiquico/fada        lendario  equilibrado 
+  129  Brotempo       grama/psiquico       lendario  equilibrado 
+
+CODIGO REMOVIDO OU SUBSTITUIDO
+------------------------------
+  - Tabelas fixas com os 649 nomes, tipos e atributos (pokemon_species_info_gen5) -> leitura do JSON
+  - Lista fixa de evolucoes por numero da Pokedex (pokemon_evolution_rules) -> campos evolui_de/nivel_evolucao
+  - Evolucoes ramificadas fixas (Eevee, Tyrogue, Wurmple, Burmy...) -> sorteio entre os candidatos
+  - Listas de raridade e de nivel minimo por numero da Pokedex -> campo raridade do JSON
+  - 68 blocos de perfil por numero da Pokedex (ex.: 'Chikorita foi reposicionada...') -> perfil pelos atributos
+  - Entradas especiais de Bulbasaur/Charmander/Squirtle e seus desenhos procedurais
+  - Caminhos fixos D:/GAME-MAKER/PokemonRogueLike e d:/VITOR/Jogos/... -> caminhos relativos
+
+ARQUIVOS ALTERADOS (desde o commit base)
+----------------------------------------
+  ARQUIVO                                                            LINHAS +ADICIONADAS -REMOVIDAS
+  .agents/AGENTS.md                                                  +2 -1
+  .gitignore                                                         +6 -0
+  PokemonRogueLike.yyp                                               +5 -784
+  datafiles/data/criaturas.json                                      +2149 -0
+  datafiles/data/mundo.json                                          +100 -0
+  datafiles/fonts/power_clear_bold.ttf                               +- --
+  datafiles/fonts/power_red_blue.ttf                                 +- --
+  datafiles/sprites/background.png                                   +- --
+  datafiles/sprites/cities/celadon.png                               +- --
+  datafiles/sprites/cities/cerulean.png                              +- --
+  datafiles/sprites/cities/cinnabar.png                              +- --
+  datafiles/sprites/cities/pallet.png                                +- --
+  datafiles/sprites/cities/pewter.png                                +- --
+  datafiles/sprites/cities/vermilion.png                             +- --
+  datafiles/sprites/cities/viridian.png                              +- --
+  datafiles/sprites/effects/shiny_star.png                           +- --
+  datafiles/sprites/items/antidote.png                               +- --
+  datafiles/sprites/items/awakening.png                              +- --
+  datafiles/sprites/items/burn_heal.png                              +- --
+  datafiles/sprites/items/cheri_berry.png                            +- --
+  datafiles/sprites/items/full_heal.png                              +- --
+  datafiles/sprites/items/full_restore.png                           +- --
+  datafiles/sprites/items/great_ball.png                             +- --
+  datafiles/sprites/items/hyper_potion.png                           +- --
+  datafiles/sprites/items/leppa_berry.png                            +- --
+  datafiles/sprites/items/master_ball.png                            +- --
+  datafiles/sprites/items/oran_berry.png                             +- --
+  datafiles/sprites/items/pokebola.png                               +- --
+  datafiles/sprites/items/potion.png                                 +- --
+  datafiles/sprites/items/super_potion.png                           +- --
+  datafiles/sprites/items/ultra_ball.png                             +- --
+  datafiles/sprites/overworld/route_bg.png                           +- --
+  datafiles/sprites/overworld/trainer_run.png                        +- --
+  datafiles/sprites/pokemon/001.png                                  +- --
+  datafiles/sprites/pokemon/001_atk.png                              +- --
+  datafiles/sprites/pokemon/001_dmg.png                              +- --
+  datafiles/sprites/pokemon/001_idle.png                             +- --
+  datafiles/sprites/pokemon/004.png                                  +- --
+  datafiles/sprites/pokemon/004_atk.png                              +- --
+  datafiles/sprites/pokemon/004_dmg.png                              +- --
+  datafiles/sprites/pokemon/004_idle.png                             +- --
+  datafiles/sprites/pokemon/007.png                                  +- --
+  datafiles/sprites/pokemon/007_atk.png                              +- --
+  datafiles/sprites/pokemon/007_dmg.png                              +- --
+  datafiles/sprites/pokemon/007_idle.png                             +- --
+  datafiles/sprites/pokemon/BULBASAUR.png                            +- --
+  datafiles/sprites/pokemon/BULBASAUR_atk.png                        +- --
+  datafiles/sprites/pokemon/BULBASAUR_dmg.png                        +- --
+  datafiles/sprites/pokemon/BULBASAUR_idle.png                       +- --
+  datafiles/sprites/pokemon/CHARMANDER.png                           +- --
+  datafiles/sprites/pokemon/CHARMANDER_atk.png                       +- --
+  datafiles/sprites/pokemon/CHARMANDER_dmg.png                       +- --
+  datafiles/sprites/pokemon/CHARMANDER_idle.png                      +- --
+  datafiles/sprites/pokemon/SQUIRTLE.png                             +- --
+  datafiles/sprites/pokemon/SQUIRTLE_atk.png                         +- --
+  datafiles/sprites/pokemon/SQUIRTLE_dmg.png                         +- --
+  datafiles/sprites/pokemon/SQUIRTLE_idle.png                        +- --
+  datafiles/sprites/pokemon/_README.txt                              +0 -16
+  datafiles/sprites/pokemon/black-white/1.png                        +- --
+  datafiles/sprites/pokemon/black-white/10.png                       +- --
+  datafiles/sprites/pokemon/black-white/100.png                      +- --
+  datafiles/sprites/pokemon/black-white/101.png                      +- --
+  datafiles/sprites/pokemon/black-white/102.png                      +- --
+  datafiles/sprites/pokemon/black-white/103.png                      +- --
+  datafiles/sprites/pokemon/black-white/104.png                      +- --
+  datafiles/sprites/pokemon/black-white/105.png                      +- --
+  datafiles/sprites/pokemon/black-white/106.png                      +- --
+  datafiles/sprites/pokemon/black-white/107.png                      +- --
+  datafiles/sprites/pokemon/black-white/108.png                      +- --
+  datafiles/sprites/pokemon/black-white/109.png                      +- --
+  datafiles/sprites/pokemon/black-white/11.png                       +- --
+  datafiles/sprites/pokemon/black-white/110.png                      +- --
+  datafiles/sprites/pokemon/black-white/111.png                      +- --
+  datafiles/sprites/pokemon/black-white/112.png                      +- --
+  datafiles/sprites/pokemon/black-white/113.png                      +- --
+  datafiles/sprites/pokemon/black-white/114.png                      +- --
+  datafiles/sprites/pokemon/black-white/115.png                      +- --
+  datafiles/sprites/pokemon/black-white/116.png                      +- --
+  datafiles/sprites/pokemon/black-white/117.png                      +- --
+  datafiles/sprites/pokemon/black-white/118.png                      +- --
+  datafiles/sprites/pokemon/black-white/119.png                      +- --
+  datafiles/sprites/pokemon/black-white/12.png                       +- --
+  datafiles/sprites/pokemon/black-white/120.png                      +- --
+  datafiles/sprites/pokemon/black-white/121.png                      +- --
+  datafiles/sprites/pokemon/black-white/122.png                      +- --
+  datafiles/sprites/pokemon/black-white/123.png                      +- --
+  datafiles/sprites/pokemon/black-white/124.png                      +- --
+  datafiles/sprites/pokemon/black-white/125.png                      +- --
+  datafiles/sprites/pokemon/black-white/126.png                      +- --
+  datafiles/sprites/pokemon/black-white/127.png                      +- --
+  datafiles/sprites/pokemon/black-white/128.png                      +- --
+  datafiles/sprites/pokemon/black-white/129.png                      +- --
+  datafiles/sprites/pokemon/black-white/13.png                       +- --
+  datafiles/sprites/pokemon/black-white/130.png                      +- --
+  datafiles/sprites/pokemon/black-white/131.png                      +- --
+  datafiles/sprites/pokemon/black-white/132.png                      +- --
+  datafiles/sprites/pokemon/black-white/133.png                      +- --
+  datafiles/sprites/pokemon/black-white/134.png                      +- --
+  datafiles/sprites/pokemon/black-white/135.png                      +- --
+  datafiles/sprites/pokemon/black-white/136.png                      +- --
+  datafiles/sprites/pokemon/black-white/137.png                      +- --
+  datafiles/sprites/pokemon/black-white/138.png                      +- --
+  datafiles/sprites/pokemon/black-white/139.png                      +- --
+  datafiles/sprites/pokemon/black-white/14.png                       +- --
+  datafiles/sprites/pokemon/black-white/140.png                      +- --
+  datafiles/sprites/pokemon/black-white/141.png                      +- --
+  datafiles/sprites/pokemon/black-white/142.png                      +- --
+  datafiles/sprites/pokemon/black-white/143.png                      +- --
+  datafiles/sprites/pokemon/black-white/144.png                      +- --
+  datafiles/sprites/pokemon/black-white/145.png                      +- --
+  datafiles/sprites/pokemon/black-white/146.png                      +- --
+  datafiles/sprites/pokemon/black-white/147.png                      +- --
+  datafiles/sprites/pokemon/black-white/148.png                      +- --
+  datafiles/sprites/pokemon/black-white/149.png                      +- --
+  datafiles/sprites/pokemon/black-white/15.png                       +- --
+  datafiles/sprites/pokemon/black-white/150.png                      +- --
+  datafiles/sprites/pokemon/black-white/151.png                      +- --
+  datafiles/sprites/pokemon/black-white/152.png                      +- --
+  datafiles/sprites/pokemon/black-white/153.png                      +- --
+  datafiles/sprites/pokemon/black-white/154.png                      +- --
+  datafiles/sprites/pokemon/black-white/155.png                      +- --
+  datafiles/sprites/pokemon/black-white/156.png                      +- --
+  datafiles/sprites/pokemon/black-white/157.png                      +- --
+  datafiles/sprites/pokemon/black-white/158.png                      +- --
+  datafiles/sprites/pokemon/black-white/159.png                      +- --
+  datafiles/sprites/pokemon/black-white/16.png                       +- --
+  datafiles/sprites/pokemon/black-white/160.png                      +- --
+  datafiles/sprites/pokemon/black-white/161.png                      +- --
+  datafiles/sprites/pokemon/black-white/162.png                      +- --
+  datafiles/sprites/pokemon/black-white/163.png                      +- --
+  datafiles/sprites/pokemon/black-white/164.png                      +- --
+  datafiles/sprites/pokemon/black-white/165.png                      +- --
+  datafiles/sprites/pokemon/black-white/166.png                      +- --
+  datafiles/sprites/pokemon/black-white/167.png                      +- --
+  datafiles/sprites/pokemon/black-white/168.png                      +- --
+  datafiles/sprites/pokemon/black-white/169.png                      +- --
+  datafiles/sprites/pokemon/black-white/17.png                       +- --
+  datafiles/sprites/pokemon/black-white/170.png                      +- --
+  datafiles/sprites/pokemon/black-white/171.png                      +- --
+  datafiles/sprites/pokemon/black-white/172.png                      +- --
+  datafiles/sprites/pokemon/black-white/173.png                      +- --
+  datafiles/sprites/pokemon/black-white/174.png                      +- --
+  datafiles/sprites/pokemon/black-white/175.png                      +- --
+  datafiles/sprites/pokemon/black-white/176.png                      +- --
+  datafiles/sprites/pokemon/black-white/177.png                      +- --
+  datafiles/sprites/pokemon/black-white/178.png                      +- --
+  datafiles/sprites/pokemon/black-white/179.png                      +- --
+  datafiles/sprites/pokemon/black-white/18.png                       +- --
+  datafiles/sprites/pokemon/black-white/180.png                      +- --
+  datafiles/sprites/pokemon/black-white/181.png                      +- --
+  datafiles/sprites/pokemon/black-white/182.png                      +- --
+  datafiles/sprites/pokemon/black-white/183.png                      +- --
+  datafiles/sprites/pokemon/black-white/184.png                      +- --
+  datafiles/sprites/pokemon/black-white/185.png                      +- --
+  datafiles/sprites/pokemon/black-white/186.png                      +- --
+  datafiles/sprites/pokemon/black-white/187.png                      +- --
+  datafiles/sprites/pokemon/black-white/188.png                      +- --
+  datafiles/sprites/pokemon/black-white/189.png                      +- --
+  datafiles/sprites/pokemon/black-white/19.png                       +- --
+  datafiles/sprites/pokemon/black-white/190.png                      +- --
+  datafiles/sprites/pokemon/black-white/191.png                      +- --
+  datafiles/sprites/pokemon/black-white/192.png                      +- --
+  datafiles/sprites/pokemon/black-white/193.png                      +- --
+  datafiles/sprites/pokemon/black-white/194.png                      +- --
+  datafiles/sprites/pokemon/black-white/195.png                      +- --
+  datafiles/sprites/pokemon/black-white/196.png                      +- --
+  datafiles/sprites/pokemon/black-white/197.png                      +- --
+  datafiles/sprites/pokemon/black-white/198.png                      +- --
+  datafiles/sprites/pokemon/black-white/199.png                      +- --
+  datafiles/sprites/pokemon/black-white/2.png                        +- --
+  datafiles/sprites/pokemon/black-white/20.png                       +- --
+  datafiles/sprites/pokemon/black-white/200.png                      +- --
+  datafiles/sprites/pokemon/black-white/201.png                      +- --
+  datafiles/sprites/pokemon/black-white/202.png                      +- --
+  datafiles/sprites/pokemon/black-white/203.png                      +- --
+  datafiles/sprites/pokemon/black-white/204.png                      +- --
+  datafiles/sprites/pokemon/black-white/205.png                      +- --
+  datafiles/sprites/pokemon/black-white/206.png                      +- --
+  datafiles/sprites/pokemon/black-white/207.png                      +- --
+  datafiles/sprites/pokemon/black-white/208.png                      +- --
+  datafiles/sprites/pokemon/black-white/209.png                      +- --
+  datafiles/sprites/pokemon/black-white/21.png                       +- --
+  datafiles/sprites/pokemon/black-white/210.png                      +- --
+  datafiles/sprites/pokemon/black-white/211.png                      +- --
+  datafiles/sprites/pokemon/black-white/212.png                      +- --
+  datafiles/sprites/pokemon/black-white/213.png                      +- --
+  datafiles/sprites/pokemon/black-white/214.png                      +- --
+  datafiles/sprites/pokemon/black-white/215.png                      +- --
+  datafiles/sprites/pokemon/black-white/216.png                      +- --
+  datafiles/sprites/pokemon/black-white/217.png                      +- --
+  datafiles/sprites/pokemon/black-white/218.png                      +- --
+  datafiles/sprites/pokemon/black-white/219.png                      +- --
+  datafiles/sprites/pokemon/black-white/22.png                       +- --
+  datafiles/sprites/pokemon/black-white/220.png                      +- --
+  datafiles/sprites/pokemon/black-white/221.png                      +- --
+  datafiles/sprites/pokemon/black-white/222.png                      +- --
+  datafiles/sprites/pokemon/black-white/223.png                      +- --
+  datafiles/sprites/pokemon/black-white/224.png                      +- --
+  datafiles/sprites/pokemon/black-white/225.png                      +- --
+  datafiles/sprites/pokemon/black-white/226.png                      +- --
+  datafiles/sprites/pokemon/black-white/227.png                      +- --
+  datafiles/sprites/pokemon/black-white/228.png                      +- --
+  datafiles/sprites/pokemon/black-white/229.png                      +- --
+  datafiles/sprites/pokemon/black-white/23.png                       +- --
+  datafiles/sprites/pokemon/black-white/230.png                      +- --
+  datafiles/sprites/pokemon/black-white/231.png                      +- --
+  datafiles/sprites/pokemon/black-white/232.png                      +- --
+  datafiles/sprites/pokemon/black-white/233.png                      +- --
+  datafiles/sprites/pokemon/black-white/234.png                      +- --
+  datafiles/sprites/pokemon/black-white/235.png                      +- --
+  datafiles/sprites/pokemon/black-white/236.png                      +- --
+  datafiles/sprites/pokemon/black-white/237.png                      +- --
+  datafiles/sprites/pokemon/black-white/238.png                      +- --
+  datafiles/sprites/pokemon/black-white/239.png                      +- --
+  datafiles/sprites/pokemon/black-white/24.png                       +- --
+  datafiles/sprites/pokemon/black-white/240.png                      +- --
+  datafiles/sprites/pokemon/black-white/241.png                      +- --
+  datafiles/sprites/pokemon/black-white/242.png                      +- --
+  datafiles/sprites/pokemon/black-white/243.png                      +- --
+  datafiles/sprites/pokemon/black-white/244.png                      +- --
+  datafiles/sprites/pokemon/black-white/245.png                      +- --
+  datafiles/sprites/pokemon/black-white/246.png                      +- --
+  datafiles/sprites/pokemon/black-white/247.png                      +- --
+  datafiles/sprites/pokemon/black-white/248.png                      +- --
+  datafiles/sprites/pokemon/black-white/249.png                      +- --
+  datafiles/sprites/pokemon/black-white/25.png                       +- --
+  datafiles/sprites/pokemon/black-white/250.png                      +- --
+  datafiles/sprites/pokemon/black-white/251.png                      +- --
+  datafiles/sprites/pokemon/black-white/252.png                      +- --
+  datafiles/sprites/pokemon/black-white/253.png                      +- --
+  datafiles/sprites/pokemon/black-white/254.png                      +- --
+  datafiles/sprites/pokemon/black-white/255.png                      +- --
+  datafiles/sprites/pokemon/black-white/256.png                      +- --
+  datafiles/sprites/pokemon/black-white/257.png                      +- --
+  datafiles/sprites/pokemon/black-white/258.png                      +- --
+  datafiles/sprites/pokemon/black-white/259.png                      +- --
+  datafiles/sprites/pokemon/black-white/26.png                       +- --
+  datafiles/sprites/pokemon/black-white/260.png                      +- --
+  datafiles/sprites/pokemon/black-white/261.png                      +- --
+  datafiles/sprites/pokemon/black-white/262.png                      +- --
+  datafiles/sprites/pokemon/black-white/263.png                      +- --
+  datafiles/sprites/pokemon/black-white/264.png                      +- --
+  datafiles/sprites/pokemon/black-white/265.png                      +- --
+  datafiles/sprites/pokemon/black-white/266.png                      +- --
+  datafiles/sprites/pokemon/black-white/267.png                      +- --
+  datafiles/sprites/pokemon/black-white/268.png                      +- --
+  datafiles/sprites/pokemon/black-white/269.png                      +- --
+  datafiles/sprites/pokemon/black-white/27.png                       +- --
+  datafiles/sprites/pokemon/black-white/270.png                      +- --
+  datafiles/sprites/pokemon/black-white/271.png                      +- --
+  datafiles/sprites/pokemon/black-white/272.png                      +- --
+  datafiles/sprites/pokemon/black-white/273.png                      +- --
+  datafiles/sprites/pokemon/black-white/274.png                      +- --
+  datafiles/sprites/pokemon/black-white/275.png                      +- --
+  datafiles/sprites/pokemon/black-white/276.png                      +- --
+  datafiles/sprites/pokemon/black-white/277.png                      +- --
+  datafiles/sprites/pokemon/black-white/278.png                      +- --
+  datafiles/sprites/pokemon/black-white/279.png                      +- --
+  datafiles/sprites/pokemon/black-white/28.png                       +- --
+  datafiles/sprites/pokemon/black-white/280.png                      +- --
+  datafiles/sprites/pokemon/black-white/281.png                      +- --
+  datafiles/sprites/pokemon/black-white/282.png                      +- --
+  datafiles/sprites/pokemon/black-white/283.png                      +- --
+  datafiles/sprites/pokemon/black-white/284.png                      +- --
+  datafiles/sprites/pokemon/black-white/285.png                      +- --
+  datafiles/sprites/pokemon/black-white/286.png                      +- --
+  datafiles/sprites/pokemon/black-white/287.png                      +- --
+  datafiles/sprites/pokemon/black-white/288.png                      +- --
+  datafiles/sprites/pokemon/black-white/289.png                      +- --
+  datafiles/sprites/pokemon/black-white/29.png                       +- --
+  datafiles/sprites/pokemon/black-white/290.png                      +- --
+  datafiles/sprites/pokemon/black-white/291.png                      +- --
+  datafiles/sprites/pokemon/black-white/292.png                      +- --
+  datafiles/sprites/pokemon/black-white/293.png                      +- --
+  datafiles/sprites/pokemon/black-white/294.png                      +- --
+  datafiles/sprites/pokemon/black-white/295.png                      +- --
+  datafiles/sprites/pokemon/black-white/296.png                      +- --
+  datafiles/sprites/pokemon/black-white/297.png                      +- --
+  datafiles/sprites/pokemon/black-white/298.png                      +- --
+  datafiles/sprites/pokemon/black-white/299.png                      +- --
+  datafiles/sprites/pokemon/black-white/3.png                        +- --
+  datafiles/sprites/pokemon/black-white/30.png                       +- --
+  datafiles/sprites/pokemon/black-white/300.png                      +- --
+  datafiles/sprites/pokemon/black-white/301.png                      +- --
+  datafiles/sprites/pokemon/black-white/302.png                      +- --
+  datafiles/sprites/pokemon/black-white/303.png                      +- --
+  datafiles/sprites/pokemon/black-white/304.png                      +- --
+  datafiles/sprites/pokemon/black-white/305.png                      +- --
+  datafiles/sprites/pokemon/black-white/306.png                      +- --
+  datafiles/sprites/pokemon/black-white/307.png                      +- --
+  datafiles/sprites/pokemon/black-white/308.png                      +- --
+  datafiles/sprites/pokemon/black-white/309.png                      +- --
+  datafiles/sprites/pokemon/black-white/31.png                       +- --
+  datafiles/sprites/pokemon/black-white/310.png                      +- --
+  datafiles/sprites/pokemon/black-white/311.png                      +- --
+  datafiles/sprites/pokemon/black-white/312.png                      +- --
+  datafiles/sprites/pokemon/black-white/313.png                      +- --
+  datafiles/sprites/pokemon/black-white/314.png                      +- --
+  datafiles/sprites/pokemon/black-white/315.png                      +- --
+  datafiles/sprites/pokemon/black-white/316.png                      +- --
+  datafiles/sprites/pokemon/black-white/317.png                      +- --
+  datafiles/sprites/pokemon/black-white/318.png                      +- --
+  datafiles/sprites/pokemon/black-white/319.png                      +- --
+  datafiles/sprites/pokemon/black-white/32.png                       +- --
+  datafiles/sprites/pokemon/black-white/320.png                      +- --
+  datafiles/sprites/pokemon/black-white/321.png                      +- --
+  datafiles/sprites/pokemon/black-white/322.png                      +- --
+  datafiles/sprites/pokemon/black-white/323.png                      +- --
+  datafiles/sprites/pokemon/black-white/324.png                      +- --
+  datafiles/sprites/pokemon/black-white/325.png                      +- --
+  datafiles/sprites/pokemon/black-white/326.png                      +- --
+  datafiles/sprites/pokemon/black-white/327.png                      +- --
+  datafiles/sprites/pokemon/black-white/328.png                      +- --
+  datafiles/sprites/pokemon/black-white/329.png                      +- --
+  datafiles/sprites/pokemon/black-white/33.png                       +- --
+  datafiles/sprites/pokemon/black-white/330.png                      +- --
+  datafiles/sprites/pokemon/black-white/331.png                      +- --
+  datafiles/sprites/pokemon/black-white/332.png                      +- --
+  datafiles/sprites/pokemon/black-white/333.png                      +- --
+  datafiles/sprites/pokemon/black-white/334.png                      +- --
+  datafiles/sprites/pokemon/black-white/335.png                      +- --
+  datafiles/sprites/pokemon/black-white/336.png                      +- --
+  datafiles/sprites/pokemon/black-white/337.png                      +- --
+  datafiles/sprites/pokemon/black-white/338.png                      +- --
+  datafiles/sprites/pokemon/black-white/339.png                      +- --
+  datafiles/sprites/pokemon/black-white/34.png                       +- --
+  datafiles/sprites/pokemon/black-white/340.png                      +- --
+  datafiles/sprites/pokemon/black-white/341.png                      +- --
+  datafiles/sprites/pokemon/black-white/342.png                      +- --
+  datafiles/sprites/pokemon/black-white/343.png                      +- --
+  datafiles/sprites/pokemon/black-white/344.png                      +- --
+  datafiles/sprites/pokemon/black-white/345.png                      +- --
+  datafiles/sprites/pokemon/black-white/346.png                      +- --
+  datafiles/sprites/pokemon/black-white/347.png                      +- --
+  datafiles/sprites/pokemon/black-white/348.png                      +- --
+  datafiles/sprites/pokemon/black-white/349.png                      +- --
+  datafiles/sprites/pokemon/black-white/35.png                       +- --
+  datafiles/sprites/pokemon/black-white/350.png                      +- --
+  datafiles/sprites/pokemon/black-white/351.png                      +- --
+  datafiles/sprites/pokemon/black-white/352.png                      +- --
+  datafiles/sprites/pokemon/black-white/353.png                      +- --
+  datafiles/sprites/pokemon/black-white/354.png                      +- --
+  datafiles/sprites/pokemon/black-white/355.png                      +- --
+  datafiles/sprites/pokemon/black-white/356.png                      +- --
+  datafiles/sprites/pokemon/black-white/357.png                      +- --
+  datafiles/sprites/pokemon/black-white/358.png                      +- --
+  datafiles/sprites/pokemon/black-white/359.png                      +- --
+  datafiles/sprites/pokemon/black-white/36.png                       +- --
+  datafiles/sprites/pokemon/black-white/360.png                      +- --
+  datafiles/sprites/pokemon/black-white/361.png                      +- --
+  datafiles/sprites/pokemon/black-white/362.png                      +- --
+  datafiles/sprites/pokemon/black-white/363.png                      +- --
+  datafiles/sprites/pokemon/black-white/364.png                      +- --
+  datafiles/sprites/pokemon/black-white/365.png                      +- --
+  datafiles/sprites/pokemon/black-white/366.png                      +- --
+  datafiles/sprites/pokemon/black-white/367.png                      +- --
+  datafiles/sprites/pokemon/black-white/368.png                      +- --
+  datafiles/sprites/pokemon/black-white/369.png                      +- --
+  datafiles/sprites/pokemon/black-white/37.png                       +- --
+  datafiles/sprites/pokemon/black-white/370.png                      +- --
+  datafiles/sprites/pokemon/black-white/371.png                      +- --
+  datafiles/sprites/pokemon/black-white/372.png                      +- --
+  datafiles/sprites/pokemon/black-white/373.png                      +- --
+  datafiles/sprites/pokemon/black-white/374.png                      +- --
+  datafiles/sprites/pokemon/black-white/375.png                      +- --
+  datafiles/sprites/pokemon/black-white/376.png                      +- --
+  datafiles/sprites/pokemon/black-white/377.png                      +- --
+  datafiles/sprites/pokemon/black-white/378.png                      +- --
+  datafiles/sprites/pokemon/black-white/379.png                      +- --
+  datafiles/sprites/pokemon/black-white/38.png                       +- --
+  datafiles/sprites/pokemon/black-white/380.png                      +- --
+  datafiles/sprites/pokemon/black-white/381.png                      +- --
+  datafiles/sprites/pokemon/black-white/382.png                      +- --
+  datafiles/sprites/pokemon/black-white/383.png                      +- --
+  datafiles/sprites/pokemon/black-white/384.png                      +- --
+  datafiles/sprites/pokemon/black-white/385.png                      +- --
+  datafiles/sprites/pokemon/black-white/386.png                      +- --
+  datafiles/sprites/pokemon/black-white/387.png                      +- --
+  datafiles/sprites/pokemon/black-white/388.png                      +- --
+  datafiles/sprites/pokemon/black-white/389.png                      +- --
+  datafiles/sprites/pokemon/black-white/39.png                       +- --
+  datafiles/sprites/pokemon/black-white/390.png                      +- --
+  datafiles/sprites/pokemon/black-white/391.png                      +- --
+  datafiles/sprites/pokemon/black-white/392.png                      +- --
+  datafiles/sprites/pokemon/black-white/393.png                      +- --
+  datafiles/sprites/pokemon/black-white/394.png                      +- --
+  datafiles/sprites/pokemon/black-white/395.png                      +- --
+  datafiles/sprites/pokemon/black-white/396.png                      +- --
+  datafiles/sprites/pokemon/black-white/397.png                      +- --
+  datafiles/sprites/pokemon/black-white/398.png                      +- --
+  datafiles/sprites/pokemon/black-white/399.png                      +- --
+  datafiles/sprites/pokemon/black-white/4.png                        +- --
+  datafiles/sprites/pokemon/black-white/40.png                       +- --
+  datafiles/sprites/pokemon/black-white/400.png                      +- --
+  datafiles/sprites/pokemon/black-white/401.png                      +- --
+  datafiles/sprites/pokemon/black-white/402.png                      +- --
+  datafiles/sprites/pokemon/black-white/403.png                      +- --
+  datafiles/sprites/pokemon/black-white/404.png                      +- --
+  datafiles/sprites/pokemon/black-white/405.png                      +- --
+  datafiles/sprites/pokemon/black-white/406.png                      +- --
+  datafiles/sprites/pokemon/black-white/407.png                      +- --
+  datafiles/sprites/pokemon/black-white/408.png                      +- --
+  datafiles/sprites/pokemon/black-white/409.png                      +- --
+  datafiles/sprites/pokemon/black-white/41.png                       +- --
+  datafiles/sprites/pokemon/black-white/410.png                      +- --
+  datafiles/sprites/pokemon/black-white/411.png                      +- --
+  datafiles/sprites/pokemon/black-white/412.png                      +- --
+  datafiles/sprites/pokemon/black-white/413.png                      +- --
+  datafiles/sprites/pokemon/black-white/414.png                      +- --
+  datafiles/sprites/pokemon/black-white/415.png                      +- --
+  datafiles/sprites/pokemon/black-white/416.png                      +- --
+  datafiles/sprites/pokemon/black-white/417.png                      +- --
+  datafiles/sprites/pokemon/black-white/418.png                      +- --
+  datafiles/sprites/pokemon/black-white/419.png                      +- --
+  datafiles/sprites/pokemon/black-white/42.png                       +- --
+  datafiles/sprites/pokemon/black-white/420.png                      +- --
+  datafiles/sprites/pokemon/black-white/421.png                      +- --
+  datafiles/sprites/pokemon/black-white/422.png                      +- --
+  datafiles/sprites/pokemon/black-white/423.png                      +- --
+  datafiles/sprites/pokemon/black-white/424.png                      +- --
+  datafiles/sprites/pokemon/black-white/425.png                      +- --
+  datafiles/sprites/pokemon/black-white/426.png                      +- --
+  datafiles/sprites/pokemon/black-white/427.png                      +- --
+  datafiles/sprites/pokemon/black-white/428.png                      +- --
+  datafiles/sprites/pokemon/black-white/429.png                      +- --
+  datafiles/sprites/pokemon/black-white/43.png                       +- --
+  datafiles/sprites/pokemon/black-white/430.png                      +- --
+  datafiles/sprites/pokemon/black-white/431.png                      +- --
+  datafiles/sprites/pokemon/black-white/432.png                      +- --
+  datafiles/sprites/pokemon/black-white/433.png                      +- --
+  datafiles/sprites/pokemon/black-white/434.png                      +- --
+  datafiles/sprites/pokemon/black-white/435.png                      +- --
+  datafiles/sprites/pokemon/black-white/436.png                      +- --
+  datafiles/sprites/pokemon/black-white/437.png                      +- --
+  datafiles/sprites/pokemon/black-white/438.png                      +- --
+  datafiles/sprites/pokemon/black-white/439.png                      +- --
+  datafiles/sprites/pokemon/black-white/44.png                       +- --
+  datafiles/sprites/pokemon/black-white/440.png                      +- --
+  datafiles/sprites/pokemon/black-white/441.png                      +- --
+  datafiles/sprites/pokemon/black-white/442.png                      +- --
+  datafiles/sprites/pokemon/black-white/443.png                      +- --
+  datafiles/sprites/pokemon/black-white/444.png                      +- --
+  datafiles/sprites/pokemon/black-white/445.png                      +- --
+  datafiles/sprites/pokemon/black-white/446.png                      +- --
+  datafiles/sprites/pokemon/black-white/447.png                      +- --
+  datafiles/sprites/pokemon/black-white/448.png                      +- --
+  datafiles/sprites/pokemon/black-white/449.png                      +- --
+  datafiles/sprites/pokemon/black-white/45.png                       +- --
+  datafiles/sprites/pokemon/black-white/450.png                      +- --
+  datafiles/sprites/pokemon/black-white/451.png                      +- --
+  datafiles/sprites/pokemon/black-white/452.png                      +- --
+  datafiles/sprites/pokemon/black-white/453.png                      +- --
+  datafiles/sprites/pokemon/black-white/454.png                      +- --
+  datafiles/sprites/pokemon/black-white/455.png                      +- --
+  datafiles/sprites/pokemon/black-white/456.png                      +- --
+  datafiles/sprites/pokemon/black-white/457.png                      +- --
+  datafiles/sprites/pokemon/black-white/458.png                      +- --
+  datafiles/sprites/pokemon/black-white/459.png                      +- --
+  datafiles/sprites/pokemon/black-white/46.png                       +- --
+  datafiles/sprites/pokemon/black-white/460.png                      +- --
+  datafiles/sprites/pokemon/black-white/461.png                      +- --
+  datafiles/sprites/pokemon/black-white/462.png                      +- --
+  datafiles/sprites/pokemon/black-white/463.png                      +- --
+  datafiles/sprites/pokemon/black-white/464.png                      +- --
+  datafiles/sprites/pokemon/black-white/465.png                      +- --
+  datafiles/sprites/pokemon/black-white/466.png                      +- --
+  datafiles/sprites/pokemon/black-white/467.png                      +- --
+  datafiles/sprites/pokemon/black-white/468.png                      +- --
+  datafiles/sprites/pokemon/black-white/469.png                      +- --
+  datafiles/sprites/pokemon/black-white/47.png                       +- --
+  datafiles/sprites/pokemon/black-white/470.png                      +- --
+  datafiles/sprites/pokemon/black-white/471.png                      +- --
+  datafiles/sprites/pokemon/black-white/472.png                      +- --
+  datafiles/sprites/pokemon/black-white/473.png                      +- --
+  datafiles/sprites/pokemon/black-white/474.png                      +- --
+  datafiles/sprites/pokemon/black-white/475.png                      +- --
+  datafiles/sprites/pokemon/black-white/476.png                      +- --
+  datafiles/sprites/pokemon/black-white/477.png                      +- --
+  datafiles/sprites/pokemon/black-white/478.png                      +- --
+  datafiles/sprites/pokemon/black-white/479.png                      +- --
+  datafiles/sprites/pokemon/black-white/48.png                       +- --
+  datafiles/sprites/pokemon/black-white/480.png                      +- --
+  datafiles/sprites/pokemon/black-white/481.png                      +- --
+  datafiles/sprites/pokemon/black-white/482.png                      +- --
+  datafiles/sprites/pokemon/black-white/483.png                      +- --
+  datafiles/sprites/pokemon/black-white/484.png                      +- --
+  datafiles/sprites/pokemon/black-white/485.png                      +- --
+  datafiles/sprites/pokemon/black-white/486.png                      +- --
+  datafiles/sprites/pokemon/black-white/487.png                      +- --
+  datafiles/sprites/pokemon/black-white/488.png                      +- --
+  datafiles/sprites/pokemon/black-white/489.png                      +- --
+  datafiles/sprites/pokemon/black-white/49.png                       +- --
+  datafiles/sprites/pokemon/black-white/490.png                      +- --
+  datafiles/sprites/pokemon/black-white/491.png                      +- --
+  datafiles/sprites/pokemon/black-white/492.png                      +- --
+  datafiles/sprites/pokemon/black-white/493.png                      +- --
+  datafiles/sprites/pokemon/black-white/494.png                      +- --
+  datafiles/sprites/pokemon/black-white/495.png                      +- --
+  datafiles/sprites/pokemon/black-white/496.png                      +- --
+  datafiles/sprites/pokemon/black-white/497.png                      +- --
+  datafiles/sprites/pokemon/black-white/498.png                      +- --
+  datafiles/sprites/pokemon/black-white/499.png                      +- --
+  datafiles/sprites/pokemon/black-white/5.png                        +- --
+  datafiles/sprites/pokemon/black-white/50.png                       +- --
+  datafiles/sprites/pokemon/black-white/500.png                      +- --
+  datafiles/sprites/pokemon/black-white/501.png                      +- --
+  datafiles/sprites/pokemon/black-white/502.png                      +- --
+  datafiles/sprites/pokemon/black-white/503.png                      +- --
+  datafiles/sprites/pokemon/black-white/504.png                      +- --
+  datafiles/sprites/pokemon/black-white/505.png                      +- --
+  datafiles/sprites/pokemon/black-white/506.png                      +- --
+  datafiles/sprites/pokemon/black-white/507.png                      +- --
+  datafiles/sprites/pokemon/black-white/508.png                      +- --
+  datafiles/sprites/pokemon/black-white/509.png                      +- --
+  datafiles/sprites/pokemon/black-white/51.png                       +- --
+  datafiles/sprites/pokemon/black-white/510.png                      +- --
+  datafiles/sprites/pokemon/black-white/511.png                      +- --
+  datafiles/sprites/pokemon/black-white/512.png                      +- --
+  datafiles/sprites/pokemon/black-white/513.png                      +- --
+  datafiles/sprites/pokemon/black-white/514.png                      +- --
+  datafiles/sprites/pokemon/black-white/515.png                      +- --
+  datafiles/sprites/pokemon/black-white/516.png                      +- --
+  datafiles/sprites/pokemon/black-white/517.png                      +- --
+  datafiles/sprites/pokemon/black-white/518.png                      +- --
+  datafiles/sprites/pokemon/black-white/519.png                      +- --
+  datafiles/sprites/pokemon/black-white/52.png                       +- --
+  datafiles/sprites/pokemon/black-white/520.png                      +- --
+  datafiles/sprites/pokemon/black-white/521.png                      +- --
+  datafiles/sprites/pokemon/black-white/522.png                      +- --
+  datafiles/sprites/pokemon/black-white/523.png                      +- --
+  datafiles/sprites/pokemon/black-white/524.png                      +- --
+  datafiles/sprites/pokemon/black-white/525.png                      +- --
+  datafiles/sprites/pokemon/black-white/526.png                      +- --
+  datafiles/sprites/pokemon/black-white/527.png                      +- --
+  datafiles/sprites/pokemon/black-white/528.png                      +- --
+  datafiles/sprites/pokemon/black-white/529.png                      +- --
+  datafiles/sprites/pokemon/black-white/53.png                       +- --
+  datafiles/sprites/pokemon/black-white/530.png                      +- --
+  datafiles/sprites/pokemon/black-white/531.png                      +- --
+  datafiles/sprites/pokemon/black-white/532.png                      +- --
+  datafiles/sprites/pokemon/black-white/533.png                      +- --
+  datafiles/sprites/pokemon/black-white/534.png                      +- --
+  datafiles/sprites/pokemon/black-white/535.png                      +- --
+  datafiles/sprites/pokemon/black-white/536.png                      +- --
+  datafiles/sprites/pokemon/black-white/537.png                      +- --
+  datafiles/sprites/pokemon/black-white/538.png                      +- --
+  datafiles/sprites/pokemon/black-white/539.png                      +- --
+  datafiles/sprites/pokemon/black-white/54.png                       +- --
+  datafiles/sprites/pokemon/black-white/540.png                      +- --
+  datafiles/sprites/pokemon/black-white/541.png                      +- --
+  datafiles/sprites/pokemon/black-white/542.png                      +- --
+  datafiles/sprites/pokemon/black-white/543.png                      +- --
+  datafiles/sprites/pokemon/black-white/544.png                      +- --
+  datafiles/sprites/pokemon/black-white/545.png                      +- --
+  datafiles/sprites/pokemon/black-white/546.png                      +- --
+  datafiles/sprites/pokemon/black-white/547.png                      +- --
+  datafiles/sprites/pokemon/black-white/548.png                      +- --
+  datafiles/sprites/pokemon/black-white/549.png                      +- --
+  datafiles/sprites/pokemon/black-white/55.png                       +- --
+  datafiles/sprites/pokemon/black-white/550.png                      +- --
+  datafiles/sprites/pokemon/black-white/551.png                      +- --
+  datafiles/sprites/pokemon/black-white/552.png                      +- --
+  datafiles/sprites/pokemon/black-white/553.png                      +- --
+  datafiles/sprites/pokemon/black-white/554.png                      +- --
+  datafiles/sprites/pokemon/black-white/555.png                      +- --
+  datafiles/sprites/pokemon/black-white/556.png                      +- --
+  datafiles/sprites/pokemon/black-white/557.png                      +- --
+  datafiles/sprites/pokemon/black-white/558.png                      +- --
+  datafiles/sprites/pokemon/black-white/559.png                      +- --
+  datafiles/sprites/pokemon/black-white/56.png                       +- --
+  datafiles/sprites/pokemon/black-white/560.png                      +- --
+  datafiles/sprites/pokemon/black-white/561.png                      +- --
+  datafiles/sprites/pokemon/black-white/562.png                      +- --
+  datafiles/sprites/pokemon/black-white/563.png                      +- --
+  datafiles/sprites/pokemon/black-white/564.png                      +- --
+  datafiles/sprites/pokemon/black-white/565.png                      +- --
+  datafiles/sprites/pokemon/black-white/566.png                      +- --
+  datafiles/sprites/pokemon/black-white/567.png                      +- --
+  datafiles/sprites/pokemon/black-white/568.png                      +- --
+  datafiles/sprites/pokemon/black-white/569.png                      +- --
+  datafiles/sprites/pokemon/black-white/57.png                       +- --
+  datafiles/sprites/pokemon/black-white/570.png                      +- --
+  datafiles/sprites/pokemon/black-white/571.png                      +- --
+  datafiles/sprites/pokemon/black-white/572.png                      +- --
+  datafiles/sprites/pokemon/black-white/573.png                      +- --
+  datafiles/sprites/pokemon/black-white/574.png                      +- --
+  datafiles/sprites/pokemon/black-white/575.png                      +- --
+  datafiles/sprites/pokemon/black-white/576.png                      +- --
+  datafiles/sprites/pokemon/black-white/577.png                      +- --
+  datafiles/sprites/pokemon/black-white/578.png                      +- --
+  datafiles/sprites/pokemon/black-white/579.png                      +- --
+  datafiles/sprites/pokemon/black-white/58.png                       +- --
+  datafiles/sprites/pokemon/black-white/580.png                      +- --
+  datafiles/sprites/pokemon/black-white/581.png                      +- --
+  datafiles/sprites/pokemon/black-white/582.png                      +- --
+  datafiles/sprites/pokemon/black-white/583.png                      +- --
+  datafiles/sprites/pokemon/black-white/584.png                      +- --
+  datafiles/sprites/pokemon/black-white/585.png                      +- --
+  datafiles/sprites/pokemon/black-white/586.png                      +- --
+  datafiles/sprites/pokemon/black-white/587.png                      +- --
+  datafiles/sprites/pokemon/black-white/588.png                      +- --
+  datafiles/sprites/pokemon/black-white/589.png                      +- --
+  datafiles/sprites/pokemon/black-white/59.png                       +- --
+  datafiles/sprites/pokemon/black-white/590.png                      +- --
+  datafiles/sprites/pokemon/black-white/591.png                      +- --
+  datafiles/sprites/pokemon/black-white/592.png                      +- --
+  datafiles/sprites/pokemon/black-white/593.png                      +- --
+  datafiles/sprites/pokemon/black-white/594.png                      +- --
+  datafiles/sprites/pokemon/black-white/595.png                      +- --
+  datafiles/sprites/pokemon/black-white/596.png                      +- --
+  datafiles/sprites/pokemon/black-white/597.png                      +- --
+  datafiles/sprites/pokemon/black-white/598.png                      +- --
+  datafiles/sprites/pokemon/black-white/599.png                      +- --
+  datafiles/sprites/pokemon/black-white/6.png                        +- --
+  datafiles/sprites/pokemon/black-white/60.png                       +- --
+  datafiles/sprites/pokemon/black-white/600.png                      +- --
+  datafiles/sprites/pokemon/black-white/601.png                      +- --
+  datafiles/sprites/pokemon/black-white/602.png                      +- --
+  datafiles/sprites/pokemon/black-white/603.png                      +- --
+  datafiles/sprites/pokemon/black-white/604.png                      +- --
+  datafiles/sprites/pokemon/black-white/605.png                      +- --
+  datafiles/sprites/pokemon/black-white/606.png                      +- --
+  datafiles/sprites/pokemon/black-white/607.png                      +- --
+  datafiles/sprites/pokemon/black-white/608.png                      +- --
+  datafiles/sprites/pokemon/black-white/609.png                      +- --
+  datafiles/sprites/pokemon/black-white/61.png                       +- --
+  datafiles/sprites/pokemon/black-white/610.png                      +- --
+  datafiles/sprites/pokemon/black-white/611.png                      +- --
+  datafiles/sprites/pokemon/black-white/612.png                      +- --
+  datafiles/sprites/pokemon/black-white/613.png                      +- --
+  datafiles/sprites/pokemon/black-white/614.png                      +- --
+  datafiles/sprites/pokemon/black-white/615.png                      +- --
+  datafiles/sprites/pokemon/black-white/616.png                      +- --
+  datafiles/sprites/pokemon/black-white/617.png                      +- --
+  datafiles/sprites/pokemon/black-white/618.png                      +- --
+  datafiles/sprites/pokemon/black-white/619.png                      +- --
+  datafiles/sprites/pokemon/black-white/62.png                       +- --
+  datafiles/sprites/pokemon/black-white/620.png                      +- --
+  datafiles/sprites/pokemon/black-white/621.png                      +- --
+  datafiles/sprites/pokemon/black-white/622.png                      +- --
+  datafiles/sprites/pokemon/black-white/623.png                      +- --
+  datafiles/sprites/pokemon/black-white/624.png                      +- --
+  datafiles/sprites/pokemon/black-white/625.png                      +- --
+  datafiles/sprites/pokemon/black-white/626.png                      +- --
+  datafiles/sprites/pokemon/black-white/627.png                      +- --
+  datafiles/sprites/pokemon/black-white/628.png                      +- --
+  datafiles/sprites/pokemon/black-white/629.png                      +- --
+  datafiles/sprites/pokemon/black-white/63.png                       +- --
+  datafiles/sprites/pokemon/black-white/630.png                      +- --
+  datafiles/sprites/pokemon/black-white/631.png                      +- --
+  datafiles/sprites/pokemon/black-white/632.png                      +- --
+  datafiles/sprites/pokemon/black-white/633.png                      +- --
+  datafiles/sprites/pokemon/black-white/634.png                      +- --
+  datafiles/sprites/pokemon/black-white/635.png                      +- --
+  datafiles/sprites/pokemon/black-white/636.png                      +- --
+  datafiles/sprites/pokemon/black-white/637.png                      +- --
+  datafiles/sprites/pokemon/black-white/638.png                      +- --
+  datafiles/sprites/pokemon/black-white/639.png                      +- --
+  datafiles/sprites/pokemon/black-white/64.png                       +- --
+  datafiles/sprites/pokemon/black-white/640.png                      +- --
+  datafiles/sprites/pokemon/black-white/641.png                      +- --
+  datafiles/sprites/pokemon/black-white/642.png                      +- --
+  datafiles/sprites/pokemon/black-white/643.png                      +- --
+  datafiles/sprites/pokemon/black-white/644.png                      +- --
+  datafiles/sprites/pokemon/black-white/645.png                      +- --
+  datafiles/sprites/pokemon/black-white/646.png                      +- --
+  datafiles/sprites/pokemon/black-white/647.png                      +- --
+  datafiles/sprites/pokemon/black-white/648.png                      +- --
+  datafiles/sprites/pokemon/black-white/649.png                      +- --
+  datafiles/sprites/pokemon/black-white/65.png                       +- --
+  datafiles/sprites/pokemon/black-white/66.png                       +- --
+  datafiles/sprites/pokemon/black-white/67.png                       +- --
+  datafiles/sprites/pokemon/black-white/68.png                       +- --
+  datafiles/sprites/pokemon/black-white/69.png                       +- --
+  datafiles/sprites/pokemon/black-white/7.png                        +- --
+  datafiles/sprites/pokemon/black-white/70.png                       +- --
+  datafiles/sprites/pokemon/black-white/71.png                       +- --
+  datafiles/sprites/pokemon/black-white/72.png                       +- --
+  datafiles/sprites/pokemon/black-white/73.png                       +- --
+  datafiles/sprites/pokemon/black-white/74.png                       +- --
+  datafiles/sprites/pokemon/black-white/75.png                       +- --
+  datafiles/sprites/pokemon/black-white/76.png                       +- --
+  datafiles/sprites/pokemon/black-white/77.png                       +- --
+  datafiles/sprites/pokemon/black-white/78.png                       +- --
+  datafiles/sprites/pokemon/black-white/79.png                       +- --
+  datafiles/sprites/pokemon/black-white/8.png                        +- --
+  datafiles/sprites/pokemon/black-white/80.png                       +- --
+  datafiles/sprites/pokemon/black-white/81.png                       +- --
+  datafiles/sprites/pokemon/black-white/82.png                       +- --
+  datafiles/sprites/pokemon/black-white/83.png                       +- --
+  datafiles/sprites/pokemon/black-white/84.png                       +- --
+  datafiles/sprites/pokemon/black-white/85.png                       +- --
+  datafiles/sprites/pokemon/black-white/86.png                       +- --
+  datafiles/sprites/pokemon/black-white/87.png                       +- --
+  datafiles/sprites/pokemon/black-white/88.png                       +- --
+  datafiles/sprites/pokemon/black-white/89.png                       +- --
+  datafiles/sprites/pokemon/black-white/9.png                        +- --
+  datafiles/sprites/pokemon/black-white/90.png                       +- --
+  datafiles/sprites/pokemon/black-white/91.png                       +- --
+  datafiles/sprites/pokemon/black-white/92.png                       +- --
+  datafiles/sprites/pokemon/black-white/93.png                       +- --
+  datafiles/sprites/pokemon/black-white/94.png                       +- --
+  datafiles/sprites/pokemon/black-white/95.png                       +- --
+  datafiles/sprites/pokemon/black-white/96.png                       +- --
+  datafiles/sprites/pokemon/black-white/97.png                       +- --
+  datafiles/sprites/pokemon/black-white/98.png                       +- --
+  datafiles/sprites/pokemon/black-white/99.png                       +- --
+  datafiles/sprites/trainers/AROMALADY.png                           +- --
+  datafiles/sprites/trainers/BEAUTY.png                              +- --
+  datafiles/sprites/trainers/BIKER.png                               +- --
+  datafiles/sprites/trainers/BIRDKEEPER.png                          +- --
+  datafiles/sprites/trainers/BLACKBELT.png                           +- --
+  datafiles/sprites/trainers/BUGCATCHER.png                          +- --
+  datafiles/sprites/trainers/BURGLAR.png                             +- --
+  datafiles/sprites/trainers/CAMPER.png                              +- --
+  datafiles/sprites/trainers/CHAMPION.png                            +- --
+  datafiles/sprites/trainers/CHANNELER.png                           +- --
+  datafiles/sprites/trainers/COOLCOUPLE.png                          +- --
+  datafiles/sprites/trainers/COOLTRAINER_F.png                       +- --
+  datafiles/sprites/trainers/COOLTRAINER_M.png                       +- --
+  datafiles/sprites/trainers/CRUSHGIRL.png                           +- --
+  datafiles/sprites/trainers/CRUSHKIN.png                            +- --
+  datafiles/sprites/trainers/CUEBALL.png                             +- --
+  datafiles/sprites/trainers/ELITEFOUR_Agatha.png                    +- --
+  datafiles/sprites/trainers/ELITEFOUR_Bruno.png                     +- --
+  datafiles/sprites/trainers/ELITEFOUR_Lance.png                     +- --
+  datafiles/sprites/trainers/ELITEFOUR_Lorelei.png                   +- --
+  datafiles/sprites/trainers/ENGINEER.png                            +- --
+  datafiles/sprites/trainers/FISHERMAN.png                           +- --
+  datafiles/sprites/trainers/GAMBLER.png                             +- --
+  datafiles/sprites/trainers/GENTLEMAN.png                           +- --
+  datafiles/sprites/trainers/HIKER.png                               +- --
+  datafiles/sprites/trainers/JUGGLER.png                             +- --
+  datafiles/sprites/trainers/LADY.png                                +- --
+  datafiles/sprites/trainers/LASS.png                                +- --
+  datafiles/sprites/trainers/LEADER_Blaine.png                       +- --
+  datafiles/sprites/trainers/LEADER_Brock.png                        +- --
+  datafiles/sprites/trainers/LEADER_Erika.png                        +- --
+  datafiles/sprites/trainers/LEADER_Giovanni.png                     +- --
+  datafiles/sprites/trainers/LEADER_Koga.png                         +- --
+  datafiles/sprites/trainers/LEADER_Misty.png                        +- --
+  datafiles/sprites/trainers/LEADER_Sabrina.png                      +- --
+  datafiles/sprites/trainers/LEADER_Surge.png                        +- --
+  datafiles/sprites/trainers/PAINTER.png                             +- --
+  datafiles/sprites/trainers/PICNICKER.png                           +- --
+  datafiles/sprites/trainers/POKEMANIAC.png                          +- --
+  datafiles/sprites/trainers/POKEMONBREEDER.png                      +- --
+  datafiles/sprites/trainers/POKEMONRANGER_F.png                     +- --
+  datafiles/sprites/trainers/POKEMONRANGER_M.png                     +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_Brendan.png              +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_Brendan_back.png         +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_Leaf.png                 +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_Leaf_back.png            +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_May.png                  +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_May_back.png             +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_Red.png                  +- --
+  datafiles/sprites/trainers/POKEMONTRAINER_Red_back.png             +- --
+  datafiles/sprites/trainers/PROFESSOR.png                           +- --
+  datafiles/sprites/trainers/PSYCHIC_F.png                           +- --
+  datafiles/sprites/trainers/PSYCHIC_M.png                           +- --
+  datafiles/sprites/trainers/RIVAL1.png                              +- --
+  datafiles/sprites/trainers/RIVAL2.png                              +- --
+  datafiles/sprites/trainers/ROCKER.png                              +- --
+  datafiles/sprites/trainers/ROCKETBOSS.png                          +- --
+  datafiles/sprites/trainers/RUINMANIAC.png                          +- --
+  datafiles/sprites/trainers/SAILOR.png                              +- --
+  datafiles/sprites/trainers/SCIENTIST.png                           +- --
+  datafiles/sprites/trainers/SISANDBRO.png                           +- --
+  datafiles/sprites/trainers/SUPERNERD.png                           +- --
+  datafiles/sprites/trainers/SWIMMER2_F.png                          +- --
+  datafiles/sprites/trainers/SWIMMER2_M.png                          +- --
+  datafiles/sprites/trainers/SWIMMER_F.png                           +- --
+  datafiles/sprites/trainers/SWIMMER_M.png                           +- --
+  datafiles/sprites/trainers/TAMER.png                               +- --
+  datafiles/sprites/trainers/TEAMROCKET_F.png                        +- --
+  datafiles/sprites/trainers/TEAMROCKET_M.png                        +- --
+  datafiles/sprites/trainers/TUBER2_F.png                            +- --
+  datafiles/sprites/trainers/TUBER2_M.png                            +- --
+  datafiles/sprites/trainers/TUBER_F.png                             +- --
+  datafiles/sprites/trainers/TUBER_M.png                             +- --
+  datafiles/sprites/trainers/TWINS.png                               +- --
+  datafiles/sprites/trainers/YOUNGCOUPLE.png                         +- --
+  datafiles/sprites/trainers/YOUNGSTER.png                           +- --
+  datafiles/sprites/ui/battle/databox_normal.png                     +- --
+  datafiles/sprites/ui/battle/databox_normal_foe.png                 +- --
+  datafiles/sprites/ui/battle/icon_ball.png                          +- --
+  datafiles/sprites/ui/battle/icon_ball_empty.png                    +- --
+  datafiles/sprites/ui/battle/overlay_message.png                    +- --
+  datafiles/sprites/ui/types.png                                     +- --
+  docs/como_adicionar_artes.txt                                      +55 -0
+  estado_do_jogo.md                                                  +55 -87
+  objects/obj_demo_game/Create_0.gml                                 +51 -57
+  objects/obj_demo_game/Draw_64.gml                                  +7 -7
+  objects/obj_demo_game/Step_0.gml                                   +10 -10
+  objects/obj_game_manager/Create_0.gml                              +1 -0
+  objects/obj_game_manager/Draw_75.gml                               +1 -0
+  objects/obj_game_manager/Step_0.gml                                +1 -0
+  objects/obj_game_manager/obj_game_manager.yy                       +1 -0
+  options/android/options_android.yy                                 +1 -1
+  options/html5/options_html5.yy                                     +1 -1
+  options/ios/options_ios.yy                                         +1 -1
+  options/linux/options_linux.yy                                     +1 -1
+  options/mac/options_mac.yy                                         +1 -1
+  options/tvos/options_tvos.yy                                       +1 -1
+  options/windows/options_windows.yy                                 +3 -3
+  scripts/scr_autoteste/scr_autoteste.gml                            +291 -0
+  scripts/scr_autoteste/scr_autoteste.yy                             +13 -0
+  scripts/scr_battle_ui/scr_battle_ui.gml                            +78 -57
+  scripts/scr_conteudo/scr_conteudo.gml                              +227 -0
+  scripts/scr_conteudo/scr_conteudo.yy                               +13 -0
+  scripts/scr_demo_playable/scr_demo_playable.gml                    +285 -411
+  scripts/scr_event_manager/scr_event_manager.gml                    +2 -2
+  scripts/scr_placeholders/scr_placeholders.gml                      +432 -0
+  scripts/scr_placeholders/scr_placeholders.yy                       +13 -0
+  scripts/scr_pokedex/scr_pokedex.gml                                +18 -20
+  scripts/scr_pokemon_data/scr_pokemon_data.gml                      +96 -903
+  scripts/scr_pokemon_sprites/scr_pokemon_sprites.gml                +80 -139
+  tools/autoteste.ps1                                                +14 -0
+  tools/gerar_conteudo.py                                            +218 -0
+  tools/gerar_registro.py                                            +219 -0
+  tools/gml_patch.py                                                 +67 -0
+  extrair_habilidades.py => tools/legacy/extrair_habilidades.py      +0 -0
+  injetar_passivas.ps1 => tools/legacy/injetar_passivas.ps1          +0 -0
+  injetar_passivas.py => tools/legacy/injetar_passivas.py            +0 -0
+  injetar_passivas_fix.ps1 => tools/legacy/injetar_passivas_fix.ps1  +0 -0
+  limpar_passivas.ps1 => tools/legacy/limpar_passivas.ps1            +0 -0
+  tools/renomear_habilidades.py                                      +39 -0
+  tools/trocar_textos.py                                             +142 -0
+  tools/yyp_util.py                                                  +90 -0

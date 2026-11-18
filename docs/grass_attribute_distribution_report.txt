@@ -1,0 +1,167 @@
+RELATORIO - DISTRIBUICAO DE ATRIBUTOS E PERFIS GRASS
+Projeto: PokemonRogueLike
+Gerado em: 2026-06-08
+
+OBJETIVO
+- Refinar todos os Pokemon Grass / dual Grass das geracoes 1 a 5.
+- Manter somente Grass como tipo com habilidades realmente desenhadas.
+- Outros tipos entram como placeholders genericos por enquanto, inclusive quando um dual Grass nasce jogando pelo outro tipo.
+
+COMO O CODIGO APLICA ISSO
+- Arquivo principal: scripts/scr_pokemon_data/scr_pokemon_data.gml
+- Funcao de perfil: pokemon_grass_perfil_get()
+- Aplicacao nos dados: pokemon_grass_perfil_aplicar()
+- Pool por arquetipo: pokemon_habilidades_grass_por_arquetipo()
+- Pool placeholder dos outros tipos: pokemon_habilidades_genericas_por_tipo()
+
+ARQUETIPOS GRASS ATIVOS
+1. Parasita / Parasita Parrudo
+   Foco: HP, Defesa, drenagem, Enraizado, sustain.
+   Tradeoff: menos velocidade e menos burst.
+
+2. Florescencia Critica
+   Foco: Velocidade, Ataque, Crescimento, golpes rapidos, critico.
+   Tradeoff: menos HP/Defesa.
+
+3. Energia Solar
+   Foco: HP/Defesa, Fotossintese, cura passiva pequena, golpes solares.
+   Tradeoff: cooldowns maiores e velocidade menor.
+
+DUAL TYPES
+- Se o segundo tipo define melhor a fantasia do Pokemon, ele nasce com placeholder desse tipo.
+- Grass entra como pacote secundario a partir do nivel 10 para nao quebrar a regra de uma habilidade inicial.
+- Exemplo: Oddish nasce Poison placeholder; Bulbasaur nasce Grass porque a linha foi pensada como Parasita Parrudo.
+
+PERFIS POR LINHA / POKEMON
+
+GRASS COMO IDENTIDADE PRINCIPAL
+#001-003 Bulbasaur/Ivysaur/Venusaur
+Perfil: Parasita Parrudo. Mais HP/Defesa, menos velocidade, dano levemente menor.
+Motivo: linha inicial mais robusta, boa para sobreviver em rotas longas com drenagem.
+
+#152-154 Chikorita/Bayleef/Meganium
+Perfil: Florescencia Critica. Menos HP/Defesa, muito mais velocidade, ataque equilibrado.
+Motivo: reposicionada como linha agil/critica conforme sua direcao de design.
+
+#252-254 Treecko/Grovyle/Sceptile
+Perfil: Florescencia Critica. Alta velocidade e pressao.
+Motivo: fantasia de atacante rapido.
+
+#387-388 Turtwig/Grotle
+Perfil: Raiz Pesada. Mais HP/Defesa, menos velocidade.
+Motivo: prepara a linha para virar colosso.
+
+#389 Torterra
+Perfil: Colosso Solar. Muito HP/Defesa, dano reduzido, velocidade muito baixa.
+Motivo: tanque de atrito. Nao deve apagar inimigo rapido; deve vencer pela duracao.
+
+#114 Tangela, #465 Tangrowth
+Perfil: Energia Solar. Defesa/HP altos, ritmo baixo.
+Motivo: muralha vegetal com sustain.
+
+#191-192 Sunkern/Sunflora
+Perfil: Energia Solar. Mais solar/sustain, baixa velocidade.
+Motivo: identidade solar literal.
+
+#548-549 Petilil/Lilligant
+Perfil: Florescencia Critica. Mais velocidade e ataque.
+Motivo: linha ofensiva elegante, boa para Crescimento + Folha Navalha.
+
+#511-512 Pansage/Simisage
+Perfil: Florescencia Critica. Ataque e velocidade.
+Motivo: atacante leve.
+
+#455 Carnivine
+Perfil: Florescencia Critica. Ataque alto, pouca defesa.
+Motivo: predador vegetal.
+
+#492 Shaymin
+Perfil: Energia Solar. Stats altos e equilibrados, sustain solar.
+Motivo: lendario defensivo/ofensivo sem exagerar cooldown.
+
+GRASS/POISON COM POISON COMO CAMINHO PRINCIPAL
+#043-045 Oddish/Gloom/Vileplume
+Perfil: Veneno Floral. Nasce Poison placeholder; Grass vem depois.
+Motivo: status e debuff importam mais que dano Grass puro.
+
+#069-071 Bellsprout/Weepinbell/Victreebel
+Perfil: Veneno Agressivo. Nasce Poison placeholder; mais ataque.
+Motivo: atacante venenoso agressivo.
+
+#315 Roselia, #406 Budew, #407 Roserade
+Perfil: Veneno Floral. Nasce Poison placeholder; velocidade melhor.
+Motivo: linha floral venenosa, boa ponte para combos Envenenado + Grass.
+
+#590-591 Foongus/Amoonguss
+Perfil: Veneno Dormente. Nasce Poison placeholder; muito HP, pouca velocidade.
+Motivo: controle lento, resistente e incomodo.
+
+GRASS COM OUTRO TIPO DOMINANTE PLACEHOLDER
+#046-047 Paras/Parasect
+Perfil: Inseto de Pressao. Nasce Bug placeholder; Grass complementa com Enraizado.
+
+#270-272 Lotad/Lombre/Ludicolo
+Perfil: Fluxo Solar. Nasce Water placeholder; Grass entra como sustain.
+
+#274-275 Nuzleaf/Shiftry
+Perfil: Florescencia Critica. Nasce Dark placeholder; Grass vira pacote de pressao.
+
+#286 Breloom
+Perfil: Lutador Natural. Nasce Fighting placeholder; Grass complementa sustain.
+
+#345-346 Lileep/Cradily
+Perfil: Rocha Solar. Nasce Rock placeholder; HP/Defesa altos e velocidade baixa.
+
+#357 Tropius
+Perfil: Energia Solar. Nasce Flying placeholder; corpo grande, sustain solar.
+
+#459-460 Snover/Abomasnow
+Perfil: Geada Floral. Nasce Ice placeholder; lento e resistente.
+
+#546-547 Cottonee/Whimsicott
+Perfil: Florescencia Critica. Nasce Fairy placeholder; velocidade alta.
+
+#585-586 Deerling/Sawsbuck
+Perfil: Florescencia Critica. Nasce Normal placeholder; alta mobilidade.
+
+#597-598 Ferroseed/Ferrothorn
+Perfil: Casca de Espinhos. Nasce Steel placeholder; defesa altissima, velocidade baixissima.
+
+#640 Virizion
+Perfil: Florescencia Critica. Nasce Fighting placeholder; lendario rapido.
+
+OUTROS GRASS COBERTOS POR FALLBACK INTELIGENTE
+- Se tiver HP+Defesa altos: Energia Solar.
+- Se tiver Speed ou Attack altos: Florescencia Critica.
+- Caso contrario: Parasita.
+
+HABILIDADES POR ARQUETIPO
+
+Parasita
+Lv 1  Absorver
+Lv 10 Enraizar / Folhagem
+Lv 15 Semente Sanguessuga / Mega Dreno
+Lv 20 Bomba de Semente / Giga Dreno
+Lv 30 Tempestade Floral
+
+Florescencia Critica
+Lv 1  Folhagem
+Lv 10 Crescimento / Absorver
+Lv 15 Folha Navalha
+Lv 20 Bomba de Semente
+Lv 25 Lamina de Folha
+Lv 30 Danca das Flores / Tempestade Floral
+
+Energia Solar
+Lv 1  Broto Solar
+Lv 10 Absorver / Enraizar
+Lv 15 Sintese
+Lv 20 Giga Dreno
+Lv 25 Lamina Solar / Bomba de Semente
+Lv 30 Raio Solar
+
+OBSERVACOES
+- O dano dos perfis defensivos foi reduzido por multiplicador de Attack, nao por remover habilidades.
+- O Torterra agora deve parecer um tanque lento: muita vida, muita defesa e pouca velocidade.
+- Chikorita deixa de competir com Bulbasaur no mesmo papel; agora ocupa o nicho rapido/critico.
+- Poison/Bug/Water/etc ainda nao possuem arquetipos finais no codigo: usam placeholders ate a fase de balanceamento desses tipos.

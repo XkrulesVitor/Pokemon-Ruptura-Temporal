@@ -1,0 +1,186 @@
+RELATORIO DE BALANCEAMENTO - TIPOS FOGO E AGUA
+Projeto: PokemonRogueLike
+
+Resumo rapido
+- Fogo ficou centrado em derreter defesa, aplicar Queimando e abrir janelas de burst.
+- Agua ficou centrada em manipular cooldowns, aplicar Molhado e controlar o ritmo da luta.
+- Os dois tipos conversam com Grass/Poison:
+  - Fogo aproveita Corroendo e Envenenado para finalizar alvos ja fragilizados por Poison.
+  - Agua aplica Molhado/Enraizado e acelera cooldowns, combinando bem com Grass de drenagem e controle.
+
+============================================================
+TIPO FOGO
+============================================================
+
+Arquetipo 1: Incandescencia
+Marca: derretimento progressivo de defesa.
+Build: aplica Queimando, aplica ArmaduraDerretida, depois finaliza com Rajada Derretida/Nucleo Infernal.
+Sinergias fortes: Poison Corrosao Organica, Grass Parasita, qualquer skill que aplique Vulneravel.
+
+Habilidades:
+- Brasa | Nv.1 | Dano 20 | CD 4.1s | Efeitos: aplica Queimando.
+- Marca Incandescente | Nv.10 | Dano 14 | CD 6.5s | Efeitos: aplica ArmaduraDerretida; +8% dano se alvo estiver Envenenado.
+- Roda de Fogo | Nv.10 | Dano 30 | CD 4.6s | Efeitos: +10% dano se alvo estiver com ArmaduraDerretida.
+- Lanca-Chamas | Nv.15 | Dano 42 | CD 6.8s | Efeitos: +16% dano contra Queimando; combo Queimando.
+- Calor Escaldante | Nv.20 | Dano 24 | CD 8.4s | Efeitos: aplica CalorEscaldante, reduzindo ataque/ritmo do alvo.
+- Rajada Derretida | Nv.25 | Dano 50 | CD 7.4s | Efeitos: +14% contra ArmaduraDerretida; +12% contra Corroendo.
+- Nucleo Infernal | Nv.30 | Dano 72 | CD 10.8s | Efeitos: +16% contra Queimando; +12% contra Corroendo.
+
+Passivas:
+- Passiva 1: Brasas Persistentes - Queimando e ArmaduraDerretida deixam o alvo vulneravel a combos.
+- Passiva 2: Forno Aberto - Dano de fogo conversa melhor com Corroendo e outros debuffs defensivos.
+
+Pokemons/perfis:
+- Vulpix/Ninetales, Growlithe/Arcanine, Ponyta/Rapidash, Flareon, Moltres, Entei, Ho-Oh, Torchic/Combusken/Blaziken, Heatran, Victini, Litwick/Lampent/Chandelure, Larvesta/Volcarona, Reshiram.
+- Fallback: Fire com HP+Def altos tambem cai em Incandescencia.
+
+------------------------------------------------------------
+
+Arquetipo 2: Explosao Termica
+Marca: dano pesado, cooldown maior, alto risco/alto impacto.
+Build: prepara CalorConcentrado ou ArmaduraDerretida, guarda janela e explode com Sobreaquecer/Explosao Termica.
+Sinergias fortes: Poison Corroendo, Water Mare Protelatoria atrasando cooldown inimigo, Grass Enraizado segurando o alvo.
+
+Habilidades:
+- Estouro de Calor | Nv.1 | Dano 32 | CD 5.4s | Efeitos: aplica Queimando; +10% se alvo estiver com ArmaduraDerretida.
+- Brasa | Nv.10 | Dano 21 | CD 4.2s | Efeitos: aplica Queimando.
+- Carga Termica | Nv.10 | Dano 10 | CD 7.2s | Efeitos: aplica CalorConcentrado no usuario.
+- Sobreaquecer | Nv.15 | Dano 52 | CD 8.4s | Efeitos: aplica ArmaduraDerretida; +18% se usuario tiver CalorConcentrado.
+- Lanca-Chamas | Nv.20 | Dano 42 | CD 6.8s | Efeitos: +16% contra Queimando; combo Queimando.
+- Explosao Termica | Nv.25 | Dano 70 | CD 10.0s | Efeitos: +18% contra ArmaduraDerretida; +10% contra Corroendo.
+- Nucleo Infernal | Nv.30 | Dano 76 | CD 10.8s | Efeitos: +16% se usuario tiver CalorConcentrado; +16% contra Queimando.
+
+Passivas:
+- Passiva 1: Calor Concentrado - Preparos de fogo aumentam golpes pesados.
+- Passiva 2: Pavio Curto - Finalizadores aproveitam alvos queimando ou com defesa derretida.
+
+Pokemons/perfis:
+- Magmar/Magmortar, Slugma/Magcargo, Magby, Numel/Camerupt, Torkoal, Tepig/Pignite/Emboar, Darumaka/Darmanitan, Heatmor.
+- Fallback: Fire com ataque alto e velocidade baixa cai em Explosao Termica.
+
+------------------------------------------------------------
+
+Arquetipo 3: Fenix Veloz
+Marca: DPS de vidro e rotacao rapida.
+Build: usa Chama Veloz/Aqua-like pressure, pega Fenix no slot 2 e transforma velocidade em muitas janelas pequenas.
+Sinergias fortes: Water Fluxo Acelerado, Grass Florescencia Critica, Poison Peste Gradual.
+
+Habilidades:
+- Chama Veloz | Nv.1 | Dano 18 | CD 3.2s | Efeitos: +8% se usuario tiver FenixAtiva.
+- Brasa | Nv.10 | Dano 21 | CD 4.2s | Efeitos: aplica Queimando.
+- Fenix | Nv.10 | Dano 8 | CD 7.4s | Efeitos: aplica FenixAtiva no usuario.
+- Avanco Flamejante | Nv.15 | Dano 30 | CD 3.8s | Efeitos: +14% se usuario tiver FenixAtiva.
+- Asa Ardente | Nv.20 | Dano 40 | CD 5.6s | Efeitos: +12% contra Queimando.
+- Investida Ardente | Nv.25 | Dano 46 | CD 5.2s | Efeitos: +12% se usuario tiver FenixAtiva; +10% contra CalorEscaldante.
+- Surto Fenix | Nv.30 | Dano 58 | CD 7.2s | Efeitos: +22% se usuario tiver FenixAtiva; +12% contra Queimando.
+
+Passivas:
+- Passiva 1: Chama de Retorno - Buffs de Fenix favorecem rotacoes rapidas.
+- Passiva 2: Passo Incandescente - Velocidade alta transforma cooldown curto em pressao constante.
+
+Pokemons/perfis:
+- Charmander/Charmeleon/Charizard, Cyndaquil/Quilava/Typhlosion, Chimchar/Monferno/Infernape, Pansear/Simisear.
+- Fallback: Fire com Speed >= 90 cai em Fenix Veloz.
+
+============================================================
+TIPO AGUA
+============================================================
+
+Arquetipo 1: Fluxo Acelerado
+Marca: reducao de cooldown e pressao constante.
+Build: aplica Molhado, ativa FluxoAcelerado e usa golpes curtos para manter a barra sempre girando.
+Sinergias fortes: Grass Fluxo Solar/Lotad, Fire Fenix Veloz, Poison Peste Gradual.
+
+Habilidades:
+- Jato d'Agua | Nv.1 | Dano 20 | CD 4.0s | Efeitos: aplica Molhado.
+- Corrente Rapida | Nv.10 | Dano 22 | CD 3.3s | Efeitos: reduz cooldowns do usuario em 0.35s.
+- Aqua Jet | Nv.10 | Dano 28 | CD 3.0s | Efeitos: aplica FluxoAcelerado no usuario.
+- Corte Correnteza | Nv.15 | Dano 38 | CD 4.2s | Efeitos: +12% contra Molhado.
+- Renovar Fluxo | Nv.20 | Dano 14 | CD 7.0s | Efeitos: reduz cooldowns do usuario em 0.65s; aplica FluxoAcelerado.
+- Surto Rapido | Nv.25 | Dano 46 | CD 4.8s | Efeitos: +14% se usuario tiver FluxoAcelerado; +10% contra Molhado.
+- Ciclo Torrencial | Nv.30 | Dano 58 | CD 7.8s | Efeitos: reduz cooldowns do usuario em 0.80s; +16% se usuario tiver FluxoAcelerado.
+
+Passivas:
+- Passiva 1: Ritmo de Correnteza - FluxoAcelerado reduz cooldowns e cria rotacoes constantes.
+- Passiva 2: Retorno Liquido - Aceleracoes de agua ajudam builds hibridas a manter dois tipos ativos.
+
+Pokemons/perfis:
+- Psyduck/Golduck, Poliwag/Poliwhirl/Poliwrath, Horsea/Seadra, Goldeen/Seaking, Staryu/Starmie, Chinchou/Lanturn, Politoed, Remoraid/Octillery, Wingull/Pelipper, Surskit, Piplup/Prinplup/Empoleon, Buizel/Floatzel, Finneon/Lumineon, Oshawott/Dewott/Samurott, Panpour/Simipour, Ducklett/Swanna.
+- Fallback: Water com Speed >= 85 cai em Fluxo Acelerado.
+
+------------------------------------------------------------
+
+Arquetipo 2: Mare Protelatoria
+Marca: atrasar cooldown inimigo e vencer no controle.
+Build: Bolha/Nevoa atrasa o alvo, Redemoinho conversa com Enraizado, depois Mar Revolto/Tranca de Mare fecha a luta.
+Sinergias fortes: Grass Parasita, Poison Corrosao Organica, Fire Explosao Termica.
+
+Habilidades:
+- Bolha | Nv.1 | Dano 16 | CD 4.5s | Efeitos: aplica Molhado; atrasa cooldowns do alvo em 0.20s.
+- Nevoa Estagnante | Nv.10 | Dano 8 | CD 7.4s | Efeitos: aplica NevoaEstagnante; atrasa cooldowns do alvo em 0.45s.
+- Redemoinho | Nv.10 | Dano 26 | CD 6.8s | Efeitos: aplica Enraizado; +10% contra Molhado.
+- Mare Lenta | Nv.15 | Dano 34 | CD 6.4s | Efeitos: atrasa cooldowns do alvo em 0.35s; +12% contra Molhado.
+- Muralha de Mare | Nv.20 | Dano 24 | CD 8.8s | Efeitos: cura 5% HP max; atrasa cooldowns do alvo em 0.25s.
+- Mar Revolto | Nv.25 | Dano 48 | CD 8.4s | Efeitos: +16% contra Molhado; escala ate +12% pelo cooldown atual do alvo.
+- Tranca de Mare | Nv.30 | Dano 60 | CD 10.2s | Efeitos: atrasa cooldowns do alvo em 0.65s; +15% contra NevoaEstagnante.
+
+Passivas:
+- Passiva 1: Pressao de Mare - Habilidades de agua atrasam cooldowns e compram tempo.
+- Passiva 2: Nevoa Tardia - Alvos molhados ou lentos sofrem mais em lutas longas.
+
+Pokemons/perfis:
+- Slowpoke/Slowbro/Slowking, Seel/Dewgong, Shellder/Cloyster, Lapras, Vaporeon, Marill/Azumarill, Qwilfish, Corsola, Mantine, Suicune, Wailmer/Wailord, Feebas/Milotic, Spheal/Sealeo/Walrein, Clamperl/Huntail/Gorebyss, Relicanth, Luvdisc, Shellos/Gastrodon, Mantyke, Phione/Manaphy, Tympole/Palpitoad/Seismitoad, Tirtouga/Carracosta, Frillish/Jellicent, Alomomola.
+- Fallback: Water com HP+Def altos ou HP >= 100 cai em Mare Protelatoria.
+
+------------------------------------------------------------
+
+Arquetipo 3: Pressao Hidraulica
+Marca: dano de impacto que escala com cooldown inimigo.
+Build: aplica Molhado e tenta bater quando o inimigo esta atrasado/carregando.
+Sinergias fortes: Water Mare Protelatoria, Fire Incandescencia, Grass Enraizado.
+
+Habilidades:
+- Pulso d'Agua | Nv.1 | Dano 26 | CD 4.8s | Efeitos: aplica Molhado; escala ate +8% pelo cooldown atual do alvo.
+- Jato d'Agua | Nv.10 | Dano 20 | CD 4.0s | Efeitos: aplica Molhado.
+- Corte de Pressao | Nv.10 | Dano 34 | CD 5.4s | Efeitos: escala ate +12% pelo cooldown atual do alvo.
+- Pressao Hidraulica | Nv.15 | Dano 44 | CD 6.2s | Efeitos: escala ate +18% pelo cooldown atual do alvo; +10% contra Molhado.
+- Surfar | Nv.20 | Dano 50 | CD 7.0s | Efeitos: +16% contra Molhado; combo Molhado.
+- Onda Esmagadora | Nv.25 | Dano 58 | CD 8.2s | Efeitos: escala ate +18% pelo cooldown atual do alvo.
+- Hidro Bomba | Nv.30 | Dano 72 | CD 10.5s | Efeitos: escala ate +20% pelo cooldown atual do alvo; +12% contra Molhado.
+
+Passivas:
+- Passiva 1: Carga Hidraulica - Golpes fortes causam mais dano quando o alvo esta com cooldowns carregados.
+- Passiva 2: Impacto de Ressaca - Molhado prepara finalizadores pesados sem dobrar dano demais.
+
+Pokemons/perfis:
+- Squirtle/Wartortle/Blastoise, Krabby/Kingler, Magikarp/Gyarados, Omanyte/Omastar, Kabuto/Kabutops, Totodile/Croconaw/Feraligatr, Wooper/Quagsire, Kingdra, Mudkip/Marshtomp/Swampert, Carvanha/Sharpedo, Barboach/Whiscash, Corphish/Crawdaunt, Kyogre, Palkia, Basculin, Keldeo.
+- Fallback: Water padrao cai em Pressao Hidraulica.
+
+============================================================
+SISTEMAS DE COMBATE ADICIONADOS
+============================================================
+
+- calcular_dano_elemental aplica tabela suavizada:
+  - super eficaz: 1.25x
+  - neutro: 1.00x
+  - pouco eficaz ou antiga imunidade: 0.75x
+- Queimando causa DoT leve por segundo.
+- ArmaduraDerretida reduz defesa efetiva do alvo.
+- CalorEscaldante reduz dano e ritmo de cooldown do alvo.
+- FluxoAcelerado acelera cooldowns do usuario.
+- NevoaEstagnante reduz ritmo de cooldown do alvo.
+- bonus_dano_alvo_cd escala habilidades de Agua com o cooldown atual do alvo.
+- reduzir_cooldowns_usuario e aumentar_cooldowns_alvo movem diretamente as barras de cooldown.
+
+============================================================
+IDEIAS DE BUILD
+============================================================
+
+- Charmander/Charizard: Fenix Veloz + Brasa + Avanco Flamejante. Build de DPS de vidro; precisa de item/berry ou parceiro que segure o inimigo.
+- Torkoal/Camerupt: Explosao Termica + Sobreaquecer + Explosao Termica. Build lenta, mas muito forte quando Poison/Grass ja prepararam status.
+- Vulpix/Ninetales: Incandescencia + Calor Escaldante. Build de controle ofensivo, boa contra inimigos de alto dano.
+- Squirtle/Blastoise: Pressao Hidraulica + Surfar/Hidro Bomba. Build bruiser; bate melhor quando o inimigo foi atrasado por Mare.
+- Poliwag/Starmie/Buizel: Fluxo Acelerado + Corrente Rapida + Aqua Jet. Build de rotacao; segura DPS constante.
+- Lapras/Wailord/Milotic: Mare Protelatoria + Nevoa + Muralha de Mare. Build de controle/tanque para runs longas.
+- Lotad/Ludicolo: Grass com inicial Water; pode misturar Fluxo Acelerado com drenagem de Grass para sustain e cooldown.
+- Tentacool/Cruel: mantido como Poison principal; Water entra como pool secundaria no draft se usarmos esse caminho futuramente.

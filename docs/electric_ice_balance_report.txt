@@ -1,0 +1,186 @@
+RELATORIO DE BALANCEAMENTO - TIPOS ELETRICO E GELO
+Projeto: PokemonRogueLike
+
+Resumo rapido
+- Eletrico ficou centrado em Ofuscado, Paralisado, Sobrecarregado e velocidade de rotacao.
+- Gelo ficou centrado em Gelado, Congelando, Fragil, MantoGelo e finalizacao de alvo enfraquecido.
+- Os dois tipos conversam com os ja criados:
+  - Eletrico ganha muito com Agua/Molhado e tambem pune alvos presos por Grass.
+  - Gelo segura o ritmo do inimigo para Poison/Grass trabalharem em lutas longas.
+  - Fire derrete Ice pela tabela elemental, mas Ice pode sobreviver com MantoGelo.
+
+============================================================
+TIPO ELETRICO
+============================================================
+
+Arquetipo 1: Curto-Circuito
+Marca: erro/ofuscacao e controle leve de cooldown.
+Build: aplica Ofuscado, tenta fazer o inimigo errar, pune com Pulso de Interferencia ou Apagao.
+Sinergias fortes: Agua Molhado, Grass Enraizado, Poison Corroendo.
+
+Habilidades:
+- Choque Ofuscante | Nv.1 | Dano 18 | CD 3.8s | Aplica Ofuscado.
+- Flash Eletrico | Nv.10 | Dano 10 | CD 6.4s | Aplica Ofuscado; atrasa cooldowns do alvo em 0.18s.
+- Curto-Circuito | Nv.10 | Dano 28 | CD 5.6s | Aplica Paralisado; +14% contra Molhado; combo Molhado.
+- Campo Estatico | Nv.15 | Dano 16 | CD 7.2s | Ativa EstaticaAtiva; atrasa cooldowns do alvo em 0.20s.
+- Raio Cegante | Nv.20 | Dano 36 | CD 6.2s | +18% contra Ofuscado; combo Ofuscado.
+- Pulso de Interferencia | Nv.25 | Dano 34 | CD 8.2s | Aplica Ofuscado; atrasa cooldowns em 0.45s; +12% contra ErroEletrico.
+- Apagao | Nv.30 | Dano 62 | CD 10.2s | +18% contra Ofuscado; +14% contra Paralisado; +12% contra ErroEletrico.
+
+Passivas:
+- Passiva 1: Circuito Instavel - Ofuscado pode fazer o alvo desperdicar o proximo golpe.
+- Passiva 2: Erro Punido - Inimigos que erram viram alvo de combos eletricos.
+
+Pokemons/perfis:
+- Magnemite/Magneton/Magnezone, Voltorb/Electrode, Plusle, Minun, Pachirisu, Stunfisk.
+- Perfil de atributos: HP medio, dano um pouco menor, defesa boa, velocidade media/alta.
+
+------------------------------------------------------------
+
+Arquetipo 2: Sobrecarga
+Marca: dano eletrico forte e carga acumulada.
+Build: aplica Sobrecarregado ou Paralisado, usa Descarga/Sobrecarga e finaliza com Trovao/Colapso Eletrico.
+Sinergias fortes: Agua Molhado, Grass Enraizado, Electric Ofuscado.
+
+Habilidades:
+- Faisca Condutora | Nv.1 | Dano 24 | CD 4.4s | Aplica Sobrecarregado.
+- Condutor Eletrico | Nv.10 | Dano 20 | CD 5.2s | Aplica Paralisado; +16% contra Molhado; combo Molhado.
+- Descarga | Nv.10 | Dano 36 | CD 5.9s | +12% contra Sobrecarregado; +10% contra Molhado.
+- Sobrecarga | Nv.15 | Dano 48 | CD 7.0s | +18% contra Sobrecarregado; +10% contra Ofuscado.
+- Raio em Cadeia | Nv.20 | Dano 44 | CD 6.8s | +10% contra Enraizado; +12% contra Molhado.
+- Trovao | Nv.25 | Dano 64 | CD 9.2s | +16% contra Molhado; +12% contra Paralisado; combo Molhado.
+- Colapso Eletrico | Nv.30 | Dano 74 | CD 10.6s | +20% contra Sobrecarregado; +12% contra Molhado; +12% contra ErroEletrico.
+
+Passivas:
+- Passiva 1: Carga Acumulada - Sobrecarregado prepara golpes eletricos mais fortes.
+- Passiva 2: Condutor Natural - Molhado e Enraizado ajudam eletrico a encaixar finalizadores.
+
+Pokemons/perfis:
+- Pikachu/Raichu, Electabuzz/Electivire, Raikou, Electrike/Manectric, Shinx/Luxio/Luxray, Blitzle/Zebstrika, Tynamo/Eelektrik/Eelektross.
+- Ampharos, Electivire, Thundurus e Zekrom usam uma variante mais pesada: mais HP/dano, menos velocidade.
+- Perfil de atributos: dano alto, velocidade media, defesa menor nos ofensivos; versao pesada tem HP maior e speed menor.
+
+------------------------------------------------------------
+
+Arquetipo 3: Estatica Veloz
+Marca: velocidade, rotacao curta e pressao constante.
+Build: ativa EstaticaAtiva, reduz cooldowns e usa golpes curtos ate abrir uma janela de burst.
+Sinergias fortes: Water Fluxo Acelerado, Grass Florescencia Critica, Poison Peste Gradual.
+
+Habilidades:
+- Faisca | Nv.1 | Dano 20 | CD 3.2s | Aplica Paralisado.
+- Carga Estatica | Nv.10 | Dano 8 | CD 6.8s | Ativa EstaticaAtiva; reduz cooldowns do usuario em 0.25s.
+- Troca Volt | Nv.10 | Dano 30 | CD 3.9s | +12% se o usuario tiver EstaticaAtiva.
+- Agulha Eletrica | Nv.15 | Dano 32 | CD 3.6s | +10% contra Molhado.
+- Sobrerrotacao | Nv.20 | Dano 18 | CD 7.2s | Reduz cooldowns em 0.60s; ativa EstaticaAtiva.
+- Avanco Relampago | Nv.25 | Dano 48 | CD 5.0s | +14% com EstaticaAtiva; +10% contra Paralisado.
+- Circuito Veloz | Nv.30 | Dano 58 | CD 7.4s | Reduz cooldowns em 0.70s; +18% com EstaticaAtiva.
+
+Passivas:
+- Passiva 1: Pele Estatica - EstaticaAtiva acelera a rotacao das habilidades.
+- Passiva 2: Voltagem Continua - Velocidade alta transforma golpes pequenos em pressao constante.
+
+Pokemons/perfis:
+- Jolteon, Zapdos, Pichu, Rotom, Emolga, Joltik/Galvantula.
+- Perfil de atributos: HP baixo, defesa baixa, ataque moderado e velocidade muito alta.
+
+============================================================
+TIPO GELO
+============================================================
+
+Arquetipo 1: Geada Acumulativa
+Marca: reduzir ritmo e preparar alvo lento.
+Build: aplica Gelado, evolui para Congelando e fecha com Permafrost.
+Sinergias fortes: Poison DoT, Grass sustain, Water Mare Protelatoria.
+
+Habilidades:
+- Vento Gelado | Nv.1 | Dano 18 | CD 4.2s | Aplica Gelado.
+- Camada de Geada | Nv.10 | Dano 12 | CD 6.2s | Aplica Gelado; atrasa cooldowns em 0.20s.
+- Neve Cortante | Nv.10 | Dano 28 | CD 4.8s | +12% contra Gelado.
+- Prisao Gelida | Nv.15 | Dano 32 | CD 6.8s | Aplica Congelando; +10% contra Gelado.
+- Cristais Lentos | Nv.20 | Dano 38 | CD 7.4s | Atrasa cooldowns em 0.35s; +10% contra Congelando.
+- Granizo | Nv.25 | Dano 30 | CD 8.8s | Aplica Granizo; +12% contra Gelado.
+- Permafrost | Nv.30 | Dano 62 | CD 10.0s | +18% contra Congelando; +12% contra Gelado.
+
+Passivas:
+- Passiva 1: Geada Acumulada - Gelado e Congelando reduzem o ritmo do alvo.
+- Passiva 2: Frio Progressivo - Controle de gelo combina bem com veneno, grama e agua.
+
+Pokemons/perfis:
+- Articuno, Glalie, Vanillite/Vanillish/Vanilluxe.
+- Perfil de atributos: equilibrado, com leve foco em controle e defesa sem ficar tanque demais.
+
+------------------------------------------------------------
+
+Arquetipo 2: Estilhacar
+Marca: fragilidade e finalizadores.
+Build: aplica Fragil ou Gelado, quebra com Estilhacar/Quebra-Cristal e finaliza com Zero Absoluto.
+Sinergias fortes: Grass Enraizado, Electric Paralisado, Water cooldown alto.
+
+Habilidades:
+- Lasca de Gelo | Nv.1 | Dano 24 | CD 3.8s | Aplica Gelado; +8% contra Gelado.
+- Gelo Fino | Nv.10 | Dano 14 | CD 6.8s | Aplica Fragil.
+- Estilhacar | Nv.10 | Dano 38 | CD 5.5s | +16% contra Fragil; +10% contra Gelado.
+- Estacas de Gelo | Nv.15 | Dano 36 | CD 4.8s | +10% contra Fragil.
+- Mordida Gelida | Nv.20 | Dano 46 | CD 6.2s | +14% contra Gelado; +8% contra Enraizado.
+- Quebra-Cristal | Nv.25 | Dano 56 | CD 7.4s | +18% contra Fragil; +12% contra Congelando.
+- Zero Absoluto | Nv.30 | Dano 68 | CD 10.8s | +16% contra Fragil; +20% se alvo estiver com 30% ou menos de HP.
+
+Passivas:
+- Passiva 1: Gelo Fino - Fragil prepara golpes de estouro sem dobrar dano demais.
+- Passiva 2: Quebra Precisa - Alvos gelados ou com HP baixo sofrem finalizadores melhores.
+
+Pokemons/perfis:
+- Jynx/Smoochum, Sneasel/Weavile, Delibird, Snorunt, Glaceon, Froslass, Cryogonal.
+- Perfil de atributos: ataque/velocidade altos, HP e defesa mais baixos.
+
+------------------------------------------------------------
+
+Arquetipo 3: Manto de Gelo
+Marca: resistencia, defesa e contra-ataque lento.
+Build: ativa MantoGelo, segura a luta, aplica Granizo/Gelado e vence com Avalanche.
+Sinergias fortes: Poison Peste Gradual, Grass Energia Solar, Water Mare Protelatoria.
+
+Habilidades:
+- Neve Firme | Nv.1 | Dano 18 | CD 4.8s | Aplica Gelado.
+- Manto de Gelo | Nv.10 | Dano 8 | CD 8.0s | Ativa MantoGelo; cura 4% do HP maximo.
+- Guarda Cristalina | Nv.10 | Dano 18 | CD 7.0s | Aplica Gelado; atrasa cooldowns em 0.18s.
+- Espelho Gelido | Nv.15 | Dano 34 | CD 6.4s | +12% se usuario tiver MantoGelo.
+- Casca de Granizo | Nv.20 | Dano 26 | CD 8.8s | Aplica Granizo; cura 6% do HP maximo.
+- Avalanche | Nv.25 | Dano 58 | CD 8.0s | +14% com MantoGelo; +12% contra Gelado.
+- Muralha Glacial | Nv.30 | Dano 60 | CD 10.4s | Ativa MantoGelo; +14% contra Fragil.
+
+Passivas:
+- Passiva 1: Casca Glacial - Manto de Gelo aumenta a resistencia e sustenta lutas longas.
+- Passiva 2: Avalanche Lenta - Defesa alta vira janela de contra-ataque gelado.
+
+Pokemons/perfis:
+- Dewgong, Cloyster, Lapras, Swinub/Piloswine/Mamoswine, Spheal/Sealeo/Walrein, Regice, Snover/Abomasnow, Cubchoo/Beartic, Kyurem.
+- Observacao: alguns Water/Ice e Grass/Ice podem usar Agua/Grass como tipo principal no banco, mas recebem Ice como pool secundaria nos drafts.
+- Perfil de atributos: HP/defesa altos, velocidade baixa, dano moderado.
+
+============================================================
+EFEITOS DE COMBATE NOVOS
+============================================================
+
+- Ofuscado: no proximo ataque, 28% de chance de errar; o status e consumido na tentativa.
+- ErroEletrico: aplicado por erro causado por Ofuscado; abre combos eletricos por 3s.
+- Paralisado: reduz velocidade de cooldown em 12%.
+- EstaticaAtiva: aumenta velocidade de cooldown em 13%.
+- Sobrecarregado: marcador ofensivo para combos eletricos.
+- Gelado: reduz velocidade de cooldown em 10%.
+- Congelando: reduz velocidade de cooldown em 18%.
+- Fragil: reduz defesa efetiva do alvo em 10%.
+- MantoGelo: aumenta defesa efetiva em 14%, mas reduz velocidade de cooldown em 6%.
+- Granizo: dano leve por segundo, escalando pouco com stacks.
+
+============================================================
+IDEIAS DE BUILD
+============================================================
+
+- Pikachu/Raichu: Sobrecarga + Water ally. Molhado abre Condutor Eletrico, Trovao e Colapso Eletrico.
+- Jolteon: Estatica Veloz + Grass crit. Rotacao rapida aproveita janelas curtas de Enraizado/Paralisado.
+- Magnezone: Curto-Circuito + Steel futuro. Controle e defesa para segurar chefe rapido.
+- Lapras/Cloyster: Water principal + Ice secundaria. Mare Protelatoria cria tempo, Manto/Geada segura rota longa.
+- Weavile/Froslass: Estilhacar. Precisa de suporte de controle; recompensa bem alvos Fragil/Gelado.
+- Abomasnow: Grass principal + Ice secundaria. Energia Solar sustenta, Ice reduz ritmo do inimigo.

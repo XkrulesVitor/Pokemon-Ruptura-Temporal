@@ -1,0 +1,1 @@
+battle_layout_posicionar_campo(aliados_campo, inimigos_campo);

@@ -1,0 +1,219 @@
+RELATORIO DE BALANCEAMENTO - TIPO POISON
+Projeto: PokemonRogueLike
+Gerado em: 2026-06-09
+
+OBJETIVO
+- Transformar Poison em uma tipagem jogavel, com identidade propria, e nao apenas golpes genericos.
+- Fazer Poison conversar com Grass, principalmente nos Pokemon Grass/Poison.
+- Definir 3 arquetipos finais, habilidade inicial, pools de draft, passivas e distribuicao de atributos.
+- Manter Pokemon de dois tipos mais brandos: o primeiro slot define a identidade inicial; o segundo tipo entra no draft a partir do nivel 10.
+
+ARQUIVOS ALTERADOS
+- scripts/scr_pokemon_data/scr_pokemon_data.gml
+- scripts/scr_pokemon_combate/scr_pokemon_combate.gml
+
+RESUMO DAS MUDANCAS
+- Poison agora tem tres arquetipos reais: Peste Gradual, Toxina Autodestrutiva e Corrosao Organica.
+- Envenenado agora causa dano por tempo de verdade. O dano tica 1 vez por segundo e escala levemente com stacks.
+- Corroendo agora reduz a defesa efetiva do alvo durante o calculo de dano.
+- Vulneravel agora tambem reduz a defesa efetiva do alvo, deixando o status util para combos.
+- Habilidades de sacrificio de HP foram adicionadas para o arquetipo agressivo.
+- Grass/Poison usa sinergias cruzadas:
+  - Enraizado melhora Lodo, Esporos Toxicos, Seiva Toxica e Floracao Toxica.
+  - Envenenado melhora Bomba de Semente, Tempestade Floral, Venenochoque e finalizadores Poison.
+  - Drenos Grass/Poison permitem builds de atrito sem precisar de quatro habilidades perfeitas.
+- Bulbasaur/Ivysaur/Venusaur continuam Grass como identidade principal, mas recebem passivas Poison.
+- Oddish, Bellsprout, Roselia/Budew/Roserade e Foongus/Amoonguss comecam Poison, pois a fantasia deles puxa mais veneno/esporo do que folha pura.
+
+MECANICAS NOVAS NO COMBATE
+- Envenenado:
+  Dano por segundo = max(1, floor(HP maximo * (0.012 + stacks * 0.006)))
+  Stacks considerados: 1 a 4.
+  Funcao: desgaste constante, bom contra tanques e lutas longas.
+
+- Corroendo:
+  Defesa efetiva do alvo recebe multiplicador 0.78.
+  Funcao: abrir defesa para finalizadores e para dano de aliados.
+
+- Vulneravel:
+  Defesa efetiva do alvo recebe multiplicador 0.88.
+  Funcao: setup leve que conversa com controle de campo.
+
+- ToxinaAtiva:
+  Buff curto aplicado por Antidoto Reverso.
+  Explosao Toxica ganha +12% dano se o usuario estiver com ToxinaAtiva.
+  Implosao Venenosa ganha +15% dano se o usuario estiver com ToxinaAtiva.
+  Funcao: dar uma janela de preparacao para o arquetipo agressivo sem depender de quatro habilidades.
+
+- Sacrificio:
+  Efeito: sacrificar_hp_pct:X.
+  O usuario perde uma porcentagem do proprio HP maximo, sem cair abaixo de 1 HP.
+  Efeito complementar: bonus_dano_sacrificio:X.
+  Funcao: burst de risco para linhas agressivas como Beedrill, Arbok, Nidoking, Gengar, Seviper, Drapion, Toxicroak e Scolipede.
+
+ARQUETIPOS POISON
+
+1. PESTE GRADUAL
+Marca: dano por tempo, stacks e finalizadores contra alvo ja envenenado.
+Habilidade inicial: Agulhao Venenoso.
+Passiva 1: Fermentacao Toxica
+Descricao: Envenenado acumula stacks e causa dano por tempo.
+Passiva 2: Peste Terminal
+Descricao: Finalizadores ganham valor contra alvos ja envenenados.
+Perfil de atributo:
+- HP medio
+- Ataque medio
+- Defesa levemente baixa
+- Velocidade alta quando a linha naturalmente pede rotacao
+Core com 2 habilidades:
+- Agulhao Venenoso + Venenochoque
+- Enraizar + Venenochoque em Grass/Poison
+- Esporos Toxicos + Floracao Toxica
+
+2. TOXINA AUTODESTRUTIVA
+Marca: troca vida por dano explosivo.
+Habilidade inicial: Presa Venenosa.
+Passiva 1: Sangue Caustico
+Descricao: Habilidades de sacrificio convertem HP em picos de dano.
+Passiva 2: Surto Terminal
+Descricao: Quando esta ferido, o Pokemon prioriza golpes toxicos de alto impacto.
+Perfil de atributo:
+- HP levemente baixo
+- Ataque alto
+- Defesa baixa
+- Velocidade boa
+Core com 2 habilidades:
+- Presa Venenosa + Golpe Venenoso
+- Sangue Toxico + Explosao Toxica
+- Vinhas Toxicas/Enraizar + Implosao Venenosa
+
+3. CORROSAO ORGANICA
+Marca: reduzir defesa, travar ritmo do alvo e ganhar por desgaste.
+Habilidade inicial: Acido.
+Passiva 1: Pele Acida
+Descricao: Corroendo reduz a defesa efetiva do alvo durante o combate.
+Passiva 2: Nuvem Organica
+Descricao: Alvos corroidos ou vulneraveis alimentam finalizadores toxicos.
+Perfil de atributo:
+- HP alto
+- Ataque baixo ou medio
+- Defesa alta
+- Velocidade baixa
+Core com 2 habilidades:
+- Acido + Lama Toxica
+- Acido Diluidor + Lodo
+- Gas Corrosivo + Onda Toxica
+
+HABILIDADES POISON - PESTE GRADUAL
+Lv  1 | Agulhao Venenoso   | Dano 18 | CD  3.8s | Aplica Envenenado.
+Lv 10 | Po de Veneno       | Dano  7 | CD  8.5s | Aplica Envenenado. Dano baixo porque e setup forte.
+Lv 10 | Acido Diluidor     | Dano 24 | CD  5.2s | Aplica Corroendo.
+Lv 15 | Venenochoque       | Dano 36 | CD  6.0s | +22% dano se alvo Envenenado. Combo Envenenado.
+Lv 15 | Esporos Toxicos    | Dano 12 | CD  8.8s | +12% dano se alvo Enraizado. Aplica Envenenado.
+Lv 20 | Lodo               | Dano 42 | CD  7.0s | +14% dano se alvo Enraizado. +10% se Corroendo.
+Lv 20 | Vinhas Toxicas     | Dano 24 | CD  7.8s | Aplica Enraizado. Combo Envenenado.
+Lv 25 | Seiva Toxica       | Dano 34 | CD  7.6s | Cura por dano se alvo Envenenado ou Enraizado.
+Lv 30 | Floracao Toxica    | Dano 56 | CD 10.5s | +20% se alvo Envenenado. +15% se Enraizado.
+
+HABILIDADES POISON - TOXINA AUTODESTRUTIVA
+Lv  1 | Presa Venenosa     | Dano 24 | CD  4.4s | Aplica Envenenado.
+Lv 10 | Sangue Toxico      | Dano 30 | CD  5.8s | Sacrifica 4% HP. +18% dano.
+Lv 15 | Golpe Venenoso     | Dano 40 | CD  6.2s | +16% dano se alvo Envenenado. Combo Envenenado.
+Lv 15 | Acido Diluidor     | Dano 22 | CD  5.2s | Aplica Corroendo.
+Lv 20 | Explosao Toxica    | Dano 56 | CD  9.0s | Sacrifica 7% HP. +22% dano. +12% se usuario com ToxinaAtiva. Aplica Envenenado.
+Lv 25 | Antidoto Reverso   | Dano 34 | CD  8.0s | Sacrifica 3% HP. Aplica ToxinaAtiva no usuario.
+Lv 25 | Seiva Toxica       | Dano 34 | CD  7.4s | Cura por dano se alvo Envenenado ou Enraizado.
+Lv 30 | Implosao Venenosa  | Dano 68 | CD 11.0s | Sacrifica 10% HP. +25% dano. +18% se alvo Envenenado. +15% se usuario com ToxinaAtiva.
+
+HABILIDADES POISON - CORROSAO ORGANICA
+Lv  1 | Acido              | Dano 20 | CD  4.4s | Aplica Corroendo.
+Lv 10 | Acido Diluidor     | Dano 24 | CD  5.2s | Aplica Corroendo.
+Lv 10 | Po de Veneno       | Dano  7 | CD  8.4s | Aplica Envenenado. Dano baixo porque e setup forte.
+Lv 15 | Lama Toxica        | Dano 32 | CD  6.2s | +16% dano se alvo Corroendo. +8% se Enraizado.
+Lv 20 | Lodo               | Dano 42 | CD  7.0s | +14% dano se alvo Enraizado. +12% se Corroendo.
+Lv 25 | Gas Corrosivo      | Dano 18 | CD  9.0s | +10% se alvo Envenenado. Aplica Vulneravel. Combo Corroendo.
+Lv 25 | Vinhas Toxicas     | Dano 24 | CD  7.8s | Aplica Enraizado. Combo Envenenado.
+Lv 30 | Onda Toxica        | Dano 60 | CD 10.0s | +20% se alvo Corroendo. +14% se Envenenado.
+
+DISTRIBUICAO DE POKEMON POISON - GERACOES 1 A 5
+Legenda:
+- Start = tipo da habilidade inicial.
+- HP/Atk/Def/Spd = atributos base ja ajustados pelo perfil.
+- Base = valores originais usados como referencia.
+
+#001 Bulbasaur  | GRASS/POISON    | Arq Peste Gradual via Grass principal      | Start GRASS  | HP  50 Atk  47 Def  55 Spd  39 | Base 45/49/49/45
+#002 Ivysaur    | GRASS/POISON    | Arq Peste Gradual via Grass principal      | Start GRASS  | HP  67 Atk  59 Def  71 Spd  52 | Base 60/62/63/60
+#003 Venusaur   | GRASS/POISON    | Arq Peste Gradual via Grass principal      | Start GRASS  | HP  90 Atk  78 Def  93 Spd  69 | Base 80/82/83/80
+#013 Weedle     | BUG/POISON      | Arq Toxina Autodestrutiva                  | Start POISON | HP  38 Atk  39 Def  27 Spd  55 | Base 40/35/30/50
+#014 Kakuna     | BUG/POISON      | Arq Toxina Autodestrutiva                  | Start POISON | HP  42 Atk  28 Def  45 Spd  39 | Base 45/25/50/35
+#015 Beedrill   | BUG/POISON      | Arq Toxina Autodestrutiva                  | Start POISON | HP  61 Atk 101 Def  36 Spd  83 | Base 65/90/40/75
+#023 Ekans      | POISON          | Arq Toxina Autodestrutiva                  | Start POISON | HP  33 Atk  67 Def  40 Spd  61 | Base 35/60/44/55
+#024 Arbok      | POISON          | Arq Toxina Autodestrutiva                  | Start POISON | HP  56 Atk 106 Def  62 Spd  88 | Base 60/95/69/80
+#029 Nidoran F  | POISON          | Arq Corrosao Organica                      | Start POISON | HP  63 Atk  43 Def  60 Spd  31 | Base 55/47/52/41
+#030 Nidorina   | POISON          | Arq Corrosao Organica                      | Start POISON | HP  80 Atk  57 Def  78 Spd  43 | Base 70/62/67/56
+#031 Nidoqueen  | POISON/GROUND   | Arq Corrosao Organica                      | Start POISON | HP 103 Atk  85 Def 101 Spd  58 | Base 90/92/87/76
+#032 Nidoran M  | POISON          | Arq Toxina Autodestrutiva                  | Start POISON | HP  43 Atk  64 Def  36 Spd  55 | Base 46/57/40/50
+#033 Nidorino   | POISON          | Arq Toxina Autodestrutiva                  | Start POISON | HP  57 Atk  81 Def  51 Spd  72 | Base 61/72/57/65
+#034 Nidoking   | POISON/GROUND   | Arq Toxina Autodestrutiva                  | Start POISON | HP  76 Atk 114 Def  69 Spd  94 | Base 81/102/77/85
+#041 Zubat      | POISON/FLYING   | Arq Peste Gradual                          | Start POISON | HP  39 Atk  44 Def  33 Spd  62 | Base 40/45/35/55
+#042 Golbat     | POISON/FLYING   | Arq Peste Gradual                          | Start POISON | HP  74 Atk  78 Def  66 Spd 101 | Base 75/80/70/90
+#043 Oddish     | GRASS/POISON    | Arq Peste Gradual via Veneno Floral        | Start POISON | HP  42 Atk  51 Def  51 Spd  34 | Base 45/50/55/30
+#044 Gloom      | GRASS/POISON    | Arq Peste Gradual via Veneno Floral        | Start POISON | HP  56 Atk  66 Def  64 Spd  45 | Base 60/65/70/40
+#045 Vileplume  | GRASS/POISON    | Arq Peste Gradual via Veneno Floral        | Start POISON | HP  71 Atk  82 Def  78 Spd  56 | Base 75/80/85/50
+#048 Venonat    | BUG/POISON      | Arq Peste Gradual                          | Start POISON | HP  59 Atk  54 Def  47 Spd  50 | Base 60/55/50/45
+#049 Venomoth   | BUG/POISON      | Arq Peste Gradual                          | Start POISON | HP  69 Atk  64 Def  56 Spd 101 | Base 70/65/60/90
+#069 Bellsprout | GRASS/POISON    | Arq Toxina Autodestrutiva via Veneno Agressivo | Start POISON | HP  49 Atk  81 Def  32 Spd  41 | Base 50/75/35/40
+#070 Weepinbell | GRASS/POISON    | Arq Toxina Autodestrutiva via Veneno Agressivo | Start POISON | HP  64 Atk  97 Def  46 Spd  56 | Base 65/90/50/55
+#071 Victreebel | GRASS/POISON    | Arq Toxina Autodestrutiva via Veneno Agressivo | Start POISON | HP  78 Atk 113 Def  60 Spd  71 | Base 80/105/65/70
+#072 Tentacool  | WATER/POISON    | Arq Peste Gradual                          | Start POISON | HP  39 Atk  39 Def  33 Spd  78 | Base 40/40/35/70
+#073 Tentacruel | WATER/POISON    | Arq Peste Gradual                          | Start POISON | HP  78 Atk  69 Def  61 Spd 112 | Base 80/70/65/100
+#088 Grimer     | POISON          | Arq Corrosao Organica                      | Start POISON | HP  91 Atk  74 Def  58 Spd  19 | Base 80/80/50/25
+#089 Muk        | POISON          | Arq Corrosao Organica                      | Start POISON | HP 120 Atk  97 Def  87 Spd  38 | Base 105/105/75/50
+#092 Gastly     | GHOST/POISON    | Arq Toxina Autodestrutiva                  | Start POISON | HP  28 Atk  39 Def  27 Spd  88 | Base 30/35/30/80
+#093 Haunter    | GHOST/POISON    | Arq Toxina Autodestrutiva                  | Start POISON | HP  42 Atk  56 Def  41 Spd 105 | Base 45/50/45/95
+#094 Gengar     | GHOST/POISON    | Arq Toxina Autodestrutiva                  | Start POISON | HP  56 Atk  73 Def  54 Spd 121 | Base 60/65/60/110
+#109 Koffing    | POISON          | Arq Corrosao Organica                      | Start POISON | HP  46 Atk  60 Def 110 Spd  27 | Base 40/65/95/35
+#110 Weezing    | POISON          | Arq Corrosao Organica                      | Start POISON | HP  74 Atk  83 Def 139 Spd  46 | Base 65/90/120/60
+#167 Spinarak   | BUG/POISON      | Arq Peste Gradual                          | Start POISON | HP  39 Atk  59 Def  38 Spd  34 | Base 40/60/40/30
+#168 Ariados    | BUG/POISON      | Arq Peste Gradual                          | Start POISON | HP  69 Atk  88 Def  66 Spd  45 | Base 70/90/70/40
+#169 Crobat     | POISON/FLYING   | Arq Peste Gradual                          | Start POISON | HP  83 Atk  88 Def  75 Spd 146 | Base 85/90/80/130
+#211 Qwilfish   | WATER/POISON    | Arq Toxina Autodestrutiva                  | Start POISON | HP  61 Atk 106 Def  77 Spd  94 | Base 65/95/85/85
+#269 Dustox     | BUG/POISON      | Arq Peste Gradual                          | Start POISON | HP  59 Atk  49 Def  66 Spd  73 | Base 60/50/70/65
+#315 Roselia    | GRASS/POISON    | Arq Peste Gradual via Veneno Floral        | Start POISON | HP  47 Atk  61 Def  41 Spd  73 | Base 50/60/45/65
+#316 Gulpin     | POISON          | Arq Corrosao Organica                      | Start POISON | HP  80 Atk  40 Def  61 Spd  30 | Base 70/43/53/40
+#317 Swalot     | POISON          | Arq Corrosao Organica                      | Start POISON | HP 114 Atk  67 Def  96 Spd  42 | Base 100/73/83/55
+#336 Seviper    | POISON          | Arq Toxina Autodestrutiva                  | Start POISON | HP  69 Atk 112 Def  54 Spd  72 | Base 73/100/60/65
+#406 Budew      | GRASS/POISON    | Arq Peste Gradual via Veneno Floral        | Start POISON | HP  38 Atk  31 Def  32 Spd  62 | Base 40/30/35/55
+#407 Roserade   | GRASS/POISON    | Arq Peste Gradual via Veneno Floral        | Start POISON | HP  56 Atk  71 Def  60 Spd 101 | Base 60/70/65/90
+#434 Stunky     | POISON/DARK     | Arq Toxina Autodestrutiva                  | Start POISON | HP  59 Atk  71 Def  42 Spd  81 | Base 63/63/47/74
+#435 Skuntank   | POISON/DARK     | Arq Toxina Autodestrutiva                  | Start POISON | HP  97 Atk 104 Def  60 Spd  92 | Base 103/93/67/84
+#451 Skorupi    | POISON/BUG      | Arq Toxina Autodestrutiva                  | Start POISON | HP  38 Atk  56 Def  81 Spd  72 | Base 40/50/90/65
+#452 Drapion    | POISON/DARK     | Arq Toxina Autodestrutiva                  | Start POISON | HP  66 Atk 101 Def  99 Spd 105 | Base 70/90/110/95
+#453 Croagunk   | POISON/FIGHTING | Arq Toxina Autodestrutiva                  | Start POISON | HP  45 Atk  68 Def  36 Spd  55 | Base 48/61/40/50
+#454 Toxicroak  | POISON/FIGHTING | Arq Toxina Autodestrutiva                  | Start POISON | HP  78 Atk 119 Def  59 Spd  94 | Base 83/106/65/85
+#543 Venipede   | BUG/POISON      | Arq Toxina Autodestrutiva                  | Start POISON | HP  28 Atk  50 Def  53 Spd  63 | Base 30/45/59/57
+#544 Whirlipede | BUG/POISON      | Arq Toxina Autodestrutiva                  | Start POISON | HP  38 Atk  62 Def  89 Spd  52 | Base 40/55/99/47
+#545 Scolipede  | BUG/POISON      | Arq Toxina Autodestrutiva                  | Start POISON | HP  56 Atk 112 Def  80 Spd 123 | Base 60/100/89/112
+#568 Trubbish   | POISON          | Arq Corrosao Organica                      | Start POISON | HP  57 Atk  46 Def  72 Spd  49 | Base 50/50/62/65
+#569 Garbodor   | POISON          | Arq Corrosao Organica                      | Start POISON | HP  91 Atk  87 Def  95 Spd  57 | Base 80/95/82/75
+#590 Foongus    | GRASS/POISON    | Arq Corrosao Organica via Veneno Dormente  | Start POISON | HP  83 Atk  51 Def  49 Spd  10 | Base 69/55/45/15
+#591 Amoonguss  | GRASS/POISON    | Arq Corrosao Organica via Veneno Dormente  | Start POISON | HP 137 Atk  78 Def  76 Spd  19 | Base 114/85/70/30
+
+NOTAS DE DESIGN POR LINHA
+- Bulbasaur: Grass principal, Poison como suporte. Boa linha para aprender sustain sem virar burst.
+- Oddish/Roselia: Poison floral rapido. Aplica veneno cedo e usa Grass para sustain/controle.
+- Bellsprout: veneno agressivo. Ataque alto, defesa baixa, excelente para risco/recompensa.
+- Foongus: veneno dormente. Muito HP, pouca velocidade, ideal para corrosao e lutas longas.
+- Nidoran F/Nidoqueen: corrosao defensiva. Linha mais tanque e estavel.
+- Nidoran M/Nidoking: agressao venenosa. Linha mais ofensiva e arriscada.
+- Zubat/Crobat: peste veloz. Aplica DoT rapido, mas nao deve ter dano bruto absurdo.
+- Grimer/Muk/Koffing/Weezing: corrosao pesada. Baixa velocidade, muita resistencia e debuff.
+- Gastly/Gengar: Toxina Autodestrutiva pelo estilo fantasma agressivo. Alto risco e alta rotacao.
+- Drapion/Toxicroak/Scolipede: assassinos venenosos. Bons candidatos a builds de sacrificio.
+
+PONTOS PARA TESTE MANUAL
+- Testar Bulbasaur vs inimigo Poison para garantir que Enraizado + Envenenado nao gere IK.
+- Testar Bellsprout/Victreebel usando Presa Venenosa + Sangue Toxico; se estiver morrendo rapido demais, reduzir sacrificio em 1%.
+- Testar Muk/Weezing: se lutas ficarem lentas demais, aumentar dano de Acido de 20 para 22.
+- Testar Crobat/Scolipede: se a velocidade alta fizer logs ficarem poluidos, subir CD das skills rapidas em +0.2s.
+- Testar Grass/Poison no draft de nivel 10: o segundo tipo deve aparecer como opcao sem quebrar a regra de uma habilidade inicial.

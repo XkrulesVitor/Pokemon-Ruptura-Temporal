@@ -1,0 +1,142 @@
+RELATORIO DE BALANCEAMENTO - VOADOR E PSIQUICO
+
+Objetivo:
+Adicionar as tipagens Voador e Psiquico ao mesmo padrao das tipagens ja finalizadas.
+Cada tipo tem 3 arquetipos, habilidades de nivel 1/10/15/20/25/30, passivas e distribuicao de atributos.
+Os valores foram pensados para builds de 2 habilidades ja funcionarem e para dual-types conversarem com Grass, Poison, Fire, Water, Electric, Ice, Fighting e Ground.
+
+TIPO VOADOR
+
+Marca central:
+Evasao, velocidade de movimento e controle leve de ritmo.
+
+Arquetipo 1 - Ataque Rasante
+Funcao: DPS fragil de abertura, marca o alvo e explode em janelas curtas.
+Sinergias: MarcadoRasante, Turbulento, VentoDeCauda, Molhado e Ofuscado.
+Perfil de atributos: menos HP/defesa, mais ataque/velocidade.
+Pokemon principais: Pidgey, Pidgeotto, Pidgeot, Spearow, Fearow, Doduo, Dodrio, Aerodactyl, Taillow, Swellow, Starly, Staravia, Staraptor, Archen, Archeops, Rufflet, Braviary, Tornadus.
+
+Habilidades:
+- Lv.1 Rajada | Dano 18 | CD 3.8s | Aplica MarcadoRasante.
+- Lv.10 Rasante | Dano 30 | CD 4.4s | Aplica MarcadoRasante e causa +16% em alvo marcado.
+- Lv.10 Vento de Cauda | Dano 8 | CD 7.0s | Aplica VentoDeCauda no usuario e reduz cooldowns em 0.20s.
+- Lv.15 Aero Ace | Dano 38 | CD 4.8s | +12% se o usuario estiver com VentoDeCauda.
+- Lv.20 Mergulho Inicial | Dano 48 | CD 6.2s | +18% em MarcadoRasante e +8% em Turbulento.
+- Lv.25 Ave Corajosa | Dano 62 | CD 8.0s | Sacrifica 4% HP e ganha +14% com VentoDeCauda.
+- Lv.30 Queda do Ceu | Dano 70 | CD 9.8s | +22% em MarcadoRasante e +12% em Turbulento.
+
+Arquetipo 2 - Turbulencia
+Funcao: controle aereo, atrasa cooldowns e deixa o alvo instavel.
+Sinergias: Molhado, AreiaMovedica, Ofuscado, Gelado e controle de Water/Ice/Electric.
+Perfil de atributos: equilibrado, velocidade boa, dano moderado.
+Pokemon principais: Butterfree, Hoothoot, Noctowl, Yanma, Dustox, Masquerain, Ninjask, Mothim, Drifloon, Drifblim, Yanmega, Sigilyph, Vullaby, Mandibuzz.
+
+Habilidades:
+- Lv.1 Ataque de Asa | Dano 20 | CD 4.0s | Aplica Turbulento.
+- Lv.10 Turbulencia | Dano 10 | CD 6.6s | Aplica Turbulento e atrasa cooldowns em 0.22s.
+- Lv.10 Corte de Ar | Dano 32 | CD 5.0s | +12% em Turbulento.
+- Lv.15 Danca de Penas | Dano 8 | CD 7.0s | Aplica PenasLeves no usuario e Turbulento no alvo.
+- Lv.20 Ciclone | Dano 42 | CD 7.2s | +8% em AreiaMovedica e +12% em Turbulento.
+- Lv.25 Furacao | Dano 56 | CD 9.0s | +10% em Molhado e +16% em Turbulento.
+- Lv.30 Trava de Ventos | Dano 62 | CD 10.0s | Atrasa cooldowns em 0.45s, +18% em Turbulento e +8% em Ofuscado.
+
+Arquetipo 3 - Vento de Cauda
+Funcao: suporte de rotacao, boa identidade para dual-types e times rapidos.
+Sinergias: VentoDeCauda, PenasLeves, Electric/Water por cooldown, Grass por sustain.
+Perfil de atributos: velocidade alta, atributos ofensivos/defensivos equilibrados.
+Pokemon principais: Farfetch'd, Togetic, Natu, Xatu, Murkrow, Gligar, Skarmory, Lugia, Ho-Oh, Altaria, Tropius, Chatot, Togekiss, Swoobat, Swanna, Emolga.
+
+Habilidades:
+- Lv.1 Brisa de Cauda | Dano 16 | CD 4.2s | Aplica VentoDeCauda no usuario.
+- Lv.10 Bicada Rapida | Dano 26 | CD 3.2s | Golpe rapido.
+- Lv.10 Penas Leves | Dano 8 | CD 7.2s | Aplica PenasLeves e reduz cooldowns em 0.18s.
+- Lv.15 Seguir o Vento | Dano 30 | CD 4.4s | +12% com VentoDeCauda.
+- Lv.20 Corrente Ascendente | Dano 24 | CD 6.4s | Aplica VentoDeCauda no usuario e Turbulento no alvo.
+- Lv.25 Danca do Ceu | Dano 46 | CD 6.6s | +12% com PenasLeves e +12% com VentoDeCauda.
+- Lv.30 Rota de Cauda | Dano 56 | CD 8.8s | Reduz cooldowns em 0.60s e ganha +18% com VentoDeCauda.
+
+Passivas Voador:
+- Rasante Marcado: MarcadoRasante abre janela curta para burst.
+- Altura de Impacto: finalizadores aereos melhoram contra alvo marcado/turbulento.
+- Corrente Instavel: Turbulento reduz defesa efetiva e atrasa rotacao.
+- Olho do Furacao: alvos molhados, ofuscados ou lentos sofrem mais com vento.
+- Ritmo de Cauda: VentoDeCauda acelera rotacoes hibridas.
+- Penas Leves: buffs de evasao viram pressao constante.
+
+
+TIPO PSIQUICO
+
+Marca central:
+Interrupcao, controle mental e manipulacao de defesa/cooldowns.
+
+Arquetipo 1 - Paralisia Mental
+Funcao: controle ativo de cooldown, bom em Pokemon frageis e rapidos.
+Sinergias: AmnesiaInduzida, Vulneravel, Electric por falha/controle, Ice/Ground por atraso.
+Perfil de atributos: menos HP/defesa, mais ataque/velocidade.
+Pokemon principais: Abra, Kadabra, Alakazam, Drowzee, Hypno, Natu, Xatu, Espeon, Ralts, Kirlia, Gardevoir, Spoink, Grumpig, Chimecho, Munna, Musharna, Woobat, Swoobat, Gothita, Gothorita, Gothitelle, Elgyem, Beheeyem, Meloetta.
+
+Habilidades:
+- Lv.1 Confusao | Dano 18 | CD 4.2s | Aplica ParalisiaMental e atrasa cooldowns em 0.12s.
+- Lv.10 Trava Mental | Dano 10 | CD 6.8s | Aplica ParalisiaMental e atrasa cooldowns em 0.35s.
+- Lv.10 Psybeam | Dano 32 | CD 5.2s | +14% em ParalisiaMental.
+- Lv.15 Pulso Hipnotico | Dano 18 | CD 7.0s | Aplica AmnesiaInduzida e atrasa cooldowns em 0.25s.
+- Lv.20 Psiquico | Dano 46 | CD 7.0s | +16% em ParalisiaMental e +10% em AmnesiaInduzida.
+- Lv.25 Quebra Mental | Dano 54 | CD 8.4s | +16% em AmnesiaInduzida e +8% em Vulneravel.
+- Lv.30 Bloqueio Total | Dano 62 | CD 10.4s | Aplica ParalisiaMental, atrasa cooldowns em 0.50s e ganha +20% no alvo paralisado mentalmente.
+
+Arquetipo 2 - Escudo Cinetico
+Funcao: psiquico defensivo, estabiliza a equipe e ganha valor em lutas longas.
+Sinergias: EscudoCinetico, BarreiraLama, MantoGelo, Fotossintese e sustain de Grass.
+Perfil de atributos: HP/defesa altos, velocidade menor, dano moderado.
+Pokemon principais: Slowpoke, Slowbro, Mr. Mime, Slowking, Wobbuffet, Wynaut, Beldum, Metang, Metagross, Jirachi, Bronzor, Bronzong, Uxie, Mesprit, Azelf, Cresselia, Solosis, Duosion, Reuniclus.
+
+Habilidades:
+- Lv.1 Empurrao Cinetico | Dano 16 | CD 4.8s | Aplica EscudoCinetico no usuario.
+- Lv.10 Escudo Cinetico | Dano 8 | CD 7.6s | Aplica EscudoCinetico e cura 3% HP maximo.
+- Lv.10 Barreira Pulsante | Dano 28 | CD 5.8s | +14% com EscudoCinetico.
+- Lv.15 Tela Mental | Dano 12 | CD 8.4s | Aplica EscudoCinetico no usuario e DistorcaoEspacial no alvo.
+- Lv.20 Campo de Forca | Dano 36 | CD 7.2s | +12% com EscudoCinetico e atrasa cooldowns em 0.22s.
+- Lv.25 Guarda Espelhada | Dano 44 | CD 8.0s | +10% em ParalisiaMental e reaplica EscudoCinetico.
+- Lv.30 Esmagamento Cinetico | Dano 60 | CD 10.0s | +18% com EscudoCinetico e +16% em DistorcaoEspacial.
+
+Arquetipo 3 - Inversao Espacial
+Funcao: manipulador de defesa/tempo, bom para lendarios e dual-types estranhos.
+Sinergias: DistorcaoEspacial, AmnesiaInduzida, PosturaQuebrada, bonus por cooldown do alvo.
+Perfil de atributos: ataque bom, defesa/velocidade equilibradas.
+Pokemon principais: Exeggcute, Exeggutor, Mewtwo, Mew, Unown, Girafarig, Lugia, Celebi, Lunatone, Solrock, Baltoy, Claydol, Latias, Latios, Deoxys, Victini, Sigilyph.
+
+Habilidades:
+- Lv.1 Torcer Espaco | Dano 20 | CD 4.6s | Aplica DistorcaoEspacial.
+- Lv.10 Amnesia | Dano 8 | CD 7.2s | Aplica AmnesiaInduzida e atrasa cooldowns em 0.18s.
+- Lv.10 Telecinese | Dano 30 | CD 5.5s | +14% em DistorcaoEspacial.
+- Lv.15 Foco Psiquico | Dano 10 | CD 7.0s | Aplica FocoPsiquico e reduz cooldowns em 0.20s.
+- Lv.20 Psicochoque | Dano 44 | CD 6.8s | +16% em DistorcaoEspacial e +8% em PosturaQuebrada.
+- Lv.25 Troca Espacial | Dano 50 | CD 8.8s | Aplica DistorcaoEspacial e escala com cooldown atual do alvo.
+- Lv.30 Colapso Dimensional | Dano 68 | CD 11.0s | +20% em DistorcaoEspacial e +12% em AmnesiaInduzida.
+
+Passivas Psiquico:
+- Fenda Mental: ParalisiaMental atrasa cooldowns sem travar totalmente a luta.
+- Memoria Quebrada: AmnesiaInduzida melhora finalizadores psiquicos.
+- Campo Cinetico: EscudoCinetico aumenta resistencia e converte defesa em dano moderado.
+- Barreira Reflexiva: protecao mental sustenta equipes lentas ou de controle.
+- Dobra Espacial: DistorcaoEspacial enfraquece defesa e prepara psicochoques.
+- Tempo Repartido: manipulacao de cooldown conversa com Water, Ice e Ground.
+
+
+SINERGIAS ENTRE TIPOS DUPLOS E BUILDS RAPIDAS
+
+- Flying/Electric: Ofuscado + Turbulento cria janela para Sobrecarregado e punicoes de erro.
+- Flying/Water: Molhado aumenta Furacao, enquanto Water atrasa cooldowns para o Voador encaixar Rasante.
+- Flying/Grass: Hoppip/Jumpluff e Tropius usam VentoDeCauda como motor para sustentar drenos e Fotossintese.
+- Flying/Psychic: Xatu/Sigilyph preferem controle; ParalisiaMental + Turbulento segura o alvo sem stun absoluto.
+- Psychic/Grass: Exeggutor/Celebi usam DistorcaoEspacial para abrir dano de Grass e ganhar tempo para Fotossintese.
+- Psychic/Fighting: Meditite/Medicham/Gallade ainda priorizam Fighting; Psicochoque conversa com PosturaQuebrada.
+- Psychic/Steel: Metagross/Jirachi/Bronzong usam EscudoCinetico como identidade defensiva ate Steel ganhar sistema proprio.
+- Psychic/Water: Slowpoke/Slowbro/Slowking ainda caem em Water pela prioridade atual, mas o pool secundario psiquico ja aparece em drafts.
+
+OBSERVACOES DE BALANCEAMENTO
+
+- Voador recebeu dano menor que Fire/Fighting, mas cooldowns melhores e controle de defesa por janela curta.
+- Psiquico recebeu controle forte, porem com dano medio. O atraso de cooldown entra em valores pequenos para nao virar stun-lock.
+- Nao foram criadas imunidades; a eficacia elemental segue o sistema suavizado 1.25 / 1.0 / 0.75.
+- Dual-types que ja tinham identidade finalizada preservam essa prioridade: Grass, Poison, Fire, Water, Electric, Ice, Fighting e Ground continuam vindo antes.

@@ -1,0 +1,100 @@
+{
+ "regiao": "Vale de Cronaria",
+ "titulo_jogo": "Rasgo Temporal",
+ "termo_criatura": "criatura",
+ "termo_criaturas": "criaturas",
+ "professor": "Prof. Sabia",
+ "mae": "Mae",
+ "equipe_vila": "Sindicato Eclipse",
+ "chefe_final": "Aeonox",
+ "guardioes": [
+  "Lumis",
+  "Brotempo"
+ ],
+ "cidades": [
+  {
+   "nome": "Vila Alvorada",
+   "lider": "",
+   "especialidade": "",
+   "tipo": "",
+   "evento": "Casa da Mae",
+   "lider_criatura": "",
+   "lider_nivel": 0,
+   "sprite_lider": "",
+   "sprite_cidade": "vila_alvorada.png",
+   "lider_criatura_id": 0
+  },
+  {
+   "nome": "Porto Raizes",
+   "lider": "",
+   "especialidade": "",
+   "tipo": "",
+   "evento": "Mercado do Porto",
+   "lider_criatura": "",
+   "lider_nivel": 0,
+   "sprite_lider": "",
+   "sprite_cidade": "porto_raizes.png",
+   "lider_criatura_id": 0
+  },
+  {
+   "nome": "Pedralia",
+   "lider": "Tito Basalto",
+   "especialidade": "Pedra",
+   "tipo": "pedra",
+   "evento": "Museu de Pedralia",
+   "lider_criatura": "Rochedao",
+   "lider_nivel": 10,
+   "sprite_lider": "lider_tito.png",
+   "sprite_cidade": "pedralia.png",
+   "lider_criatura_id": 38
+  },
+  {
+   "nome": "Marevia",
+   "lider": "Ondina",
+   "especialidade": "Agua",
+   "tipo": "agua",
+   "evento": "Ponte das Gaivotas",
+   "lider_criatura": "Barbatao",
+   "lider_nivel": 14,
+   "sprite_lider": "lider_ondina.png",
+   "sprite_cidade": "marevia.png",
+   "lider_criatura_id": 75
+  },
+  {
+   "nome": "Voltara",
+   "lider": "Capita Raia",
+   "especialidade": "Eletrico",
+   "tipo": "eletrico",
+   "evento": "Cais dos Cargueiros",
+   "lider_criatura": "Amperfelino",
+   "lider_nivel": 19,
+   "sprite_lider": "lider_raia.png",
+   "sprite_cidade": "voltara.png",
+   "lider_criatura_id": 81
+  },
+  {
+   "nome": "Ilha Brasa",
+   "lider": "Dr. Calidus",
+   "especialidade": "Fogo",
+   "tipo": "fogo",
+   "evento": "Laboratorio Rachado",
+   "lider_criatura": "Brasilobo",
+   "lider_nivel": 24,
+   "sprite_lider": "lider_calidus.png",
+   "sprite_cidade": "ilha_brasa.png",
+   "lider_criatura_id": 73
+  },
+  {
+   "nome": "Cidadela Fenda",
+   "lider": "Vesper",
+   "especialidade": "Terra / Eclipse",
+   "tipo": "terra",
+   "evento": "Base do Eclipse",
+   "lider_criatura": "Sismodonte",
+   "lider_nivel": 30,
+   "sprite_lider": "lider_vesper.png",
+   "sprite_cidade": "cidadela_fenda.png",
+   "lider_criatura_id": 27
+  }
+ ]
+}
