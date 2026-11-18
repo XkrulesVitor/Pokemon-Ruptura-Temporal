@@ -69,6 +69,7 @@
   },
   "name":"PokemonRogueLike",
   "resources":[
+    {"id":{"name":"scr_desafio_diario","path":"scripts/scr_desafio_diario/scr_desafio_diario.yy",},},
     {"id":{"name":"scr_autoteste","path":"scripts/scr_autoteste/scr_autoteste.yy",},},
     {"id":{"name":"scr_placeholders","path":"scripts/scr_placeholders/scr_placeholders.yy",},},
     {"id":{"name":"scr_conteudo","path":"scripts/scr_conteudo/scr_conteudo.yy",},},

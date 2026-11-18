@@ -191,6 +191,43 @@ function autoteste_passos() {
             demo_cleanup_battle(id);
             estado_demo = DemoEstado.GAME_OVER;
             game_over_timer = 0;
+        } },
+        { Nome: "menu com diario", Espera: 1.2, Foto: "21_menu_diario", Acao: function() {
+            demo_run_resetar(id, DemoEstado.MENU);
+        } },
+        { Nome: "diario: inicio", Espera: 1.5, Foto: "22_diario_laboratorio", Acao: function() {
+            diario_iniciar(id);
+            autoteste_log("diario " + global.diario.Chave + " oficial=" + string(global.diario.Oficial) + " inicial=" + demo_pokemon_nome(global.diario.InicialID));
+        } },
+        { Nome: "diario: cidade", Espera: 1.2, Foto: "23_diario_cidade", Acao: function() {
+            autoteste_log("diario equipe: " + player_party[0].Nome + " nv " + string(player_party[0].Level) + " hp " + string(player_party[0].HpMax) + " atk " + string(player_party[0].Attack));
+            estado_demo = DemoEstado.CIDADE;
+            cidade_index = 0;
+            message = demo_cidade_nome(cidade_index);
+        } },
+        { Nome: "diario: escolha de rota", Espera: 1.2, Foto: "24_diario_rotas", Acao: function() {
+            saida_destino_index = 1;
+            estado_demo = DemoEstado.SAIR_CIDADE;
+            var _opcoes = demo_rota_saida_opcoes_get(id, 1);
+            var _nomes = "";
+            for (var _i = 0; _i < array_length(_opcoes); _i += 1) _nomes += _opcoes[_i].Nome + "; ";
+            autoteste_log("diario rotas: " + _nomes);
+        } },
+        { Nome: "diario: encontro", Espera: 2.0, Foto: "25_diario_batalha", Acao: function() {
+            var _opcoes = demo_rota_saida_opcoes_get(id, 1);
+            demo_rota_escolher(id, demo_rota_block_index(0, 1), _opcoes[0]);
+            demo_rota_iniciar(1, _opcoes[0]);
+            autoteste_log("diario passos da rota: " + string(route_steps_needed) + " treinador no passo " + string(route_trainer_step));
+            route_steps += 1;
+            demo_rota_encontro_selvagem_iniciar(id);
+            autoteste_log("diario selvagem: " + enemy_pokemon_data.Nome + " nv " + string(enemy_pokemon_data.Level) + " hp " + string(enemy_pokemon_data.HpMax));
+        } },
+        { Nome: "diario: game over", Espera: 1.5, Foto: "26_diario_game_over", Acao: function() {
+            demo_cleanup_battle(id);
+            estado_demo = DemoEstado.GAME_OVER;
+            game_over_timer = 0;
+            diario_finalizar(id);
+            autoteste_log("diario pontos: " + string(global.diario.Resultado.Pontos));
         } }
     ];
 }

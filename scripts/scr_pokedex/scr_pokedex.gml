@@ -16,7 +16,7 @@ function PokedexEntrada(_id, _nome, _tipo1, _tipo2, _hp, _atk, _def, _spd) const
 }
 
 function pokedex_save_path() {
-    return "bestiario_save.json";
+    return (autoteste_ativo() ? "autoteste_" : "") + "bestiario_save.json";
 }
 
 function pokedex_inicializar() {

@@ -249,7 +249,15 @@ function pokemon_draft_garantir_globals() {
     }
 }
 
+// Sorteios desta funcao sao deterministicos no Desafio Diario.
 function pokemon_draft_disparar(_pokemon, _level) {
+    var _escopo = diario_escopo("habilidade:" + string(is_struct(_pokemon) ? _pokemon.ID : 0) + ":" + string(_level));
+    var _resultado = pokemon_draft_disparar_base(_pokemon, _level);
+    diario_escopo_fim(_escopo);
+    return _resultado;
+}
+
+function pokemon_draft_disparar_base(_pokemon, _level) {
     pokemon_draft_garantir_globals();
 
     var _opcoes = pokemon_sortear_opcoes_draft(_pokemon, _level);

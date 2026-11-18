@@ -41,11 +41,15 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Arte original de criaturas, treinadores, cidades, itens e interface (o usuário adiciona; o jogo já procura os arquivos).
   - Fontes com licença livre em `datafiles/fonts_jogo/`.
 - [ ] **Sprint 3: Fechar a run**: chefe final Aeonox com fases, tela de vitória e créditos, save no meio da run, missões de NPC nas cidades (portar `scr_event_manager`).
-- [ ] **Sprint 4: Desafio Diário**
-  - Semente = data em UTC (AAAAMMDD), gerador próprio só para a jogabilidade (o RNG global também é usado por efeitos visuais).
-  - Inicial do dia: criatura em estágio inicial (`criatura_e_estagio_inicial`) de raridade comum, incomum ou rara.
-  - A semente fixa inicial, drafts de rota, encontros, times de treinador e drops. O combate em tempo real ainda varia.
-  - Sem bônus da meta-loja. Uma tentativa oficial por dia + treino. Histórico, pontuação e sequência em `daily.json`.
+- [x] **Sprint 4: Desafio Diário** (`scripts/scr_desafio_diario`)
+  - Botão "DESAFIO DIARIO" no menu (ou tecla D). Semente = data em UTC (AAAAMMDD); para testar outra data use `RASGO_DIARIO_DATA=AAAAMMDD`.
+  - Inicial do dia: criatura em estágio inicial de raridade comum, incomum ou rara (60 candidatas), escolhida por hash da data.
+  - Sorteios em "escopos" (`diario_escopo`/`diario_escopo_fim`): cada evento usa `random_set_seed(hash(data|chave))` e depois `randomize()`, então efeitos visuais não desalinham a run. Escopos: inicial, drafts de rota, início de rota, encontro selvagem, treinador, drops, líder, draft de habilidade.
+  - O combate em tempo real e as capturas continuam aleatórios.
+  - Sem bônus da loja permanente; treino não rende fragmentos.
+  - Uma tentativa oficial por dia, gravada ao começar (fechar o jogo no meio não devolve). Depois, só treino.
+  - Pontos = insígnias×1000 + vitórias×40 + capturas×60 + soma dos níveis×10. Histórico, melhor marca e sequência de dias em `desafio_diario.json`.
+  - Pendente: ranking online (hoje é só local).
 - [ ] **Sprint 5: Combate**: captura pela fórmula de HP/status, sinergia cruzada entre golpes, aviso "COMBO!", VFX por tipo.
 - [ ] **Sprint 6: Gráficos (tudo que não é criatura)**: elementos de rota em PNG com transparência, os 15 elementos que faltam do catálogo de biomas, kit de UI (9-slice, botões, ícones), transições e easing, mapas de cidade, áreas de clique compartilhadas entre Step e Draw.
 - [ ] **Sprint 7: Rejogabilidade**: dificuldade, hardcore, modo Buraco Negro (infinito), conquistas, mais itens, skins.

@@ -282,11 +282,11 @@ function demo_draw_space_crack(_cx, _cy, _height, _alpha, _power) {
 function demo_menu_start_button_rect() {
     var _gw = display_get_gui_width();
     var _gh = display_get_gui_height();
-    var _w = 380;
+    var _w = 300;
     var _h = 58;
 
     return {
-        X: (_gw - _w) * 0.5,
+        X: (_gw * 0.5) - 310,
         Y: _gh - 166,
         W: _w,
         H: _h
@@ -333,7 +333,8 @@ function demo_draw_title_button(_rect, _label, _hover) {
 }
 
 function demo_meta_save_path() {
-    return "pokemon_roguelike_meta.ini";
+    // Nome antigo mantido para nao perder o progresso ja salvo.
+    return (autoteste_ativo() ? "autoteste_" : "") + "pokemon_roguelike_meta.ini";
 }
 
 function demo_meta_default() {
@@ -497,6 +498,10 @@ function demo_meta_dinheiro_aplicar(_controller, _valor) {
 }
 
 function demo_meta_dinheiro_inicial_bonus(_meta) {
+    if (diario_ativo()) {
+        return 0;
+    }
+
     switch (demo_meta_upgrade_level(_meta, "start_money")) {
         case 1: return 50;
         case 2: return 100;
@@ -520,13 +525,17 @@ function demo_meta_fragmentos_adicionar(_controller, _qtd) {
         return 0;
     }
 
+    if (diario_ativo() && !global.diario.Oficial) {
+        return 0;
+    }
+
     if (!is_struct(_controller.meta_progresso)) {
         _controller.meta_progresso = demo_meta_carregar();
     }
 
     _controller.meta_progresso.FragmentosEspaco = max(0, floor(_controller.meta_progresso.FragmentosEspaco + _qtd));
     demo_meta_salvar(_controller.meta_progresso);
-    demo_meta_sincronizar_globals(_controller.meta_progresso);
+    demo_meta_sincronizar_globals(diario_ativo() ? demo_meta_default() : _controller.meta_progresso);
 
     return _qtd;
 }
@@ -1588,6 +1597,7 @@ function demo_draw_menu_titulo(_controller) {
 
     demo_draw_title_button(_btn, "COMECAR RUN", _hover);
     demo_draw_title_button(_shop_btn, "LOJA DO ESPACO", _shop_hover);
+    diario_draw_menu(_mx, _my);
 
     var _fragment_tooltip_title = undefined;
 
@@ -4044,7 +4054,9 @@ function demo_city_marker_ativar(_controller, _marker) {
                     message = demo_cidade_atual().Lider + " ja foi derrotado. A proxima rota esta liberada.";
                 } else {
                     var _gym_enemy_id = demo_gym_enemy_id(cidade_index);
+                    var _escopo_lider = diario_escopo("lider:" + string(cidade_index));
                     enemy_pokemon_data = demo_criar_pokemon_data(_gym_enemy_id, demo_gym_enemy_level(cidade_index), true, false, true, "ginasio");
+                    diario_escopo_fim(_escopo_lider);
                     battle_context = "ginasio";
                     gym_battle_city_index = cidade_index;
                     demo_start_battle(id);
@@ -4832,6 +4844,8 @@ function demo_run_resetar(_controller, _estado_destino) {
         return;
     }
 
+    diario_encerrar();
+
     with (_controller) {
         demo_cleanup_battle(id);
 
@@ -5463,7 +5477,15 @@ function demo_rota_array_push_unica(_array, _rota) {
     return _array;
 }
 
+// Sorteios desta funcao sao deterministicos no Desafio Diario.
 function demo_rota_draft_criar(_controller, _block_index, _rotas) {
+    var _escopo = diario_escopo("draft_rota:" + string(_block_index));
+    var _resultado = demo_rota_draft_criar_base(_controller, _block_index, _rotas);
+    diario_escopo_fim(_escopo);
+    return _resultado;
+}
+
+function demo_rota_draft_criar_base(_controller, _block_index, _rotas) {
     var _candidatas = [];
     var _fallback = [];
     var _escolhida_atual = _controller.rota_escolhas[_block_index];
@@ -5727,7 +5749,15 @@ function demo_rota_opcao_ativa(_controller, _block_index, _rota, _destino_index)
     return _controller.rota_escolhas[_block_index] == _rota.ID;
 }
 
+// Sorteios desta funcao sao deterministicos no Desafio Diario.
 function demo_rota_iniciar(_destino_index, _rota_info) {
+    var _escopo = diario_escopo("rota:" + string(cidade_index) + ">" + string(_destino_index) + ":" + (is_struct(_rota_info) ? _rota_info.ID : ""));
+    var _resultado = demo_rota_iniciar_base(_destino_index, _rota_info);
+    diario_escopo_fim(_escopo);
+    return _resultado;
+}
+
+function demo_rota_iniciar_base(_destino_index, _rota_info) {
     rota_origem_index = cidade_index;
     rota_destino_index = clamp(_destino_index, 0, array_length(kanto_cidades) - 1);
     rota_atual = _rota_info;
@@ -5970,6 +6000,19 @@ function demo_rota_enemy_id(_rota_info) {
     return _fallback_ids[irandom(array_length(_fallback_ids) - 1)];
 }
 
+// Gera e inicia o proximo encontro selvagem da rota atual.
+function demo_rota_encontro_selvagem_iniciar(_controller) {
+    with (_controller) {
+        var _escopo = diario_escopo("selvagem:" + string(rota_origem_index) + ">" + string(rota_destino_index) + ":" + string(route_steps));
+        var _enemy_level = demo_rota_enemy_level(rota_origem_index, rota_destino_index);
+        var _enemy_id = demo_rota_enemy_id(rota_atual, _enemy_level, "selvagem");
+        enemy_pokemon_data = demo_criar_pokemon_data(_enemy_id, _enemy_level, true, true, true, "selvagem");
+        diario_escopo_fim(_escopo);
+        battle_context = "rota";
+        demo_start_battle(id);
+    }
+}
+
 function demo_rota_trainer_chance(_controller) {
     if (!instance_exists(_controller)) {
         return 0.25;
@@ -6119,7 +6162,15 @@ function demo_rota_trainer_party_criar(_controller) {
     return _party;
 }
 
+// Sorteios desta funcao sao deterministicos no Desafio Diario.
 function demo_rota_trainer_iniciar(_controller) {
+    var _escopo = diario_escopo("treinador:" + string(_controller.rota_origem_index) + ">" + string(_controller.rota_destino_index));
+    var _resultado = demo_rota_trainer_iniciar_base(_controller);
+    diario_escopo_fim(_escopo);
+    return _resultado;
+}
+
+function demo_rota_trainer_iniciar_base(_controller) {
     if (!instance_exists(_controller)) {
         return false;
     }
@@ -6219,7 +6270,15 @@ function demo_trainer_drop_heal_id(_block_index) {
     return choose("potion", "antidote");
 }
 
+// Sorteios desta funcao sao deterministicos no Desafio Diario.
 function demo_trainer_drops_gerar(_controller) {
+    var _escopo = diario_escopo("drops:" + string(_controller.rota_origem_index) + ">" + string(_controller.rota_destino_index) + ":" + string(_controller.route_steps));
+    var _resultado = demo_trainer_drops_gerar_base(_controller);
+    diario_escopo_fim(_escopo);
+    return _resultado;
+}
+
+function demo_trainer_drops_gerar_base(_controller) {
     var _drops = [];
 
     if (!instance_exists(_controller)) {

@@ -36,6 +36,7 @@ switch (estado_demo) {
     case DemoEstado.MENU:
         var _start_menu = keyboard_check_pressed(vk_enter);
         var _open_meta_shop = false;
+        var _open_daily = keyboard_check_pressed(ord("D"));
 
         if (mouse_check_button_pressed(mb_left)) {
             var _mx_menu = device_mouse_x_to_gui(0);
@@ -44,6 +45,13 @@ switch (estado_demo) {
             var _shop_btn_menu = demo_menu_shop_button_rect();
             _start_menu = demo_hover_rect(_mx_menu, _my_menu, _btn_menu.X, _btn_menu.Y, _btn_menu.W, _btn_menu.H);
             _open_meta_shop = demo_hover_rect(_mx_menu, _my_menu, _shop_btn_menu.X, _shop_btn_menu.Y, _shop_btn_menu.W, _shop_btn_menu.H);
+            var _daily_btn_menu = demo_menu_daily_button_rect();
+            _open_daily = demo_hover_rect(_mx_menu, _my_menu, _daily_btn_menu.X, _daily_btn_menu.Y, _daily_btn_menu.W, _daily_btn_menu.H);
+        }
+
+        if (_open_daily) {
+            diario_iniciar(id);
+            break;
         }
 
         if (_open_meta_shop) {
@@ -54,6 +62,7 @@ switch (estado_demo) {
         }
 
         if (_start_menu) {
+            diario_encerrar();
             meta_progresso = demo_meta_carregar();
             demo_meta_sincronizar_globals(meta_progresso);
             starter_ids = demo_meta_starter_roll(meta_progresso);
@@ -166,7 +175,9 @@ switch (estado_demo) {
         }
 
         if (starter_id > 0) {
+            var _escopo_inicial = diario_escopo("inicial");
             player_pokemon_data = demo_criar_pokemon_data(starter_id, 5, false);
+            diario_escopo_fim(_escopo_inicial);
             player_pokemon_data.FoiCapturado = true;
             player_pokemon_data.Capturado = true;
             player_party = [player_pokemon_data];
@@ -335,11 +346,7 @@ switch (estado_demo) {
                 break;
             }
 
-            var _enemy_level = demo_rota_enemy_level(rota_origem_index, rota_destino_index);
-            var _enemy_id = demo_rota_enemy_id(rota_atual, _enemy_level, "selvagem");
-            enemy_pokemon_data = demo_criar_pokemon_data(_enemy_id, _enemy_level, true, true, true, "selvagem");
-            battle_context = "rota";
-            demo_start_battle(id);
+            demo_rota_encontro_selvagem_iniciar(id);
         }
         break;
 
@@ -392,6 +399,7 @@ switch (estado_demo) {
             dinheiro += _total_money_reward;
             var _pos_battle_heal = demo_party_curar_pos_batalha(id);
             estado_demo = DemoEstado.VITORIA;
+            diario_registrar_vitoria();
             result_timer = 1.5;
             if (battle_context == "ginasio") {
                 _fragmentos_reward = demo_meta_fragmentos_ginasio(gym_battle_city_index);
@@ -469,6 +477,7 @@ switch (estado_demo) {
                     var _money_capture_reward = demo_meta_dinheiro_aplicar(id, pokemon_recompensa_dinheiro(enemy_pokemon_data, "captura"));
                     dinheiro += _money_capture_reward;
                     estado_demo = DemoEstado.VITORIA;
+                    diario_registrar_captura();
                     result_timer = 1.0;
                     battle_result_info = demo_resultado_criar("captura", "Monstro capturado!", message, _xp_capture_reward, _xp_capture_ganhos, enemy_pokemon_data, _money_capture_reward);
 
@@ -509,6 +518,7 @@ switch (estado_demo) {
             demo_cleanup_battle(id);
 
             if (estado_demo == DemoEstado.DERROTA) {
+                diario_finalizar(id);
                 estado_demo = DemoEstado.GAME_OVER;
                 game_over_timer = 0;
                 message = "A run terminou.";
