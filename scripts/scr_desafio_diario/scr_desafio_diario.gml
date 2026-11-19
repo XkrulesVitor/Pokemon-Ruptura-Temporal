@@ -221,6 +221,7 @@ function diario_iniciar(_controller) {
         InicialID: _inicial,
         Vitorias: 0,
         Capturas: 0,
+        ChefeDerrotado: false,
         Profundidade: 0,
         Resultado: undefined
     };
@@ -293,7 +294,8 @@ function diario_pontuacao(_controller) {
         }
     }
 
-    return (diario_insignias(_controller) * 1000) + (global.diario.Vitorias * 40) + (global.diario.Capturas * 60) + (_niveis * 10);
+    var _bonus_chefe = global.diario.ChefeDerrotado ? 5000 : 0;
+    return (diario_insignias(_controller) * 1000) + (global.diario.Vitorias * 40) + (global.diario.Capturas * 60) + (_niveis * 10) + _bonus_chefe;
 }
 
 // Chamado quando a run termina. Pode ser chamado mais de uma vez: so calcula na primeira.
@@ -422,7 +424,7 @@ function diario_draw_resultado_game_over(_controller) {
     battle_ui_draw_nineslice_panel(_x, _y, _w, _h);
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(255, 222, 120));
-    draw_text_transformed(_gw * 0.5, _y + 14, "DESAFIO DIARIO " + diario_chave_legivel(global.diario.Chave) + (_r.Oficial ? "" : " (treino, nao conta)"), 0.82, 0.82, 0);
+    draw_text_transformed(_gw * 0.5, _y + 14, "DESAFIO DIARIO " + diario_chave_legivel(global.diario.Chave) + (global.diario.ChefeDerrotado ? " - RASGO FECHADO!" : "") + (_r.Oficial ? "" : " (treino, nao conta)"), 0.82, 0.82, 0);
     draw_set_color(c_white);
     draw_text_transformed(_gw * 0.5, _y + 42, string(_r.Pontos) + " pontos  |  " + string(_r.Insignias) + " insignias  |  " + string(_r.Vitorias) + " vitorias  |  " + string(_r.Capturas) + " capturas", 0.72, 0.72, 0);
     draw_text_transformed(_gw * 0.5, _y + 64, "Melhor marca: " + string(_r.Melhor) + "   Sequencia de dias: " + string(_r.Sequencia), 0.68, 0.68, 0);

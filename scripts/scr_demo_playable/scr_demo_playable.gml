@@ -15,7 +15,8 @@ enum DemoEstado {
     CAPTURA,
     VITORIA,
     DERROTA,
-    GAME_OVER
+    GAME_OVER,
+    VITORIA_FINAL
 }
 
 function demo_draw_sprite_cover(_spr, _x, _y, _w, _h, _alpha) {
@@ -3945,14 +3946,14 @@ function demo_city_markers(_controller) {
     switch (_city) {
         case 0:
             array_push(_markers, new DemoCityMarker(variable_instance_get(_controller, "mae_presente_entregue") ? "!" : "?", "Casa da Mae", "mom", 0.265, 0.205));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.480, 0.205));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.480, 0.205));
             array_push(_markers, new DemoCityMarker(variable_instance_get(_controller, "professor_carvalho_visto") ? "!" : "?", "Prof. Sabia", "lab", 0.715, 0.195));
             array_push(_markers, new DemoCityMarker("^", _next_label, "leave", 0.405, 0.075, _next_target));
             break;
 
         case 1:
             array_push(_markers, new DemoCityMarker("+", "Centro de Cura", "center", 0.385, 0.590));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.599, 0.395));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.599, 0.395));
             array_push(_markers, new DemoCityMarker("G", "Ginasio trancado", "gym", 0.519, 0.205));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Cidadao", "event", 0.395, 0.447));
             array_push(_markers, new DemoCityMarker("<", _back_label, "leave", 0.121, 0.503, _back_target));
@@ -3961,7 +3962,7 @@ function demo_city_markers(_controller) {
 
         case 2:
             array_push(_markers, new DemoCityMarker("+", "Centro de Cura", "center", 0.305, 0.585));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.632, 0.490));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.632, 0.490));
             array_push(_markers, new DemoCityMarker("G", "Ginasio Tito Basalto", "gym", 0.375, 0.360));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Museu de Pedralia", "event", 0.390, 0.125));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Morador", "event", 0.840, 0.670));
@@ -3971,7 +3972,7 @@ function demo_city_markers(_controller) {
 
         case 3:
             array_push(_markers, new DemoCityMarker("+", "Centro de Cura", "center", 0.405, 0.090));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.548, 0.478));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.548, 0.478));
             array_push(_markers, new DemoCityMarker("G", "Ginasio Ondina", "gym", 0.148, 0.615));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Ponte das Gaivotas", "event", 0.855, 0.325));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Casa suspeita", "event", 0.805, 0.530));
@@ -3981,7 +3982,7 @@ function demo_city_markers(_controller) {
 
         case 4:
             array_push(_markers, new DemoCityMarker("+", "Centro de Cura", "center", 0.372, 0.315));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.287, 0.285));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.287, 0.285));
             array_push(_markers, new DemoCityMarker("G", "Ginasio Capita Raia", "gym", 0.303, 0.570));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Porto Cargueiro Aurora", "event", 0.150, 0.075));
             array_push(_markers, new DemoCityMarker(">", _next_label, "leave", 0.363, 0.970, _next_target));
@@ -3990,7 +3991,7 @@ function demo_city_markers(_controller) {
 
         case 5:
             array_push(_markers, new DemoCityMarker("+", "Centro de Cura", "center", 0.338, 0.580));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.618, 0.460));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.618, 0.460));
             array_push(_markers, new DemoCityMarker("G", "Ginasio Dr. Calidus", "gym", 0.496, 0.115));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Laboratorio", "event", 0.254, 0.164));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Pesquisador", "event", 0.674, 0.648));
@@ -4000,9 +4001,13 @@ function demo_city_markers(_controller) {
 
         default:
             array_push(_markers, new DemoCityMarker("+", "Centro de Cura", "center", 0.388, 0.568));
-            array_push(_markers, new DemoCityMarker("$", "PokeMart", "mart", 0.597, 0.392));
+            array_push(_markers, new DemoCityMarker("$", "Mercado", "mart", 0.597, 0.392));
             array_push(_markers, new DemoCityMarker("G", "Ginasio Vesper", "gym", 0.519, 0.205));
             array_push(_markers, new DemoCityMarker(demo_city_event_seen(_controller, _city) ? "!" : "?", "Base Eclipse", "event", 0.395, 0.447));
+
+            if (_city >= array_length(_controller.kanto_cidades) - 1 && _controller.ginasios_vencidos[_city]) {
+                array_push(_markers, new DemoCityMarker("X", "Rasgo Temporal", "boss", 0.700, 0.300));
+            }
             array_push(_markers, new DemoCityMarker("<", _back_label, "leave", 0.121, 0.503, _back_target));
             break;
     }
@@ -4061,6 +4066,16 @@ function demo_city_marker_ativar(_controller, _marker) {
                     gym_battle_city_index = cidade_index;
                     demo_start_battle(id);
                 }
+                break;
+
+            case "boss":
+                var _escopo_chefe = diario_escopo("chefe");
+                trainer_party = demo_chefe_final_party_criar();
+                diario_escopo_fim(_escopo_chefe);
+                trainer_party_index = 0;
+                enemy_pokemon_data = trainer_party[0];
+                battle_context = "chefe";
+                demo_start_battle(id);
                 break;
 
             case "event":
@@ -4906,6 +4921,8 @@ function demo_run_resetar(_controller, _estado_destino) {
         intro_timer = 0;
         intro_step = 0;
         game_over_timer = 0;
+        vitoria_final_timer = 0;
+        vitoria_final_fragmentos = 0;
         estado_demo = _estado_destino;
         message = _estado_destino == DemoEstado.MENU ? "Menu inicial" : "Escolha seu monstro inicial";
 
@@ -6192,7 +6209,7 @@ function demo_rota_trainer_iniciar_base(_controller) {
 }
 
 function demo_trainer_tem_proximo(_controller) {
-    if (!instance_exists(_controller) || _controller.battle_context != "treinador" || !is_array(_controller.trainer_party)) {
+    if (!instance_exists(_controller) || (_controller.battle_context != "treinador" && _controller.battle_context != "chefe") || !is_array(_controller.trainer_party)) {
         return false;
     }
 
@@ -6217,6 +6234,23 @@ function demo_trainer_enviar_proximo(_controller) {
 
     if (instance_exists(_controller.battle_manager)) {
         _controller.battle_manager.inimigos_campo = [_controller.enemy_inst];
+    }
+
+    if (_controller.battle_context == "chefe") {
+        // Troca de fase do chefe final: os guardioes curam a criatura ativa.
+        var _mundo = conteudo_garantir().Mundo;
+        var _cura = conteudo_struct_get(_mundo, "chefe_cura_entre_fases", 0.25);
+
+        if (instance_exists(_controller.player_inst) && _controller.player_inst.vivo) {
+            _controller.player_inst.hp_atual = min(_controller.player_inst.hp_max, _controller.player_inst.hp_atual + (_controller.player_inst.hp_max * _cura));
+        }
+
+        var _fala = variable_struct_exists(_controller.enemy_pokemon_data, "FalaChefe") ? " " + _controller.enemy_pokemon_data.FalaChefe : "";
+        _controller.message = "O rasgo se alarga: " + _controller.enemy_pokemon_data.Nome + "!" + _fala;
+        battle_log_force(_controller.message);
+        battle_log_push(string_join_ext(" e ", conteudo_struct_get(_mundo, "guardioes", ["Os guardioes"])) + " renovam sua equipe.");
+        battle_screen_shake(10, 0.5);
+        return true;
     }
 
     _controller.message = _controller.battle_trainer_name + " enviou " + _controller.enemy_pokemon_data.Nome + "!";
@@ -6341,6 +6375,177 @@ function demo_exp_recompensa(_pokemon_vencedor, _enemy_level, _tipo_encontro, _c
     }
 
     return floor(demo_exp_base_por_level(_enemy_level) * _mult * _catchup);
+}
+
+function demo_cidade_eh_final(_index) {
+    return variable_instance_exists(id, "kanto_cidades") && _index >= array_length(kanto_cidades) - 1;
+}
+
+// Chefe final (mundo.json -> chefe_fases): um "time" de fases que entram uma depois da outra.
+function demo_chefe_final_party_criar() {
+    var _id = demo_intro_id_chefe();
+    var _fases = conteudo_struct_get(conteudo_garantir().Mundo, "chefe_fases", []);
+    var _party = [];
+
+    for (var _i = 0; _i < array_length(_fases); _i += 1) {
+        var _f = _fases[_i];
+        var _p = demo_criar_pokemon_data(_id, floor(conteudo_struct_get(_f, "nivel", 30)), true, false, true, "ginasio");
+
+        if (!is_struct(_p)) {
+            continue;
+        }
+
+        _p.HpMax = max(1, round(_p.HpMax * conteudo_struct_get(_f, "hp", 1)));
+        _p.HpAtual = _p.HpMax;
+        _p.Attack = max(1, round(_p.Attack * conteudo_struct_get(_f, "ataque", 1)));
+        _p.Defense = max(1, round(_p.Defense * conteudo_struct_get(_f, "defesa", 1)));
+        _p.Speed = max(1, round(_p.Speed * conteudo_struct_get(_f, "velocidade", 1)));
+        _p.Nome = string(conteudo_struct_get(_f, "nome", _p.Nome));
+        _p.FalaChefe = string(conteudo_struct_get(_f, "fala", ""));
+        _p.FaseChefe = _i + 1;
+        array_push(_party, _p);
+    }
+
+    if (array_length(_party) <= 0) {
+        array_push(_party, demo_criar_pokemon_data(_id, 30, true, false, true, "ginasio"));
+    }
+
+    return _party;
+}
+
+function demo_vitoria_final_iniciar(_controller) {
+    with (_controller) {
+        var _recompensa = floor(conteudo_struct_get(conteudo_garantir().Mundo, "chefe_recompensa_fragmentos", 12));
+        vitoria_final_fragmentos = demo_meta_fragmentos_adicionar(id, _recompensa);
+        vitoria_final_timer = 0;
+
+        if (diario_ativo()) {
+            global.diario.ChefeDerrotado = true;
+            diario_finalizar(id);
+        }
+
+        estado_demo = DemoEstado.VITORIA_FINAL;
+        message = "O Rasgo Temporal foi fechado.";
+    }
+}
+
+function demo_vitoria_final_draw_ceu(_gw, _gh, _t) {
+    draw_rectangle_colour(0, 0, _gw, _gh, make_color_rgb(18, 20, 48), make_color_rgb(18, 20, 48), make_color_rgb(70, 46, 92), make_color_rgb(70, 46, 92), false);
+
+    for (var _i = 0; _i < 110; _i += 1) {
+        var _sx = placeholder_hash(_i * 7 + 3) mod max(1, floor(_gw));
+        var _sy = placeholder_hash(_i * 13 + 5) mod max(1, floor(_gh * 0.72));
+        draw_set_alpha(0.35 + (0.65 * abs(sin((current_time * 0.0015) + _i))));
+        draw_set_color((_i mod 5 == 0) ? make_color_rgb(255, 226, 160) : c_white);
+        draw_rectangle(_sx, _sy, _sx + 1 + (_i mod 2), _sy + 1 + (_i mod 2), false);
+    }
+
+    draw_set_alpha(1);
+
+    // A fenda vai se fechando e vira luz.
+    var _poder = max(0, 0.85 - (_t * 0.14));
+
+    if (_poder > 0.03) {
+        demo_draw_space_crack(_gw * 0.5, _gh * 0.42, 40 + (320 * _poder), min(1, _poder * 1.3), _poder);
+    }
+
+    draw_set_alpha(0.22 * (1 - _poder));
+    draw_set_color(make_color_rgb(255, 238, 190));
+    draw_circle(_gw * 0.5, _gh * 0.42, 90 + min(160, _t * 26), false);
+    draw_set_alpha(1);
+
+    // Chao.
+    draw_set_color(make_color_rgb(28, 52, 44));
+    draw_rectangle(0, _gh * 0.78, _gw, _gh, false);
+}
+
+function demo_draw_vitoria_final(_controller) {
+    var _gw = display_get_gui_width();
+    var _gh = display_get_gui_height();
+    var _mx = device_mouse_x_to_gui(0);
+    var _my = device_mouse_y_to_gui(0);
+    var _t = instance_exists(_controller) ? _controller.vitoria_final_timer : 0;
+    var _mundo = conteudo_garantir().Mundo;
+
+    demo_vitoria_final_draw_ceu(_gw, _gh, _t);
+
+    var _panel_w = min(_gw - 96, 860);
+    var _panel_h = 172;
+    var _panel_x = (_gw - _panel_w) * 0.5;
+    var _panel_y = 46;
+    battle_ui_draw_nineslice_panel(_panel_x, _panel_y, _panel_w, _panel_h);
+
+    draw_set_halign(fa_center);
+    draw_set_color(make_color_rgb(255, 222, 120));
+    draw_text_transformed(_gw * 0.5, _panel_y + 24, "O RASGO FOI FECHADO", 1.75, 1.75, 0);
+    draw_set_halign(fa_left);
+    draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
+    battle_ui_font_body();
+    draw_text_ext(_panel_x + 42, _panel_y + 72, conteudo_mundo_texto("texto_vitoria", ""), 25, _panel_w - 84);
+    battle_ui_font_title();
+
+    var _frag = instance_exists(_controller) ? _controller.vitoria_final_fragmentos : 0;
+    draw_set_halign(fa_center);
+    draw_set_color(make_color_rgb(190, 170, 255));
+    draw_text_transformed(_gw * 0.5, _panel_y + _panel_h - 30, _frag > 0 ? "+" + string(_frag) + " Fragmentos do Espaco" : "Treino do desafio: sem fragmentos", 0.8, 0.8, 0);
+
+    // Creditos em faixa rolando.
+    var _creditos = conteudo_struct_get(_mundo, "creditos", []);
+    var _linha = "";
+
+    for (var _c = 0; _c < array_length(_creditos); _c += 1) {
+        _linha += (_c > 0 ? "     |     " : "") + string(_creditos[_c]);
+    }
+
+    var _cards_y = max(_panel_y + _panel_h + 150, _gh - 370);
+    var _ticker_y = _cards_y - 66;
+    var _largura = string_width(_linha) * 0.8;
+    var _desloc = (_t * 70) mod max(1, _largura + _gw);
+    draw_set_alpha(0.65);
+    draw_set_color(c_black);
+    draw_rectangle(0, _ticker_y - 4, _gw, _ticker_y + 22, false);
+    draw_set_alpha(1);
+    draw_set_halign(fa_left);
+    draw_set_color(make_color_rgb(255, 238, 180));
+    draw_text_transformed(_gw - _desloc, _ticker_y, _linha, 0.8, 0.8, 0);
+
+    // Equipe vencedora.
+    var _filled_total = 0;
+
+    if (instance_exists(_controller) && is_array(_controller.player_party)) {
+        for (var _count_i = 0; _count_i < min(4, array_length(_controller.player_party)); _count_i += 1) {
+            if (is_struct(_controller.player_party[_count_i])) {
+                _filled_total += 1;
+            }
+        }
+    }
+
+    var _card_h = max(254, min(270, _gh - _cards_y - 84));
+    var _slots = 4;
+    var _gap = 14;
+    var _party_w = min(_gw - 80, 1220);
+    var _card_w = (_party_w - (_gap * (_slots - 1))) / _slots;
+    var _cards_x = (_gw - _party_w) * 0.5;
+
+    draw_set_color(c_white);
+    draw_text_transformed(_cards_x, _cards_y - 30, "Equipe vencedora: " + string(_filled_total) + "/4", 0.74, 0.74, 0);
+
+    for (var _i = 0; _i < _slots; _i += 1) {
+        var _membro = undefined;
+
+        if (instance_exists(_controller) && is_array(_controller.player_party) && _i < array_length(_controller.player_party)) {
+            _membro = _controller.player_party[_i];
+        }
+
+        demo_draw_game_over_party_card(_membro, _cards_x + (_i * (_card_w + _gap)), _cards_y, _card_w, _card_h, _i, _filled_total);
+    }
+
+    var _button_rect = demo_game_over_button_rect(_gw, _gh);
+    demo_draw_gold_button(_button_rect, "VOLTAR AO MENU", demo_hover_rect(_mx, _my, _button_rect.X, _button_rect.Y, _button_rect.W, _button_rect.H));
+
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    draw_set_alpha(1);
 }
 
 function demo_cidade_chegar(_index) {
@@ -7153,6 +7358,12 @@ function demo_draw_battle_pokemon_instance(_inst) {
     var _draw_y = _inst.y + _shake_y;
     var _xscale = _inst.lado_batalha == LadoBatalha.ALIADO ? -1 : 1;
     var _base_scale = 2.05;
+
+    // O chefe final cresce a cada fase.
+    if (variable_instance_exists(_inst, "pokemon_data") && is_struct(_inst.pokemon_data) && variable_struct_exists(_inst.pokemon_data, "FaseChefe")) {
+        _base_scale *= 1.2 + (0.12 * _inst.pokemon_data.FaseChefe);
+    }
+
     var _scale = _base_scale;
     var _alpha = 1;
     var _capture_enemy = false;
@@ -7609,6 +7820,11 @@ function demo_start_battle(_controller) {
             gym_trainer_sprite = demo_trainer_sprite_carregar_generico(_trainer_sprite_file);
             var _party_total = is_array(trainer_party) ? array_length(trainer_party) : 1;
             message = battle_trainer_name + " te desafiou com " + string(_party_total) + " monstros!";
+        } else if (battle_context == "chefe") {
+            battle_trainer_active = false;
+            battle_trainer_name = conteudo_mundo_texto("chefe_final", "Aeonox");
+            var _fala_chefe = variable_struct_exists(enemy_pokemon_data, "FalaChefe") ? " " + enemy_pokemon_data.FalaChefe : "";
+            message = "O Rasgo Temporal se abre!" + _fala_chefe;
         } else {
             battle_trainer_active = false;
             battle_trainer_name = "";

@@ -134,6 +134,28 @@ MUNDO = {
     "equipe_vila": "Sindicato Eclipse",
     "chefe_final": "Aeonox",
     "guardioes": ["Lumis", "Brotempo"],
+    # Batalha final: aparece na ultima cidade depois de vencer o ultimo lider.
+    # Cada fase entra quando a anterior cai; entre fases a criatura ativa recupera "cura_entre_fases" do HP.
+    # O nivel maximo do jogo e 30, entao as fases se diferenciam pelos multiplicadores.
+    "chefe_fases": [
+        {"nome": "Aeonox", "nivel": 30, "hp": 1.35, "ataque": 1.05, "defesa": 1.00, "velocidade": 1.00,
+         "fala": "Aeonox: O tempo se curva diante de mim."},
+        {"nome": "Aeonox Fendido", "nivel": 30, "hp": 1.60, "ataque": 1.20, "defesa": 1.15, "velocidade": 1.08,
+         "fala": "Aeonox: Voce so abriu mais o rasgo!"},
+        {"nome": "Aeonox Desperto", "nivel": 30, "hp": 1.90, "ataque": 1.35, "defesa": 1.20, "velocidade": 1.18,
+         "fala": "Aeonox: Entao veja o fim de todas as eras!"},
+    ],
+    "chefe_cura_entre_fases": 0.25,
+    "chefe_recompensa_fragmentos": 12,
+    "texto_vitoria": "Aeonox foi selado e o tempo voltou a correr no Vale de Cronaria. Lumis e Brotempo guardam a fenda agora, e o eco desta equipe fica gravado em todas as eras.",
+    "creditos": [
+        "RASGO TEMPORAL",
+        "Ideia, direcao e GDD: o criador do projeto",
+        "Codigo e conteudo feitos com IA (Claude e Codex) no GameMaker",
+        "Arte de rotas e cenarios gerada para o projeto",
+        "Criaturas, mundo e historia originais",
+        "Obrigado por jogar!",
+    ],
     "cidades": [
         {"nome": "Vila Alvorada", "lider": "", "especialidade": "", "tipo": "", "evento": "Casa da Mae", "lider_criatura": "", "lider_nivel": 0, "sprite_lider": "", "sprite_cidade": "vila_alvorada.png"},
         {"nome": "Porto Raizes", "lider": "", "especialidade": "", "tipo": "", "evento": "Mercado do Porto", "lider_criatura": "", "lider_nivel": 0, "sprite_lider": "", "sprite_cidade": "porto_raizes.png"},

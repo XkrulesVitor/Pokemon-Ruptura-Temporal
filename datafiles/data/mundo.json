@@ -11,6 +11,46 @@
   "Lumis",
   "Brotempo"
  ],
+ "chefe_fases": [
+  {
+   "nome": "Aeonox",
+   "nivel": 30,
+   "hp": 1.35,
+   "ataque": 1.05,
+   "defesa": 1.0,
+   "velocidade": 1.0,
+   "fala": "Aeonox: O tempo se curva diante de mim."
+  },
+  {
+   "nome": "Aeonox Fendido",
+   "nivel": 30,
+   "hp": 1.6,
+   "ataque": 1.2,
+   "defesa": 1.15,
+   "velocidade": 1.08,
+   "fala": "Aeonox: Voce so abriu mais o rasgo!"
+  },
+  {
+   "nome": "Aeonox Desperto",
+   "nivel": 30,
+   "hp": 1.9,
+   "ataque": 1.35,
+   "defesa": 1.2,
+   "velocidade": 1.18,
+   "fala": "Aeonox: Entao veja o fim de todas as eras!"
+  }
+ ],
+ "chefe_cura_entre_fases": 0.25,
+ "chefe_recompensa_fragmentos": 12,
+ "texto_vitoria": "Aeonox foi selado e o tempo voltou a correr no Vale de Cronaria. Lumis e Brotempo guardam a fenda agora, e o eco desta equipe fica gravado em todas as eras.",
+ "creditos": [
+  "RASGO TEMPORAL",
+  "Ideia, direcao e GDD: o criador do projeto",
+  "Codigo e conteudo feitos com IA (Claude e Codex) no GameMaker",
+  "Arte de rotas e cenarios gerada para o projeto",
+  "Criaturas, mundo e historia originais",
+  "Obrigado por jogar!"
+ ],
  "cidades": [
   {
    "nome": "Vila Alvorada",

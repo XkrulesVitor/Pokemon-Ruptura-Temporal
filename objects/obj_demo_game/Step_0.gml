@@ -320,7 +320,9 @@ switch (estado_demo) {
                         saida_destino_index = -1;
                         demo_rota_iniciar(_destino_leave, _rota_leave);
                     } else if (cidade_index >= array_length(kanto_cidades) - 1) {
-                        message = "Cidadela Fenda e o limite da run atual. Vesper aguarda no ginasio.";
+                        message = demo_cidade_ginasio_vencido(cidade_index)
+                            ? "O Rasgo Temporal aguarda no centro da cidade. Feche-o para terminar a run."
+                            : demo_cidade_atual().Lider + " aguarda no ginasio.";
                     } else if (!demo_cidade_ginasio_vencido(cidade_index)) {
                         message = "Voce precisa vencer o lider desta cidade antes de prosseguir.";
                     } else if (!demo_rota_opcao_ativa(id, _block_leave, _rota_leave, _destino_leave)) {
@@ -358,7 +360,7 @@ switch (estado_demo) {
 
             var _xp_tipo = "selvagem";
 
-            if (battle_context == "ginasio" || battle_context == "treinador") {
+            if (battle_context == "ginasio" || battle_context == "treinador" || battle_context == "chefe") {
                 _xp_tipo = "treinador";
             } else if (battle_context == "rocket") {
                 _xp_tipo = "rocket";
@@ -369,7 +371,7 @@ switch (estado_demo) {
             var _xp_ganhos = demo_exp_compartilhar(id, _xp_reward);
             var _money_tipo = "selvagem";
 
-            if (battle_context == "ginasio") {
+            if (battle_context == "ginasio" || battle_context == "chefe") {
                 _money_tipo = "ginasio";
             } else if (battle_context == "treinador") {
                 _money_tipo = "treinador";
@@ -380,7 +382,7 @@ switch (estado_demo) {
             var _money_reward = demo_meta_dinheiro_aplicar(id, pokemon_recompensa_dinheiro(enemy_pokemon_data, _money_tipo));
             demo_battle_reward_adicionar(id, _xp_reward, _xp_ganhos, _money_reward);
 
-            if (battle_context == "treinador" && demo_trainer_tem_proximo(id)) {
+            if ((battle_context == "treinador" || battle_context == "chefe") && demo_trainer_tem_proximo(id)) {
                 demo_trainer_enviar_proximo(id);
                 break;
             }
@@ -401,7 +403,9 @@ switch (estado_demo) {
             estado_demo = DemoEstado.VITORIA;
             diario_registrar_vitoria();
             result_timer = 1.5;
-            if (battle_context == "ginasio") {
+            if (battle_context == "chefe") {
+                message = conteudo_mundo_texto("chefe_final", "Aeonox") + " caiu! O Rasgo Temporal esta se fechando. Pressione ENTER ou clique.";
+            } else if (battle_context == "ginasio") {
                 _fragmentos_reward = demo_meta_fragmentos_ginasio(gym_battle_city_index);
                 demo_meta_fragmentos_adicionar(id, _fragmentos_reward);
                 ginasios_vencidos[gym_battle_city_index] = true;
@@ -525,6 +529,11 @@ switch (estado_demo) {
                 break;
             }
 
+            if (battle_context == "chefe") {
+                demo_vitoria_final_iniciar(id);
+                break;
+            }
+
             if (battle_context == "rota" || battle_context == "treinador" || battle_context == "rocket") {
                 if (route_steps >= route_steps_needed) {
                     demo_cidade_chegar(rota_destino_index);
@@ -534,7 +543,26 @@ switch (estado_demo) {
                 }
             } else {
                 estado_demo = DemoEstado.CIDADE;
-                message = kanto_cidades[cidade_index].Lider + " foi derrotado. A proxima rota esta liberada.";
+                message = demo_cidade_eh_final(cidade_index)
+                    ? kanto_cidades[cidade_index].Lider + " caiu! O Rasgo Temporal se abriu no centro da cidade."
+                    : kanto_cidades[cidade_index].Lider + " foi derrotado. A proxima rota esta liberada.";
+            }
+        }
+        break;
+
+    case DemoEstado.VITORIA_FINAL:
+        vitoria_final_timer += _dt;
+
+        if (vitoria_final_timer > 0.8) {
+            var _vf_click = false;
+
+            if (mouse_check_button_pressed(mb_left)) {
+                var _vf_btn = demo_game_over_button_rect(display_get_gui_width(), display_get_gui_height());
+                _vf_click = demo_hover_rect(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), _vf_btn.X, _vf_btn.Y, _vf_btn.W, _vf_btn.H);
+            }
+
+            if (keyboard_check_pressed(vk_enter) || _vf_click) {
+                demo_run_resetar(id, DemoEstado.MENU);
             }
         }
         break;

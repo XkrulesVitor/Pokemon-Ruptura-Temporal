@@ -20,6 +20,9 @@ if (estado_demo == DemoEstado.MENU) {
 } else if (estado_demo == DemoEstado.GAME_OVER) {
     demo_draw_game_over(id);
     diario_draw_resultado_game_over(id);
+} else if (estado_demo == DemoEstado.VITORIA_FINAL) {
+    demo_draw_vitoria_final(id);
+    diario_draw_resultado_game_over(id);
 } else if (estado_demo == DemoEstado.ESCOLHA_INICIAL) {
     draw_set_color(c_black);
     draw_set_alpha(0.55);
@@ -527,6 +530,6 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
     demo_draw_status_tooltip(_draft_tooltip);
 }
 
-if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU) {
+if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU && estado_demo != DemoEstado.VITORIA_FINAL) {
     diario_draw_hud();
 }

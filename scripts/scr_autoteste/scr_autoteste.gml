@@ -192,20 +192,62 @@ function autoteste_passos() {
             estado_demo = DemoEstado.GAME_OVER;
             game_over_timer = 0;
         } },
-        { Nome: "menu com diario", Espera: 1.2, Foto: "21_menu_diario", Acao: function() {
+        { Nome: "chefe: cidade final", Espera: 1.5, Foto: "21_cidade_final_rasgo", Acao: function() {
+            demo_run_resetar(id, DemoEstado.CIDADE);
+            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[1], 28, true);
+            _p.FoiCapturado = true;
+            _p.Capturado = true;
+            player_party = [_p];
+            player_pokemon_data = _p;
+            player_party_active_index = 0;
+            cidade_index = array_length(kanto_cidades) - 1;
+            ginasios_vencidos[cidade_index] = true;
+            message = demo_cidade_nome(cidade_index);
+        } },
+        { Nome: "chefe: fase 1", Espera: 2.5, Foto: "22_chefe_fase1", Acao: function() {
+            var _markers = demo_city_markers(id);
+            var _achou = false;
+
+            for (var _i = 0; _i < array_length(_markers); _i += 1) {
+                if (_markers[_i].Action == "boss") {
+                    demo_city_marker_ativar(id, _markers[_i]);
+                    _achou = true;
+                    break;
+                }
+            }
+
+            autoteste_log("marcador do rasgo encontrado: " + string(_achou) + " | fases: " + string(array_length(trainer_party)));
+        } },
+        { Nome: "chefe: fase 2", Espera: 2.5, Foto: "23_chefe_fase2", Acao: function() {
+            if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
+        } },
+        { Nome: "chefe: fase 3", Espera: 2.5, Foto: "24_chefe_fase3", Acao: function() {
+            autoteste_log("fase atual: " + enemy_pokemon_data.Nome);
+            if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
+        } },
+        { Nome: "chefe: derrotado", Espera: 1.5, Foto: "25_chefe_derrotado", Acao: function() {
+            autoteste_log("fase atual: " + enemy_pokemon_data.Nome);
+            if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
+        } },
+        { Nome: "vitoria final", Espera: 3.0, Foto: "26_vitoria_final", Acao: function() {
+            autoteste_log("estado antes da vitoria final: " + string(estado_demo) + " | " + message);
+            demo_cleanup_battle(id);
+            demo_vitoria_final_iniciar(id);
+        } },
+        { Nome: "menu com diario", Espera: 1.2, Foto: "31_menu_diario", Acao: function() {
             demo_run_resetar(id, DemoEstado.MENU);
         } },
-        { Nome: "diario: inicio", Espera: 1.5, Foto: "22_diario_laboratorio", Acao: function() {
+        { Nome: "diario: inicio", Espera: 1.5, Foto: "32_diario_laboratorio", Acao: function() {
             diario_iniciar(id);
             autoteste_log("diario " + global.diario.Chave + " oficial=" + string(global.diario.Oficial) + " inicial=" + demo_pokemon_nome(global.diario.InicialID));
         } },
-        { Nome: "diario: cidade", Espera: 1.2, Foto: "23_diario_cidade", Acao: function() {
+        { Nome: "diario: cidade", Espera: 1.2, Foto: "33_diario_cidade", Acao: function() {
             autoteste_log("diario equipe: " + player_party[0].Nome + " nv " + string(player_party[0].Level) + " hp " + string(player_party[0].HpMax) + " atk " + string(player_party[0].Attack));
             estado_demo = DemoEstado.CIDADE;
             cidade_index = 0;
             message = demo_cidade_nome(cidade_index);
         } },
-        { Nome: "diario: escolha de rota", Espera: 1.2, Foto: "24_diario_rotas", Acao: function() {
+        { Nome: "diario: escolha de rota", Espera: 1.2, Foto: "34_diario_rotas", Acao: function() {
             saida_destino_index = 1;
             estado_demo = DemoEstado.SAIR_CIDADE;
             var _opcoes = demo_rota_saida_opcoes_get(id, 1);
@@ -213,7 +255,7 @@ function autoteste_passos() {
             for (var _i = 0; _i < array_length(_opcoes); _i += 1) _nomes += _opcoes[_i].Nome + "; ";
             autoteste_log("diario rotas: " + _nomes);
         } },
-        { Nome: "diario: encontro", Espera: 2.0, Foto: "25_diario_batalha", Acao: function() {
+        { Nome: "diario: encontro", Espera: 2.0, Foto: "35_diario_batalha", Acao: function() {
             var _opcoes = demo_rota_saida_opcoes_get(id, 1);
             demo_rota_escolher(id, demo_rota_block_index(0, 1), _opcoes[0]);
             demo_rota_iniciar(1, _opcoes[0]);
@@ -222,7 +264,7 @@ function autoteste_passos() {
             demo_rota_encontro_selvagem_iniciar(id);
             autoteste_log("diario selvagem: " + enemy_pokemon_data.Nome + " nv " + string(enemy_pokemon_data.Level) + " hp " + string(enemy_pokemon_data.HpMax));
         } },
-        { Nome: "diario: game over", Espera: 1.5, Foto: "26_diario_game_over", Acao: function() {
+        { Nome: "diario: game over", Espera: 1.5, Foto: "36_diario_game_over", Acao: function() {
             demo_cleanup_battle(id);
             estado_demo = DemoEstado.GAME_OVER;
             game_over_timer = 0;

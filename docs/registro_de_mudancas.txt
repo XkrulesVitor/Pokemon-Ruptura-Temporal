@@ -311,7 +311,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   .gitignore                                                         +6 -0
   PokemonRogueLike.yyp                                               +6 -784
   datafiles/data/criaturas.json                                      +2149 -0
-  datafiles/data/mundo.json                                          +100 -0
+  datafiles/data/mundo.json                                          +140 -0
   datafiles/fonts/power_clear_bold.ttf                               +- --
   datafiles/fonts/power_red_blue.ttf                                 +- --
   datafiles/sprites/background.png                                   +- --
@@ -1097,10 +1097,10 @@ ARQUIVOS ALTERADOS (desde o commit base)
   datafiles/sprites/ui/battle/overlay_message.png                    +- --
   datafiles/sprites/ui/types.png                                     +- --
   docs/como_adicionar_artes.txt                                      +55 -0
-  estado_do_jogo.md                                                  +59 -87
-  objects/obj_demo_game/Create_0.gml                                 +51 -57
-  objects/obj_demo_game/Draw_64.gml                                  +12 -7
-  objects/obj_demo_game/Step_0.gml                                   +25 -15
+  estado_do_jogo.md                                                  +58 -82
+  objects/obj_demo_game/Create_0.gml                                 +53 -57
+  objects/obj_demo_game/Draw_64.gml                                  +15 -7
+  objects/obj_demo_game/Step_0.gml                                   +58 -20
   objects/obj_game_manager/Create_0.gml                              +1 -0
   objects/obj_game_manager/Draw_75.gml                               +1 -0
   objects/obj_game_manager/Step_0.gml                                +1 -0
@@ -1112,13 +1112,13 @@ ARQUIVOS ALTERADOS (desde o commit base)
   options/mac/options_mac.yy                                         +1 -1
   options/tvos/options_tvos.yy                                       +1 -1
   options/windows/options_windows.yy                                 +3 -3
-  scripts/scr_autoteste/scr_autoteste.gml                            +328 -0
+  scripts/scr_autoteste/scr_autoteste.gml                            +370 -0
   scripts/scr_autoteste/scr_autoteste.yy                             +13 -0
   scripts/scr_battle_ui/scr_battle_ui.gml                            +78 -57
   scripts/scr_conteudo/scr_conteudo.gml                              +227 -0
   scripts/scr_conteudo/scr_conteudo.yy                               +13 -0
-  scripts/scr_demo_playable/scr_demo_playable.gml                    +348 -415
-  scripts/scr_desafio_diario/scr_desafio_diario.gml                  +430 -0
+  scripts/scr_demo_playable/scr_demo_playable.gml                    +573 -424
+  scripts/scr_desafio_diario/scr_desafio_diario.gml                  +432 -0
   scripts/scr_desafio_diario/scr_desafio_diario.yy                   +13 -0
   scripts/scr_event_manager/scr_event_manager.gml                    +2 -2
   scripts/scr_placeholders/scr_placeholders.gml                      +432 -0
@@ -1128,7 +1128,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   scripts/scr_pokemon_progressao/scr_pokemon_progressao.gml          +8 -0
   scripts/scr_pokemon_sprites/scr_pokemon_sprites.gml                +80 -139
   tools/autoteste.ps1                                                +14 -0
-  tools/gerar_conteudo.py                                            +218 -0
+  tools/gerar_conteudo.py                                            +240 -0
   tools/gerar_registro.py                                            +219 -0
   tools/gml_patch.py                                                 +67 -0
   extrair_habilidades.py => tools/legacy/extrair_habilidades.py      +0 -0
