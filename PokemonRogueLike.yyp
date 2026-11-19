@@ -70,6 +70,7 @@
   },
   "name":"PokemonRogueLike",
   "resources":[
+    {"id":{"name":"scr_rejogabilidade","path":"scripts/scr_rejogabilidade/scr_rejogabilidade.yy",},},
     {"id":{"name":"scr_combate_extras","path":"scripts/scr_combate_extras/scr_combate_extras.yy",},},
     {"id":{"name":"scr_missoes","path":"scripts/scr_missoes/scr_missoes.yy",},},
     {"id":{"name":"scr_run_save","path":"scripts/scr_run_save/scr_run_save.yy",},},

@@ -20,6 +20,9 @@ if (estado_demo == DemoEstado.MENU) {
 } else if (estado_demo == DemoEstado.GAME_OVER) {
     demo_draw_game_over(id);
     diario_draw_resultado_game_over(id);
+    buraco_negro_draw_resultado();
+} else if (estado_demo == DemoEstado.CONQUISTAS) {
+    conquistas_draw_tela();
 } else if (estado_demo == DemoEstado.VITORIA_FINAL) {
     demo_draw_vitoria_final(id);
     diario_draw_resultado_game_over(id);
@@ -535,8 +538,9 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
     demo_draw_status_tooltip(_draft_tooltip);
 }
 
-if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU && estado_demo != DemoEstado.VITORIA_FINAL) {
+if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU && estado_demo != DemoEstado.VITORIA_FINAL && estado_demo != DemoEstado.CONQUISTAS) {
     diario_draw_hud();
 }
 
 missao_toast_draw();
+conquista_avisos_draw();

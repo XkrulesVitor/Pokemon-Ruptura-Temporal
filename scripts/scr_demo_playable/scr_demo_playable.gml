@@ -16,7 +16,8 @@ enum DemoEstado {
     VITORIA,
     DERROTA,
     GAME_OVER,
-    VITORIA_FINAL
+    VITORIA_FINAL,
+    CONQUISTAS
 }
 
 function demo_draw_sprite_cover(_spr, _x, _y, _w, _h, _alpha) {
@@ -495,7 +496,7 @@ function demo_meta_sincronizar_globals(_meta) {
 
 function demo_meta_dinheiro_aplicar(_controller, _valor) {
     var _mult = variable_global_exists("demo_meta_money_mult") ? global.demo_meta_money_mult : 1;
-    return max(0, floor(_valor * _mult));
+    return max(0, floor(_valor * _mult * dificuldade_param("Dinheiro")));
 }
 
 function demo_meta_dinheiro_inicial_bonus(_meta) {
@@ -514,11 +515,8 @@ function demo_meta_dinheiro_inicial_bonus(_meta) {
 }
 
 function demo_meta_fragmentos_ginasio(_cidade_index) {
-    if (_cidade_index >= 6) {
-        return 10;
-    }
-
-    return max(1, _cidade_index - 1);
+    var _base = _cidade_index >= 6 ? 10 : max(1, _cidade_index - 1);
+    return max(1, round(_base * dificuldade_param("Fragmentos")));
 }
 
 function demo_meta_fragmentos_adicionar(_controller, _qtd) {
@@ -1599,6 +1597,7 @@ function demo_draw_menu_titulo(_controller) {
     demo_draw_title_button(_btn, "COMECAR RUN", _hover);
     demo_draw_title_button(_shop_btn, "LOJA DO ESPACO", _shop_hover);
     diario_draw_menu(_mx, _my);
+    menu_opcoes_draw(_mx, _my);
     run_save_draw_menu(_mx, _my);
 
     var _fragment_tooltip_title = undefined;
@@ -4207,6 +4206,7 @@ function ItemData(_id, _nome, _tipo, _valor_efeito, _preco, _descricao) construc
     ValorEfeito = _valor_efeito;
     Preco = _preco;
     Descricao = _descricao;
+    Status = argument_count >= 7 ? argument[6] : "";
 }
 
 function demo_item_db_criar() {
@@ -4226,7 +4226,10 @@ function demo_item_db_criar() {
         oran_berry: new ItemData("oran_berry", "Fruta Anil", "berry", 0.25, 50, "Auto: cura 25% abaixo de 30% HP."),
         cheri_berry: new ItemData("cheri_berry", "Fruta Rubra", "berry", 0, 60, "Auto: cura Paralisia."),
         leppa_berry: new ItemData("leppa_berry", "Fruta Ambar", "cooldown", 0.50, 120, "Reduz cooldowns em 50% uma vez."),
-        rare_candy: new ItemData("rare_candy", "Cristal de Nivel", "level", 1, 900, "Sobe 1 nivel do monstro ativo.")
+        rare_candy: new ItemData("rare_candy", "Cristal de Nivel", "level", 1, 900, "Sobe 1 nivel do monstro ativo."),
+        po_ataque: new ItemData("po_ataque", "Po de Furia", "buff", 0, 140, "Na batalha: o monstro ativo fica com IMPETO OFENSIVO por um tempo.", "ImpetoOfensivo"),
+        po_defesa: new ItemData("po_defesa", "Po de Couraca", "buff", 0, 140, "Na batalha: o monstro ativo fica FORTIFICADO por um tempo.", "Fortificado"),
+        po_velocidade: new ItemData("po_velocidade", "Po de Vento", "buff", 0, 160, "Na batalha: as recargas do monstro ativo correm mais rapido.", "FluxoAcelerado")
     };
 }
 
@@ -4259,7 +4262,10 @@ function demo_inventario_criar() {
         oran_berry: 0,
         cheri_berry: 0,
         leppa_berry: 0,
-        rare_candy: 0
+        rare_candy: 0,
+        po_ataque: 0,
+        po_defesa: 0,
+        po_velocidade: 0
     };
 }
 
@@ -4287,14 +4293,14 @@ function demo_shop_items_cidade(_cidade_index) {
         case 1:
             return ["pokebola", "potion", "antidote"];
         case 2:
-            return ["pokebola", "great_ball", "potion", "antidote", "burn_heal", "awakening"];
+            return ["pokebola", "great_ball", "potion", "antidote", "burn_heal", "awakening", "po_ataque"];
         case 3:
-            return ["great_ball", "super_potion", "oran_berry", "full_heal"];
+            return ["great_ball", "super_potion", "oran_berry", "full_heal", "po_ataque", "po_defesa"];
         case 4:
-            return ["ultra_ball", "hyper_potion", "leppa_berry", "full_heal"];
+            return ["ultra_ball", "hyper_potion", "leppa_berry", "full_heal", "po_defesa", "po_velocidade"];
         case 5:
         case 6:
-            return ["ultra_ball", "hyper_potion", "full_restore", "leppa_berry", "rare_candy"];
+            return ["ultra_ball", "hyper_potion", "full_restore", "leppa_berry", "rare_candy", "po_ataque", "po_velocidade"];
     }
 
     return ["pokebola", "potion"];
@@ -4304,7 +4310,7 @@ function demo_item_ids_mochila() {
     return [
         "potion", "super_potion", "hyper_potion", "full_restore",
         "antidote", "burn_heal", "awakening", "full_heal",
-        "rare_candy",
+        "rare_candy", "po_ataque", "po_defesa", "po_velocidade",
         "oran_berry", "cheri_berry", "leppa_berry",
         "pokebola", "great_ball", "ultra_ball", "master_ball"
     ];
@@ -4334,6 +4340,7 @@ function demo_item_pode_usar(_item, _em_batalha) {
         case "status":
             return true;
         case "cooldown":
+        case "buff":
             return _em_batalha;
         case "level":
             return !_em_batalha;
@@ -4853,6 +4860,7 @@ function demo_run_resetar(_controller, _estado_destino) {
     }
 
     diario_encerrar();
+    buraco_negro_encerrar();
 
     with (_controller) {
         demo_cleanup_battle(id);
@@ -4966,7 +4974,7 @@ function demo_capture_chance(_controller, _item, _enemy) {
 
     var _shiny_bonus = variable_struct_exists(_enemy, "CaptureChanceBonus") ? _enemy.CaptureChanceBonus : 0;
     var _meta_bonus = variable_global_exists("demo_meta_capture_bonus") ? global.demo_meta_capture_bonus : 0;
-    var _mult_dificuldade = variable_global_exists("dificuldade_captura_mult") ? global.dificuldade_captura_mult : 1;
+    var _mult_dificuldade = dificuldade_param("Captura");
     var _chance = ((0.03 + (_item.ValorEfeito * _fator_hp)) * _mult_raridade[_raridade]) + _status + _shiny_bonus + _meta_bonus;
     return clamp(_chance * _mult_dificuldade, 0.01, 0.97);
 }
@@ -5105,6 +5113,12 @@ function demo_item_usar(_controller, _id_item, _em_batalha) {
                 }
             }
 
+            _curou = true;
+        }
+
+        if (_item.Tipo == "buff" && instance_exists(_ally)) {
+            pokemon_status_aplicar(_ally, _item.Status, pokemon_combate_status_duracao_padrao(_item.Status) * 3);
+            battle_log_push(string_upper(_ally.pokemon_nome) + " ficou " + string_upper(_item.Status) + "!");
             _curou = true;
         }
 
@@ -5339,6 +5353,11 @@ function demo_rota_level_range_texto(_block_index, _treinador) {
 function demo_rota_biomas_texto(_rota) {
     if (!is_struct(_rota) || !is_array(_rota.Biomas)) {
         return "";
+    }
+
+    // Hardcore: o nome da rota aparece, mas os tipos ficam escondidos.
+    if (dificuldade_param("RotasCegas")) {
+        return "???";
     }
 
     var _texto = "";
@@ -5840,7 +5859,7 @@ function demo_rota_encontros_texto(_origem_index, _destino_index) {
 function demo_rota_enemy_level(_origem_index, _destino_index) {
     var _block = demo_rota_block_index(_origem_index, _destino_index);
     var _range = demo_rota_level_range(_block, false);
-    return irandom_range(_range[0], _range[1]);
+    return dificuldade_nivel(irandom_range(_range[0], _range[1]));
 }
 
 function demo_pokemon_tags_contem(_pokemon, _tags) {
@@ -6151,7 +6170,7 @@ function demo_rota_trainer_level(_controller) {
 
     var _block = demo_rota_block_index(_controller.rota_origem_index, _controller.rota_destino_index);
     var _range = demo_rota_level_range(_block, true);
-    return irandom_range(_range[0], _range[1]);
+    return dificuldade_nivel(irandom_range(_range[0], _range[1]));
 }
 
 function demo_rota_trainer_party_size(_controller) {
@@ -6224,7 +6243,7 @@ function demo_rota_trainer_iniciar_base(_controller) {
 }
 
 function demo_trainer_tem_proximo(_controller) {
-    if (!instance_exists(_controller) || (_controller.battle_context != "treinador" && _controller.battle_context != "chefe") || !is_array(_controller.trainer_party)) {
+    if (!instance_exists(_controller) || (_controller.battle_context != "treinador" && _controller.battle_context != "chefe" && _controller.battle_context != "buraco_negro") || !is_array(_controller.trainer_party)) {
         return false;
     }
 
@@ -6430,8 +6449,9 @@ function demo_chefe_final_party_criar() {
 
 function demo_vitoria_final_iniciar(_controller) {
     with (_controller) {
-        var _recompensa = floor(conteudo_struct_get(conteudo_garantir().Mundo, "chefe_recompensa_fragmentos", 12));
+        var _recompensa = round(floor(conteudo_struct_get(conteudo_garantir().Mundo, "chefe_recompensa_fragmentos", 12)) * dificuldade_param("Fragmentos"));
         vitoria_final_fragmentos = demo_meta_fragmentos_adicionar(id, _recompensa);
+        conquista_evento("chefe", id);
         vitoria_final_timer = 0;
 
         if (diario_ativo()) {
@@ -6443,6 +6463,11 @@ function demo_vitoria_final_iniciar(_controller) {
         message = "O Rasgo Temporal foi fechado.";
         run_save_apagar();
     }
+}
+
+function demo_vitoria_dive_rect(_gw, _gh) {
+    var _b = demo_game_over_button_rect(_gw, _gh);
+    return { X: _b.X + _b.W + 24, Y: _b.Y, W: _b.W, H: _b.H };
 }
 
 function demo_vitoria_final_draw_ceu(_gw, _gh, _t) {
@@ -6559,6 +6584,11 @@ function demo_draw_vitoria_final(_controller) {
     var _button_rect = demo_game_over_button_rect(_gw, _gh);
     demo_draw_gold_button(_button_rect, "VOLTAR AO MENU", demo_hover_rect(_mx, _my, _button_rect.X, _button_rect.Y, _button_rect.W, _button_rect.H));
 
+    if (buraco_negro_disponivel()) {
+        var _dive = demo_vitoria_dive_rect(_gw, _gh);
+        demo_draw_gold_button(_dive, "MERGULHAR NO RASGO", demo_hover_rect(_mx, _my, _dive.X, _dive.Y, _dive.W, _dive.H));
+    }
+
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     draw_set_alpha(1);
@@ -6590,10 +6620,10 @@ function demo_gym_enemy_level(_cidade_index) {
     var _cidades = variable_instance_exists(id, "kanto_cidades") ? kanto_cidades : demo_kanto_cidades_criar();
 
     if (_cidade_index >= 0 && _cidade_index < array_length(_cidades) && _cidades[_cidade_index].LiderNivel > 0) {
-        return _cidades[_cidade_index].LiderNivel;
+        return dificuldade_nivel(_cidades[_cidade_index].LiderNivel);
     }
 
-    return clamp(5 + (_cidade_index * 4), 5, 30);
+    return dificuldade_nivel(clamp(5 + (_cidade_index * 4), 5, 30));
 }
 
 function demo_dialogo_mae_inicial() {
@@ -7838,6 +7868,10 @@ function demo_start_battle(_controller) {
             gym_trainer_sprite = demo_trainer_sprite_carregar_generico(_trainer_sprite_file);
             var _party_total = is_array(trainer_party) ? array_length(trainer_party) : 1;
             message = battle_trainer_name + " te desafiou com " + string(_party_total) + " monstros!";
+        } else if (battle_context == "buraco_negro") {
+            battle_trainer_active = false;
+            battle_trainer_name = "O Buraco Negro";
+            message = "Buraco Negro - onda " + string(global.buraco_negro.Onda) + ": " + string(array_length(trainer_party)) + " monstro(s) surgem do rasgo!";
         } else if (battle_context == "chefe") {
             battle_trainer_active = false;
             battle_trainer_name = conteudo_mundo_texto("chefe_final", "Aeonox");

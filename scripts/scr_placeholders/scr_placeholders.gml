@@ -244,6 +244,7 @@ function placeholder_treinador_sprite(_nome) {
 
 // Folha 4x4 do personagem andando pelo mapa (linhas: baixo, esquerda, direita, cima).
 function placeholder_andarilho_folha() {
+    var _skin = skin_dados(argument_count >= 1 ? argument[0] : "padrao");
     var _fw = 32;
     var _fh = 48;
     var _w = _fw * 4;
@@ -267,13 +268,13 @@ function placeholder_andarilho_folha() {
             draw_rectangle(_cx + 2 - _passo, _oy + 34, _cx + 7 - _passo, _oy + 45, false);
             draw_set_color(make_color_rgb(32, 30, 44));
             draw_roundrect_ext(_cx - 10, _oy + 18, _cx + 10, _oy + 38, 6, 6, false);
-            draw_set_color(make_color_rgb(64, 156, 136));
+            draw_set_color(_skin.Camisa);
             draw_roundrect_ext(_cx - 8, _oy + 20, _cx + 8, _oy + 36, 5, 5, false);
             draw_set_color(make_color_rgb(32, 30, 44));
             draw_circle(_cx, _oy + 12, 9, false);
             draw_set_color(make_color_rgb(236, 200, 166));
             draw_circle(_cx, _oy + 12, 7.5, false);
-            draw_set_color(make_color_rgb(232, 168, 56));
+            draw_set_color(_skin.Chapeu);
             draw_roundrect_ext(_cx - 9, _oy + 2, _cx + 9, _oy + 9, 4, 4, false);
 
             if (_row != 3) {
@@ -403,6 +404,21 @@ function placeholder_item_sprite(_id_item) {
             draw_roundrect_ext(10, 14, 22, 27, 5, 5, false);
             draw_set_color(make_color_rgb(180, 140, 100));
             draw_rectangle(13, 5, 19, 9, false);
+            break;
+
+        case "buff":
+            var _cor_po = make_color_rgb(230, 90, 60);
+            if (_id_item == "po_defesa") _cor_po = make_color_rgb(110, 140, 200);
+            if (_id_item == "po_velocidade") _cor_po = make_color_rgb(120, 220, 200);
+            draw_set_color(_contorno);
+            draw_circle(16, 19, 10, false);
+            draw_rectangle(12, 6, 20, 11, false);
+            draw_set_color(make_color_rgb(214, 190, 150));
+            draw_circle(16, 19, 8, false);
+            draw_set_color(_cor_po);
+            draw_circle(16, 21, 5, false);
+            draw_set_color(make_color_rgb(150, 60, 60));
+            draw_rectangle(11, 10, 21, 12, false);
             break;
 
         case "berry":

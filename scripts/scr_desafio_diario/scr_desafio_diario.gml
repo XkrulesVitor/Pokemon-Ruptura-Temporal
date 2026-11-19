@@ -324,6 +324,7 @@ function diario_finalizar(_controller) {
         }
 
         _save.UltimoDia = _chave;
+        conquista_evento("diario", _save.Sequencia);
 
         if (_pontos > _save.MelhorPontos) {
             _save.MelhorPontos = _pontos;

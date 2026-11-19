@@ -80,8 +80,9 @@ route_fx_sprites = {
     lightning: demo_asset_sprite("datafiles/sprites/overworld/routes/route_fx_lightning_sheet.png")
 };
 route_trainer_sprite = demo_asset_sprite("datafiles/sprites/treinadores/jogador_andando.png");
-if (!sprite_exists(route_trainer_sprite)) {
-    route_trainer_sprite = placeholder_andarilho_folha();
+route_trainer_placeholder = !sprite_exists(route_trainer_sprite);
+if (route_trainer_placeholder) {
+    route_trainer_sprite = placeholder_andarilho_folha(progresso().Skin);
 }
 professor_sprite = demo_trainer_sprite_carregar_generico("professor.png");
 mae_sprite = demo_trainer_sprite_carregar_generico("mae.png");

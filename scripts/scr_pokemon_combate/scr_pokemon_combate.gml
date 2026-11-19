@@ -573,6 +573,10 @@ function pokemon_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplic
     var _mitigacao = _defesa_efetiva * 0.13;
     var _variacao = random_range(0.92, 1.08);
     var _dano_bruto = max(1, ((_poder - _mitigacao) * _multiplicador) * _variacao);
+
+    if (instance_exists(_atacante) && _atacante.lado_batalha == LadoBatalha.INIMIGO) {
+        _dano_bruto *= dificuldade_param("Dano");
+    }
     var _limite_golpe = max(8, floor(_alvo.hp_max * 0.42));
     return clamp(floor(_dano_bruto), 4, _limite_golpe);
 }
@@ -1165,6 +1169,11 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
 
     if (_houve_combo || _bonus_tipo >= 0.05 || _sinergias > 0) {
         battle_screen_shake(6, 0.16);
+
+        if (_atacante.lado_batalha == LadoBatalha.ALIADO) {
+            if (_sinergias > 0) conquista_contador("sinergias", _sinergias);
+            if (_houve_combo || _bonus_tipo >= 0.05) conquista_contador("combos", 1);
+        }
     }
 
     if (pokemon_status_tem(_alvo, "EspinhosFerro") && _alvo.hp_atual > 0 && _atacante.hp_atual > 0) {
@@ -1306,6 +1315,8 @@ function pokemon_combate_step(_inst, _dt) {
     if (!_inst.vivo) {
         return;
     }
+
+    dificuldade_ia_itens(_inst);
 
     for (var _i = 0; _i < 4; _i += 1) {
         var _habilidade = _inst.habilidades_equipadas[_i];

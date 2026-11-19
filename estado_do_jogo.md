@@ -60,7 +60,12 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Aviso grande e pulsante na tela: COMBO! (marca consumida), DANO SINERGICO! (golpe de tipo contra alvo enfraquecido, +X% no log), SINERGIA! (efeito cruzado), com tremida de tela.
   - VFX: projetil desenhado por tipo e particulas de impacto por tipo (sistema de particulas proprio).
 - [ ] **Sprint 6: Gráficos (tudo que não é criatura)**: elementos de rota em PNG com transparência, os 15 elementos que faltam do catálogo de biomas, kit de UI (9-slice, botões, ícones), transições e easing, mapas de cidade, áreas de clique compartilhadas entre Step e Draw.
-- [ ] **Sprint 7: Rejogabilidade**: dificuldade, hardcore, modo Buraco Negro (infinito), conquistas, mais itens, skins.
+- [x] **Sprint 7: Rejogabilidade** (`scripts/scr_rejogabilidade`, progresso permanente em `progresso.json`)
+  - Dificuldade (botao no canto do menu): Facil (-2 niveis, dano inimigo -15%, captura +15%), Normal, Dificil (+2 niveis, dano +15%, +20% dinheiro, +50% fragmentos), Hardcore (+3 niveis, dano +35%, captura -40%, rotas sem tipos visiveis, treinadores/lideres/chefe usam uma cura forte por batalha, fragmentos x2). O Desafio Diario sempre roda no Normal.
+  - Modo Buraco Negro: liberado ao vencer Aeonox; botao "MERGULHAR NO RASGO" na tela de vitoria (fora do Desafio Diario). Ondas infinitas no nivel 30, com +10% de forca por onda e ate 4 inimigos; a equipe recupera 35% entre ondas. Recorde salvo e mostrado no game over.
+  - 14 conquistas com aviso na tela e tela propria (botao no menu). Contadores de sinergias e combos.
+  - Visuais do jogador (botao no menu): 6 paletas do personagem do mapa, liberadas por conquistas.
+  - Itens de batalha novos: Po de Furia (Impeto Ofensivo), Po de Couraca (Fortificado), Po de Vento (recargas mais rapidas), vendidos a partir de Pedralia.
 - [ ] **Sprint 8: Lançamento**: BGM/SFX com licença livre, PT-BR/EN-US, balanceamento, build testado em máquina limpa.
 
 ## 6. Regras para a IA

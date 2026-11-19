@@ -90,6 +90,7 @@ function run_save_gravar(_controller) {
 
     global.run_save_existe_cache = true;
     global.run_save_resumo_cache = _dados.Resumo;
+    progresso_salvar();
     return true;
 }
 

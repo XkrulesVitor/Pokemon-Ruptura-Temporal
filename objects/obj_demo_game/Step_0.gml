@@ -37,6 +37,10 @@ run_save_step(id);
 
 switch (estado_demo) {
     case DemoEstado.MENU:
+        if (mouse_check_button_pressed(mb_left) && menu_opcoes_clique(id, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0))) {
+            break;
+        }
+
         var _start_menu = keyboard_check_pressed(vk_enter);
         var _open_meta_shop = false;
         var _open_daily = keyboard_check_pressed(ord("D"));
@@ -374,7 +378,7 @@ switch (estado_demo) {
 
             var _xp_tipo = "selvagem";
 
-            if (battle_context == "ginasio" || battle_context == "treinador" || battle_context == "chefe") {
+            if (battle_context == "ginasio" || battle_context == "treinador" || battle_context == "chefe" || battle_context == "buraco_negro") {
                 _xp_tipo = "treinador";
             } else if (battle_context == "rocket") {
                 _xp_tipo = "rocket";
@@ -385,7 +389,7 @@ switch (estado_demo) {
             var _xp_ganhos = demo_exp_compartilhar(id, _xp_reward);
             var _money_tipo = "selvagem";
 
-            if (battle_context == "ginasio" || battle_context == "chefe") {
+            if (battle_context == "ginasio" || battle_context == "chefe" || battle_context == "buraco_negro") {
                 _money_tipo = "ginasio";
             } else if (battle_context == "treinador") {
                 _money_tipo = "treinador";
@@ -398,7 +402,7 @@ switch (estado_demo) {
             missao_evento(id, "vitoria", enemy_pokemon_data);
             missao_evento(id, "checar", undefined);
 
-            if ((battle_context == "treinador" || battle_context == "chefe") && demo_trainer_tem_proximo(id)) {
+            if ((battle_context == "treinador" || battle_context == "chefe" || battle_context == "buraco_negro") && demo_trainer_tem_proximo(id)) {
                 demo_trainer_enviar_proximo(id);
                 break;
             }
@@ -423,12 +427,15 @@ switch (estado_demo) {
                 missao_evento(id, "treinador", undefined);
             }
             result_timer = 1.5;
-            if (battle_context == "chefe") {
+            if (battle_context == "buraco_negro") {
+                message = "Onda " + string(global.buraco_negro.Onda) + " vencida! O rasgo puxa voce mais fundo. Pressione ENTER ou clique.";
+            } else if (battle_context == "chefe") {
                 message = conteudo_mundo_texto("chefe_final", "Aeonox") + " caiu! O Rasgo Temporal esta se fechando. Pressione ENTER ou clique.";
             } else if (battle_context == "ginasio") {
                 _fragmentos_reward = demo_meta_fragmentos_ginasio(gym_battle_city_index);
                 demo_meta_fragmentos_adicionar(id, _fragmentos_reward);
                 ginasios_vencidos[gym_battle_city_index] = true;
+                conquista_evento("lider", undefined);
                 message = "Vitoria contra " + kanto_cidades[gym_battle_city_index].Lider + "! +" + string(_fragmentos_reward) + " Fragmentos do Espaco.";
             } else if (battle_context == "treinador") {
                 message = "Vitoria contra " + battle_trainer_name + "! Pressione ENTER ou clique para continuar pela rota.";
@@ -503,6 +510,7 @@ switch (estado_demo) {
                     estado_demo = DemoEstado.VITORIA;
                     diario_registrar_captura();
                     missao_evento(id, "captura", enemy_pokemon_data);
+                    conquista_evento("captura", enemy_pokemon_data);
                     result_timer = 1.0;
                     battle_result_info = demo_resultado_criar("captura", "Monstro capturado!", message, _xp_capture_reward, _xp_capture_ganhos, enemy_pokemon_data, _money_capture_reward);
 
@@ -544,10 +552,16 @@ switch (estado_demo) {
 
             if (estado_demo == DemoEstado.DERROTA) {
                 diario_finalizar(id);
+                buraco_negro_finalizar();
                 run_save_apagar();
                 estado_demo = DemoEstado.GAME_OVER;
                 game_over_timer = 0;
                 message = "A run terminou.";
+                break;
+            }
+
+            if (battle_context == "buraco_negro") {
+                buraco_negro_proxima_onda(id);
                 break;
             }
 
@@ -572,11 +586,26 @@ switch (estado_demo) {
         }
         break;
 
+    case DemoEstado.CONQUISTAS:
+        if (keyboard_check_pressed(vk_escape) || (mouse_check_button_pressed(mb_left) && demo_hover_rect(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), 54, display_get_gui_height() - 76, 180, 58))) {
+            estado_demo = DemoEstado.MENU;
+        }
+        break;
+
     case DemoEstado.VITORIA_FINAL:
         vitoria_final_timer += _dt;
 
         if (vitoria_final_timer > 0.8) {
             var _vf_click = false;
+
+            if (buraco_negro_disponivel()) {
+                var _vf_dive = demo_vitoria_dive_rect(display_get_gui_width(), display_get_gui_height());
+
+                if (keyboard_check_pressed(ord("B")) || (mouse_check_button_pressed(mb_left) && demo_hover_rect(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), _vf_dive.X, _vf_dive.Y, _vf_dive.W, _vf_dive.H))) {
+                    buraco_negro_iniciar(id);
+                    break;
+                }
+            }
 
             if (mouse_check_button_pressed(mb_left)) {
                 var _vf_btn = demo_game_over_button_rect(display_get_gui_width(), display_get_gui_height());

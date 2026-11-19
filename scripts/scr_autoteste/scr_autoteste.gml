@@ -397,6 +397,66 @@ function autoteste_passos() {
             autoteste_log("captura comum: capsula HP cheio " + string_format(_cheio * 100, 1, 1) + "% | capsula 10% HP " + string_format(_baixo * 100, 1, 1) + "% | avancada 10% HP " + string_format(_ultra_baixo * 100, 1, 1) + "% | mestra " + string(demo_capture_chance(id, demo_item_get("master_ball"), enemy_pokemon_data) * 100) + "%");
             enemy_inst.hp_atual = enemy_inst.hp_max;
             battle_time_scale_set(2.0, false);
+        } },
+        { Nome: "rejog: menu hardcore", Espera: 1.2, Foto: "43_menu_hardcore", Acao: function() {
+            demo_run_resetar(id, DemoEstado.MENU);
+            progresso().Dificuldade = Dificuldade.HARDCORE;
+            autoteste_log("hardcore: nivel +" + string(dificuldade_param("Nivel")) + " dano x" + string(dificuldade_param("Dano")) + " captura x" + string(dificuldade_param("Captura")) + " | nivel 10 vira " + string(dificuldade_nivel(10)));
+        } },
+        { Nome: "rejog: rota cega", Espera: 1.2, Foto: "44_rota_cega", Acao: function() {
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[0], 8, true);
+            player_party = [_p];
+            player_pokemon_data = _p;
+            cidade_index = 0;
+            saida_destino_index = 1;
+            estado_demo = DemoEstado.SAIR_CIDADE;
+            var _rotas = demo_rota_saida_opcoes_get(id, 1);
+            autoteste_log("biomas no hardcore: " + demo_rota_biomas_texto(_rotas[0]));
+        } },
+        { Nome: "rejog: conquistas", Espera: 1.2, Foto: "45_conquistas", Acao: function() {
+            progresso().Dificuldade = Dificuldade.NORMAL;
+            conquista_evento("captura", player_party[0]);
+            autoteste_log("conquistas: " + string(conquistas_total_desbloqueadas()) + "/" + string(array_length(conquistas_lista())) + " | buraco negro liberado: " + string(progresso().BuracoNegroLiberado));
+            estado_demo = DemoEstado.CONQUISTAS;
+        } },
+        { Nome: "rejog: buraco negro onda 1", Espera: 2.0, Foto: "46_buraco_onda1", Acao: function() {
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _a = demo_criar_pokemon_data(criatura_id_por_nome("Infernhal"), 30, true);
+            var _b = demo_criar_pokemon_data(criatura_id_por_nome("Abissauro"), 30, true);
+            player_party = [_a, _b];
+            player_pokemon_data = _a;
+            player_party_active_index = 0;
+            buraco_negro_iniciar(id);
+            autoteste_log("onda " + string(global.buraco_negro.Onda) + " | inimigos " + string(array_length(trainer_party)));
+        } },
+        { Nome: "rejog: buraco negro vencer onda", Espera: 1.2, Foto: "", Acao: function() {
+            if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
+        } },
+        { Nome: "rejog: buraco negro onda 2", Espera: 2.0, Foto: "47_buraco_onda2", Acao: function() {
+            autoteste_log("estado apos vencer onda 1: " + string(estado_demo) + " | " + message);
+            demo_cleanup_battle(id);
+            buraco_negro_proxima_onda(id);
+            autoteste_log("onda " + string(global.buraco_negro.Onda) + " | inimigos " + string(array_length(trainer_party)) + " | hp do 1o inimigo " + string(trainer_party[0].HpMax));
+        } },
+        { Nome: "rejog: buraco negro derrota", Espera: 1.5, Foto: "48_buraco_game_over", Acao: function() {
+            demo_cleanup_battle(id);
+            buraco_negro_finalizar();
+            estado_demo = DemoEstado.GAME_OVER;
+            game_over_timer = 0;
+            autoteste_log("buraco negro: " + string(global.buraco_negro.Resultado.Ondas) + " ondas | recorde " + string(progresso().BuracoNegroRecorde));
+        } },
+        { Nome: "rejog: item de batalha", Espera: 1.5, Foto: "49_item_buff", Acao: function() {
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[1], 12, true);
+            player_party = [_p];
+            player_pokemon_data = _p;
+            enemy_pokemon_data = demo_criar_pokemon_data(criatura_id_por_nome("Rataco"), 8, true, false, false, "selvagem");
+            battle_context = "rota";
+            demo_start_battle(id);
+            demo_inventario_adicionar(inventario, "po_ataque", 1);
+            demo_item_usar(id, "po_ataque", true);
+            autoteste_log("po de furia: impeto ofensivo = " + string(pokemon_status_tem(player_inst, "ImpetoOfensivo")) + " | restam " + string(demo_inventario_quantidade(inventario, "po_ataque")));
         } }
     ];
 }
@@ -480,8 +540,10 @@ function autoteste_step() {
         return;
     }
 
-    autoteste_log("foto " + _passo.Foto + " | estado " + string(_jogo.estado_demo) + " | " + string(_jogo.message));
-    autoteste_foto(_passo.Foto);
+    if (_passo.Foto != "") {
+        autoteste_log("foto " + _passo.Foto + " | estado " + string(_jogo.estado_demo) + " | " + string(_jogo.message));
+        autoteste_foto(_passo.Foto);
+    }
     _t.Passo += 1;
     _t.Executado = false;
 }
