@@ -1,0 +1,152 @@
+{
+ "versao": 1,
+ "sinergias": [
+  {
+   "tipo": "inseto",
+   "requer": "veneno",
+   "efeito": "Envenenado",
+   "chance": 1.0,
+   "nome": "Ferrao toxico"
+  },
+  {
+   "tipo": "inseto",
+   "requer": "inseto",
+   "efeito": "SedaPresa",
+   "chance": 0.5,
+   "nome": "Enxame de seda"
+  },
+  {
+   "tipo": "veneno",
+   "requer": "inseto",
+   "efeito": "Infestado",
+   "chance": 0.5,
+   "nome": "Praga"
+  },
+  {
+   "tipo": "fogo",
+   "requer": "terra",
+   "efeito": "ArmaduraDerretida",
+   "chance": 0.5,
+   "nome": "Magma"
+  },
+  {
+   "tipo": "fogo",
+   "requer": "voador",
+   "efeito": "Queimando",
+   "chance": 0.6,
+   "nome": "Vento em brasa"
+  },
+  {
+   "tipo": "agua",
+   "requer": "eletrico",
+   "efeito": "Molhado",
+   "chance": 1.0,
+   "nome": "Condutor"
+  },
+  {
+   "tipo": "eletrico",
+   "requer": "agua",
+   "efeito": "Paralisado",
+   "chance": 0.35,
+   "nome": "Curto-circuito"
+  },
+  {
+   "tipo": "gelo",
+   "requer": "agua",
+   "efeito": "Gelado",
+   "chance": 0.6,
+   "nome": "Geada umida"
+  },
+  {
+   "tipo": "grama",
+   "requer": "terra",
+   "efeito": "Enraizado",
+   "chance": 0.6,
+   "nome": "Raizes fundas"
+  },
+  {
+   "tipo": "grama",
+   "requer": "veneno",
+   "efeito": "Envenenado",
+   "chance": 0.5,
+   "nome": "Espinho venenoso"
+  },
+  {
+   "tipo": "lutador",
+   "requer": "pedra",
+   "efeito": "PosturaQuebrada",
+   "chance": 0.6,
+   "nome": "Golpe de pedra"
+  },
+  {
+   "tipo": "terra",
+   "requer": "pedra",
+   "efeito": "AreiaMovedica",
+   "chance": 0.5,
+   "nome": "Deslizamento"
+  },
+  {
+   "tipo": "pedra",
+   "requer": "aco",
+   "efeito": "Fragmentado",
+   "chance": 0.5,
+   "nome": "Estilhaco"
+  },
+  {
+   "tipo": "voador",
+   "requer": "eletrico",
+   "efeito": "Turbulento",
+   "chance": 0.5,
+   "nome": "Tempestade"
+  },
+  {
+   "tipo": "psiquico",
+   "requer": "fada",
+   "efeito": "ParalisiaMental",
+   "chance": 0.35,
+   "nome": "Transe"
+  },
+  {
+   "tipo": "fantasma",
+   "requer": "sombrio",
+   "efeito": "Amedrontado",
+   "chance": 0.5,
+   "nome": "Pavor"
+  },
+  {
+   "tipo": "sombrio",
+   "requer": "veneno",
+   "efeito": "MarcadoSombrio",
+   "chance": 0.6,
+   "nome": "Marca podre"
+  },
+  {
+   "tipo": "dragao",
+   "requer": "fogo",
+   "efeito": "Queimando",
+   "chance": 0.5,
+   "nome": "Sopro ardente"
+  },
+  {
+   "tipo": "aco",
+   "requer": "gelo",
+   "efeito": "Fragil",
+   "chance": 0.5,
+   "nome": "Metal frio"
+  },
+  {
+   "tipo": "fada",
+   "requer": "psiquico",
+   "efeito": "Ofuscado",
+   "chance": 0.4,
+   "nome": "Brilho mental"
+  },
+  {
+   "tipo": "normal",
+   "requer": "lutador",
+   "efeito": "Vulneravel",
+   "chance": 0.5,
+   "nome": "Guarda aberta"
+  }
+ ]
+}

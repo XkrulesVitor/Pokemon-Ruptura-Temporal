@@ -209,6 +209,33 @@ MUNDO = {
 }
 
 
+# Sinergia cruzada: um golpe do tipo "tipo" ganha "efeito" (com "chance") quando a criatura
+# tem OUTRA habilidade equipada do tipo "requer". Os efeitos usam os status do combate.
+SINERGIAS = [
+    ("inseto", "veneno", "Envenenado", 1.00, "Ferrao toxico"),
+    ("inseto", "inseto", "SedaPresa", 0.50, "Enxame de seda"),
+    ("veneno", "inseto", "Infestado", 0.50, "Praga"),
+    ("fogo", "terra", "ArmaduraDerretida", 0.50, "Magma"),
+    ("fogo", "voador", "Queimando", 0.60, "Vento em brasa"),
+    ("agua", "eletrico", "Molhado", 1.00, "Condutor"),
+    ("eletrico", "agua", "Paralisado", 0.35, "Curto-circuito"),
+    ("gelo", "agua", "Gelado", 0.60, "Geada umida"),
+    ("grama", "terra", "Enraizado", 0.60, "Raizes fundas"),
+    ("grama", "veneno", "Envenenado", 0.50, "Espinho venenoso"),
+    ("lutador", "pedra", "PosturaQuebrada", 0.60, "Golpe de pedra"),
+    ("terra", "pedra", "AreiaMovedica", 0.50, "Deslizamento"),
+    ("pedra", "aco", "Fragmentado", 0.50, "Estilhaco"),
+    ("voador", "eletrico", "Turbulento", 0.50, "Tempestade"),
+    ("psiquico", "fada", "ParalisiaMental", 0.35, "Transe"),
+    ("fantasma", "sombrio", "Amedrontado", 0.50, "Pavor"),
+    ("sombrio", "veneno", "MarcadoSombrio", 0.60, "Marca podre"),
+    ("dragao", "fogo", "Queimando", 0.50, "Sopro ardente"),
+    ("aco", "gelo", "Fragil", 0.50, "Metal frio"),
+    ("fada", "psiquico", "Ofuscado", 0.40, "Brilho mental"),
+    ("normal", "lutador", "Vulneravel", 0.50, "Guarda aberta"),
+]
+
+
 def atributos(papel, total, semente):
     fr = PAPEIS[papel]
     vals = [max(10, round(total * f)) for f in fr]
@@ -269,6 +296,11 @@ def main():
         json.dump({"versao": 1, "criaturas": criaturas, "pacotes_iniciais": pacotes}, f, ensure_ascii=True, indent=1)
     with open(os.path.join(SAIDA, "mundo.json"), "w", encoding="utf-8") as f:
         json.dump(MUNDO, f, ensure_ascii=True, indent=1)
+    sinergias = [{"tipo": t, "requer": r, "efeito": e, "chance": c, "nome": n} for t, r, e, c, n in SINERGIAS]
+    for item in sinergias:
+        assert item["tipo"] in TIPOS and item["requer"] in TIPOS, item
+    with open(os.path.join(SAIDA, "sinergias.json"), "w", encoding="utf-8") as f:
+        json.dump({"versao": 1, "sinergias": sinergias}, f, ensure_ascii=True, indent=1)
 
     contagem = {r: sum(1 for c in criaturas if c["raridade"] == r) for r in RARIDADES}
     print("criaturas:", len(criaturas), contagem)

@@ -1138,6 +1138,8 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
     }
 
     _multiplicador *= pokemon_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade);
+    var _tipo_golpe = variable_struct_exists(_habilidade, "TipoElementar") ? _habilidade.TipoElementar : _habilidade.Tipo;
+    var _bonus_tipo = pokemon_combate_sinergia_tipo_status(_atacante, _alvo, _tipo_golpe);
 
     var _dano = pokemon_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplicador);
     _alvo.hp_atual = max(0, _alvo.hp_atual - _dano);
@@ -1145,10 +1147,25 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
 
     var _houve_combo = _combo_consumir != "";
     var _impacto = _houve_combo ? "Combo!" : string(_dano);
-    battle_vfx_criar(_atacante, _alvo, _impacto);
+    battle_vfx_criar(_atacante, _alvo, _impacto, _tipo_golpe);
     battle_log_push(string_upper(_atacante.pokemon_nome) + " usou " + string_upper(_habilidade.Nome) + "!" + pokemon_combate_efetividade_log(_multiplicador_elemental));
 
     pokemon_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano);
+    var _sinergias = sinergia_aplicar(_atacante, _alvo, _habilidade);
+
+    // Aviso na tela: combo de marca > dano sinergico (tipo x status) > sinergia cruzada.
+    if (_houve_combo) {
+        battle_combo_push(_alvo.x, _alvo.y - 132, "COMBO!", make_color_rgb(255, 214, 70));
+    } else if (_bonus_tipo >= 0.05) {
+        battle_combo_push(_alvo.x, _alvo.y - 132, "DANO SINERGICO!", make_color_rgb(255, 146, 64));
+        battle_log_push("DANO SINERGICO! +" + string(round(_bonus_tipo * 100)) + "% contra o alvo enfraquecido.");
+    } else if (_sinergias > 0) {
+        battle_combo_push(_alvo.x, _alvo.y - 132, "SINERGIA!", make_color_rgb(120, 230, 255));
+    }
+
+    if (_houve_combo || _bonus_tipo >= 0.05 || _sinergias > 0) {
+        battle_screen_shake(6, 0.16);
+    }
 
     if (pokemon_status_tem(_alvo, "EspinhosFerro") && _alvo.hp_atual > 0 && _atacante.hp_atual > 0) {
         var _espinhos = variable_struct_get(_alvo.status_map, "EspinhosFerro");

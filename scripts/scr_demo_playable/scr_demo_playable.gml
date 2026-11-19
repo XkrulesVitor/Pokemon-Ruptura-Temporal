@@ -4932,9 +4932,15 @@ function demo_run_resetar(_controller, _estado_destino) {
     }
 }
 
+// Chance de captura (Sprint 5): depende do HP que falta, da raridade e do status do alvo.
+// Com HP cheio quase sempre falha; a Capsula Mestra sempre captura.
 function demo_capture_chance(_controller, _item, _enemy) {
     if (!instance_exists(_controller) || !is_struct(_item) || !is_struct(_enemy)) {
         return 0;
+    }
+
+    if (_item.ID == "master_ball") {
+        return 1;
     }
 
     var _hp_pct = 1;
@@ -4945,10 +4951,24 @@ function demo_capture_chance(_controller, _item, _enemy) {
         _hp_pct = clamp(_enemy.HpAtual / max(1, _enemy.HpMax), 0, 1);
     }
 
-    var _low_hp_bonus = (1 - _hp_pct) * 0.22;
+    static _mult_raridade = [1.0, 0.85, 0.65, 0.40, 0.12, 0.08];
+    var _raridade = variable_struct_exists(_enemy, "RaridadePadrao") ? clamp(_enemy.RaridadePadrao, 0, 5) : 0;
+    var _fator_hp = 0.15 + (0.85 * (1 - _hp_pct));
+    var _status = 0;
+
+    if (instance_exists(_controller.enemy_inst)) {
+        if (pokemon_combate_status_algum(_controller.enemy_inst, ["Paralisado", "Congelando", "Gelado", "ParalisiaMental", "SedaPresa", "Enraizado", "AreiaMovedica"])) {
+            _status = 0.15;
+        } else if (pokemon_combate_status_algum(_controller.enemy_inst, ["Envenenado", "Queimando", "Corroendo", "Infestado", "Maldito", "Amedrontado"])) {
+            _status = 0.08;
+        }
+    }
+
     var _shiny_bonus = variable_struct_exists(_enemy, "CaptureChanceBonus") ? _enemy.CaptureChanceBonus : 0;
     var _meta_bonus = variable_global_exists("demo_meta_capture_bonus") ? global.demo_meta_capture_bonus : 0;
-    return clamp(_item.ValorEfeito + _low_hp_bonus + _shiny_bonus + _meta_bonus, 0.03, 1);
+    var _mult_dificuldade = variable_global_exists("dificuldade_captura_mult") ? global.dificuldade_captura_mult : 1;
+    var _chance = ((0.03 + (_item.ValorEfeito * _fator_hp)) * _mult_raridade[_raridade]) + _status + _shiny_bonus + _meta_bonus;
+    return clamp(_chance * _mult_dificuldade, 0.01, 0.97);
 }
 
 function demo_capture_anim_criar(_item_id, _success) {

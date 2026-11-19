@@ -22,6 +22,7 @@ if (_dist <= max(8, speed_px * _dt)) {
     x = _target_x;
     y = _target_y;
     pokemon_visual_mudar_estado(alvo, ESTADO.DANO, 0.18, id);
+    battle_vfx_impacto(x, y, tipo, texto_impacto == "Combo!");
     battle_screen_shake(4, 0.12);
     battle_float_text_push(alvo.x - 24, alvo.y - 84, texto_impacto, c_white);
     instance_destroy();

@@ -1,4 +1,2 @@
-draw_set_color(make_color_rgb(96, 232, 255));
-draw_circle(x, y, 5, false);
-draw_set_color(c_white);
-draw_circle(x, y, 2, false);
+// Projetil desenhado conforme o tipo do golpe (scr_combate_extras).
+battle_vfx_draw_projetil(x, y, tipo, direcao, current_time * 0.01);

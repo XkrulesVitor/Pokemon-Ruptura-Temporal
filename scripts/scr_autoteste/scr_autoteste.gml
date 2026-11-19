@@ -367,6 +367,36 @@ function autoteste_passos() {
             autoteste_log("missao " + _m.Id + " -> " + _m.Estado + " | dinheiro " + string(_antes) + " -> " + string(dinheiro));
             autoteste_log(_m.Estado == "concluida" ? "MISSAO OK" : "MISSAO NAO CONCLUIU");
             estado_demo = DemoEstado.CIDADE;
+        } },
+        { Nome: "combate: sinergia", Espera: 0.45, Foto: "41_combate_sinergia", Acao: function() {
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _p = demo_criar_pokemon_data(criatura_id_por_nome("Larvinha"), 14, true);
+            _p.Capturado = true;
+            player_party = [_p];
+            player_pokemon_data = _p;
+            enemy_pokemon_data = demo_criar_pokemon_data(criatura_id_por_nome("Folhoca"), 10, true, false, false, "selvagem");
+            battle_context = "rota";
+            demo_start_battle(id);
+            battle_time_scale_set(0, false);
+            var _hab = player_inst.habilidades_equipadas;
+            if (!is_struct(_hab[1])) { _hab[1] = variable_clone(_hab[0]); _hab[1].ID = "teste_veneno"; }
+            _hab[0].TipoElementar = PokemonTipo.BUG;
+            _hab[1].TipoElementar = PokemonTipo.POISON;
+            var _n = sinergia_aplicar(player_inst, enemy_inst, _hab[0]);
+            battle_combo_push(enemy_inst.x, enemy_inst.y - 132, "SINERGIA!", make_color_rgb(120, 230, 255));
+            autoteste_log("sinergias aplicadas: " + string(_n) + " | alvo envenenado: " + string(pokemon_status_tem(enemy_inst, "Envenenado")) + " | texto: " + sinergia_texto(_hab, _hab[0]));
+        } },
+        { Nome: "combate: captura", Espera: 2.5, Foto: "42_combate_vfx", Acao: function() {
+            var _bola = demo_item_get("pokebola");
+            var _ultra = demo_item_get("ultra_ball");
+            enemy_inst.hp_atual = enemy_inst.hp_max;
+            var _cheio = demo_capture_chance(id, _bola, enemy_pokemon_data);
+            enemy_inst.hp_atual = max(1, enemy_inst.hp_max * 0.1);
+            var _baixo = demo_capture_chance(id, _bola, enemy_pokemon_data);
+            var _ultra_baixo = demo_capture_chance(id, _ultra, enemy_pokemon_data);
+            autoteste_log("captura comum: capsula HP cheio " + string_format(_cheio * 100, 1, 1) + "% | capsula 10% HP " + string_format(_baixo * 100, 1, 1) + "% | avancada 10% HP " + string_format(_ultra_baixo * 100, 1, 1) + "% | mestra " + string(demo_capture_chance(id, demo_item_get("master_ball"), enemy_pokemon_data) * 100) + "%");
+            enemy_inst.hp_atual = enemy_inst.hp_max;
+            battle_time_scale_set(2.0, false);
         } }
     ];
 }

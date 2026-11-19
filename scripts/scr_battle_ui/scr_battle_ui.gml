@@ -466,11 +466,22 @@ function battle_ui_draw_skill_slot(_skill, _x, _y, _w, _h, _is_next) {
     draw_text_transformed(_x + _w - 32, _y + _h - 42, _ready_text, 0.66, 0.66, 0);
     draw_set_halign(fa_left);
 
+    // Selo de sinergia cruzada ativa (scr_combate_extras).
+    var _dono = battle_ui_get_primary_ally();
+    var _sinergia = instance_exists(_dono) ? sinergia_texto(_dono.habilidades_equipadas, _skill) : "";
+
+    if (_sinergia != "") {
+        draw_set_color(make_color_rgb(120, 230, 255));
+        draw_set_halign(fa_right);
+        draw_text_transformed(_x + _w - 14, _y + 6, "SINERGIA", 0.5, 0.5, 0);
+        draw_set_halign(fa_left);
+    }
+
     if (_hover) {
         return {
             X: _mx,
             Y: _my,
-            Texto: habilidade_descricao_curta(_skill)
+            Texto: habilidade_descricao_curta(_skill) + (_sinergia != "" ? "\n" + _sinergia : "")
         };
     }
 
@@ -570,6 +581,8 @@ function battle_float_text_step(_dt) {
             array_delete(global.battle_float_texts, _i, 1);
         }
     }
+
+    battle_combo_step(_dt);
 }
 
 function battle_float_text_draw_gui() {
@@ -587,6 +600,7 @@ function battle_float_text_draw_gui() {
 
     draw_set_alpha(1);
     draw_set_color(c_white);
+    battle_combo_draw_gui();
 }
 
 function battle_ui_draw_nineslice_panel(_x, _y, _w, _h) {
@@ -1790,10 +1804,13 @@ function battle_vfx_criar(_atacante, _alvo, _texto_impacto) {
         return noone;
     }
 
+    var _tipo = argument_count >= 4 ? argument[3] : PokemonTipo.NONE;
     var _vfx = instance_create_layer(_atacante.x, _atacante.y - 28, "Instances", obj_vfx_ataque);
     _vfx.alvo = _alvo;
     _vfx.texto_impacto = _texto_impacto;
     _vfx.direcao = sign(_alvo.x - _atacante.x);
-    _vfx.speed_px = 520;
+    _vfx.speed_px = _tipo == PokemonTipo.ELECTRIC ? 760 : 520;
+    _vfx.tipo = _tipo;
+    _vfx.depth = -100;
     return _vfx;
 }

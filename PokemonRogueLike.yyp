@@ -15,6 +15,7 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"sinergias.json","CopyToMask":-1,"filePath":"datafiles/data","name":"sinergias.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"mundo.json","CopyToMask":-1,"filePath":"datafiles/data","name":"mundo.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"criaturas.json","CopyToMask":-1,"filePath":"datafiles/data","name":"criaturas.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"intro_destroyed_horizon_day.png","CopyToMask":-1,"filePath":"datafiles/sprites/cutscene","name":"intro_destroyed_horizon_day.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -69,6 +70,7 @@
   },
   "name":"PokemonRogueLike",
   "resources":[
+    {"id":{"name":"scr_combate_extras","path":"scripts/scr_combate_extras/scr_combate_extras.yy",},},
     {"id":{"name":"scr_missoes","path":"scripts/scr_missoes/scr_missoes.yy",},},
     {"id":{"name":"scr_run_save","path":"scripts/scr_run_save/scr_run_save.yy",},},
     {"id":{"name":"scr_desafio_diario","path":"scripts/scr_desafio_diario/scr_desafio_diario.yy",},},

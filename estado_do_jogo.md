@@ -54,7 +54,11 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Uma tentativa oficial por dia, gravada ao começar (fechar o jogo no meio não devolve). Depois, só treino.
   - Pontos = insígnias×1000 + vitórias×40 + capturas×60 + soma dos níveis×10. Histórico, melhor marca e sequência de dias em `desafio_diario.json`.
   - Pendente: ranking online (hoje é só local).
-- [ ] **Sprint 5: Combate**: captura pela fórmula de HP/status, sinergia cruzada entre golpes, aviso "COMBO!", VFX por tipo.
+- [x] **Sprint 5: Combate** (`scripts/scr_combate_extras`)
+  - Captura: `(0.03 + forca_da_capsula * (0.15 + 0.85 * HP_perdido)) * mult_raridade + status`. Com HP cheio fica em ~7% (Capsula Simples, criatura comum); status de controle +15%, de dano +8%; Capsula Mestra sempre captura. `global.dificuldade_captura_mult` fica para a Sprint 7.
+  - Sinergia cruzada (`datafiles/data/sinergias.json`, 21 regras): um golpe do tipo X ganha um efeito quando a criatura tem OUTRA habilidade equipada do tipo Y (ex.: Inseto + Veneno = envenena). Selo "SINERGIA" no slot e explicacao no tooltip.
+  - Aviso grande e pulsante na tela: COMBO! (marca consumida), DANO SINERGICO! (golpe de tipo contra alvo enfraquecido, +X% no log), SINERGIA! (efeito cruzado), com tremida de tela.
+  - VFX: projetil desenhado por tipo e particulas de impacto por tipo (sistema de particulas proprio).
 - [ ] **Sprint 6: Gráficos (tudo que não é criatura)**: elementos de rota em PNG com transparência, os 15 elementos que faltam do catálogo de biomas, kit de UI (9-slice, botões, ícones), transições e easing, mapas de cidade, áreas de clique compartilhadas entre Step e Draw.
 - [ ] **Sprint 7: Rejogabilidade**: dificuldade, hardcore, modo Buraco Negro (infinito), conquistas, mais itens, skins.
 - [ ] **Sprint 8: Lançamento**: BGM/SFX com licença livre, PT-BR/EN-US, balanceamento, build testado em máquina limpa.
