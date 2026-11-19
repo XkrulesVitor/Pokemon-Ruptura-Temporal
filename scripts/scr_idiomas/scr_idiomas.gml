@@ -78,12 +78,40 @@ function i18n_draw_text_ext(_x, _y, _texto, _sep, _w) {
     draw_text_ext(_x, _y, i18n_t(_texto), _sep, _w);
 }
 
+// Texto escalado: se existe a fonte no tamanho final, desenha com ela (nitida, sem esticar a textura).
+// Senao, liga a filtragem de textura so durante o desenho.
 function i18n_draw_text_transformed(_x, _y, _texto, _xs, _ys, _ang) {
+    var _fonte = (_ang == 0 && _xs == _ys) ? ui_fonte_escalada(_xs) : -1;
+
+    if (_fonte >= 0) {
+        var _antiga = draw_get_font();
+        draw_set_font(_fonte);
+        draw_text(_x, _y, i18n_t(_texto));
+        draw_set_font(_antiga);
+        return;
+    }
+
+    var _filtro = gpu_get_texfilter();
+    gpu_set_texfilter(_xs != 1 || _ys != 1 || _ang != 0);
     draw_text_transformed(_x, _y, i18n_t(_texto), _xs, _ys, _ang);
+    gpu_set_texfilter(_filtro);
 }
 
 function i18n_draw_text_ext_transformed(_x, _y, _texto, _sep, _w, _xs, _ys, _ang) {
+    var _fonte = (_ang == 0 && _xs == _ys) ? ui_fonte_escalada(_xs) : -1;
+
+    if (_fonte >= 0) {
+        var _antiga = draw_get_font();
+        draw_set_font(_fonte);
+        draw_text_ext(_x, _y, i18n_t(_texto), _sep < 0 ? -1 : _sep * _xs, _w * _xs);
+        draw_set_font(_antiga);
+        return;
+    }
+
+    var _filtro = gpu_get_texfilter();
+    gpu_set_texfilter(_xs != 1 || _ys != 1 || _ang != 0);
     draw_text_ext_transformed(_x, _y, i18n_t(_texto), _sep, _w, _xs, _ys, _ang);
+    gpu_set_texfilter(_filtro);
 }
 
 function i18n_string_width(_texto) {

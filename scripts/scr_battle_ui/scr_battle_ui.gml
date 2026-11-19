@@ -113,6 +113,10 @@ function battle_ui_init() {
             _font_body_path = battle_ui_fonte_sistema(["segoeui.ttf", "verdana.ttf", "arial.ttf"]);
         }
 
+        global.ui_font_path = _font_path;
+        global.ui_font_body_path = _font_body_path;
+        global.ui_font_tamanho = _font_size;
+
         if (_font_path != "") {
             global.ui_font = font_add(_font_path, _font_size, false, false, 32, 127);
         }
@@ -395,32 +399,30 @@ function battle_ui_draw_skill_summary(_skill, _x, _y, _w, _show_description) {
     battle_ui_draw_type_icon(_skill.TipoElementar, _x, _y + 2, 0.82);
     draw_set_color(_text_color);
     battle_ui_font_title();
-    battle_ui_draw_text_fit(_x + 62, _y, _skill.Nome, _w - 66, 0.72, _text_color);
+    battle_ui_draw_text_fit(_x + 62, _y - 2, _skill.Nome, _w - 66, 0.95, _text_color);
     battle_ui_font_body();
-    i18n_draw_text(_x + 62, _y + 30, battle_ui_skill_damage_text(_skill));
+    var _escuro = !sprite_exists(global.ui_panel_sprite);
+    var _cor_info = _escuro ? make_color_rgb(190, 200, 230) : make_color_rgb(80, 72, 66);
 
     if (variable_struct_exists(_skill, "TipoOpcao") && _skill.TipoOpcao == "upgrade") {
-        i18n_draw_text_ext(_x, _y + 68, "Evolui esta habilidade, aumentando dano, efeito ou reduzindo recarga.", 24, _w);
-
-        if (_show_description) {
-            var _upgrade_note = "Upgrade de tier da habilidade equipada.";
-
-            if (variable_struct_exists(_skill, "ProximoTier")) {
-                _upgrade_note = criatura_habilidade_tier_nome(_skill.TierAtual) + " > " + criatura_habilidade_tier_nome(_skill.ProximoTier);
-            }
-
-            i18n_draw_text_ext(_x, _y + 128, _upgrade_note, 24, _w);
-        }
-
+        draw_set_color(ui_cor("ouro"));
+        i18n_draw_text_transformed(_x + 62, _y + 30, battle_ui_skill_damage_text(_skill), 0.85, 0.85, 0);
+        draw_set_color(_text_color);
+        i18n_draw_text_ext(_x, _y + 72, "Evolui esta habilidade, aumentando dano, efeito ou reduzindo recarga.", 24, _w);
+        battle_ui_font_title();
         return undefined;
     }
 
-    i18n_draw_text(_x + 164, _y + 30, "CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s");
+    draw_set_color(_cor_info);
+    i18n_draw_text_transformed(_x + 62, _y + 30, battle_ui_skill_damage_text(_skill) + "   |   CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s", 0.85, 0.85, 0);
+    draw_set_color(_text_color);
 
     if (_show_description) {
         var _mx = device_mouse_x_to_gui(0);
         var _my = device_mouse_y_to_gui(0);
+        global.ui_tinta_override = _text_color;
         _tooltip = demo_draw_habilidade_descricao_rica(_skill, _x, _y + 72, _w, _mx, _my, 2);
+        global.ui_tinta_override = undefined;
     }
 
     battle_ui_font_title();
@@ -442,8 +444,32 @@ function battle_ui_draw_skill_slot(_skill, _x, _y, _w, _h, _is_next) {
     }
 
     if (!is_struct(_skill)) {
+        var _trancado = variable_global_exists("ui_slot_trancado") ? global.ui_slot_trancado : "";
+
+        if (_trancado != "") {
+            draw_set_alpha(0.55);
+            battle_ui_draw_text_fit(_x + 28, _y + 20, "Trancado", _w - 56, 0.74, _text_color);
+            battle_ui_font_body();
+            battle_ui_draw_text_fit(_x + 28, _y + 50, _trancado, _w - 56, 0.66, _text_color);
+            battle_ui_font_title();
+            draw_set_alpha(1);
+            return undefined;
+        }
+
         battle_ui_draw_text_fit(_x + 28, _y + 20, "Vazio", _w - 56, 0.74, _text_color);
         return undefined;
+    }
+
+    // Proxima habilidade a disparar: contorno ciano; hover: borda de selecao.
+    if (_is_next) {
+        draw_set_alpha(0.55 + (0.3 * sin(current_time * 0.008)));
+        draw_set_color(make_color_rgb(120, 230, 255));
+        draw_roundrect_ext(_x + 2, _y + 2, _x + _w - 2, _y + _h - 2, 8, 8, true);
+        draw_set_alpha(1);
+    }
+
+    if (_hover) {
+        ui_borda_selecao(_x, _y, _w, _h);
     }
 
     battle_ui_draw_type_icon(_skill.TipoElementar, _x + 26, _y + 22, 0.66);
@@ -1324,7 +1350,15 @@ function battle_ui_draw_skill_bar() {
         }
 
         var _is_next = is_struct(_skill) && is_struct(_next) && _skill.ID == _next.ID;
+        global.ui_slot_trancado = "";
+
+        if (!is_struct(_skill) && instance_exists(_ally) && is_struct(_ally.criatura_data) && !criatura_slot_desbloqueado(_ally.criatura_data, _i)) {
+            var _nivel_slot = [1, 10, 15, 20][_i];
+            global.ui_slot_trancado = _ally.criatura_data.Level >= _nivel_slot ? "Slot trancado" : "Abre no nivel " + string(_nivel_slot);
+        }
+
         var _slot_tooltip = battle_ui_draw_skill_slot(_skill, _x + (_i * (_slot_w + _slot_gap)), _y, _slot_w, _h, _is_next);
+        global.ui_slot_trancado = "";
 
         if (is_struct(_slot_tooltip)) {
             _tooltip = _slot_tooltip;
@@ -1439,25 +1473,25 @@ function battle_ui_draw_bag_overlay() {
     draw_set_alpha(1);
 
     battle_ui_draw_nineslice_panel(56, 84, _gw - 112, _gh - 140);
-    draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-    i18n_draw_text(84, 112, "MOCHILA");
-    i18n_draw_text(84, 136, "Combate pausado. Clique em um item para usar.");
+    battle_ui_font_title();
+    ui_texto_sombra(84, 108, "MOCHILA", sprite_exists(global.ui_panel_sprite) ? c_black : c_white, 1.1);
+    battle_ui_font_body();
+    draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : make_color_rgb(200, 206, 230));
+    i18n_draw_text(84, 140, "Combate pausado. Clique em um item para usar.");
+    battle_ui_font_title();
 
     battle_ui_draw_button("FECHAR", _gw - 224, 112, 160, 42, battle_ui_button_hit(_mx, _my, _gw - 224, 112, 160, 42));
 
     var _bag_ids = demo_item_ids_possuidos(_demo.inventario);
-    var _bag_x = 84;
-    var _bag_y = 176;
-    var _bag_col_w = (_gw - 196) * 0.5;
-    var _bag_row_h = 48;
+    var _n_bag = array_length(_bag_ids);
 
-    if (array_length(_bag_ids) <= 0) {
+    if (_n_bag <= 0) {
         var _empty_text = "Mochila vazia";
-        draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
+        draw_set_color(c_white);
         i18n_draw_text((_gw * 0.5) - (i18n_string_width(_empty_text) * 0.5), _gh * 0.5, _empty_text);
     }
 
-    for (var _bag_i = 0; _bag_i < array_length(_bag_ids); _bag_i += 1) {
+    for (var _bag_i = 0; _bag_i < _n_bag; _bag_i += 1) {
         var _bag_id = _bag_ids[_bag_i];
         var _bag_item = demo_item_get(_bag_id);
 
@@ -1465,30 +1499,54 @@ function battle_ui_draw_bag_overlay() {
             continue;
         }
 
+        var _r = battle_ui_bag_rect(_bag_i, _n_bag);
         var _bag_qty = demo_inventario_quantidade(_demo.inventario, _bag_id);
         var _can_use = demo_item_pode_usar(_bag_item, true);
-        var _bag_col = _bag_i div 8;
-        var _bag_row = _bag_i mod 8;
-        var _item_x = _bag_x + (_bag_col * (_bag_col_w + 28));
-        var _item_y = _bag_y + (_bag_row * (_bag_row_h + 8));
-        var _hover = _can_use && battle_ui_button_hit(_mx, _my, _item_x, _item_y, _bag_col_w, _bag_row_h);
+        var _hover = _can_use && battle_ui_button_hit(_mx, _my, _r.X, _r.Y, _r.W, _r.H);
+        var _k = ui_cartao_escuro(_r.X, _r.Y, _r.W, _r.H, _hover, !_can_use);
 
-        battle_ui_draw_nineslice_panel(_item_x, _item_y, _bag_col_w, _bag_row_h);
+        draw_set_alpha(_can_use ? 1 : 0.55);
+        draw_set_color(make_color_rgb(52, 60, 96));
+        draw_circle(_k.X + 34, _k.Y + (_k.H * 0.5), 22, false);
+        demo_draw_item_icon(_bag_id, _k.X + 34, _k.Y + (_k.H * 0.5), 32);
+        battle_ui_font_title();
+        battle_ui_draw_text_fit(_k.X + 68, _k.Y + 9, _bag_item.Nome, _k.W - 118, 0.74, c_white);
 
-        if (_hover) {
-            draw_set_alpha(0.32);
-            draw_set_color(make_color_rgb(245, 220, 86));
-            draw_rectangle(_item_x + 5, _item_y + 5, _item_x + _bag_col_w - 5, _item_y + _bag_row_h - 5, false);
-            draw_set_alpha(1);
+        draw_set_color(ui_cor("ouro"));
+        draw_circle(_k.X + _k.W - 22, _k.Y + 20, 13, false);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+        draw_set_color(ui_cor("noite"));
+        i18n_draw_text_transformed(_k.X + _k.W - 22, _k.Y + 20, string(_bag_qty), 0.6, 0.6, 0);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_top);
+
+        var _cat = demo_item_categoria(_bag_item);
+        var _tx = _k.X + 68 + ui_tag(_k.X + 68, _k.Y + 33, _cat.Nome, _cat.Cor, c_white) + 6;
+
+        if (!_can_use) {
+            ui_tag(_tx, _k.Y + 33, "Fora de batalha", make_color_rgb(70, 74, 100), make_color_rgb(200, 206, 230));
         }
 
-        demo_draw_item_icon(_bag_id, _item_x + 26, _item_y + (_bag_row_h * 0.5), 30);
-        draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-        i18n_draw_text(_item_x + 54, _item_y + 7, _bag_item.Nome);
-        i18n_draw_text(_item_x + 228, _item_y + 7, "x" + string(_bag_qty));
-        draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(80, 72, 66) : c_white);
-        i18n_draw_text_ext(_item_x + 54, _item_y + 27, _bag_item.Descricao, 12, _bag_col_w - 66);
+        battle_ui_font_body();
+        draw_set_color(make_color_rgb(200, 206, 230));
+        ui_texto_bloco(_k.X + 68, min(_k.Y + 56, _k.Y + _k.H - 17), _bag_item.Descricao, 16, _k.W - 82, 1, 0.66);
+        battle_ui_font_title();
+        draw_set_alpha(1);
     }
+}
+
+// Cartoes da mochila na batalha: 3 colunas; com muitos itens as linhas encolhem.
+function battle_ui_bag_rect(_i, _n) {
+    var _gw = display_get_gui_width();
+    var _gh = display_get_gui_height();
+    var _x0 = 84;
+    var _y0 = 176;
+    var _colunas = 3;
+    var _cw = ((_gw - 168) - ((_colunas - 1) * 16)) / _colunas;
+    var _linhas = max(1, ceil(_n / _colunas));
+    var _passo = min(92, floor(((_gh - 84) - _y0 - 12) / _linhas));
+    return { X: _x0 + ((_i mod _colunas) * (_cw + 16)), Y: _y0 + ((_i div _colunas) * _passo), W: _cw, H: _passo - 10 };
 }
 
 function battle_ui_draw_switch_overlay() {
@@ -1539,11 +1597,14 @@ function battle_ui_draw_switch_overlay() {
 
         battle_ui_draw_nineslice_panel(_x, _y, _card_w, _card_h);
 
-        if (_hover || _active) {
-            draw_set_alpha(_active ? 0.26 : 0.32);
-            draw_set_color(_active ? make_color_rgb(80, 148, 220) : make_color_rgb(245, 220, 86));
-            draw_rectangle(_x + 5, _y + 5, _x + _card_w - 5, _y + _card_h - 5, false);
-            draw_set_alpha(1);
+        if (_active) {
+            draw_set_color(ui_cor("ciano"));
+            draw_roundrect_ext(_x + 2, _y + 2, _x + _card_w - 2, _y + _card_h - 2, 10, 10, true);
+            draw_roundrect_ext(_x + 3, _y + 3, _x + _card_w - 3, _y + _card_h - 3, 10, 10, true);
+        }
+
+        if (_hover) {
+            ui_borda_selecao(_x, _y, _card_w, _card_h);
         }
 
         if (!is_struct(_criatura)) {
@@ -1607,10 +1668,6 @@ function battle_ui_step(_dt) {
 
         if (instance_exists(_demo)) {
             var _bag_ids = demo_item_ids_possuidos(_demo.inventario);
-            var _bag_x = 84;
-            var _bag_y = 176;
-            var _bag_col_w = (_gw - 196) * 0.5;
-            var _bag_row_h = 48;
 
             for (var _bag_i = 0; _bag_i < array_length(_bag_ids); _bag_i += 1) {
                 var _bag_id = _bag_ids[_bag_i];
@@ -1621,12 +1678,9 @@ function battle_ui_step(_dt) {
                 }
 
                 var _bag_qty = demo_inventario_quantidade(_demo.inventario, _bag_id);
-                var _bag_col = _bag_i div 8;
-                var _bag_row = _bag_i mod 8;
-                var _bag_item_x = _bag_x + (_bag_col * (_bag_col_w + 28));
-                var _bag_item_y = _bag_y + (_bag_row * (_bag_row_h + 8));
+                var _bag_r = battle_ui_bag_rect(_bag_i, array_length(_bag_ids));
 
-                if (_bag_qty > 0 && battle_ui_button_hit(_mx, _my, _bag_item_x, _bag_item_y, _bag_col_w, _bag_row_h)) {
+                if (_bag_qty > 0 && battle_ui_button_hit(_mx, _my, _bag_r.X, _bag_r.Y, _bag_r.W, _bag_r.H)) {
                     demo_item_usar(_demo, _bag_id, true);
                     return;
                 }

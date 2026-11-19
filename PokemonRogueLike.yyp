@@ -88,6 +88,7 @@
   },
   "name":"PokemonRogueLike",
   "resources":[
+    {"id":{"name":"scr_ui_kit","path":"scripts/scr_ui_kit/scr_ui_kit.yy",},},
     {"id":{"name":"scr_idiomas","path":"scripts/scr_idiomas/scr_idiomas.yy",},},
     {"id":{"name":"scr_audio","path":"scripts/scr_audio/scr_audio.yy",},},
     {"id":{"name":"scr_rejogabilidade","path":"scripts/scr_rejogabilidade/scr_rejogabilidade.yy",},},

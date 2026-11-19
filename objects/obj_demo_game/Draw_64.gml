@@ -54,10 +54,7 @@ if (estado_demo == DemoEstado.MENU) {
         var _criatura_preview = demo_criatura_preview_get(_id);
 
         if (_hover) {
-            draw_set_alpha(0.28);
-            draw_set_color(make_color_rgb(255, 232, 88));
-            draw_rectangle(_x - 7, _card_y - 7, _x + _card_w + 7, _card_y + _card_h + 7, false);
-            draw_set_alpha(1);
+            ui_borda_selecao(_x, _card_y, _card_w, _card_h);
         }
 
         draw_set_color(make_color_rgb(108, 18, 28));
@@ -173,13 +170,10 @@ if (estado_demo == DemoEstado.MENU) {
     var _mx_city_ui = device_mouse_x_to_gui(0);
     var _my_city_ui = device_mouse_y_to_gui(0);
 
-    draw_set_color(make_color_rgb(242, 235, 208));
-    draw_rectangle(36, 34, 420, 106, false);
-    draw_set_color(make_color_rgb(108, 82, 68));
-    draw_rectangle(36, 34, 420, 106, true);
-    draw_rectangle(40, 38, 416, 102, true);
-    draw_set_color(make_color_rgb(196, 46, 54));
-    draw_rectangle(36, 34, 420, 58, false);
+    ui_painel_papel(36, 34, 384, 72);
+    draw_set_color(ui_cor("vermelho"));
+    draw_roundrect_ext(39, 37, 417, 60, 12, 12, false);
+    draw_rectangle(39, 48, 417, 60, false);
     var _cidade_titulo = demo_cidade_nome(cidade_index);
 
     if (cidade_index == 0) {
@@ -212,13 +206,17 @@ if (estado_demo == DemoEstado.MENU) {
         _cidade_subtitulo = "Saida da cidade";
     }
 
-    battle_ui_draw_text_fit(58, 72, _cidade_subtitulo, 350, 1, make_color_rgb(36, 30, 28));
+    battle_ui_font_body();
+    battle_ui_draw_text_fit(58, 72, _cidade_subtitulo, 346, 1, ui_cor("tinta"));
+    battle_ui_font_title();
 
     if (estado_demo == DemoEstado.CIDADE) {
         missoes_draw_lista(id);
     }
 
-    demo_draw_money_badge(_gw - 208, 38, dinheiro);
+    if (estado_demo != DemoEstado.POKESTORE && estado_demo != DemoEstado.MOCHILA) {
+        demo_draw_money_badge(_gw - 208, 38, dinheiro);
+    }
 
     if (estado_demo == DemoEstado.CIDADE) {
         var _markers_city_ui = demo_city_markers(id);
@@ -236,148 +234,33 @@ if (estado_demo == DemoEstado.MENU) {
             );
         }
 
-        demo_draw_choice_button("Mochila", "", 36, _gh - 96, 210, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 36, _gh - 96, 210, 58));
+        var _btn_mochila_ui = demo_cidade_botao_mochila_rect();
+        var _btn_menu_ui = demo_cidade_botao_menu_rect();
+        var _sem_modal_ui = !ui_confirmacao_ativa();
+        demo_draw_choice_button("Mochila", "", _btn_mochila_ui.X, _btn_mochila_ui.Y, _btn_mochila_ui.W, _btn_mochila_ui.H, _sem_modal_ui && demo_hover_rect(_mx_city_ui, _my_city_ui, _btn_mochila_ui.X, _btn_mochila_ui.Y, _btn_mochila_ui.W, _btn_mochila_ui.H));
+        demo_draw_choice_button("Menu", "", _btn_menu_ui.X, _btn_menu_ui.Y, _btn_menu_ui.W, _btn_menu_ui.H, _sem_modal_ui && demo_hover_rect(_mx_city_ui, _my_city_ui, _btn_menu_ui.X, _btn_menu_ui.Y, _btn_menu_ui.W, _btn_menu_ui.H));
     } else if (estado_demo == DemoEstado.POKESTORE) {
-        draw_set_color(make_color_rgb(242, 235, 208));
-        draw_rectangle(70, 152, 650, 612, false);
-        draw_set_color(make_color_rgb(108, 82, 68));
-        draw_rectangle(70, 152, 650, 612, true);
-        draw_set_color(make_color_rgb(36, 30, 28));
-        i18n_draw_text(98, 176, "Clique em um item para comprar.");
-
-        var _shop_items = demo_shop_items_cidade(cidade_index);
-        var _shop_x = 88;
-        var _shop_y = 214;
-        var _shop_w = 520;
-        var _shop_row_h = 58;
-        draw_set_color(make_color_rgb(86, 68, 58));
-        i18n_draw_text(_shop_x + 418, _shop_y - 20, "Estoque");
-
-        for (var _shop_i = 0; _shop_i < array_length(_shop_items); _shop_i += 1) {
-            var _shop_id = _shop_items[_shop_i];
-            var _shop_item = demo_item_get(_shop_id);
-
-            if (!is_struct(_shop_item)) {
-                continue;
-            }
-
-            var _row_y = _shop_y + (_shop_i * (_shop_row_h + 8));
-            var _hover_shop = demo_hover_rect(_mx_city_ui, _my_city_ui, _shop_x, _row_y, _shop_w, _shop_row_h);
-            draw_set_color(_hover_shop ? make_color_rgb(255, 244, 152) : make_color_rgb(250, 244, 224));
-            draw_rectangle(_shop_x, _row_y, _shop_x + _shop_w, _row_y + _shop_row_h, false);
-            draw_set_color(_hover_shop ? make_color_rgb(220, 184, 42) : make_color_rgb(164, 138, 92));
-            draw_rectangle(_shop_x, _row_y, _shop_x + _shop_w, _row_y + _shop_row_h, true);
-            demo_draw_item_icon(_shop_id, _shop_x + 28, _row_y + 29, 32);
-            draw_set_color(make_color_rgb(36, 30, 28));
-            battle_ui_font_title();
-            i18n_draw_text(_shop_x + 58, _row_y + 9, _shop_item.Nome);
-            i18n_draw_text(_shop_x + 302, _row_y + 9, "M$ " + string(_shop_item.Preco));
-            i18n_draw_text(_shop_x + 432, _row_y + 9, "x" + string(demo_inventario_quantidade(inventario, _shop_id)));
-            draw_set_color(make_color_rgb(86, 68, 58));
-            battle_ui_font_body();
-            i18n_draw_text_ext(_shop_x + 58, _row_y + 31, _shop_item.Descricao, 14, _shop_w - 76);
-            battle_ui_font_title();
-        }
-
+        demo_draw_loja(id);
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
         demo_draw_choice_button("Mochila", "", 264, _gh - 96, 210, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 264, _gh - 96, 210, 58));
     } else if (estado_demo == DemoEstado.LAB_CARVALHO) {
-        draw_set_color(make_color_rgb(242, 235, 208));
-        draw_rectangle(70, 150, 820, 430, false);
-        draw_set_color(make_color_rgb(108, 82, 68));
-        draw_rectangle(70, 150, 820, 430, true);
-        demo_draw_dialog_character(professor_sprite, 70, 150, 820, 430);
-        draw_set_color(make_color_rgb(36, 30, 28));
-        battle_ui_font_title();
-        i18n_draw_text(98, 176, "Lab. do Prof. Sabia");
-        battle_ui_font_body();
-        i18n_draw_text_ext(98, 212, message, 24, 520);
-        battle_ui_font_title();
+        demo_draw_dialogo_cidade("Lab. do Prof. Sabia", message, professor_sprite);
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.MOCHILA) {
-        draw_set_color(make_color_rgb(242, 235, 208));
-        draw_rectangle(70, 136, 742, 620, false);
-        draw_set_color(make_color_rgb(108, 82, 68));
-        draw_rectangle(70, 136, 742, 620, true);
-        draw_set_color(make_color_rgb(36, 30, 28));
-        battle_ui_font_body();
-        i18n_draw_text_ext(98, 166, "Armazenamento de todos os seus itens. Para usar ou equipar nos seus monstros entre as rotas, basta clicar no item.", 24, 560);
-        battle_ui_font_title();
-
-        var _bag_ids = demo_item_ids_possuidos(inventario);
-        var _bag_x = 88;
-        var _bag_y = 236;
-        var _bag_col_w = 306;
-        var _bag_row_h = 52;
-
-        if (array_length(_bag_ids) <= 0) {
-            var _empty_text = "Mochila vazia";
-            draw_set_color(make_color_rgb(86, 68, 58));
-            i18n_draw_text(406 - (i18n_string_width(_empty_text) * 0.5), 368, _empty_text);
-        }
-
-        for (var _bag_i = 0; _bag_i < array_length(_bag_ids); _bag_i += 1) {
-            var _bag_id = _bag_ids[_bag_i];
-            var _bag_item = demo_item_get(_bag_id);
-
-            if (!is_struct(_bag_item)) {
-                continue;
-            }
-
-            var _bag_qty = demo_inventario_quantidade(inventario, _bag_id);
-            var _can_use_bag = demo_item_pode_usar(_bag_item, false);
-            var _bag_col = _bag_i div 8;
-            var _bag_row = _bag_i mod 8;
-            var _bag_item_x = _bag_x + (_bag_col * (_bag_col_w + 18));
-            var _row_bag_y = _bag_y + (_bag_row * (_bag_row_h + 8));
-            var _hover_bag = _can_use_bag && demo_hover_rect(_mx_city_ui, _my_city_ui, _bag_item_x, _row_bag_y, _bag_col_w, _bag_row_h);
-            draw_set_color(_hover_bag ? make_color_rgb(255, 244, 152) : make_color_rgb(250, 244, 224));
-            draw_rectangle(_bag_item_x, _row_bag_y, _bag_item_x + _bag_col_w, _row_bag_y + _bag_row_h, false);
-            draw_set_color(_hover_bag ? make_color_rgb(220, 184, 42) : make_color_rgb(164, 138, 92));
-            draw_rectangle(_bag_item_x, _row_bag_y, _bag_item_x + _bag_col_w, _row_bag_y + _bag_row_h, true);
-            demo_draw_item_icon(_bag_id, _bag_item_x + 28, _row_bag_y + (_bag_row_h * 0.5), 30);
-            draw_set_color(make_color_rgb(36, 30, 28));
-            i18n_draw_text(_bag_item_x + 58, _row_bag_y + 8, _bag_item.Nome);
-            i18n_draw_text(_bag_item_x + 244, _row_bag_y + 8, "x" + string(_bag_qty));
-            draw_set_color(make_color_rgb(86, 68, 58));
-            i18n_draw_text(_bag_item_x + 58, _row_bag_y + 30, _bag_item.Tipo);
-        }
-
+        demo_draw_mochila(id);
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.GINASIO) {
-        draw_set_color(make_color_rgb(242, 235, 208));
-        draw_rectangle(70, 170, 680, 386, false);
-        draw_set_color(make_color_rgb(108, 82, 68));
-        draw_rectangle(70, 170, 680, 386, true);
         var _ginasio_speaker = demo_cidade_tem_ginasio(cidade_index) ? demo_dialog_sprite_cidade(id, professor_sprite) : professor_sprite;
-        demo_draw_dialog_character(_ginasio_speaker, 70, 170, 680, 386);
-        draw_set_color(make_color_rgb(36, 30, 28));
-        battle_ui_font_title();
-        i18n_draw_text(98, 196, demo_cidade_tem_ginasio(cidade_index) ? "Ginasio de " + demo_cidade_nome(cidade_index) : "Sem ginasio");
-        battle_ui_font_body();
-        i18n_draw_text_ext(98, 232, message, 24, 410);
-        battle_ui_font_title();
+        demo_draw_dialogo_cidade(demo_cidade_tem_ginasio(cidade_index) ? "Ginasio de " + demo_cidade_nome(cidade_index) : "Sem ginasio", message, _ginasio_speaker);
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.CASA_MAE) {
-        draw_set_color(make_color_rgb(242, 235, 208));
-        draw_rectangle(70, 170, 680, 386, false);
-        draw_set_color(make_color_rgb(108, 82, 68));
-        draw_rectangle(70, 170, 680, 386, true);
         var _evento_speaker = cidade_index == 0 ? mae_sprite : demo_dialog_sprite_cidade(id, professor_sprite);
-        demo_draw_dialog_character(_evento_speaker, 70, 170, 680, 386);
-        draw_set_color(make_color_rgb(36, 30, 28));
-        battle_ui_font_title();
-        i18n_draw_text(98, 196, cidade_index == 0 ? "Casa da Mae" : (evento_titulo != "" ? evento_titulo : demo_cidade_atual().Evento));
-        battle_ui_font_body();
-        i18n_draw_text_ext(98, 232, message, 24, 410);
-        battle_ui_font_title();
+        demo_draw_dialogo_cidade(cidade_index == 0 ? "Casa da Mae" : (evento_titulo != "" ? evento_titulo : demo_cidade_atual().Evento), message, _evento_speaker);
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.SAIR_CIDADE) {
-        draw_set_color(make_color_rgb(242, 235, 208));
-        draw_rectangle((_gw - 640) * 0.5, 210, (_gw + 640) * 0.5, 292, false);
-        draw_set_color(make_color_rgb(108, 82, 68));
-        draw_rectangle((_gw - 640) * 0.5, 210, (_gw + 640) * 0.5, 292, true);
-        draw_set_color(make_color_rgb(36, 30, 28));
+        ui_fundo_escurecido(0.25);
+        ui_painel_papel((_gw - 640) * 0.5, 210, 640, 82);
+        draw_set_color(ui_cor("tinta"));
         var _destino_rota_ui = demo_rota_saida_destino_get(id);
         var _prompt_rota = "O caminho final esta selado.";
 
@@ -520,14 +403,11 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
         var _x_draft = _start_x_draft + (_d * (_card_w_draft + _gap_draft));
         var _hover_draft = demo_hover_rect(_mx_draft, _my_draft, _x_draft, _card_y_draft, _card_w_draft, _card_h_draft);
 
-        if (_hover_draft) {
-            draw_set_alpha(0.22);
-            draw_set_color(make_color_rgb(255, 232, 88));
-            draw_rectangle(_x_draft - 6, _card_y_draft - 6, _x_draft + _card_w_draft + 6, _card_y_draft + _card_h_draft + 6, false);
-            draw_set_alpha(1);
-        }
-
         battle_ui_draw_nineslice_panel(_x_draft, _card_y_draft, _card_w_draft, _card_h_draft);
+
+        if (_hover_draft) {
+            ui_borda_selecao(_x_draft, _card_y_draft, _card_w_draft, _card_h_draft);
+        }
         var _tooltip_draft = battle_ui_draw_skill_summary(_draft.Opcoes[_d], _x_draft + 28, _card_y_draft + 28, _card_w_draft - 56, true);
 
         if (is_struct(_tooltip_draft)) {
@@ -544,6 +424,10 @@ if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU && est
 
 missao_toast_draw();
 conquista_avisos_draw();
+
+if (estado_demo == DemoEstado.MENU || estado_demo == DemoEstado.CIDADE) {
+    ui_confirmacao_draw();
+}
 
 // Transicao: escurece rapido ao trocar de tela principal e volta (scr_placeholders nao interfere).
 var _grupo_tela = estado_demo;

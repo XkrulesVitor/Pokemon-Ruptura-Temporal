@@ -37,7 +37,27 @@ run_save_step(id);
 
 switch (estado_demo) {
     case DemoEstado.MENU:
-        if (mouse_check_button_pressed(mb_left) && menu_opcoes_clique(id, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0))) {
+        // Comecar outra run apaga a run salva: pergunta antes.
+        var _confirmado_menu = "";
+
+        if (ui_confirmacao_ativa()) {
+            var _resposta_menu = ui_confirmacao_step();
+
+            if (_resposta_menu == "") {
+                break;
+            }
+
+            var _acao_menu = global.ui_confirmacao.Acao;
+            ui_confirmacao_fechar();
+
+            if (_resposta_menu != "sim") {
+                break;
+            }
+
+            _confirmado_menu = _acao_menu;
+        }
+
+        if (_confirmado_menu == "" && mouse_check_button_pressed(mb_left) && menu_opcoes_clique(id, device_mouse_x_to_gui(0), device_mouse_y_to_gui(0))) {
             break;
         }
 
@@ -60,6 +80,21 @@ switch (estado_demo) {
                 var _continue_btn_menu = demo_menu_continue_button_rect();
                 _continuar = demo_hover_rect(_mx_menu, _my_menu, _continue_btn_menu.X, _continue_btn_menu.Y, _continue_btn_menu.W, _continue_btn_menu.H);
             }
+        }
+
+        if (_confirmado_menu != "") {
+            _start_menu = _confirmado_menu == "nova";
+            _open_daily = _confirmado_menu == "diario";
+            _open_meta_shop = false;
+            _continuar = false;
+        } else if (run_save_existe() && (_start_menu || _open_daily)) {
+            ui_confirmacao_abrir(
+                _open_daily ? "diario" : "nova",
+                "RUN SALVA",
+                "Voce tem uma run salva. Comecar " + (_open_daily ? "o Desafio Diario" : "uma nova run") + " apaga esse progresso.",
+                _open_daily ? "Ir ao Diario" : "Nova run"
+            );
+            break;
         }
 
         if (_continuar) {
@@ -209,13 +244,39 @@ switch (estado_demo) {
         break;
 
     case DemoEstado.CIDADE:
+        // Pausa: salva a run e volta ao menu inicial.
+        if (ui_confirmacao_ativa()) {
+            var _resposta_cidade = ui_confirmacao_step();
+
+            if (_resposta_cidade != "") {
+                ui_confirmacao_fechar();
+
+                if (_resposta_cidade == "sim") {
+                    run_save_gravar(id);
+                    demo_run_resetar(id, DemoEstado.MENU);
+                    message = "Menu inicial";
+                }
+            }
+
+            break;
+        }
+
+        if (keyboard_check_pressed(vk_escape)) {
+            demo_cidade_abrir_pausa();
+            break;
+        }
+
         if (mouse_check_button_pressed(mb_left)) {
             var _mx_city = device_mouse_x_to_gui(0);
             var _my_city = device_mouse_y_to_gui(0);
             var _gh_city = display_get_gui_height();
             var _gw_city = display_get_gui_width();
+            var _btn_mochila_city = demo_cidade_botao_mochila_rect();
+            var _btn_menu_city = demo_cidade_botao_menu_rect();
 
-            if (demo_hover_rect(_mx_city, _my_city, 54, _gh_city - 96, 210, 58)) {
+            if (demo_hover_rect(_mx_city, _my_city, _btn_menu_city.X, _btn_menu_city.Y, _btn_menu_city.W, _btn_menu_city.H)) {
+                demo_cidade_abrir_pausa();
+            } else if (demo_hover_rect(_mx_city, _my_city, _btn_mochila_city.X, _btn_mochila_city.Y, _btn_mochila_city.W, _btn_mochila_city.H)) {
                 mochila_contexto_anterior = estado_demo;
                 estado_demo = DemoEstado.MOCHILA;
                 message = "Mochila aberta.";
@@ -240,14 +301,13 @@ switch (estado_demo) {
             var _mx_shop = device_mouse_x_to_gui(0);
             var _my_shop = device_mouse_y_to_gui(0);
             var _shop_items = demo_shop_items_cidade(cidade_index);
-            var _shop_x = 88;
-            var _shop_y = 214;
-            var _shop_w = 520;
-            var _row_h = 58;
 
             for (var _shop_i = 0; _shop_i < array_length(_shop_items); _shop_i += 1) {
-                if (demo_hover_rect(_mx_shop, _my_shop, _shop_x, _shop_y + (_shop_i * (_row_h + 8)), _shop_w, _row_h)) {
+                var _shop_r = demo_loja_rect(_shop_i);
+
+                if (demo_hover_rect(_mx_shop, _my_shop, _shop_r.X, _shop_r.Y, _shop_r.W, _shop_r.H)) {
                     demo_item_comprar(id, _shop_items[_shop_i]);
+                    audio_sfx(string_pos("insuficiente", message) > 0 ? "captura_falha" : "missao");
                 }
             }
 
@@ -277,21 +337,14 @@ switch (estado_demo) {
             var _mx_bag = device_mouse_x_to_gui(0);
             var _my_bag = device_mouse_y_to_gui(0);
             var _bag_ids = demo_item_ids_possuidos(inventario);
-            var _bag_x = 88;
-            var _bag_y = 236;
-            var _bag_col_w = 306;
-            var _bag_row_h = 52;
 
             for (var _bag_i = 0; _bag_i < array_length(_bag_ids); _bag_i += 1) {
                 var _bag_id = _bag_ids[_bag_i];
                 var _bag_item = demo_item_get(_bag_id);
                 var _bag_qty = demo_inventario_quantidade(inventario, _bag_id);
-                var _bag_col = _bag_i div 8;
-                var _bag_row = _bag_i mod 8;
-                var _bag_item_x = _bag_x + (_bag_col * (_bag_col_w + 18));
-                var _bag_item_y = _bag_y + (_bag_row * (_bag_row_h + 8));
+                var _bag_r = demo_mochila_rect(_bag_i, array_length(_bag_ids));
 
-                if (_bag_qty > 0 && demo_item_pode_usar(_bag_item, false) && demo_hover_rect(_mx_bag, _my_bag, _bag_item_x, _bag_item_y, _bag_col_w, _bag_row_h)) {
+                if (_bag_qty > 0 && demo_item_pode_usar(_bag_item, false) && demo_hover_rect(_mx_bag, _my_bag, _bag_r.X, _bag_r.Y, _bag_r.W, _bag_r.H)) {
                     demo_item_usar(id, _bag_id, false);
                     break;
                 }

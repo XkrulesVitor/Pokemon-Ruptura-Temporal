@@ -226,7 +226,7 @@ function run_save_draw_menu(_mx, _my) {
     var _rect = demo_menu_continue_button_rect();
     demo_draw_title_button(_rect, "CONTINUAR", demo_hover_rect(_mx, _my, _rect.X, _rect.Y, _rect.W, _rect.H));
 
-    var _linha = (_resumo.Diario ? "Diario | " : "") + _resumo.Cidade + " | " + string(_resumo.Insignias) + " insignias | " + _resumo.Lider + " e mais " + string(max(0, _resumo.Equipe - 1));
+    var _linha = (_resumo.Diario ? "Diario | " : "") + _resumo.Cidade + " | " + string(_resumo.Insignias) + " insignias | " + _resumo.Lider + (_resumo.Equipe > 1 ? " e mais " + string(_resumo.Equipe - 1) : "");
     draw_set_halign(fa_center);
     draw_set_color(c_black);
     i18n_draw_text_transformed(_rect.X + (_rect.W * 0.5) + 1, _rect.Y + _rect.H + 9, _linha, 0.62, 0.62, 0);

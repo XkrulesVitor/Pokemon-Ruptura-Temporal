@@ -513,6 +513,10 @@ function menu_opcoes_draw(_mx, _my) {
         draw_set_color(_hover ? make_color_rgb(255, 222, 120) : make_color_rgb(150, 160, 200));
         draw_roundrect_ext(_r[_i].X, _r[_i].Y, _r[_i].X + _r[_i].W, _r[_i].Y + _r[_i].H, 8, 8, true);
         battle_ui_draw_text_fit(_r[_i].X + 14, _r[_i].Y + 9, _rotulos[_i], _r[_i].W - 28, 0.7, _hover ? make_color_rgb(255, 238, 170) : c_white);
+
+        if (_hover) {
+            ui_borda_selecao(_r[_i].X, _r[_i].Y, _r[_i].W, _r[_i].H);
+        }
     }
 
     if (demo_hover_rect(_mx, _my, _r[0].X, _r[0].Y, _r[0].W, _r[0].H)) {

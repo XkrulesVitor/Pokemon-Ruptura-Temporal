@@ -488,6 +488,43 @@ function autoteste_passos() {
         { Nome: "idioma: volta ao portugues", Espera: 0.2, Foto: "", Acao: function() {
             if (idioma_atual() == "en") idioma_alternar();
             autoteste_log("idioma restaurado: " + idioma_atual());
+        } },
+        { Nome: "ui: mochila na batalha", Espera: 1.2, Foto: "55_mochila_batalha", Acao: function() {
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _p = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[0], 11, true);
+            _p.Capturado = true;
+            player_party = [_p];
+            player_criatura_data = _p;
+            demo_inventario_adicionar(inventario, "pokebola", 4);
+            demo_inventario_adicionar(inventario, "potion", 2);
+            demo_inventario_adicionar(inventario, "po_ataque", 1);
+            enemy_criatura_data = demo_criar_criatura_data(criatura_id_por_nome("Rataco"), 8, true, false, false, "selvagem");
+            battle_context = "rota";
+            demo_start_battle(id);
+            global.mochila_overlay_aberta = true;
+            global.time_scale = 0;
+        } },
+        { Nome: "ui: draft de habilidade", Espera: 0.3, Foto: "", Acao: function() {
+            global.mochila_overlay_aberta = false;
+            global.autoteste.DraftsVistos = 0;
+            criatura_draft_disparar(player_criatura_data, 12);
+            autoteste_log("draft aberto: " + string(is_struct(global.draft_habilidade_atual)));
+        } },
+        { Nome: "ui: confirmacao", Espera: 1.2, Foto: "56_confirmacao", Acao: function() {
+            demo_run_resetar(id, DemoEstado.MENU);
+            ui_confirmacao_abrir("nova", "RUN SALVA", "Voce tem uma run salva. Comecar uma nova run apaga esse progresso.", "Nova run");
+        } },
+        { Nome: "ui: pausa na cidade", Espera: 1.2, Foto: "57_pausa_cidade", Acao: function() {
+            ui_confirmacao_fechar();
+            demo_run_resetar(id, DemoEstado.CIDADE);
+            var _p = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[0], 8, true);
+            _p.Capturado = true;
+            player_party = [_p];
+            player_criatura_data = _p;
+            demo_cidade_abrir_pausa();
+        } },
+        { Nome: "ui: fim", Espera: 1.0, Foto: "", Acao: function() {
+            ui_confirmacao_fechar();
         } }
     ];
 }
@@ -522,7 +559,12 @@ function autoteste_step() {
                 return;
             }
 
-            criatura_draft_escolher(global.draft_habilidade_atual, 0, -1);
+            // Sem slot livre a opcao nova falha: tenta a outra opcao e depois troca o slot 1.
+            var _d = global.draft_habilidade_atual;
+
+            if (!criatura_draft_escolher(_d, 0, -1) && !criatura_draft_escolher(_d, 1, -1)) {
+                criatura_draft_escolher(_d, 0, 0);
+            }
 
             if (instance_exists(_jogo.player_inst)) {
                 criatura_batalha_sincronizar_habilidades(_jogo.player_inst);

@@ -122,8 +122,8 @@
   "A equipe recuperou um pouco de HP.": "The team recovered some HP.",
   "Encontro vencido. Pressione ENTER ou clique para continuar pela rota.": "Encounter won. Press ENTER or click to keep going.",
   "Todos os monstros da equipe foram derrotados.": "Your whole team was defeated.",
-  "Escolha uma habilidade ou uma evolucao": "Pick a skill or an upgrade",
-  "Escolha uma habilidade para evoluir": "Pick a skill to upgrade",
+  "Escolha uma habilidade ou uma evolucao": "Choose a skill or an upgrade",
+  "Escolha uma habilidade para evoluir": "Choose a skill to upgrade",
   "Upgrade de tier da habilidade equipada.": "Tier upgrade for an equipped skill.",
   "+CURA": "+HEAL",
   "VEL": "SPD",
@@ -208,7 +208,34 @@
   "Cristal de Nivel": "Level Crystal",
   "Po de Furia": "Fury Powder",
   "Po de Couraca": "Armor Powder",
-  "Po de Vento": "Wind Powder"
+  "Po de Vento": "Wind Powder",
+  "Clique em um item para usar. Alguns so funcionam em batalha.": "Click an item to use it. Some only work in battle.",
+  "Usa sozinha": "Auto-use",
+  "So em batalha": "Battle only",
+  "Fora de batalha": "Not in battle",
+  "Captura": "Capture",
+  "Cura": "Healing",
+  "Cura total": "Full heal",
+  "Status": "Status",
+  "Fruta automatica": "Auto fruit",
+  "Batalha": "Battle",
+  "Nivel": "Level",
+  "RUN SALVA": "SAVED RUN",
+  "Nova run": "New run",
+  "Ir ao Diario": "Go to Daily",
+  "Cancelar": "Cancel",
+  "Voce tem uma run salva. Comecar uma nova run apaga esse progresso.": "You have a saved run. Starting a new run erases that progress.",
+  "Voce tem uma run salva. Comecar o Desafio Diario apaga esse progresso.": "You have a saved run. Starting the Daily Challenge erases that progress.",
+  "PAUSA": "PAUSED",
+  "Sair para o menu": "Quit to menu",
+  "Menu": "Menu",
+  "A run fica salva nesta cidade e volta pelo botao CONTINUAR. Voltar ao menu inicial?": "The run is saved in this town and comes back through CONTINUE. Return to the main menu?",
+  "Trancado": "Locked",
+  "Slot trancado": "Slot locked",
+  "Desmaiado": "Fainted",
+  "Suporte": "Support",
+  "Escolha uma nova habilidade": "Choose a new skill",
+  "Evolui esta habilidade, aumentando dano, efeito ou reduzindo recarga.": "Upgrades this skill: more damage, stronger effect or shorter cooldown."
  },
  "trechos": [
   [
@@ -412,6 +439,10 @@
    "Daily Challenge "
   ],
   [
+   "Ouro > Diamante",
+   "Gold > Diamond"
+  ],
+  [
    "Prof. Sabia: O ",
    "Prof. Sabia: The "
   ],
@@ -442,6 +473,14 @@
   [
    "Melhor marca: ",
    "Best score: "
+  ],
+  [
+   "Abre no nivel ",
+   "Opens at level "
+  ],
+  [
+   "Bronze > Prata",
+   "Bronze > Silver"
   ],
   [
    "DIFICULDADE: ",
@@ -512,6 +551,10 @@
    "   P: close"
   ],
   [
+   "Prata > Ouro",
+   "Silver > Gold"
+  ],
+  [
    "CONQUISTAS ",
    "ACHIEVEMENTS "
   ],
@@ -552,6 +595,10 @@
    "   Combos: "
   ],
   [
+   "Ginasio de ",
+   "Gym of "
+  ],
+  [
    "CROMATICO ",
    "CHROMATIC "
   ],
@@ -578,6 +625,14 @@
   [
    " monstros!",
    " monsters!"
+  ],
+  [
+   "MERCADO - ",
+   "SHOP - "
+  ],
+  [
+   "Voce tem: ",
+   "Owned: "
   ],
   [
    " libertou ",
@@ -622,6 +677,10 @@
   [
    " (treino)",
    " (practice)"
+  ],
+  [
+   " - NIVEL ",
+   " - LEVEL "
   ],
   [
    "VISUAL: ",

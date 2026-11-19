@@ -108,6 +108,20 @@ EXATOS = {
     "Pomada Fria": "Cooling Salve", "Sal de Despertar": "Waking Salts", "Tonico Puro": "Pure Tonic", "Fruta Anil": "Indigo Fruit",
     "Fruta Rubra": "Crimson Fruit", "Fruta Ambar": "Amber Fruit", "Cristal de Nivel": "Level Crystal", "Po de Furia": "Fury Powder",
     "Po de Couraca": "Armor Powder", "Po de Vento": "Wind Powder",
+    # interface da Sprint 9 (mercado, mochila, confirmacao, draft)
+    "Clique em um item para usar. Alguns so funcionam em batalha.": "Click an item to use it. Some only work in battle.",
+    "Usa sozinha": "Auto-use", "So em batalha": "Battle only", "Fora de batalha": "Not in battle",
+    "Captura": "Capture", "Cura": "Healing", "Cura total": "Full heal", "Status": "Status",
+    "Fruta automatica": "Auto fruit", "Batalha": "Battle", "Nivel": "Level",
+    "RUN SALVA": "SAVED RUN", "Nova run": "New run", "Ir ao Diario": "Go to Daily", "Cancelar": "Cancel",
+    "Voce tem uma run salva. Comecar uma nova run apaga esse progresso.": "You have a saved run. Starting a new run erases that progress.",
+    "Voce tem uma run salva. Comecar o Desafio Diario apaga esse progresso.": "You have a saved run. Starting the Daily Challenge erases that progress.",
+    "PAUSA": "PAUSED", "Sair para o menu": "Quit to menu", "Menu": "Menu",
+    "A run fica salva nesta cidade e volta pelo botao CONTINUAR. Voltar ao menu inicial?": "The run is saved in this town and comes back through CONTINUE. Return to the main menu?",
+    "Trancado": "Locked", "Slot trancado": "Slot locked", "Desmaiado": "Fainted", "Suporte": "Support",
+    "Escolha uma nova habilidade": "Choose a new skill", "Escolha uma habilidade para evoluir": "Choose a skill to upgrade",
+    "Escolha uma habilidade ou uma evolucao": "Choose a skill or an upgrade",
+    "Evolui esta habilidade, aumentando dano, efeito ou reduzindo recarga.": "Upgrades this skill: more damage, stronger effect or shorter cooldown.",
 }
 
 TRECHOS = [
@@ -153,6 +167,8 @@ TRECHOS = [
     ("Inicial: ", "Starting skill: "), ("Raridade: ", "Rarity: "), ("Mostrando ", "Showing "), ("Use os filtros para afinar a lista.", "Use the filters to narrow the list."),
     ("Custo ", "Cost "), ("Desafio Diario ", "Daily Challenge "), (" (tentativa oficial)", " (official attempt)"), (" (treino)", " (practice)"),
     ("Sinergia: ", "Synergy: "), ("SINERGIA (", "SYNERGY ("), ("Monstro ", "Monster "), (" monstros!", " monsters!"),
+    ("MERCADO - ", "SHOP - "), ("Voce tem: ", "Owned: "), ("Abre no nivel ", "Opens at level "), ("Ginasio de ", "Gym of "),
+    (" - NIVEL ", " - LEVEL "), ("Bronze > Prata", "Bronze > Silver"), ("Prata > Ouro", "Silver > Gold"), ("Ouro > Diamante", "Gold > Diamond"),
     ("Prof. Sabia: O ", "Prof. Sabia: The "), (" libertou ", " freed "), (", e o tempo se rasgou sobre o ", ", and time tore open over the "),
     (". Monstros de outras eras estao atravessando as fendas. Leve este parceiro, venca os lideres e feche o rasgo antes que ele engula tudo.",
      ". Monsters from other eras are crossing through the cracks. Take this partner, beat the leaders and close the rift before it swallows everything."),

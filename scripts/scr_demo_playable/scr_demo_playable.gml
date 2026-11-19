@@ -312,6 +312,10 @@ function demo_menu_shop_button_rect() {
 function demo_draw_title_button(_rect, _label, _hover) {
     var _draw_rect = demo_hover_grow_rect(_rect.X, _rect.Y, _rect.W, _rect.H, _hover, 3);
 
+    if (_hover) {
+        ui_borda_selecao(_draw_rect.X, _draw_rect.Y, _draw_rect.W, _draw_rect.H);
+    }
+
     draw_set_halign(fa_left);
     draw_set_color(make_color_rgb(92, 58, 30));
     draw_rectangle(_draw_rect.X - 4, _draw_rect.Y + 5, _draw_rect.X + _draw_rect.W + 4, _draw_rect.Y + _draw_rect.H + 7, false);
@@ -1063,6 +1067,10 @@ function demo_draw_meta_shop_card(_entry, _rect, _level, _cost, _maxed, _can_buy
     draw_rectangle(_rect.X, _rect.Y, _rect.X + 12, _rect.Y + _rect.H, false);
     draw_rectangle(_rect.X, _rect.Y, _rect.X + _rect.W, _rect.Y + _rect.H, true);
 
+    if (_hover && (_can_buy || _maxed)) {
+        ui_borda_selecao(_rect.X, _rect.Y, _rect.W, _rect.H);
+    }
+
     draw_set_color(make_color_rgb(36, 30, 28));
     demo_draw_text_fit(_rect.X + 28, _rect.Y + 10, _entry.Nome, _rect.W - 190, 0.82, make_color_rgb(36, 30, 28));
 
@@ -1206,6 +1214,10 @@ function demo_draw_gold_inner_panel(_x, _y, _w, _h) {
 
 function demo_draw_gold_button(_rect, _label, _hover) {
     var _draw_rect = demo_hover_grow_rect(_rect.X, _rect.Y, _rect.W, _rect.H, _hover, 3);
+
+    if (_hover) {
+        ui_borda_selecao(_draw_rect.X, _draw_rect.Y, _draw_rect.W, _draw_rect.H);
+    }
 
     draw_set_alpha(0.36);
     draw_set_color(make_color_rgb(24, 19, 28));
@@ -3671,7 +3683,7 @@ function demo_draw_effect_line(_effect, _x, _y, _mx, _my) {
     var _parts = demo_effect_phrase_parts(_effect);
     var _prefix = _parts.Prefix;
     battle_ui_font_body();
-    draw_set_color(make_color_rgb(50, 36, 34));
+    draw_set_color(ui_tinta_contexto());
     i18n_draw_text(_x, _y, _prefix);
 
     var _term_label = demo_status_nome_visual(_effect.Status);
@@ -3689,10 +3701,10 @@ function demo_draw_effect_line(_effect, _x, _y, _mx, _my) {
     battle_ui_font_body();
 
     if (_suffix != "" && (_suffix_x + i18n_string_width(_suffix) - _x) <= _max_w) {
-        draw_set_color(make_color_rgb(50, 36, 34));
+        draw_set_color(ui_tinta_contexto());
         i18n_draw_text(_suffix_x, _term_y, _suffix);
     } else if (_suffix != "") {
-        draw_set_color(make_color_rgb(50, 36, 34));
+        draw_set_color(ui_tinta_contexto());
         i18n_draw_text_ext(_x, _term_y + 22, _suffix, 22, _max_w);
     }
 
@@ -3709,7 +3721,7 @@ function demo_draw_habilidade_descricao_rica(_skill, _x, _y, _w, _mx, _my) {
     var _max_lines = argument_count >= 7 ? argument[6] : 2;
     var _effects = demo_habilidade_efeitos_visuais(_skill);
     battle_ui_font_body();
-    draw_set_color(make_color_rgb(50, 36, 34));
+    draw_set_color(ui_tinta_contexto());
 
     if (array_length(_effects) > 0) {
         var _line_count = min(_max_lines, array_length(_effects));
@@ -3725,7 +3737,7 @@ function demo_draw_habilidade_descricao_rica(_skill, _x, _y, _w, _mx, _my) {
 
         if (array_length(_effects) > _max_lines && _max_lines > 1) {
             battle_ui_font_body();
-            draw_set_color(make_color_rgb(90, 72, 64));
+            draw_set_color(ui_tinta_contexto(true));
             i18n_draw_text(_x, _y + (_line_count * _effect_gap), "+" + string(array_length(_effects) - _max_lines) + " efeito");
         }
 
@@ -3735,6 +3747,7 @@ function demo_draw_habilidade_descricao_rica(_skill, _x, _y, _w, _mx, _my) {
 
     var _desc = habilidade_descricao_curta(_skill);
     battle_ui_font_body();
+    draw_set_color(ui_tinta_contexto());
     i18n_draw_text_ext(_x, _y, _desc, 22, _w);
     battle_ui_font_title();
     return undefined;
@@ -4119,104 +4132,99 @@ function demo_city_marker_hit(_mx, _my, _x, _y) {
     return point_distance(_mx, _my, _x, _y) <= 30;
 }
 
+// Marcador da cidade: pino redondo com o simbolo; no hover mostra o nome numa etiqueta.
 function demo_draw_city_marker(_symbol, _label, _x, _y, _hover) {
-    var _text = _hover ? _label : _symbol;
-    var _pad_x = _hover ? 14 : 0;
-    var _w = max(34, i18n_string_width(_text) + (_pad_x * 2));
-    var _h = 34;
+    var _pulso = 0.5 + (0.5 * sin((current_time * 0.005) + _x));
+    var _cy = _y - 16;
+    var _novidade = (_symbol == "!" || _symbol == "X");
 
-    draw_set_alpha(_hover ? 0.34 : 0.22);
+    draw_set_alpha(0.3);
     draw_set_color(c_black);
-    draw_ellipse(_x - (_w * 0.5), _y - 10, _x + (_w * 0.5), _y + 18, false);
+    draw_ellipse(_x - 14, _y - 4, _x + 14, _y + 6, false);
     draw_set_alpha(1);
 
-    draw_set_color(_hover ? make_color_rgb(255, 232, 88) : make_color_rgb(242, 235, 208));
-    draw_rectangle(_x - (_w * 0.5), _y - _h, _x + (_w * 0.5), _y, false);
-    draw_set_color(make_color_rgb(88, 64, 48));
-    draw_rectangle(_x - (_w * 0.5), _y - _h, _x + (_w * 0.5), _y, true);
-    draw_rectangle(_x - (_w * 0.5) + 3, _y - _h + 3, _x + (_w * 0.5) - 3, _y - 3, true);
-    draw_set_color(make_color_rgb(36, 30, 28));
-    i18n_draw_text(_x - (i18n_string_width(_text) * 0.5), _y - 25, _text);
-}
-
-function demo_draw_choice_button(_label, _subtitle, _x, _y, _w, _h, _hover) {
-    var _draw_rect = demo_hover_grow_rect(_x, _y, _w, _h, _hover, 3);
-    var _dx = _draw_rect.X;
-    var _dy = _draw_rect.Y;
-    var _dw = _draw_rect.W;
-    var _dh = _draw_rect.H;
-
-    if (_hover) {
-        draw_set_alpha(0.24);
-        draw_set_color(make_color_rgb(255, 232, 88));
-        draw_rectangle(_dx - 6, _dy - 6, _dx + _dw + 6, _dy + _dh + 6, false);
+    if (_novidade || _hover) {
+        draw_set_alpha(0.25 + (0.25 * _pulso));
+        draw_set_color(_symbol == "X" ? make_color_rgb(190, 110, 255) : ui_cor("ouro"));
+        draw_circle(_x, _cy, 22 + (3 * _pulso), false);
         draw_set_alpha(1);
     }
 
-    draw_set_color(make_color_rgb(242, 235, 208));
-    draw_rectangle(_dx, _dy, _dx + _dw, _dy + _dh, false);
-    draw_set_color(_hover ? make_color_rgb(255, 232, 88) : make_color_rgb(108, 82, 68));
-    draw_rectangle(_dx, _dy, _dx + _dw, _dy + _dh, true);
-    draw_rectangle(_dx + 3, _dy + 3, _dx + _dw - 3, _dy + _dh - 3, true);
-    draw_set_color(make_color_rgb(196, 46, 54));
-    draw_rectangle(_dx, _dy, _dx + 12, _dy + _dh, false);
-    draw_set_color(make_color_rgb(36, 30, 28));
+    draw_set_color(ui_cor("borda"));
+    draw_circle(_x, _cy, 17, false);
+    draw_set_color(_hover ? make_color_rgb(255, 238, 150) : ui_cor("papel_claro"));
+    draw_circle(_x, _cy, 15, false);
+    draw_set_color(_symbol == "X" ? make_color_rgb(120, 60, 170) : (_symbol == "!" ? ui_cor("vermelho") : ui_cor("tinta")));
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    i18n_draw_text(_x, _cy, _symbol);
+
+    if (_hover) {
+        var _w = i18n_string_width(_label) + 24;
+        var _ly = _cy - 44;
+        ui_sombra(_x - (_w * 0.5), _ly - 14, _w, 28, 12, 3);
+        draw_set_color(ui_cor("noite"));
+        draw_roundrect_ext(_x - (_w * 0.5), _ly - 14, _x + (_w * 0.5), _ly + 14, 12, 12, false);
+        draw_set_color(ui_cor("ouro"));
+        draw_roundrect_ext(_x - (_w * 0.5), _ly - 14, _x + (_w * 0.5), _ly + 14, 12, 12, true);
+        draw_set_color(c_white);
+        i18n_draw_text(_x, _ly, _label);
+    }
+
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+}
+
+function demo_draw_choice_button(_label, _subtitle, _x, _y, _w, _h, _hover) {
+    var _k = ui_cartao(_x, _y, _w, _h, _hover, false);
+    draw_set_color(ui_cor("vermelho"));
+    draw_roundrect_ext(_k.X + 2, _k.Y + 2, _k.X + 14, _k.Y + _k.H - 2, 8, 8, false);
+    draw_rectangle(_k.X + 8, _k.Y + 2, _k.X + 14, _k.Y + _k.H - 2, false);
+    draw_set_color(ui_cor("tinta"));
 
     if (_subtitle == "") {
         draw_set_valign(fa_middle);
-        i18n_draw_text(_dx + 28, _dy + (_dh * 0.5), _label);
+        i18n_draw_text(_k.X + 30, _k.Y + (_k.H * 0.5), _label);
         draw_set_valign(fa_top);
     } else {
-        i18n_draw_text(_dx + 28, _dy + 12, _label);
-        draw_set_color(make_color_rgb(86, 68, 58));
-        i18n_draw_text_ext(_dx + 28, _dy + 38, _subtitle, 16, _dw - 56);
+        i18n_draw_text(_k.X + 30, _k.Y + 12, _label);
+        draw_set_color(ui_cor("tinta_suave"));
+        i18n_draw_text_ext(_k.X + 30, _k.Y + 38, _subtitle, 16, _k.W - 56);
     }
 }
 
 function demo_draw_route_choice_button(_rota, _label_prefix, _x, _y, _w, _h, _hover, _enabled) {
-    var _alpha = _enabled ? 1 : 0.48;
-    var _draw_rect = demo_hover_grow_rect(_x, _y, _w, _h, _hover && _enabled, 3);
-    var _dx = _draw_rect.X;
-    var _dy = _draw_rect.Y;
-    var _dw = _draw_rect.W;
-    var _dh = _draw_rect.H;
+    var _k = ui_cartao(_x, _y, _w, _h, _hover && _enabled, !_enabled);
+    draw_set_alpha(_enabled ? 1 : 0.6);
+    draw_set_color(_enabled ? ui_cor("vermelho") : ui_cor("tinta_suave"));
+    draw_roundrect_ext(_k.X + 2, _k.Y + 2, _k.X + 14, _k.Y + _k.H - 2, 8, 8, false);
+    draw_rectangle(_k.X + 8, _k.Y + 2, _k.X + 14, _k.Y + _k.H - 2, false);
+    battle_ui_font_title();
+    battle_ui_draw_text_fit(_k.X + 28, _k.Y + 12, _label_prefix + _rota.Nome, _k.W - 44, 0.86, ui_cor("tinta"));
+    battle_ui_font_body();
+    draw_set_color(ui_cor("tinta_suave"));
+    ui_texto_bloco(_k.X + 28, _k.Y + 40, demo_rota_descricao_visual(_rota), 17, _k.W - 44, 2, 0.78);
+    var _tx = _k.X + 28;
+    var _biomas = _rota.Biomas;
 
-    if (_hover && _enabled) {
-        draw_set_alpha(0.24);
-        draw_set_color(make_color_rgb(255, 232, 88));
-        draw_rectangle(_dx - 6, _dy - 6, _dx + _dw + 6, _dy + _dh + 6, false);
-        draw_set_alpha(1);
+    if (dificuldade_param("RotasCegas")) {
+        ui_tag(_tx, _k.Y + _k.H - 50, "???", ui_cor("tinta_suave"), c_white);
+    } else {
+        for (var _b = 0; _b < array_length(_biomas); _b += 1) {
+            var _tipo_bioma = conteudo_tipo_de_texto(_biomas[_b]);
+            var _cor_bioma = _tipo_bioma != CriaturaTipo.NONE ? battle_ui_type_color(_tipo_bioma) : ui_cor("tinta_suave");
+            _tx += ui_tag(_tx, _k.Y + _k.H - 50, string_upper(_biomas[_b]), _cor_bioma, c_white) + 5;
+        }
     }
 
-    draw_set_alpha(_alpha);
-    draw_set_color(_enabled ? make_color_rgb(196, 46, 54) : make_color_rgb(76, 72, 72));
-    draw_rectangle(_dx, _dy, _dx + 12, _dy + _dh, false);
-    draw_set_color((_hover && _enabled) ? make_color_rgb(255, 244, 152) : make_color_rgb(242, 235, 208));
-    draw_rectangle(_dx + 12, _dy, _dx + _dw, _dy + _dh, false);
-    draw_set_color((_hover && _enabled) ? make_color_rgb(220, 184, 42) : make_color_rgb(108, 82, 68));
-    draw_rectangle(_dx + 12, _dy, _dx + _dw, _dy + _dh, true);
-    draw_rectangle(_dx + 15, _dy + 3, _dx + _dw - 3, _dy + _dh - 3, true);
-
-    draw_set_color(make_color_rgb(36, 30, 28));
-    i18n_draw_text(_dx + 28, _dy + 14, _label_prefix + _rota.Nome);
-    draw_set_color(make_color_rgb(72, 60, 54));
-    i18n_draw_text(_dx + 28, _dy + 40, demo_rota_descricao_visual(_rota));
-    i18n_draw_text_ext(_dx + 28, _dy + 64, "Biomas: " + demo_rota_biomas_texto(_rota), 14, _dw - 52);
-    i18n_draw_text(_dx + 28, _dy + _dh - 28, demo_rota_encontros_range_texto(_rota));
+    draw_set_color(ui_cor("tinta_suave"));
+    i18n_draw_text_transformed(_k.X + 28, _k.Y + _k.H - 26, demo_rota_encontros_range_texto(_rota), 0.7, 0.7, 0);
+    battle_ui_font_title();
     draw_set_alpha(1);
 }
 
 function demo_draw_money_badge(_x, _y, _valor) {
-    draw_set_color(make_color_rgb(242, 235, 208));
-    draw_rectangle(_x, _y, _x + 156, _y + 42, false);
-    draw_set_color(make_color_rgb(108, 82, 68));
-    draw_rectangle(_x, _y, _x + 156, _y + 42, true);
-    draw_set_color(make_color_rgb(248, 228, 104));
-    draw_circle(_x + 24, _y + 21, 12, false);
-    draw_set_color(make_color_rgb(88, 64, 34));
-    i18n_draw_text(_x + 15, _y + 13, "M$");
-    draw_set_color(make_color_rgb(36, 30, 28));
-    i18n_draw_text(_x + 48, _y + 13, string(_valor));
+    ui_selo_moedas(_x, _y, _valor);
 }
 
 function ItemData(_id, _nome, _tipo, _valor_efeito, _preco, _descricao) constructor {

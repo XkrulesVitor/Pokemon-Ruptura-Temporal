@@ -76,9 +76,19 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Idiomas (`scripts/scr_idiomas`): PT-BR e EN-US, opcao IDIOMA no menu. Toda chamada de desenho de texto passa por `i18n_*`; dicionario em `datafiles/data/idiomas/en.json` (gerado por `tools/gerar_idiomas.py`). Interface principal traduzida; nomes e descricoes de habilidades/passivas e falas de NPC ainda so em portugues.
   - Build: `gm-cli package` recusa com a licenca de convidado ("Unable to obtain permission to execute"). Para exportar o .exe e preciso entrar com a conta GameMaker (IDE ou `gm-cli login`). O jogo compilado ja roda fora da pasta do projeto (cache do GameMaker) com todos os dados carregando.
   - Pendente: traducao de habilidades/passivas/falas, balanceamento jogando runs completas, exportacao do .exe com a conta do usuario, fontes com licenca livre.
+- [x] **Sprint 9: Auditoria, GDD e interface**
+  - `docs/GDD.md`: visao, loops, todos os sistemas, conteudo em numeros e a lista priorizada do que falta para a 1.0 (secao 9).
+  - Kit de UI (`scripts/scr_ui_kit`): paleta unica, painel de papel, faixa de titulo, cartoes (claro e escuro), etiquetas, selo de moedas, caixa de confirmacao e borda de selecao (brilho dourado pulsante com cantoneiras) em tudo que e clicavel.
+  - Mercado, mochila da cidade e mochila da batalha refeitos em cartoes com categoria, quantidade e descricao curta; o mesmo retangulo serve para desenho e clique (`demo_loja_rect`, `demo_mochila_rect`, `battle_ui_bag_rect`). Dialogos da cidade com titulo e retrato.
+  - Draft de habilidade: nome em destaque, descricao legivel no painel escuro, upgrade sem texto repetido. Slots fechados mostram em que nivel abrem.
+  - Fontes: texto desenhado com escala usa uma fonte gerada no tamanho final (`ui_fonte_escalada`, com cache), entao fica nitido. SDF nao da: exige o pacote `io.gamemaker.sdfshaders`, que a licenca de convidado nao tem.
+  - Confirmacao antes de comecar run nova ou Diario com run salva; botao Menu/Esc na cidade salva e volta ao menu inicial.
+  - Corrigido: patch anterior tinha apagado os marcadores do mapa da cidade; resumo do CONTINUAR dizia "e mais 0".
+  - Autoteste com 58 fotos (inclui draft, mochila da batalha, confirmacao e pausa).
 
 ## 6. Regras para a IA
 * Leia `scr_conteudo`, `scr_criatura_data`, `scr_criatura_progressao` e `scr_demo_playable` antes de grandes refatorações.
+* O que falta para a 1.0 está priorizado em `docs/GDD.md` (seção 9). Telas novas usam o kit de `scr_ui_kit` e uma função de retângulo compartilhada entre Step e Draw.
 * Depois de mudar código, compile (`.codex_tools\gms.cmd compile --target=windows --errors-only PokemonRogueLike.yyp`)
   e rode `tools\autoteste.ps1`; confira o `log.txt` e os screenshots.
 * Novo conteúdo nunca pode copiar nomes, personagens, arte, músicas ou mapas de jogos existentes.
