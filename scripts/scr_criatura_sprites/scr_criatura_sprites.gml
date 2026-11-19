@@ -78,8 +78,8 @@ function project_asset_path(_relative) {
     return "";
 }
 
-function pokemon_sprite_nome_canonico(_pokemon_id) {
-    var _info = criatura_info(_pokemon_id);
+function criatura_sprite_nome_canonico(_criatura_id) {
+    var _info = criatura_info(_criatura_id);
 
     if (is_struct(_info)) {
         return string_lower(string_replace_all(_info.Nome, " ", "_"));
@@ -88,7 +88,7 @@ function pokemon_sprite_nome_canonico(_pokemon_id) {
     return "";
 }
 
-function pokemon_sprite_essentials_folder(_pose) {
+function criatura_sprite_essentials_folder(_pose) {
     // Mantida por compatibilidade: as poses agora usam sufixo no nome do arquivo.
     return _pose == "back" ? "costas" : "frente";
 }
@@ -98,7 +98,7 @@ function pokemon_sprite_essentials_folder(_pose) {
 //   <id>_<pose>.png, <nome>_<pose>.png, <id>.png, <nome>.png
 //   variantes: cromatico/<...>, costas/<...> (pose back)
 // Tambem aceita o campo "sprite" do criaturas.json.
-function pokemon_sprite_path(_pokemon_id, _sufixo) {
+function criatura_sprite_path(_criatura_id, _sufixo) {
     if (argument_count < 2 || is_undefined(_sufixo)) {
         _sufixo = "";
     }
@@ -106,9 +106,9 @@ function pokemon_sprite_path(_pokemon_id, _sufixo) {
     _sufixo = string(_sufixo);
     var _is_shiny = argument_count >= 3 ? argument[2] : false;
     var _pose = _sufixo == "" ? "" : string_delete(_sufixo, 1, 1);
-    var _info = criatura_info(_pokemon_id);
-    var _nomes = [string(_pokemon_id)];
-    var _nome = pokemon_sprite_nome_canonico(_pokemon_id);
+    var _info = criatura_info(_criatura_id);
+    var _nomes = [string(_criatura_id)];
+    var _nome = criatura_sprite_nome_canonico(_criatura_id);
 
     if (_nome != "") {
         array_push(_nomes, _nome);
@@ -148,25 +148,25 @@ function pokemon_sprite_path(_pokemon_id, _sufixo) {
     return "";
 }
 
-function pokemon_sprite_carregar(_pokemon_id, _sprite_antigo) {
+function criatura_sprite_carregar(_criatura_id, _sprite_antigo) {
     if (argument_count < 2) {
         _sprite_antigo = -1;
     }
 
     var _is_shiny = argument_count >= 3 ? argument[2] : false;
-    return pokemon_sprite_carregar_pose(_pokemon_id, "front", _sprite_antigo, _is_shiny);
+    return criatura_sprite_carregar_pose(_criatura_id, "front", _sprite_antigo, _is_shiny);
 }
 
-function pokemon_sprite_carregar_pose(_pokemon_id, _pose, _sprite_antigo) {
+function criatura_sprite_carregar_pose(_criatura_id, _pose, _sprite_antigo) {
     if (argument_count < 3) {
         _sprite_antigo = -1;
     }
 
     var _is_shiny = argument_count >= 4 ? argument[3] : false;
-    var _path = pokemon_sprite_path(_pokemon_id, "_" + _pose, _is_shiny);
+    var _path = criatura_sprite_path(_criatura_id, "_" + _pose, _is_shiny);
 
     if (_path == "" && _pose != "back") {
-        _path = pokemon_sprite_path(_pokemon_id, "", _is_shiny);
+        _path = criatura_sprite_path(_criatura_id, "", _is_shiny);
     }
 
     if (sprite_exists(_sprite_antigo)) {
@@ -181,20 +181,20 @@ function pokemon_sprite_carregar_pose(_pokemon_id, _pose, _sprite_antigo) {
 
     if (!sprite_exists(_sprite)) {
         // Sem arte ainda: desenha um placeholder pelo tipo/estagio da criatura.
-        return placeholder_criatura_sprite(_pokemon_id, _pose == "back" ? "back" : "front", _is_shiny);
+        return placeholder_criatura_sprite(_criatura_id, _pose == "back" ? "back" : "front", _is_shiny);
     }
 
     sprite_set_offset(_sprite, sprite_get_width(_sprite) * 0.5, sprite_get_height(_sprite));
     return _sprite;
 }
 
-function pokemon_sprite_liberar_array(_sprites) {
+function criatura_sprite_liberar_array(_sprites) {
     for (var _i = 0; _i < array_length(_sprites); _i += 1) {
-        pokemon_sprite_liberar(_sprites[_i]);
+        criatura_sprite_liberar(_sprites[_i]);
     }
 }
 
-function pokemon_sprite_liberar(_sprite_dynamic) {
+function criatura_sprite_liberar(_sprite_dynamic) {
     if (sprite_exists(_sprite_dynamic)) {
         sprite_delete(_sprite_dynamic);
     }

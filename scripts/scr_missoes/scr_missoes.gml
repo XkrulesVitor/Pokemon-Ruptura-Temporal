@@ -159,13 +159,13 @@ function missao_toast(_texto) {
     global.missao_toast_atual = { Texto: _texto, Timer: 4.5 };
 }
 
-function missao_tipo_bate(_pokemon, _alvo) {
-    if (!is_struct(_pokemon)) {
+function missao_tipo_bate(_criatura, _alvo) {
+    if (!is_struct(_criatura)) {
         return false;
     }
 
     var _tipo = conteudo_tipo_de_texto(_alvo);
-    return _tipo != PokemonTipo.NONE && (_pokemon.Tipo1 == _tipo || _pokemon.Tipo2 == _tipo);
+    return _tipo != CriaturaTipo.NONE && (_criatura.Tipo1 == _tipo || _criatura.Tipo2 == _tipo);
 }
 
 // Avisa as missoes ativas de algo que aconteceu.

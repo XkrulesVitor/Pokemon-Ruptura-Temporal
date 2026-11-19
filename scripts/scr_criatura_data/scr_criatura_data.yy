@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_pokemon_data",
+  "%Name":"scr_criatura_data",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_pokemon_data",
+  "name":"scr_criatura_data",
   "parent":{
     "name":"PokemonRogueLike",
     "path":"PokemonRogueLike.yyp",

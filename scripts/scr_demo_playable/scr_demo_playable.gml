@@ -54,7 +54,7 @@ function demo_draw_sprite_grounded(_spr, _x, _ground_y, _scale, _face_dir, _blen
     draw_sprite_ext(_spr, 0, _draw_x, _draw_y, _sx, _sy, 0, _blend, _alpha);
 }
 
-function demo_draw_external_pokemon_sprite(_spr, _x, _ground_y, _scale, _face_dir, _blend, _alpha) {
+function demo_draw_external_criatura_sprite(_spr, _x, _ground_y, _scale, _face_dir, _blend, _alpha) {
     demo_draw_sprite_grounded(_spr, _x, _ground_y, _scale, _face_dir, _blend, _alpha);
 }
 
@@ -72,21 +72,21 @@ function demo_intro_id_guardiao(_indice) {
     return 0;
 }
 
-function demo_intro_pokemon_bob(_pokemon_id, _scale) {
-    return sin(current_time * 0.004 + (_pokemon_id * 0.21)) * 4 * _scale;
+function demo_intro_criatura_bob(_criatura_id, _scale) {
+    return sin(current_time * 0.004 + (_criatura_id * 0.21)) * 4 * _scale;
 }
 
-function demo_draw_intro_pokemon(_spr, _pokemon_id, _x, _ground_y, _scale, _face_dir, _blend, _alpha) {
-    var _bob = demo_intro_pokemon_bob(_pokemon_id, _scale);
-    var _breath = 1 + (sin(current_time * 0.005 + (_pokemon_id * 0.13)) * 0.025);
+function demo_draw_intro_criatura(_spr, _criatura_id, _x, _ground_y, _scale, _face_dir, _blend, _alpha) {
+    var _bob = demo_intro_criatura_bob(_criatura_id, _scale);
+    var _breath = 1 + (sin(current_time * 0.005 + (_criatura_id * 0.13)) * 0.025);
     var _draw_y = _ground_y + _bob;
     var _glow = make_color_rgb(180, 220, 255);
 
-    if (_pokemon_id == demo_intro_id_chefe()) {
+    if (_criatura_id == demo_intro_id_chefe()) {
         _glow = make_color_rgb(190, 112, 255);
-    } else if (_pokemon_id == demo_intro_id_guardiao(0)) {
+    } else if (_criatura_id == demo_intro_id_guardiao(0)) {
         _glow = make_color_rgb(255, 142, 226);
-    } else if (_pokemon_id == demo_intro_id_guardiao(1)) {
+    } else if (_criatura_id == demo_intro_id_guardiao(1)) {
         _glow = make_color_rgb(168, 255, 126);
     }
 
@@ -96,19 +96,19 @@ function demo_draw_intro_pokemon(_spr, _pokemon_id, _x, _ground_y, _scale, _face
     draw_set_alpha(1);
 
     if (sprite_exists(_spr)) {
-        draw_set_alpha(_alpha * (0.20 + (sin(current_time * 0.006 + _pokemon_id) * 0.05)));
+        draw_set_alpha(_alpha * (0.20 + (sin(current_time * 0.006 + _criatura_id) * 0.05)));
         draw_set_color(_glow);
         draw_circle(_x, _draw_y - 62 * _scale, 38 * _scale, true);
         draw_set_alpha(1);
 
-        demo_draw_external_pokemon_sprite(_spr, _x - (2 * _face_dir), _draw_y - 1, _scale * _breath * 1.08, _face_dir, c_black, _alpha * 0.22);
-        demo_draw_external_pokemon_sprite(_spr, _x + (2 * _face_dir), _draw_y + 1, _scale * _breath * 1.07, _face_dir, _glow, _alpha * 0.26);
-        demo_draw_external_pokemon_sprite(_spr, _x, _draw_y, _scale * _breath, _face_dir, _blend, _alpha);
+        demo_draw_external_criatura_sprite(_spr, _x - (2 * _face_dir), _draw_y - 1, _scale * _breath * 1.08, _face_dir, c_black, _alpha * 0.22);
+        demo_draw_external_criatura_sprite(_spr, _x + (2 * _face_dir), _draw_y + 1, _scale * _breath * 1.07, _face_dir, _glow, _alpha * 0.26);
+        demo_draw_external_criatura_sprite(_spr, _x, _draw_y, _scale * _breath, _face_dir, _blend, _alpha);
         return;
     }
 
     draw_set_alpha(_alpha);
-    demo_draw_pokemon_sprite(_pokemon_id, _x, _draw_y, _scale * _breath, _face_dir, 0);
+    demo_draw_criatura_sprite(_criatura_id, _x, _draw_y, _scale * _breath, _face_dir, 0);
     draw_set_alpha(1);
 }
 
@@ -335,8 +335,16 @@ function demo_draw_title_button(_rect, _label, _hover) {
 }
 
 function demo_meta_save_path() {
-    // Nome antigo mantido para nao perder o progresso ja salvo.
-    return (autoteste_ativo() ? "autoteste_" : "") + "pokemon_roguelike_meta.ini";
+    var _prefixo = autoteste_ativo() ? "autoteste_" : "";
+    var _novo = _prefixo + "meta_progresso.ini";
+    var _antigo = _prefixo + "pokemon_roguelike_meta.ini";
+
+    // Migra o arquivo de nome antigo uma vez, sem perder o progresso ja salvo.
+    if (!file_exists(_novo) && file_exists(_antigo)) {
+        file_copy(_antigo, _novo);
+    }
+
+    return _novo;
 }
 
 function demo_meta_default() {
@@ -612,7 +620,7 @@ function demo_meta_starter_descricao(_id_upgrade) {
             _texto += (_i == array_length(_ids) - 1) ? " e " : ", ";
         }
 
-        _texto += demo_pokemon_nome(_ids[_i]);
+        _texto += demo_criatura_nome(_ids[_i]);
     }
 
     return _texto + ".";
@@ -626,34 +634,34 @@ function demo_meta_entry_is_starter(_entry) {
     return array_length(demo_meta_starter_entry_ids(_entry.ID)) > 0;
 }
 
-function demo_pokemon_preview_get(_pokemon_id) {
-    if (!variable_global_exists("pokedex") || !is_struct(global.pokedex)) {
+function demo_criatura_preview_get(_criatura_id) {
+    if (!variable_global_exists("bestiario") || !is_struct(global.bestiario)) {
         return undefined;
     }
 
-    return pokemon_db_get(global.pokedex, _pokemon_id);
+    return criatura_db_get(global.bestiario, _criatura_id);
 }
 
-function demo_pokemon_stat_base(_pokemon, _stat) {
-    if (!is_struct(_pokemon)) {
+function demo_criatura_stat_base(_criatura, _stat) {
+    if (!is_struct(_criatura)) {
         return 0;
     }
 
     switch (_stat) {
-        case "hp": return variable_struct_exists(_pokemon, "BaseHpMax") ? _pokemon.BaseHpMax : _pokemon.HpMax;
-        case "atk": return variable_struct_exists(_pokemon, "BaseAttack") ? _pokemon.BaseAttack : _pokemon.Attack;
-        case "def": return variable_struct_exists(_pokemon, "BaseDefense") ? _pokemon.BaseDefense : _pokemon.Defense;
-        case "spd": return variable_struct_exists(_pokemon, "BaseSpeed") ? _pokemon.BaseSpeed : _pokemon.Speed;
+        case "hp": return variable_struct_exists(_criatura, "BaseHpMax") ? _criatura.BaseHpMax : _criatura.HpMax;
+        case "atk": return variable_struct_exists(_criatura, "BaseAttack") ? _criatura.BaseAttack : _criatura.Attack;
+        case "def": return variable_struct_exists(_criatura, "BaseDefense") ? _criatura.BaseDefense : _criatura.Defense;
+        case "spd": return variable_struct_exists(_criatura, "BaseSpeed") ? _criatura.BaseSpeed : _criatura.Speed;
     }
 
     return 0;
 }
 
-function demo_pokemon_focus_label(_pokemon) {
-    var _hp = demo_pokemon_stat_base(_pokemon, "hp");
-    var _atk = demo_pokemon_stat_base(_pokemon, "atk");
-    var _def = demo_pokemon_stat_base(_pokemon, "def");
-    var _spd = demo_pokemon_stat_base(_pokemon, "spd");
+function demo_criatura_focus_label(_criatura) {
+    var _hp = demo_criatura_stat_base(_criatura, "hp");
+    var _atk = demo_criatura_stat_base(_criatura, "atk");
+    var _def = demo_criatura_stat_base(_criatura, "def");
+    var _spd = demo_criatura_stat_base(_criatura, "spd");
     var _max_stat = max(max(_hp, _atk), max(_def, _spd));
     var _min_stat = min(min(_hp, _atk), min(_def, _spd));
 
@@ -667,8 +675,8 @@ function demo_pokemon_focus_label(_pokemon) {
     return "VELOCIDADE";
 }
 
-function demo_pokemon_stat_pct(_pokemon, _stat) {
-    var _value = demo_pokemon_stat_base(_pokemon, _stat);
+function demo_criatura_stat_pct(_criatura, _stat) {
+    var _value = demo_criatura_stat_base(_criatura, _stat);
     var _max_ref = _stat == "hp" ? 125 : 120;
     return clamp(_value / _max_ref, 0.08, 1);
 }
@@ -684,8 +692,8 @@ function demo_draw_stat_bar(_label, _pct, _x, _y, _w, _color_fill) {
     draw_rectangle(_x + 46, _y + 2, _x + 46 + ((_w - 4) * _pct), _y + 8, false);
 }
 
-function demo_draw_pokemon_stat_bars(_pokemon, _x, _y, _w, _compact) {
-    if (!is_struct(_pokemon)) {
+function demo_draw_criatura_stat_bars(_criatura, _x, _y, _w, _compact) {
+    if (!is_struct(_criatura)) {
         return;
     }
 
@@ -704,7 +712,7 @@ function demo_draw_pokemon_stat_bars(_pokemon, _x, _y, _w, _compact) {
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
         draw_set_color(make_color_rgb(36, 30, 28));
-        draw_text_transformed(_x, _y, "Foco: " + demo_pokemon_focus_label(_pokemon), 0.70, 0.70, 0);
+        draw_text_transformed(_x, _y, "Foco: " + demo_criatura_focus_label(_criatura), 0.70, 0.70, 0);
 
         for (var _si = 0; _si < 4; _si += 1) {
             var _yy = _y + 24 + (_si * 14);
@@ -715,7 +723,7 @@ function demo_draw_pokemon_stat_bars(_pokemon, _x, _y, _w, _compact) {
             draw_set_color(make_color_rgb(96, 82, 74));
             draw_rectangle(_bar_x, _yy, _bar_x + _bar_w_compact, _yy + 8, true);
             draw_set_color(_colors[_si]);
-            draw_rectangle(_bar_x + 2, _yy + 2, _bar_x + 2 + ((_bar_w_compact - 4) * demo_pokemon_stat_pct(_pokemon, _stats[_si])), _yy + 6, false);
+            draw_rectangle(_bar_x + 2, _yy + 2, _bar_x + 2 + ((_bar_w_compact - 4) * demo_criatura_stat_pct(_criatura, _stats[_si])), _yy + 6, false);
         }
 
         return;
@@ -727,13 +735,13 @@ function demo_draw_pokemon_stat_bars(_pokemon, _x, _y, _w, _compact) {
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(_x, _y, "Foco: " + demo_pokemon_focus_label(_pokemon));
+    draw_text(_x, _y, "Foco: " + demo_criatura_focus_label(_criatura));
 
     var _bar_y = _y + (_compact ? 17 : 22);
-    demo_draw_stat_bar("HP", demo_pokemon_stat_pct(_pokemon, "hp"), _x, _bar_y, _bar_w, make_color_rgb(104, 210, 96));
-    demo_draw_stat_bar("ATK", demo_pokemon_stat_pct(_pokemon, "atk"), _x, _bar_y + _line_h, _bar_w, make_color_rgb(232, 88, 72));
-    demo_draw_stat_bar("DEF", demo_pokemon_stat_pct(_pokemon, "def"), _x, _bar_y + (_line_h * 2), _bar_w, make_color_rgb(88, 146, 224));
-    demo_draw_stat_bar("VEL", demo_pokemon_stat_pct(_pokemon, "spd"), _x, _bar_y + (_line_h * 3), _bar_w, make_color_rgb(242, 206, 78));
+    demo_draw_stat_bar("HP", demo_criatura_stat_pct(_criatura, "hp"), _x, _bar_y, _bar_w, make_color_rgb(104, 210, 96));
+    demo_draw_stat_bar("ATK", demo_criatura_stat_pct(_criatura, "atk"), _x, _bar_y + _line_h, _bar_w, make_color_rgb(232, 88, 72));
+    demo_draw_stat_bar("DEF", demo_criatura_stat_pct(_criatura, "def"), _x, _bar_y + (_line_h * 2), _bar_w, make_color_rgb(88, 146, 224));
+    demo_draw_stat_bar("VEL", demo_criatura_stat_pct(_criatura, "spd"), _x, _bar_y + (_line_h * 3), _bar_w, make_color_rgb(242, 206, 78));
     draw_set_halign(_old_halign);
 }
 
@@ -924,8 +932,8 @@ function demo_draw_text_fit(_x, _y, _text, _max_w, _scale, _color) {
     draw_text_transformed(_x, _y, demo_string_fit(_text, _max_w, _scale), _scale, _scale, 0);
 }
 
-function demo_pokemon_focus_short(_pokemon) {
-    var _focus = demo_pokemon_focus_label(_pokemon);
+function demo_criatura_focus_short(_criatura) {
+    var _focus = demo_criatura_focus_label(_criatura);
 
     switch (_focus) {
         case "VELOCIDADE": return "VEL";
@@ -938,7 +946,7 @@ function demo_pokemon_focus_short(_pokemon) {
     return _focus;
 }
 
-function demo_draw_pokemon_stat_mini(_pokemon, _x, _y, _w) {
+function demo_draw_criatura_stat_mini(_criatura, _x, _y, _w) {
     var _labels = ["HP", "ATK", "DEF", "VEL"];
     var _stats = ["hp", "atk", "def", "spd"];
     var _colors = [
@@ -961,7 +969,7 @@ function demo_draw_pokemon_stat_mini(_pokemon, _x, _y, _w) {
         draw_set_color(make_color_rgb(82, 70, 62));
         draw_rectangle(_x + _label_w, _yy, _x + _w, _yy + _bar_h, true);
         draw_set_color(_colors[_i]);
-        draw_rectangle(_x + _label_w + 2, _yy + 2, _x + _label_w + 2 + ((_w - _label_w - 4) * demo_pokemon_stat_pct(_pokemon, _stats[_i])), _yy + _bar_h - 2, false);
+        draw_rectangle(_x + _label_w + 2, _yy + 2, _x + _label_w + 2 + ((_w - _label_w - 4) * demo_criatura_stat_pct(_criatura, _stats[_i])), _yy + _bar_h - 2, false);
     }
 }
 
@@ -986,7 +994,7 @@ function demo_draw_meta_starter_preview(_entry, _rect) {
     for (var _i = 0; _i < _count; _i += 1) {
         var _id = _ids[_i];
         var _slot_x = _rect.X + 22 + (_i * (_slot_w + _gap));
-        var _pokemon = demo_pokemon_preview_get(_id);
+        var _criatura = demo_criatura_preview_get(_id);
         var _skills = demo_get_initial_skills(_id);
         var _skill = array_length(_skills) > 0 ? _skills[0] : undefined;
         var _hover = demo_hover_rect(_mx, _my, _slot_x, _slot_y, _slot_w, _slot_h);
@@ -1005,10 +1013,10 @@ function demo_draw_meta_starter_preview(_entry, _rect) {
 
         draw_set_halign(fa_center);
         draw_set_color(make_color_rgb(36, 30, 28));
-        draw_text_transformed(_slot_x + (_slot_w * 0.5), _slot_y + 9, demo_string_fit(demo_pokemon_nome(_id), _slot_w - 20, 0.60), 0.60, 0.60, 0);
+        draw_text_transformed(_slot_x + (_slot_w * 0.5), _slot_y + 9, demo_string_fit(demo_criatura_nome(_id), _slot_w - 20, 0.60), 0.60, 0.60, 0);
         draw_set_halign(fa_left);
 
-        demo_draw_pokemon_sprite(_id, _slot_x + 44, _slot_y + 88, 0.86, 1, 0);
+        demo_draw_criatura_sprite(_id, _slot_x + 44, _slot_y + 88, 0.86, 1, 0);
 
         if (is_struct(_skill)) {
             battle_ui_draw_type_icon(_skill.TipoElementar, _slot_x + 72, _slot_y + 40, 0.40);
@@ -1018,9 +1026,9 @@ function demo_draw_meta_starter_preview(_entry, _rect) {
             demo_draw_text_fit(_slot_x + 72, _slot_y + 63, _skill_info, _slot_w - 82, 0.42, make_color_rgb(86, 68, 58));
         }
 
-        if (is_struct(_pokemon)) {
-            demo_draw_text_fit(_slot_x + 72, _slot_y + 86, "Foco " + demo_pokemon_focus_short(_pokemon), _slot_w - 82, 0.43, make_color_rgb(86, 68, 58));
-            demo_draw_pokemon_stat_mini(_pokemon, _slot_x + 14, _slot_y + 132, _slot_w - 14, 0.55, 15, 8);
+        if (is_struct(_criatura)) {
+            demo_draw_text_fit(_slot_x + 72, _slot_y + 86, "Foco " + demo_criatura_focus_short(_criatura), _slot_w - 82, 0.43, make_color_rgb(86, 68, 58));
+            demo_draw_criatura_stat_mini(_criatura, _slot_x + 14, _slot_y + 132, _slot_w - 14, 0.55, 15, 8);
         }
 
         if (_hover && is_struct(_skill)) {
@@ -1031,7 +1039,7 @@ function demo_draw_meta_starter_preview(_entry, _rect) {
                 SafeY: max(52, _rect.Y + 10),
                 SafeW: min(display_get_gui_width() - 124, max(260, _rect.W - 20)),
                 SafeH: display_get_gui_height() - 104,
-                Pokemon: demo_pokemon_nome(_id),
+                Criatura: demo_criatura_nome(_id),
                 Skill: _skill
             };
         }
@@ -1145,7 +1153,7 @@ function demo_draw_starter_skill_tooltip(_tooltip) {
     var _gw = display_get_gui_width();
     var _gh = display_get_gui_height();
     var _skill = _tooltip.Skill;
-    var _pokemon_name = variable_struct_exists(_tooltip, "Pokemon") ? _tooltip.Pokemon : "Pokemon";
+    var _criatura_name = variable_struct_exists(_tooltip, "Criatura") ? _tooltip.Criatura : "Criatura";
     var _skill_cd = variable_struct_exists(_skill, "TempoRecargaMax") ? _skill.TempoRecargaMax : (variable_struct_exists(_skill, "TempoRecargaBase") ? _skill.TempoRecargaBase : 0);
     var _desc = habilidade_descricao_curta(_skill);
     var _tw = 340;
@@ -1169,7 +1177,7 @@ function demo_draw_starter_skill_tooltip(_tooltip) {
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(36, 30, 28));
     battle_ui_font_title();
-    draw_text(_tx + 16, _ty + 20, _pokemon_name);
+    draw_text(_tx + 16, _ty + 20, _criatura_name);
 
     battle_ui_draw_type_icon(_skill.TipoElementar, _tx + 16, _ty + 52, 0.58);
     battle_ui_font_title();
@@ -1484,7 +1492,7 @@ function demo_draw_menu_titulo(_controller) {
     var _fx_frame = floor(current_time * 0.018);
     var _sprite_flicker = 0.92 + (sin(_time_title * 8.2) * 0.06);
     var _mewtwo_scale = 2.52 + (_impact * 0.12);
-    var _mewtwo_bob = demo_intro_pokemon_bob(demo_intro_id_chefe(), _mewtwo_scale);
+    var _mewtwo_bob = demo_intro_criatura_bob(demo_intro_id_chefe(), _mewtwo_scale);
     var _mewtwo_beam_x = _mewtwo_x + 60;
     var _mewtwo_beam_y = _mewtwo_y - 98 + _mewtwo_bob;
     var _mewtwo_beam2_x = _mewtwo_x + 50;
@@ -1565,9 +1573,9 @@ function demo_draw_menu_titulo(_controller) {
         demo_draw_title_spark_field(_mew_core_x, _mew_core_y, 66, make_color_rgb(255, 128, 226), 0.78 + (_impact * 0.18), 14);
         demo_draw_title_spark_field(_celebi_core_x, _celebi_core_y, 58, make_color_rgb(178, 255, 128), 0.72 + (_impact * 0.16), 14);
 
-        demo_draw_intro_pokemon(_controller.intro_mewtwo_back_sprite, demo_intro_id_chefe(), _mewtwo_x, _mewtwo_y - 2, _mewtwo_scale, -1, c_white, _sprite_flicker);
-        demo_draw_intro_pokemon(_controller.intro_mew_front_sprite, demo_intro_id_guardiao(0), _mew_x, _mew_y, 1.92 + (_impact * 0.09), 1, c_white, _sprite_flicker);
-        demo_draw_intro_pokemon(_controller.intro_celebi_front_sprite, demo_intro_id_guardiao(1), _celebi_x, _celebi_y, 1.84 + (_impact * 0.08), 1, c_white, _sprite_flicker);
+        demo_draw_intro_criatura(_controller.intro_mewtwo_back_sprite, demo_intro_id_chefe(), _mewtwo_x, _mewtwo_y - 2, _mewtwo_scale, -1, c_white, _sprite_flicker);
+        demo_draw_intro_criatura(_controller.intro_mew_front_sprite, demo_intro_id_guardiao(0), _mew_x, _mew_y, 1.92 + (_impact * 0.09), 1, c_white, _sprite_flicker);
+        demo_draw_intro_criatura(_controller.intro_celebi_front_sprite, demo_intro_id_guardiao(1), _celebi_x, _celebi_y, 1.84 + (_impact * 0.08), 1, c_white, _sprite_flicker);
     }
 
     draw_set_alpha(0.30);
@@ -2197,7 +2205,7 @@ function demo_draw_intro_contexto(_controller) {
         if (instance_exists(_controller)) {
             if (_mewtwo_lab_alpha > 0.02) {
                 draw_set_alpha(_mewtwo_lab_alpha);
-                demo_draw_intro_pokemon(_controller.intro_mewtwo_front_sprite, demo_intro_id_chefe(), _capsule_x + (sin(current_time * 0.016) * _escape * 8), _capsule_base_y - 18 + (cos(current_time * 0.020) * _escape * 8), 1.58 + (_escape * 0.20), 1, c_white, _mewtwo_lab_alpha);
+                demo_draw_intro_criatura(_controller.intro_mewtwo_front_sprite, demo_intro_id_chefe(), _capsule_x + (sin(current_time * 0.016) * _escape * 8), _capsule_base_y - 18 + (cos(current_time * 0.020) * _escape * 8), 1.58 + (_escape * 0.20), 1, c_white, _mewtwo_lab_alpha);
                 draw_set_alpha(1);
             }
 
@@ -2284,13 +2292,13 @@ function demo_draw_intro_contexto(_controller) {
         draw_set_alpha(1);
 
         if (_field_actor_alpha > 0) {
-            demo_draw_intro_pokemon(_controller.intro_mewtwo_back_sprite, demo_intro_id_chefe(), _mewtwo_x, _mewtwo_y, 2.48 + (_battle * 0.16), -1, c_white, _field_actor_alpha * (1 - (_title * 0.15)));
+            demo_draw_intro_criatura(_controller.intro_mewtwo_back_sprite, demo_intro_id_chefe(), _mewtwo_x, _mewtwo_y, 2.48 + (_battle * 0.16), -1, c_white, _field_actor_alpha * (1 - (_title * 0.15)));
         }
 
         if (_allies > 0) {
             draw_set_alpha(_allies);
-            demo_draw_intro_pokemon(_controller.intro_mew_front_sprite, demo_intro_id_guardiao(0), _mew_x, _mew_y, 1.78 + (_battle * 0.10), 1, c_white, 1);
-            demo_draw_intro_pokemon(_controller.intro_celebi_front_sprite, demo_intro_id_guardiao(1), _celebi_x, _celebi_y, 1.62 + (_battle * 0.09), 1, c_white, 1);
+            demo_draw_intro_criatura(_controller.intro_mew_front_sprite, demo_intro_id_guardiao(0), _mew_x, _mew_y, 1.78 + (_battle * 0.10), 1, c_white, 1);
+            demo_draw_intro_criatura(_controller.intro_celebi_front_sprite, demo_intro_id_guardiao(1), _celebi_x, _celebi_y, 1.62 + (_battle * 0.09), 1, c_white, 1);
             draw_set_alpha(1);
         }
 
@@ -2298,7 +2306,7 @@ function demo_draw_intro_contexto(_controller) {
             var _beam_alpha = _battle * (0.72 + (_impact * 0.26));
             var _jitter = 2 + (_impact * 7);
             var _mewtwo_battle_scale = 2.48 + (_battle * 0.16);
-            var _mewtwo_battle_bob = demo_intro_pokemon_bob(demo_intro_id_chefe(), _mewtwo_battle_scale);
+            var _mewtwo_battle_bob = demo_intro_criatura_bob(demo_intro_id_chefe(), _mewtwo_battle_scale);
             var _mewtwo_battle_beam_x = _mewtwo_x + 42;
             var _mewtwo_battle_beam_y = _mewtwo_y - 82 + _mewtwo_battle_bob;
             var _mewtwo_battle_beam2_x = _mewtwo_x + 34;
@@ -2495,7 +2503,7 @@ function demo_draw_game_over_pokeball(_controller, _x, _y) {
     draw_set_alpha(1);
 }
 
-function demo_draw_game_over_stat_mini(_pokemon, _x, _y, _w) {
+function demo_draw_game_over_stat_mini(_criatura, _x, _y, _w) {
     var _labels = ["HP", "ATK", "DEF", "VEL"];
     var _stats = ["hp", "atk", "def", "spd"];
     var _colors = [
@@ -2516,7 +2524,7 @@ function demo_draw_game_over_stat_mini(_pokemon, _x, _y, _w) {
         draw_set_color(make_color_rgb(96, 82, 74));
         draw_rectangle(_bar_x, _yy, _bar_x + _bar_w, _yy + 7, true);
         draw_set_color(_colors[_i]);
-        draw_rectangle(_bar_x + 1, _yy + 1, _bar_x + 1 + ((_bar_w - 2) * demo_pokemon_stat_pct(_pokemon, _stats[_i])), _yy + 6, false);
+        draw_rectangle(_bar_x + 1, _yy + 1, _bar_x + 1 + ((_bar_w - 2) * demo_criatura_stat_pct(_criatura, _stats[_i])), _yy + 6, false);
     }
 }
 
@@ -2539,21 +2547,21 @@ function demo_draw_game_over_passive_line(_label, _name, _unlocked, _x, _y, _w) 
     battle_ui_draw_text_fit(_x, _y, _label + ": " + _nome + _suffix, _w, 0.39, _unlocked ? make_color_rgb(36, 30, 28) : make_color_rgb(116, 98, 84));
 }
 
-function demo_draw_game_over_party_card(_pokemon, _x, _y, _w, _h, _slot, _filled_total) {
-    var _has_pokemon = is_struct(_pokemon);
+function demo_draw_game_over_party_card(_criatura, _x, _y, _w, _h, _slot, _filled_total) {
+    var _has_criatura = is_struct(_criatura);
 
-    draw_set_color(_has_pokemon ? make_color_rgb(242, 235, 208) : make_color_rgb(202, 194, 178));
+    draw_set_color(_has_criatura ? make_color_rgb(242, 235, 208) : make_color_rgb(202, 194, 178));
     draw_rectangle(_x, _y, _x + _w, _y + _h, false);
     draw_set_color(make_color_rgb(96, 78, 58));
     draw_rectangle(_x, _y, _x + _w, _y + _h, true);
     draw_rectangle(_x + 4, _y + 4, _x + _w - 4, _y + _h - 4, true);
 
-    draw_set_color(_has_pokemon ? make_color_rgb(132, 24, 36) : make_color_rgb(86, 80, 78));
+    draw_set_color(_has_criatura ? make_color_rgb(132, 24, 36) : make_color_rgb(86, 80, 78));
     draw_rectangle(_x + 8, _y + 8, _x + _w - 8, _y + 36, false);
     draw_set_color(c_white);
     draw_text_transformed(_x + 16, _y + 16, string(_slot + 1) + "/4", 0.46, 0.46, 0);
 
-    if (!_has_pokemon) {
+    if (!_has_criatura) {
         draw_set_color(make_color_rgb(72, 64, 58));
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
@@ -2564,20 +2572,20 @@ function demo_draw_game_over_party_card(_pokemon, _x, _y, _w, _h, _slot, _filled
     }
 
     draw_set_color(make_color_rgb(36, 30, 28));
-    battle_ui_draw_text_fit(_x + 16, _y + 46, _pokemon.Nome, _w - 88, 0.66, make_color_rgb(36, 30, 28));
+    battle_ui_draw_text_fit(_x + 16, _y + 46, _criatura.Nome, _w - 88, 0.66, make_color_rgb(36, 30, 28));
     draw_set_halign(fa_right);
-    draw_text_transformed(_x + _w - 16, _y + 46, "Lv." + string(_pokemon.Level), 0.56, 0.56, 0);
+    draw_text_transformed(_x + _w - 16, _y + 46, "Lv." + string(_criatura.Level), 0.56, 0.56, 0);
     draw_set_halign(fa_left);
 
-    var _raridade = variable_struct_exists(_pokemon, "RaridadeEfetiva") ? _pokemon.RaridadeEfetiva : (variable_struct_exists(_pokemon, "RaridadePadrao") ? _pokemon.RaridadePadrao : PokemonRaridade.COMMON);
-    pokemon_raridade_draw_icon(_raridade, _x + _w - 32, _y + 14, 18);
-    battle_ui_draw_type_icon(_pokemon.Tipo1, _x + 16, _y + 68, 0.43);
+    var _raridade = variable_struct_exists(_criatura, "RaridadeEfetiva") ? _criatura.RaridadeEfetiva : (variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON);
+    criatura_raridade_draw_icon(_raridade, _x + _w - 32, _y + 14, 18);
+    battle_ui_draw_type_icon(_criatura.Tipo1, _x + 16, _y + 68, 0.43);
 
-    if (_pokemon.Tipo2 != PokemonTipo.NONE && _pokemon.Tipo2 != _pokemon.Tipo1) {
-        battle_ui_draw_type_icon(_pokemon.Tipo2, _x + 53, _y + 68, 0.43);
+    if (_criatura.Tipo2 != CriaturaTipo.NONE && _criatura.Tipo2 != _criatura.Tipo1) {
+        battle_ui_draw_type_icon(_criatura.Tipo2, _x + 53, _y + 68, 0.43);
     }
 
-    var _icon = demo_pokemon_icon_get(_pokemon.ID, variable_struct_exists(_pokemon, "IsShiny") && _pokemon.IsShiny);
+    var _icon = demo_criatura_icon_get(_criatura.ID, variable_struct_exists(_criatura, "IsShiny") && _criatura.IsShiny);
     var _sprite_x = _x + 54;
     var _sprite_y = _y + 117;
 
@@ -2589,10 +2597,10 @@ function demo_draw_game_over_party_card(_pokemon, _x, _y, _w, _h, _slot, _filled
     if (sprite_exists(_icon)) {
         draw_sprite_ext(_icon, 0, _sprite_x, _sprite_y, 1.48, 1.48, 0, c_white, 1);
     } else {
-        demo_draw_pokemon_sprite(_pokemon.ID, _sprite_x, _sprite_y + 18, 0.78, 1, 0);
+        demo_draw_criatura_sprite(_criatura.ID, _sprite_x, _sprite_y + 18, 0.78, 1, 0);
     }
 
-    demo_draw_game_over_stat_mini(_pokemon, _x + 112, _y + 92, _w - 130);
+    demo_draw_game_over_stat_mini(_criatura, _x + 112, _y + 92, _w - 130);
 
     var _skills_y = _y + 154;
     draw_set_color(make_color_rgb(184, 166, 132));
@@ -2605,8 +2613,8 @@ function demo_draw_game_over_party_card(_pokemon, _x, _y, _w, _h, _slot, _filled
     for (var _s = 0; _s < 4; _s += 1) {
         var _skill = undefined;
 
-        if (variable_struct_exists(_pokemon, "HabilidadesEquipadas") && is_array(_pokemon.HabilidadesEquipadas) && _s < array_length(_pokemon.HabilidadesEquipadas)) {
-            _skill = _pokemon.HabilidadesEquipadas[_s];
+        if (variable_struct_exists(_criatura, "HabilidadesEquipadas") && is_array(_criatura.HabilidadesEquipadas) && _s < array_length(_criatura.HabilidadesEquipadas)) {
+            _skill = _criatura.HabilidadesEquipadas[_s];
         }
 
         var _skill_col = _s mod 2;
@@ -2620,10 +2628,10 @@ function demo_draw_game_over_party_card(_pokemon, _x, _y, _w, _h, _slot, _filled
     draw_set_color(make_color_rgb(36, 30, 28));
     draw_text_transformed(_x + 16, _passive_y - 2, "Passivas", 0.46, 0.46, 0);
 
-    var _p1_unlocked = variable_struct_exists(_pokemon, "Passiva1Desbloqueada") && _pokemon.Passiva1Desbloqueada;
-    var _p2_unlocked = variable_struct_exists(_pokemon, "Passiva2Desbloqueada") && _pokemon.Passiva2Desbloqueada;
-    var _p1 = variable_struct_exists(_pokemon, "Passiva1Nome") ? _pokemon.Passiva1Nome : "";
-    var _p2 = variable_struct_exists(_pokemon, "Passiva2Nome") ? _pokemon.Passiva2Nome : "";
+    var _p1_unlocked = variable_struct_exists(_criatura, "Passiva1Desbloqueada") && _criatura.Passiva1Desbloqueada;
+    var _p2_unlocked = variable_struct_exists(_criatura, "Passiva2Desbloqueada") && _criatura.Passiva2Desbloqueada;
+    var _p1 = variable_struct_exists(_criatura, "Passiva1Nome") ? _criatura.Passiva1Nome : "";
+    var _p2 = variable_struct_exists(_criatura, "Passiva2Nome") ? _criatura.Passiva2Nome : "";
     demo_draw_game_over_passive_line("P1", _p1, _p1_unlocked, _x + 16, _passive_y + 18, _w - 32);
     demo_draw_game_over_passive_line("P2", _p2, _p2_unlocked, _x + 16, _passive_y + 34, _w - 32);
 }
@@ -2698,13 +2706,13 @@ function demo_draw_game_over(_controller) {
     draw_text_transformed(_cards_x, _cards_y - 30, "Equipe final: " + string(_filled_total) + "/4", 0.74, 0.74, 0);
 
     for (var _i = 0; _i < _slots; _i += 1) {
-        var _pokemon = undefined;
+        var _criatura = undefined;
 
         if (instance_exists(_controller) && is_array(_controller.player_party) && _i < array_length(_controller.player_party)) {
-            _pokemon = _controller.player_party[_i];
+            _criatura = _controller.player_party[_i];
         }
 
-        demo_draw_game_over_party_card(_pokemon, _cards_x + (_i * (_card_w + _gap)), _cards_y, _card_w, _card_h, _i, _filled_total);
+        demo_draw_game_over_party_card(_criatura, _cards_x + (_i * (_card_w + _gap)), _cards_y, _card_w, _card_h, _i, _filled_total);
     }
 
     var _button_rect = demo_game_over_button_rect(_gw, _gh);
@@ -2716,7 +2724,7 @@ function demo_draw_game_over(_controller) {
     draw_set_alpha(1);
 }
 
-function demo_pokemon_curar_ativo(_controller) {
+function demo_criatura_curar_ativo(_controller) {
     if (!instance_exists(_controller)) {
         return false;
     }
@@ -2725,22 +2733,22 @@ function demo_pokemon_curar_ativo(_controller) {
         demo_party_garantir(id);
 
         for (var _p = 0; _p < array_length(player_party); _p += 1) {
-            var _party_pokemon = player_party[_p];
+            var _party_criatura = player_party[_p];
 
-            if (is_struct(_party_pokemon)) {
-                _party_pokemon.HpAtual = _party_pokemon.HpMax;
+            if (is_struct(_party_criatura)) {
+                _party_criatura.HpAtual = _party_criatura.HpMax;
 
-                if (variable_struct_exists(_party_pokemon, "Status")) {
-                    _party_pokemon.Status = "";
+                if (variable_struct_exists(_party_criatura, "Status")) {
+                    _party_criatura.Status = "";
                 }
             }
         }
 
-        if (is_struct(player_pokemon_data)) {
-            player_pokemon_data.HpAtual = player_pokemon_data.HpMax;
+        if (is_struct(player_criatura_data)) {
+            player_criatura_data.HpAtual = player_criatura_data.HpMax;
 
-            if (variable_struct_exists(player_pokemon_data, "Status")) {
-                player_pokemon_data.Status = "";
+            if (variable_struct_exists(player_criatura_data, "Status")) {
+                player_criatura_data.Status = "";
             }
         }
 
@@ -2767,29 +2775,29 @@ function demo_party_curar_pos_batalha(_controller) {
         demo_party_garantir(id);
 
         for (var _p = 0; _p < array_length(player_party); _p += 1) {
-            var _party_pokemon = player_party[_p];
+            var _party_criatura = player_party[_p];
 
-            if (!is_struct(_party_pokemon)) {
+            if (!is_struct(_party_criatura)) {
                 continue;
             }
 
-            if (!variable_struct_exists(_party_pokemon, "HpAtual")) {
-                _party_pokemon.HpAtual = _party_pokemon.HpMax;
+            if (!variable_struct_exists(_party_criatura, "HpAtual")) {
+                _party_criatura.HpAtual = _party_criatura.HpMax;
             }
 
-            if (_party_pokemon.HpAtual <= 0 || _party_pokemon.HpAtual >= _party_pokemon.HpMax) {
+            if (_party_criatura.HpAtual <= 0 || _party_criatura.HpAtual >= _party_criatura.HpMax) {
                 continue;
             }
 
-            var _antes = _party_pokemon.HpAtual;
-            var _cura = max(1, ceil(_party_pokemon.HpMax * 0.125));
-            _party_pokemon.HpAtual = min(_party_pokemon.HpMax, _party_pokemon.HpAtual + _cura);
-            _total_curado += _party_pokemon.HpAtual - _antes;
+            var _antes = _party_criatura.HpAtual;
+            var _cura = max(1, ceil(_party_criatura.HpMax * 0.125));
+            _party_criatura.HpAtual = min(_party_criatura.HpMax, _party_criatura.HpAtual + _cura);
+            _total_curado += _party_criatura.HpAtual - _antes;
         }
 
-        if (is_struct(player_pokemon_data) && variable_struct_exists(player_pokemon_data, "HpAtual")) {
+        if (is_struct(player_criatura_data) && variable_struct_exists(player_criatura_data, "HpAtual")) {
             if (instance_exists(player_inst)) {
-                player_inst.hp_atual = clamp(player_pokemon_data.HpAtual, 1, player_inst.hp_max);
+                player_inst.hp_atual = clamp(player_criatura_data.HpAtual, 1, player_inst.hp_max);
             }
         }
     }
@@ -2835,16 +2843,16 @@ function demo_asset_sprite(_path) {
     return -1;
 }
 
-function demo_pokemon_nome(_id) {
-    if (variable_global_exists("pokedex") && is_struct(global.pokedex)) {
-        var _pokemon = pokemon_db_get(global.pokedex, _id);
+function demo_criatura_nome(_id) {
+    if (variable_global_exists("bestiario") && is_struct(global.bestiario)) {
+        var _criatura = criatura_db_get(global.bestiario, _id);
 
-        if (is_struct(_pokemon) && is_string(_pokemon.Nome)) {
-            return _pokemon.Nome;
+        if (is_struct(_criatura) && is_string(_criatura.Nome)) {
+            return _criatura.Nome;
         }
     }
 
-    var _species = pokemon_species_info_gen5(_id);
+    var _species = criatura_species_info_gen5(_id);
 
     if (is_struct(_species) && is_string(_species.Nome)) {
         return _species.Nome;
@@ -2853,20 +2861,20 @@ function demo_pokemon_nome(_id) {
     return "Monstro #" + string(_id);
 }
 
-function demo_get_initial_skills(_pokemon_id) {
+function demo_get_initial_skills(_criatura_id) {
     var _result = [];
 
-    if (!variable_global_exists("pokedex") || !is_struct(global.pokedex)) {
+    if (!variable_global_exists("bestiario") || !is_struct(global.bestiario)) {
         return _result;
     }
 
-    var _pokemon = pokemon_db_get(global.pokedex, _pokemon_id);
+    var _criatura = criatura_db_get(global.bestiario, _criatura_id);
 
-    if (!is_struct(_pokemon)) {
+    if (!is_struct(_criatura)) {
         return _result;
     }
 
-    var _skills = _pokemon.ListaHabilidadesDisponiveis;
+    var _skills = _criatura.ListaHabilidadesDisponiveis;
 
     for (var _i = 0; _i < array_length(_skills); _i += 1) {
         var _skill = _skills[_i];
@@ -2879,12 +2887,12 @@ function demo_get_initial_skills(_pokemon_id) {
     return _result;
 }
 
-function demo_get_pokemon_sprite(_pokemon_id) {
+function demo_get_criatura_sprite(_criatura_id) {
     if (!variable_global_exists("demo_sprite_cache") || !is_struct(global.demo_sprite_cache)) {
         global.demo_sprite_cache = {};
     }
 
-    var _key = string(_pokemon_id);
+    var _key = string(_criatura_id);
 
     if (variable_struct_exists(global.demo_sprite_cache, _key)) {
         var _cached = variable_struct_get(global.demo_sprite_cache, _key);
@@ -2894,7 +2902,7 @@ function demo_get_pokemon_sprite(_pokemon_id) {
         }
     }
 
-    var _sprite = pokemon_sprite_carregar_pose(_pokemon_id, "idle", -1);
+    var _sprite = criatura_sprite_carregar_pose(_criatura_id, "idle", -1);
     variable_struct_set(global.demo_sprite_cache, _key, _sprite);
     return _sprite;
 }
@@ -2907,15 +2915,15 @@ function demo_liberar_sprite_cache() {
     var _keys = variable_struct_get_names(global.demo_sprite_cache);
 
     for (var _i = 0; _i < array_length(_keys); _i += 1) {
-        pokemon_sprite_liberar(variable_struct_get(global.demo_sprite_cache, _keys[_i]));
+        criatura_sprite_liberar(variable_struct_get(global.demo_sprite_cache, _keys[_i]));
     }
 
     global.demo_sprite_cache = {};
 }
 
-function demo_pokemon_icon_path(_pokemon_id, _is_shiny) {
-    var _nome = pokemon_sprite_nome_canonico(_pokemon_id);
-    var _nomes = [string(_pokemon_id)];
+function demo_criatura_icon_path(_criatura_id, _is_shiny) {
+    var _nome = criatura_sprite_nome_canonico(_criatura_id);
+    var _nomes = [string(_criatura_id)];
 
     if (_nome != "") {
         array_push(_nomes, _nome);
@@ -2936,18 +2944,18 @@ function demo_pokemon_icon_path(_pokemon_id, _is_shiny) {
     return "";
 }
 
-function demo_pokemon_icon_get(_pokemon_id, _is_shiny) {
-    if (!variable_global_exists("demo_pokemon_icon_cache") || !is_struct(global.demo_pokemon_icon_cache)) {
-        global.demo_pokemon_icon_cache = {};
+function demo_criatura_icon_get(_criatura_id, _is_shiny) {
+    if (!variable_global_exists("demo_criatura_icon_cache") || !is_struct(global.demo_criatura_icon_cache)) {
+        global.demo_criatura_icon_cache = {};
     }
 
-    var _key = string(_pokemon_id) + (_is_shiny ? "_shiny" : "_normal");
+    var _key = string(_criatura_id) + (_is_shiny ? "_shiny" : "_normal");
 
-    if (variable_struct_exists(global.demo_pokemon_icon_cache, _key)) {
-        return variable_struct_get(global.demo_pokemon_icon_cache, _key);
+    if (variable_struct_exists(global.demo_criatura_icon_cache, _key)) {
+        return variable_struct_get(global.demo_criatura_icon_cache, _key);
     }
 
-    var _path = demo_pokemon_icon_path(_pokemon_id, _is_shiny);
+    var _path = demo_criatura_icon_path(_criatura_id, _is_shiny);
     var _sprite = -1;
 
     if (_path != "") {
@@ -2959,25 +2967,25 @@ function demo_pokemon_icon_get(_pokemon_id, _is_shiny) {
     }
 
     if (!sprite_exists(_sprite)) {
-        _sprite = placeholder_criatura_sprite(_pokemon_id, "icon", _is_shiny);
+        _sprite = placeholder_criatura_sprite(_criatura_id, "icon", _is_shiny);
     }
 
-    variable_struct_set(global.demo_pokemon_icon_cache, _key, _sprite);
+    variable_struct_set(global.demo_criatura_icon_cache, _key, _sprite);
     return _sprite;
 }
 
-function demo_liberar_pokemon_icon_cache() {
-    if (!variable_global_exists("demo_pokemon_icon_cache") || !is_struct(global.demo_pokemon_icon_cache)) {
+function demo_liberar_criatura_icon_cache() {
+    if (!variable_global_exists("demo_criatura_icon_cache") || !is_struct(global.demo_criatura_icon_cache)) {
         return;
     }
 
-    var _keys = variable_struct_get_names(global.demo_pokemon_icon_cache);
+    var _keys = variable_struct_get_names(global.demo_criatura_icon_cache);
 
     for (var _i = 0; _i < array_length(_keys); _i += 1) {
-        pokemon_sprite_liberar(variable_struct_get(global.demo_pokemon_icon_cache, _keys[_i]));
+        criatura_sprite_liberar(variable_struct_get(global.demo_criatura_icon_cache, _keys[_i]));
     }
 
-    global.demo_pokemon_icon_cache = {};
+    global.demo_criatura_icon_cache = {};
 }
 
 function demo_item_icon_get(_id_item) {
@@ -3059,7 +3067,7 @@ function demo_liberar_item_icon_cache() {
     var _keys = variable_struct_get_names(global.demo_item_icon_cache);
 
     for (var _i = 0; _i < array_length(_keys); _i += 1) {
-        pokemon_sprite_liberar(variable_struct_get(global.demo_item_icon_cache, _keys[_i]));
+        criatura_sprite_liberar(variable_struct_get(global.demo_item_icon_cache, _keys[_i]));
     }
 
     global.demo_item_icon_cache = {};
@@ -3092,7 +3100,7 @@ function demo_liberar_effect_sprite_cache() {
     var _keys = variable_struct_get_names(global.demo_effect_sprite_cache);
 
     for (var _i = 0; _i < array_length(_keys); _i += 1) {
-        pokemon_sprite_liberar(variable_struct_get(global.demo_effect_sprite_cache, _keys[_i]));
+        criatura_sprite_liberar(variable_struct_get(global.demo_effect_sprite_cache, _keys[_i]));
     }
 
     global.demo_effect_sprite_cache = {};
@@ -3105,17 +3113,17 @@ function demo_liberar_effect_sprite_cache() {
     var _status_keys = variable_struct_get_names(global.battle_status_effect_sprite_cache);
 
     for (var _s = 0; _s < array_length(_status_keys); _s += 1) {
-        pokemon_sprite_liberar(variable_struct_get(global.battle_status_effect_sprite_cache, _status_keys[_s]));
+        criatura_sprite_liberar(variable_struct_get(global.battle_status_effect_sprite_cache, _status_keys[_s]));
     }
 
     global.battle_status_effect_sprite_cache = {};
 }
 
-function demo_card_sprite_offset_x(_pokemon_id) {
+function demo_card_sprite_offset_x(_criatura_id) {
     return 0;
 }
 
-function demo_card_sprite_scale(_pokemon_id) {
+function demo_card_sprite_scale(_criatura_id) {
     return 1.58;
 }
 
@@ -3869,7 +3877,7 @@ function demo_city_sprite_get(_controller, _city_index) {
     }
 
     if (!sprite_exists(_sprite)) {
-        _sprite = placeholder_cidade_sprite(_city_index, is_struct(_cidade) ? _cidade.Nome : "", demo_city_markers(_controller), is_struct(_cidade) ? _cidade.Tipo : PokemonTipo.NONE);
+        _sprite = placeholder_cidade_sprite(_city_index, is_struct(_cidade) ? _cidade.Nome : "", demo_city_markers(_controller), is_struct(_cidade) ? _cidade.Tipo : CriaturaTipo.NONE);
     }
 
     _controller.city_sprites[_city_index] = _sprite;
@@ -4049,7 +4057,7 @@ function demo_city_marker_ativar(_controller, _marker) {
                 break;
 
             case "center":
-                demo_pokemon_curar_ativo(id);
+                demo_criatura_curar_ativo(id);
                 message = "Equipe curada.";
                 break;
 
@@ -4063,7 +4071,7 @@ function demo_city_marker_ativar(_controller, _marker) {
                 } else {
                     var _gym_enemy_id = demo_gym_enemy_id(cidade_index);
                     var _escopo_lider = diario_escopo("lider:" + string(cidade_index));
-                    enemy_pokemon_data = demo_criar_pokemon_data(_gym_enemy_id, demo_gym_enemy_level(cidade_index), true, false, true, "ginasio");
+                    enemy_criatura_data = demo_criar_criatura_data(_gym_enemy_id, demo_gym_enemy_level(cidade_index), true, false, true, "ginasio");
                     diario_escopo_fim(_escopo_lider);
                     battle_context = "ginasio";
                     gym_battle_city_index = cidade_index;
@@ -4076,7 +4084,7 @@ function demo_city_marker_ativar(_controller, _marker) {
                 trainer_party = demo_chefe_final_party_criar();
                 diario_escopo_fim(_escopo_chefe);
                 trainer_party_index = 0;
-                enemy_pokemon_data = trainer_party[0];
+                enemy_criatura_data = trainer_party[0];
                 battle_context = "chefe";
                 demo_start_battle(id);
                 break;
@@ -4220,28 +4228,17 @@ function ItemData(_id, _nome, _tipo, _valor_efeito, _preco, _descricao) construc
     Status = argument_count >= 7 ? argument[6] : "";
 }
 
+// Itens vem de datafiles/data/itens.json (o "id" e a chave interna usada no inventario e nos saves).
 function demo_item_db_criar() {
-    return {
-        pokebola: new ItemData("pokebola", "Capsula Simples", "captura", 0.25, 20, "25% de chance base de captura."),
-        great_ball: new ItemData("great_ball", "Capsula Reforcada", "captura", 0.50, 60, "50% de chance base de captura."),
-        ultra_ball: new ItemData("ultra_ball", "Capsula Avancada", "captura", 0.75, 150, "75% de chance base de captura."),
-        master_ball: new ItemData("master_ball", "Capsula Mestra", "captura", 1.00, 0, "Captura garantida. Recompensa rarissima."),
-        potion: new ItemData("potion", "Pocao", "cura", 0.25, 30, "Cura 25% do HP maximo."),
-        super_potion: new ItemData("super_potion", "Pocao Forte", "cura", 0.50, 80, "Cura 50% do HP maximo."),
-        hyper_potion: new ItemData("hyper_potion", "Pocao Maxima", "cura", 0.75, 200, "Cura 75% do HP maximo."),
-        full_restore: new ItemData("full_restore", "Elixir Total", "cura_status", 1.00, 400, "Cura todo HP e remove status."),
-        antidote: new ItemData("antidote", "Antidoto", "status", 0, 15, "Remove Veneno."),
-        burn_heal: new ItemData("burn_heal", "Pomada Fria", "status", 0, 20, "Remove Queimadura."),
-        awakening: new ItemData("awakening", "Sal de Despertar", "status", 0, 20, "Remove Sono."),
-        full_heal: new ItemData("full_heal", "Tonico Puro", "status", 0, 40, "Remove qualquer status."),
-        oran_berry: new ItemData("oran_berry", "Fruta Anil", "berry", 0.25, 50, "Auto: cura 25% abaixo de 30% HP."),
-        cheri_berry: new ItemData("cheri_berry", "Fruta Rubra", "berry", 0, 60, "Auto: cura Paralisia."),
-        leppa_berry: new ItemData("leppa_berry", "Fruta Ambar", "cooldown", 0.50, 120, "Reduz cooldowns em 50% uma vez."),
-        rare_candy: new ItemData("rare_candy", "Cristal de Nivel", "level", 1, 900, "Sobe 1 nivel do monstro ativo."),
-        po_ataque: new ItemData("po_ataque", "Po de Furia", "buff", 0, 140, "Na batalha: o monstro ativo fica com IMPETO OFENSIVO por um tempo.", "ImpetoOfensivo"),
-        po_defesa: new ItemData("po_defesa", "Po de Couraca", "buff", 0, 140, "Na batalha: o monstro ativo fica FORTIFICADO por um tempo.", "Fortificado"),
-        po_velocidade: new ItemData("po_velocidade", "Po de Vento", "buff", 0, 160, "Na batalha: as recargas do monstro ativo correm mais rapido.", "FluxoAcelerado")
-    };
+    var _db = {};
+    var _lista = conteudo_struct_get(conteudo_dados("itens"), "itens", []);
+
+    for (var _i = 0; _i < array_length(_lista); _i += 1) {
+        var _it = _lista[_i];
+        variable_struct_set(_db, _it.id, new ItemData(_it.id, _it.nome, _it.tipo, _it.valor, _it.preco, _it.descricao, conteudo_struct_get(_it, "status", "")));
+    }
+
+    return _db;
 }
 
 function demo_item_get(_id_item) {
@@ -4257,27 +4254,14 @@ function demo_item_get(_id_item) {
 }
 
 function demo_inventario_criar() {
-    return {
-        pokebola: 0,
-        potion: 0,
-        antidote: 0,
-        great_ball: 0,
-        ultra_ball: 0,
-        master_ball: 0,
-        super_potion: 0,
-        hyper_potion: 0,
-        full_restore: 0,
-        burn_heal: 0,
-        awakening: 0,
-        full_heal: 0,
-        oran_berry: 0,
-        cheri_berry: 0,
-        leppa_berry: 0,
-        rare_candy: 0,
-        po_ataque: 0,
-        po_defesa: 0,
-        po_velocidade: 0
-    };
+    var _inv = {};
+    var _lista = conteudo_struct_get(conteudo_dados("itens"), "itens", []);
+
+    for (var _i = 0; _i < array_length(_lista); _i += 1) {
+        variable_struct_set(_inv, _lista[_i].id, 0);
+    }
+
+    return _inv;
 }
 
 function demo_inventario_quantidade(_inventario, _id_item) {
@@ -4299,32 +4283,17 @@ function demo_inventario_adicionar(_inventario, _id_item, _qtd) {
 }
 
 function demo_shop_items_cidade(_cidade_index) {
-    switch (_cidade_index) {
-        case 0:
-        case 1:
-            return ["pokebola", "potion", "antidote"];
-        case 2:
-            return ["pokebola", "great_ball", "potion", "antidote", "burn_heal", "awakening", "po_ataque"];
-        case 3:
-            return ["great_ball", "super_potion", "oran_berry", "full_heal", "po_ataque", "po_defesa"];
-        case 4:
-            return ["ultra_ball", "hyper_potion", "leppa_berry", "full_heal", "po_defesa", "po_velocidade"];
-        case 5:
-        case 6:
-            return ["ultra_ball", "hyper_potion", "full_restore", "leppa_berry", "rare_candy", "po_ataque", "po_velocidade"];
+    var _lojas = conteudo_struct_get(conteudo_dados("itens"), "lojas_por_cidade", []);
+
+    if (array_length(_lojas) <= 0) {
+        return ["pokebola", "potion"];
     }
 
-    return ["pokebola", "potion"];
+    return _lojas[clamp(_cidade_index, 0, array_length(_lojas) - 1)];
 }
 
 function demo_item_ids_mochila() {
-    return [
-        "potion", "super_potion", "hyper_potion", "full_restore",
-        "antidote", "burn_heal", "awakening", "full_heal",
-        "rare_candy", "po_ataque", "po_defesa", "po_velocidade",
-        "oran_berry", "cheri_berry", "leppa_berry",
-        "pokebola", "great_ball", "ultra_ball", "master_ball"
-    ];
+    return conteudo_struct_get(conteudo_dados("itens"), "ordem_mochila", []);
 }
 
 function demo_item_ids_possuidos(_inventario) {
@@ -4374,15 +4343,15 @@ function demo_party_garantir(_controller) {
             player_party = [];
         }
 
-        if (array_length(player_party) <= 0 && is_struct(player_pokemon_data)) {
-            player_party = [player_pokemon_data];
+        if (array_length(player_party) <= 0 && is_struct(player_criatura_data)) {
+            player_party = [player_criatura_data];
             player_party_active_index = 0;
         }
     }
 }
 
-function demo_party_adicionar(_controller, _pokemon) {
-    if (!instance_exists(_controller) || !is_struct(_pokemon)) {
+function demo_party_adicionar(_controller, _criatura) {
+    if (!instance_exists(_controller) || !is_struct(_criatura)) {
         return false;
     }
 
@@ -4394,27 +4363,27 @@ function demo_party_adicionar(_controller, _pokemon) {
     }
 
     var _party = _controller.player_party;
-    _pokemon.FoiCapturado = true;
-    _pokemon.Capturado = true;
-    array_push(_party, _pokemon);
+    _criatura.FoiCapturado = true;
+    _criatura.Capturado = true;
+    array_push(_party, _criatura);
     _controller.player_party = _party;
-    pokedex_capturar(_pokemon.ID);
-    _controller.message = _pokemon.Nome + " entrou para sua equipe!";
+    bestiario_capturar(_criatura.ID);
+    _controller.message = _criatura.Nome + " entrou para sua equipe!";
     return true;
 }
 
-function demo_capture_replace_abrir(_controller, _pokemon) {
-    if (!instance_exists(_controller) || !is_struct(_pokemon)) {
+function demo_capture_replace_abrir(_controller, _criatura) {
+    if (!instance_exists(_controller) || !is_struct(_criatura)) {
         return false;
     }
 
     demo_party_garantir(_controller);
-    _pokemon.FoiCapturado = true;
-    _pokemon.Capturado = true;
+    _criatura.FoiCapturado = true;
+    _criatura.Capturado = true;
     _controller.capture_replace_open = true;
-    _controller.capture_replace_pokemon = _pokemon;
-    _controller.message = "Equipe cheia. Escolha quem sera substituido por " + _pokemon.Nome + ".";
-    pokedex_capturar(_pokemon.ID);
+    _controller.capture_replace_criatura = _criatura;
+    _controller.message = "Equipe cheia. Escolha quem sera substituido por " + _criatura.Nome + ".";
+    bestiario_capturar(_criatura.ID);
     return true;
 }
 
@@ -4425,7 +4394,7 @@ function demo_capture_replace_confirmar(_controller, _party_index) {
 
     demo_party_garantir(_controller);
 
-    if (!variable_instance_exists(_controller, "capture_replace_open") || !_controller.capture_replace_open || !is_struct(_controller.capture_replace_pokemon)) {
+    if (!variable_instance_exists(_controller, "capture_replace_open") || !_controller.capture_replace_open || !is_struct(_controller.capture_replace_criatura)) {
         return false;
     }
 
@@ -4433,23 +4402,23 @@ function demo_capture_replace_confirmar(_controller, _party_index) {
         return false;
     }
 
-    var _novo = _controller.capture_replace_pokemon;
+    var _novo = _controller.capture_replace_criatura;
     var _antigo = _controller.player_party[_party_index];
     var _party = _controller.player_party;
     _party[_party_index] = _novo;
     _controller.player_party = _party;
 
     if (_controller.player_party_active_index == _party_index) {
-        _controller.player_pokemon_data = _novo;
+        _controller.player_criatura_data = _novo;
 
         if (instance_exists(_controller.player_inst)) {
-            pokemon_batalha_injetar(_controller.player_inst, _novo);
-            pokemon_batalha_definir_lado(_controller.player_inst, LadoBatalha.ALIADO);
+            criatura_batalha_injetar(_controller.player_inst, _novo);
+            criatura_batalha_definir_lado(_controller.player_inst, LadoBatalha.ALIADO);
         }
     }
 
     _controller.capture_replace_open = false;
-    _controller.capture_replace_pokemon = undefined;
+    _controller.capture_replace_criatura = undefined;
     _controller.message = _novo.Nome + " entrou no lugar de " + (is_struct(_antigo) ? _antigo.Nome : "um monstro") + ".";
 
     if (is_struct(_controller.battle_result_info)) {
@@ -4542,8 +4511,8 @@ function demo_capture_replace_draw_skill(_skill, _x, _y, _w, _mx, _my) {
     return undefined;
 }
 
-function demo_draw_capture_replace_card(_pokemon, _rect, _label, _clickable, _mx, _my) {
-    if (!is_struct(_pokemon)) {
+function demo_draw_capture_replace_card(_criatura, _rect, _label, _clickable, _mx, _my) {
+    if (!is_struct(_criatura)) {
         return undefined;
     }
 
@@ -4569,21 +4538,21 @@ function demo_draw_capture_replace_card(_pokemon, _rect, _label, _clickable, _mx
     draw_text_transformed(_rect.X + 18, _rect.Y + 18, _label, 0.52, 0.52, 0);
 
     draw_set_color(make_color_rgb(36, 30, 28));
-    battle_ui_draw_text_fit(_rect.X + 16, _rect.Y + 54, _pokemon.Nome, _rect.W - 80, 0.62, make_color_rgb(36, 30, 28));
+    battle_ui_draw_text_fit(_rect.X + 16, _rect.Y + 54, _criatura.Nome, _rect.W - 80, 0.62, make_color_rgb(36, 30, 28));
     draw_set_halign(fa_right);
-    draw_text_transformed(_rect.X + _rect.W - 18, _rect.Y + 54, "Lv." + string(_pokemon.Level), 0.52, 0.52, 0);
+    draw_text_transformed(_rect.X + _rect.W - 18, _rect.Y + 54, "Lv." + string(_criatura.Level), 0.52, 0.52, 0);
     draw_set_halign(fa_left);
 
-    var _raridade = variable_struct_exists(_pokemon, "RaridadeEfetiva") ? _pokemon.RaridadeEfetiva : (variable_struct_exists(_pokemon, "RaridadePadrao") ? _pokemon.RaridadePadrao : PokemonRaridade.COMMON);
-    pokemon_raridade_draw_icon(_raridade, _rect.X + _rect.W - 34, _rect.Y + 16, 18);
-    battle_ui_draw_type_icon(_pokemon.Tipo1, _rect.X + 16, _rect.Y + 78, 0.48);
+    var _raridade = variable_struct_exists(_criatura, "RaridadeEfetiva") ? _criatura.RaridadeEfetiva : (variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON);
+    criatura_raridade_draw_icon(_raridade, _rect.X + _rect.W - 34, _rect.Y + 16, 18);
+    battle_ui_draw_type_icon(_criatura.Tipo1, _rect.X + 16, _rect.Y + 78, 0.48);
 
-    if (_pokemon.Tipo2 != PokemonTipo.NONE && _pokemon.Tipo2 != _pokemon.Tipo1) {
-        battle_ui_draw_type_icon(_pokemon.Tipo2, _rect.X + 54, _rect.Y + 78, 0.48);
+    if (_criatura.Tipo2 != CriaturaTipo.NONE && _criatura.Tipo2 != _criatura.Tipo1) {
+        battle_ui_draw_type_icon(_criatura.Tipo2, _rect.X + 54, _rect.Y + 78, 0.48);
     }
 
-    var _is_shiny = variable_struct_exists(_pokemon, "IsShiny") && _pokemon.IsShiny;
-    var _icon = demo_pokemon_icon_get(_pokemon.ID, _is_shiny);
+    var _is_shiny = variable_struct_exists(_criatura, "IsShiny") && _criatura.IsShiny;
+    var _icon = demo_criatura_icon_get(_criatura.ID, _is_shiny);
     var _sprite_y = _rect.Y + 134;
 
     draw_set_color(make_color_rgb(168, 220, 188));
@@ -4594,10 +4563,10 @@ function demo_draw_capture_replace_card(_pokemon, _rect, _label, _clickable, _mx
     if (sprite_exists(_icon)) {
         draw_sprite_ext(_icon, 0, _rect.X + (_rect.W * 0.5), _sprite_y, 1.65, 1.65, 0, c_white, 1);
     } else {
-        demo_draw_pokemon_sprite(_pokemon.ID, _rect.X + (_rect.W * 0.5), _sprite_y + 22, 0.9, 1, 0);
+        demo_draw_criatura_sprite(_criatura.ID, _rect.X + (_rect.W * 0.5), _sprite_y + 22, 0.9, 1, 0);
     }
 
-    demo_draw_pokemon_stat_bars(_pokemon, _rect.X + 16, _rect.Y + 176, _rect.W - 32, true);
+    demo_draw_criatura_stat_bars(_criatura, _rect.X + 16, _rect.Y + 176, _rect.W - 32, true);
 
     var _skills_y = _rect.Y + 274;
     draw_set_color(make_color_rgb(204, 188, 158));
@@ -4606,7 +4575,7 @@ function demo_draw_capture_replace_card(_pokemon, _rect, _label, _clickable, _mx
     draw_text_transformed(_rect.X + 16, _skills_y - 2, "Habilidades", 0.48, 0.48, 0);
 
     for (var _s = 0; _s < 4; _s += 1) {
-        var _skill = _pokemon.HabilidadesEquipadas[_s];
+        var _skill = _criatura.HabilidadesEquipadas[_s];
         var _skill_tooltip = demo_capture_replace_draw_skill(_skill, _rect.X + 16, _skills_y + 24 + (_s * 31), _rect.W - 32, _mx, _my);
 
         if (is_struct(_skill_tooltip)) {
@@ -4625,7 +4594,7 @@ function demo_draw_capture_replace_card(_pokemon, _rect, _label, _clickable, _mx
 }
 
 function demo_draw_capture_replace_overlay(_controller) {
-    if (!instance_exists(_controller) || !variable_instance_exists(_controller, "capture_replace_open") || !_controller.capture_replace_open || !is_struct(_controller.capture_replace_pokemon)) {
+    if (!instance_exists(_controller) || !variable_instance_exists(_controller, "capture_replace_open") || !_controller.capture_replace_open || !is_struct(_controller.capture_replace_criatura)) {
         return;
     }
 
@@ -4647,16 +4616,16 @@ function demo_draw_capture_replace_overlay(_controller) {
     draw_set_color(make_color_rgb(36, 30, 28));
     draw_text(_panel_x + 28, _panel_y + 20, "EQUIPE CHEIA");
     battle_ui_font_body();
-    draw_text_ext(_panel_x + 28, _panel_y + 52, "Escolha um monstro da equipe para dar lugar a " + _controller.capture_replace_pokemon.Nome + ".", 24, _panel_w - 56);
+    draw_text_ext(_panel_x + 28, _panel_y + 52, "Escolha um monstro da equipe para dar lugar a " + _controller.capture_replace_criatura.Nome + ".", 24, _panel_w - 56);
     battle_ui_font_title();
 
     var _tooltip = undefined;
     demo_party_garantir(_controller);
 
     for (var _i = 0; _i < 4; _i += 1) {
-        var _party_pokemon = _i < array_length(_controller.player_party) ? _controller.player_party[_i] : undefined;
+        var _party_criatura = _i < array_length(_controller.player_party) ? _controller.player_party[_i] : undefined;
         var _rect = demo_capture_replace_card_rect(_controller, _i);
-        var _card_tooltip = demo_draw_capture_replace_card(_party_pokemon, _rect, _i == _controller.player_party_active_index ? "ATIVO" : "TIME", true, _mx, _my);
+        var _card_tooltip = demo_draw_capture_replace_card(_party_criatura, _rect, _i == _controller.player_party_active_index ? "ATIVO" : "TIME", true, _mx, _my);
 
         if (is_struct(_card_tooltip)) {
             _tooltip = _card_tooltip;
@@ -4664,7 +4633,7 @@ function demo_draw_capture_replace_overlay(_controller) {
     }
 
     var _new_rect = demo_capture_replace_card_rect(_controller, 4);
-    var _new_tooltip = demo_draw_capture_replace_card(_controller.capture_replace_pokemon, _new_rect, "NOVO", false, _mx, _my);
+    var _new_tooltip = demo_draw_capture_replace_card(_controller.capture_replace_criatura, _new_rect, "NOVO", false, _mx, _my);
 
     if (is_struct(_new_tooltip)) {
         _tooltip = _new_tooltip;
@@ -4695,27 +4664,27 @@ function demo_party_trocar_ativo(_controller, _party_index) {
         return false;
     }
 
-    if (instance_exists(_controller.player_inst) && is_struct(_controller.player_pokemon_data)) {
-        _controller.player_pokemon_data.HpAtual = max(0, _controller.player_inst.hp_atual);
+    if (instance_exists(_controller.player_inst) && is_struct(_controller.player_criatura_data)) {
+        _controller.player_criatura_data.HpAtual = max(0, _controller.player_inst.hp_atual);
     }
 
     _controller.player_party_active_index = _party_index;
-    _controller.player_pokemon_data = _novo;
-    demo_battle_marcar_participante(_controller, _controller.player_pokemon_data);
+    _controller.player_criatura_data = _novo;
+    demo_battle_marcar_participante(_controller, _controller.player_criatura_data);
 
     if (instance_exists(_controller.player_inst)) {
         _controller.player_inst.vivo = true;
         _controller.player_inst.batalha_ativo = true;
-        pokemon_batalha_injetar(_controller.player_inst, _controller.player_pokemon_data);
-        pokemon_batalha_definir_lado(_controller.player_inst, LadoBatalha.ALIADO);
+        criatura_batalha_injetar(_controller.player_inst, _controller.player_criatura_data);
+        criatura_batalha_definir_lado(_controller.player_inst, LadoBatalha.ALIADO);
     }
 
-    battle_log_force("Vai, " + string_upper(_controller.player_pokemon_data.Nome) + "!");
+    battle_log_force("Vai, " + string_upper(_controller.player_criatura_data.Nome) + "!");
     return true;
 }
 
-function demo_battle_marcar_participante(_controller, _pokemon) {
-    if (!instance_exists(_controller) || !is_struct(_pokemon)) {
+function demo_battle_marcar_participante(_controller, _criatura) {
+    if (!instance_exists(_controller) || !is_struct(_criatura)) {
         return;
     }
 
@@ -4724,13 +4693,13 @@ function demo_battle_marcar_participante(_controller, _pokemon) {
     }
 
     for (var _i = 0; _i < array_length(_controller.battle_participants); _i += 1) {
-        if (_controller.battle_participants[_i] == _pokemon) {
+        if (_controller.battle_participants[_i] == _criatura) {
             return;
         }
     }
 
     var _participants = _controller.battle_participants;
-    array_push(_participants, _pokemon);
+    array_push(_participants, _criatura);
     _controller.battle_participants = _participants;
 }
 
@@ -4743,16 +4712,16 @@ function demo_exp_compartilhar(_controller, _base_xp) {
     var _ganhos = [];
 
     for (var _i = 0; _i < array_length(_controller.player_party); _i += 1) {
-        var _pokemon = _controller.player_party[_i];
+        var _criatura = _controller.player_party[_i];
 
-        if (!is_struct(_pokemon)) {
+        if (!is_struct(_criatura)) {
             continue;
         }
 
         var _participou = false;
 
         for (var _p = 0; _p < array_length(_controller.battle_participants); _p += 1) {
-            if (_controller.battle_participants[_p] == _pokemon) {
+            if (_controller.battle_participants[_p] == _criatura) {
                 _participou = true;
                 break;
             }
@@ -4764,15 +4733,15 @@ function demo_exp_compartilhar(_controller, _base_xp) {
             continue;
         }
 
-        var _level_antes = _pokemon.Level;
-        var _resultado = pokemon_ganhar_exp(_pokemon, _xp);
+        var _level_antes = _criatura.Level;
+        var _resultado = criatura_ganhar_exp(_criatura, _xp);
 
         array_push(_ganhos, {
-            Pokemon: _pokemon,
+            Criatura: _criatura,
             XP: _xp,
             Participou: _participou,
             LevelAntes: _level_antes,
-            LevelDepois: is_struct(_resultado) ? _resultado.LevelFinal : _pokemon.Level,
+            LevelDepois: is_struct(_resultado) ? _resultado.LevelFinal : _criatura.Level,
             Evolucoes: (is_struct(_resultado) && variable_struct_exists(_resultado, "Evolucoes") && is_array(_resultado.Evolucoes)) ? _resultado.Evolucoes : []
         });
     }
@@ -4792,7 +4761,7 @@ function demo_exp_ganhos_mesclar(_base, _novos) {
     for (var _i = 0; _i < array_length(_novos); _i += 1) {
         var _novo = _novos[_i];
 
-        if (!is_struct(_novo) || !is_struct(_novo.Pokemon)) {
+        if (!is_struct(_novo) || !is_struct(_novo.Criatura)) {
             continue;
         }
 
@@ -4801,7 +4770,7 @@ function demo_exp_ganhos_mesclar(_base, _novos) {
         for (var _b = 0; _b < array_length(_base); _b += 1) {
             var _existente = _base[_b];
 
-            if (is_struct(_existente) && _existente.Pokemon == _novo.Pokemon) {
+            if (is_struct(_existente) && _existente.Criatura == _novo.Criatura) {
                 _existente.XP += _novo.XP;
                 _existente.Participou = _existente.Participou || _novo.Participou;
                 _existente.LevelDepois = _novo.LevelDepois;
@@ -4877,8 +4846,8 @@ function demo_run_resetar(_controller, _estado_destino) {
         demo_cleanup_battle(id);
 
         starter_id = -1;
-        player_pokemon_data = undefined;
-        enemy_pokemon_data = undefined;
+        player_criatura_data = undefined;
+        enemy_criatura_data = undefined;
         player_party = [];
         player_party_active_index = 0;
         player_inst = noone;
@@ -4923,7 +4892,7 @@ function demo_run_resetar(_controller, _estado_destino) {
         capture_pending_item = "";
         capture_pending_success = false;
         capture_replace_open = false;
-        capture_replace_pokemon = undefined;
+        capture_replace_criatura = undefined;
         battle_participants = [];
         battle_result_info = undefined;
         battle_reward_xp_base_total = 0;
@@ -4942,7 +4911,7 @@ function demo_run_resetar(_controller, _estado_destino) {
 
         if (variable_global_exists("mochila_overlay_aberta")) global.mochila_overlay_aberta = false;
         if (variable_global_exists("troca_overlay_aberta")) global.troca_overlay_aberta = false;
-        if (variable_global_exists("pokedex_overlay_aberto")) global.pokedex_overlay_aberto = false;
+        if (variable_global_exists("bestiario_overlay_aberto")) global.bestiario_overlay_aberto = false;
         if (variable_global_exists("time_scale")) global.time_scale = 1.0;
         if (variable_global_exists("velocidade_jogo")) global.velocidade_jogo = 1.0;
         if (variable_global_exists("draft_habilidade_atual")) global.draft_habilidade_atual = undefined;
@@ -4976,9 +4945,9 @@ function demo_capture_chance(_controller, _item, _enemy) {
     var _status = 0;
 
     if (instance_exists(_controller.enemy_inst)) {
-        if (pokemon_combate_status_algum(_controller.enemy_inst, ["Paralisado", "Congelando", "Gelado", "ParalisiaMental", "SedaPresa", "Enraizado", "AreiaMovedica"])) {
+        if (criatura_combate_status_algum(_controller.enemy_inst, ["Paralisado", "Congelando", "Gelado", "ParalisiaMental", "SedaPresa", "Enraizado", "AreiaMovedica"])) {
             _status = 0.15;
-        } else if (pokemon_combate_status_algum(_controller.enemy_inst, ["Envenenado", "Queimando", "Corroendo", "Infestado", "Maldito", "Amedrontado"])) {
+        } else if (criatura_combate_status_algum(_controller.enemy_inst, ["Envenenado", "Queimando", "Corroendo", "Infestado", "Maldito", "Amedrontado"])) {
             _status = 0.08;
         }
     }
@@ -5019,7 +4988,7 @@ function demo_capture_iniciar(_controller, _id_item) {
         return false;
     }
 
-    if (!is_struct(_controller.enemy_pokemon_data) || !instance_exists(_controller.enemy_inst) || !_controller.enemy_inst.vivo) {
+    if (!is_struct(_controller.enemy_criatura_data) || !instance_exists(_controller.enemy_inst) || !_controller.enemy_inst.vivo) {
         return false;
     }
 
@@ -5032,14 +5001,14 @@ function demo_capture_iniciar(_controller, _id_item) {
     }
 
     demo_inventario_adicionar(_controller.inventario, _id_item, -1);
-    var _chance = demo_capture_chance(_controller, _item, _controller.enemy_pokemon_data);
+    var _chance = demo_capture_chance(_controller, _item, _controller.enemy_criatura_data);
     var _success = random(1) < _chance;
     _controller.capture_anim = demo_capture_anim_criar(_id_item, _success);
     _controller.capture_pending_item = _id_item;
     _controller.capture_pending_success = _success;
     _controller.estado_demo = DemoEstado.CAPTURA;
     global.mochila_overlay_aberta = false;
-    global.pokedex_overlay_aberto = false;
+    global.bestiario_overlay_aberto = false;
     global.troca_overlay_aberta = false;
     global.time_scale = 0;
     global.velocidade_jogo = 0;
@@ -5070,23 +5039,23 @@ function demo_item_usar(_controller, _id_item, _em_batalha) {
         }
 
         if (_item.Tipo == "level") {
-            if (!is_struct(player_pokemon_data)) {
+            if (!is_struct(player_criatura_data)) {
                 message = "Nenhum monstro ativo para receber o Cristal de Nivel.";
                 exit;
             }
 
-            if (player_pokemon_data.Level >= 30) {
-                message = player_pokemon_data.Nome + " ja esta no nivel maximo.";
+            if (player_criatura_data.Level >= 30) {
+                message = player_criatura_data.Nome + " ja esta no nivel maximo.";
                 exit;
             }
 
-            var _level_antes_candy = player_pokemon_data.Level;
-            var _xp_para_subir = max(1, player_pokemon_data.ExpNecessaria - player_pokemon_data.ExpAtual);
-            var _resultado_candy = pokemon_ganhar_exp(player_pokemon_data, _xp_para_subir);
+            var _level_antes_candy = player_criatura_data.Level;
+            var _xp_para_subir = max(1, player_criatura_data.ExpNecessaria - player_criatura_data.ExpAtual);
+            var _resultado_candy = criatura_ganhar_exp(player_criatura_data, _xp_para_subir);
 
             if (is_struct(_resultado_candy) && _resultado_candy.LevelFinal > _level_antes_candy) {
                 demo_inventario_adicionar(inventario, _id_item, -1);
-                message = player_pokemon_data.Nome + " subiu para o Lv." + string(player_pokemon_data.Level) + "!";
+                message = player_criatura_data.Nome + " subiu para o Lv." + string(player_criatura_data.Level) + "!";
             } else {
                 message = "O Cristal de Nivel nao teve efeito.";
             }
@@ -5102,17 +5071,17 @@ function demo_item_usar(_controller, _id_item, _em_batalha) {
             _ally.hp_atual = min(_ally.hp_max, _ally.hp_atual + ceil(_ally.hp_max * _item.ValorEfeito));
             _curou = _ally.hp_atual > _antes;
 
-            if (is_struct(player_pokemon_data)) {
-                player_pokemon_data.HpAtual = _ally.hp_atual;
+            if (is_struct(player_criatura_data)) {
+                player_criatura_data.HpAtual = _ally.hp_atual;
             }
-        } else if (!_em_batalha && is_struct(player_pokemon_data) && (_item.Tipo == "cura" || _item.Tipo == "cura_status")) {
-            if (!variable_struct_exists(player_pokemon_data, "HpAtual")) {
-                player_pokemon_data.HpAtual = player_pokemon_data.HpMax;
+        } else if (!_em_batalha && is_struct(player_criatura_data) && (_item.Tipo == "cura" || _item.Tipo == "cura_status")) {
+            if (!variable_struct_exists(player_criatura_data, "HpAtual")) {
+                player_criatura_data.HpAtual = player_criatura_data.HpMax;
             }
 
-            var _antes_data = player_pokemon_data.HpAtual;
-            player_pokemon_data.HpAtual = min(player_pokemon_data.HpMax, player_pokemon_data.HpAtual + ceil(player_pokemon_data.HpMax * _item.ValorEfeito));
-            _curou = player_pokemon_data.HpAtual > _antes_data;
+            var _antes_data = player_criatura_data.HpAtual;
+            player_criatura_data.HpAtual = min(player_criatura_data.HpMax, player_criatura_data.HpAtual + ceil(player_criatura_data.HpMax * _item.ValorEfeito));
+            _curou = player_criatura_data.HpAtual > _antes_data;
         }
 
         if (_item.Tipo == "cooldown" && instance_exists(_ally)) {
@@ -5128,8 +5097,8 @@ function demo_item_usar(_controller, _id_item, _em_batalha) {
         }
 
         if (_item.Tipo == "buff" && instance_exists(_ally)) {
-            pokemon_status_aplicar(_ally, _item.Status, pokemon_combate_status_duracao_padrao(_item.Status) * 3);
-            battle_log_push(string_upper(_ally.pokemon_nome) + " ficou " + string_upper(_item.Status) + "!");
+            criatura_status_aplicar(_ally, _item.Status, criatura_combate_status_duracao_padrao(_item.Status) * 3);
+            battle_log_push(string_upper(_ally.criatura_nome) + " ficou " + string_upper(_item.Status) + "!");
             _curou = true;
         }
 
@@ -5142,7 +5111,7 @@ function demo_item_usar(_controller, _id_item, _em_batalha) {
         }
 
         if (!_curou && (_item.Tipo == "cura" || _item.Tipo == "cura_status")) {
-            message = player_pokemon_data.Nome + " ja esta com HP cheio.";
+            message = player_criatura_data.Nome + " ja esta com HP cheio.";
             exit;
         }
 
@@ -5203,7 +5172,7 @@ function demo_kanto_cidades_criar() {
     }
 
     if (array_length(_cidades) <= 0) {
-        array_push(_cidades, { Nome: "Vila Alvorada", Lider: "", Especialidade: "", Tipo: PokemonTipo.NONE, Evento: "Casa da Mae", LiderCriaturaID: 0, LiderNivel: 0, SpriteLider: "", SpriteCidade: "" });
+        array_push(_cidades, { Nome: "Vila Alvorada", Lider: "", Especialidade: "", Tipo: CriaturaTipo.NONE, Evento: "Casa da Mae", LiderCriaturaID: 0, LiderNivel: 0, SpriteLider: "", SpriteCidade: "" });
     }
 
     return _cidades;
@@ -5211,7 +5180,7 @@ function demo_kanto_cidades_criar() {
 
 function demo_cidade_atual() {
     if (!variable_instance_exists(id, "kanto_cidades") || !is_array(kanto_cidades)) {
-        return { Nome: "Vila Alvorada", Lider: "", Especialidade: "", Tipo: PokemonTipo.NONE, Evento: "Casa da Mae" };
+        return { Nome: "Vila Alvorada", Lider: "", Especialidade: "", Tipo: CriaturaTipo.NONE, Evento: "Casa da Mae" };
     }
 
     return kanto_cidades[clamp(cidade_index, 0, array_length(kanto_cidades) - 1)];
@@ -5254,76 +5223,26 @@ function DemoRotaData(_id, _nome, _descricao, _biomas, _min_encontros, _max_enco
     MaxTreinador = _max_treinador;
 }
 
+// Rotas vem de datafiles/data/rotas.json.
+function demo_rota_lista_criar(_chave) {
+    var _lista = conteudo_struct_get(conteudo_dados("rotas"), _chave, []);
+    var _rotas = [];
+
+    for (var _i = 0; _i < array_length(_lista); _i += 1) {
+        var _r = _lista[_i];
+        array_push(_rotas, new DemoRotaData(_r.id, _r.nome, _r.descricao, _r.biomas, _r.min_encontros, _r.max_encontros, 0, 0, 0, 0));
+    }
+
+    return _rotas;
+}
+
 function demo_rota_pool_geral_criar() {
-    return [
-        new DemoRotaData("rota_2", "Bosque Verdejante", "Mata fechada com insetos e flores toxicas", ["inseto", "grama", "veneno"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_22", "Caminho dos Desafiantes", "Trilha de treino entre lutadores e fadas", ["luta", "fada", "normal"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_23", "Pantano das Fendas", "Lama, agua parada e insetos", ["veneno", "agua", "inseto"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("rota_3_4", "Gruta do Eco", "Entrada rochosa cheia de ecos", ["caverna", "pedra", "terra"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_42", "Pico Congelado", "Vento gelado e asas no alto", ["gelo", "dragao", "voador"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("rota_4_ferro", "Fenda de Ferro", "Rochas metalicas e trilhos velhos", ["aco", "pedra", "normal"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_5_6", "Via Central", "Estrada movimentada e campos eletricos", ["terra", "eletrico", "normal"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_115", "Vale Mistico", "Nevoa feerica e ecos psiquicos", ["fada", "psiquico", "fantasma"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_9", "Desfiladeiro Ardente", "Pedra quente e chao rachado", ["fogo", "terra", "pedra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("rota_19_20", "Mar Aberto", "Ondas, aves e sombras no fundo", ["agua", "sombrio", "voador"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("rota_10", "Usinas Destruidas", "Maquinas faiscando entre chamas", ["aco", "eletrico", "fogo"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("rota_12", "Abismo das Fendas", "Agua escura e vultos", ["sombrio", "fantasma", "agua"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("rota_21", "Canal Vulcanico", "Magma, dragoes e fumaca", ["dragao", "fogo", "sombrio"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("bosque_venenoso", "Bosque Venenoso", "Flores toxicas e insetos de fenda", ["grama", "veneno", "inseto"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("trilha_cinzas", "Trilha de Cinzas", "Terra quente e rochas instaveis", ["fogo", "terra", "pedra"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("canion_magnetico", "Canion Magnetico", "Sucata antiga e campos eletricos", ["eletrico", "aco", "terra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("praia_ventos", "Praia dos Ventos", "Agua rasa, aves e trilha costeira", ["agua", "voador", "normal"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("ruinas_psiquicas", "Ruinas Psiquicas", "Ecos mentais entre casas quebradas", ["psiquico", "fantasma", "fada"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("glaciar_errante", "Glaciar Errante", "Nevoa fria cortando a estrada", ["gelo", "agua", "dragao"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("caverna_cristal", "Caverna Cristal", "Pedras vivas e metal brilhante", ["caverna", "pedra", "aco"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("campo_floral", "Campo Floral", "Flores estranhas perto da fazenda", ["fada", "grama", "normal"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("dojo_abandonado", "Dojo Abandonado", "Faixas rasgadas e passos no escuro", ["luta", "sombrio", "normal"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("ponte_sombria", "Ponte Sombria", "Fenda noturna sobre agua parada", ["sombrio", "fantasma", "veneno"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("ninho_correntes", "Ninho das Correntes", "Vento forte e descargas no ar", ["voador", "eletrico", "dragao"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("lamacal_antigo", "Lamacal Antigo", "Agua barrenta e toxinas no solo", ["agua", "terra", "veneno"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("bosque_seda", "Bosque de Seda", "Teias, folhas e luzes feericas", ["inseto", "grama", "fada"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("deserto_partido", "Deserto Partido", "Areia quente e pedra rachada", ["terra", "pedra", "fogo"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("usina_submersa", "Usina Submersa", "Maquinas afogadas ainda ligadas", ["eletrico", "agua", "aco"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("cratera_draconica", "Cratera Draconica", "Calor, pedra e presenca ancestral", ["dragao", "fogo", "pedra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("jardim_lunar", "Jardim Lunar", "Clareira fria sob luz estranha", ["fada", "gelo", "grama"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("trilho_sucata", "Trilho de Sucata", "Linha ferrea tomada por metal vivo", ["aco", "eletrico", "sombrio"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("corrego_oculto", "Corrego Oculto", "Agua limpa cortando mato fechado", ["agua", "grama", "psiquico"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("torre_ruida", "Torre Ruida", "Pedra antiga e sombras no alto", ["fantasma", "voador", "pedra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("planicie_raios", "Planicie dos Raios", "Campo aberto carregado de eletricidade", ["eletrico", "normal", "voador"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("mina_salgada", "Mina Salgada", "Tuneis umidos perto do mar", ["caverna", "agua", "pedra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("mata_crepusculo", "Mata do Crepusculo", "Arvores densas e passos distantes", ["sombrio", "grama", "inseto"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("floresta_eclipse", "Floresta do Eclipse", "Noite fechada, lua baixa e teias nas trilhas", ["sombrio", "fantasma", "inseto"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("sepulcro_raizes", "Sepulcro de Raizes", "Tumulos tomados por musgo e veneno", ["fantasma", "grama", "veneno"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("fornalha_ferro", "Fornalha de Ferro", "Metal rubro, fuligem e vapor eletrico", ["fogo", "aco", "eletrico"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("tunel_obsidiana", "Tunel de Obsidiana", "Caverna quente com rochas negras", ["caverna", "fogo", "pedra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("serra_gelida", "Serra Gelida", "Vento cortante entre pedra e metal", ["gelo", "pedra", "aco"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("lago_neblina", "Lago da Neblina", "Agua fria sob ecos psiquicos", ["agua", "gelo", "psiquico"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("altar_lunar", "Altar Lunar", "Pedras antigas brilhando com energia feerica", ["fada", "fantasma", "psiquico"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("penhasco_dragao", "Penhasco do Dragao", "Correntes de ar sobre rochas escaldadas", ["dragao", "voador", "fogo"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("pedreira_bruta", "Pedreira Bruta", "Quebra-pedra, poeira e treino pesado", ["pedra", "luta", "terra"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("pantanoso_noturno", "Pantano Noturno", "Agua escura com toxinas e insetos", ["agua", "sombrio", "veneno"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("jardim_estilhacado", "Jardim Estilhacado", "Flores feericas crescendo entre cristais", ["fada", "grama", "pedra"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("trilha_carvao", "Trilha do Carvao", "Cinzas no mato e calor vindo do subsolo", ["fogo", "grama", "terra"], 4, 5, 0, 0, 0, 0),
-        new DemoRotaData("observatorio_eco", "Observatorio Eco", "Antenas quebradas lendo sinais mentais", ["psiquico", "eletrico", "normal"], 3, 5, 0, 0, 0, 0),
-        new DemoRotaData("ninho_farpas", "Ninho de Farpas", "Casulos, espinhos e sombra entre folhas", ["inseto", "sombrio", "grama"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("dique_enferrujado", "Dique Enferrujado", "Agua batendo em comportas antigas", ["agua", "aco", "eletrico"], 4, 6, 0, 0, 0, 0),
-        new DemoRotaData("arena_poeira", "Arena de Poeira", "Solo seco marcado por batalhas", ["luta", "terra", "normal"], 3, 5, 0, 0, 0, 0)
-    ];
+    return demo_rota_lista_criar("rotas_gerais");
 }
 
 function demo_rota_blocos_criar() {
     var _pool = demo_rota_pool_geral_criar();
-
-    return [
-        [
-            new DemoRotaData("rota_1", "Trilha da Alvorada", "Estrada de grama classica", ["grama", "normal", "voador"], 3, 5, 0, 0, 0, 0)
-        ],
-        _pool,
-        _pool,
-        _pool,
-        _pool,
-        _pool
-    ];
+    return [demo_rota_lista_criar("rotas_iniciais"), _pool, _pool, _pool, _pool, _pool];
 }
 
 function demo_rota_block_index(_origem_index, _destino_index) {
@@ -5873,14 +5792,14 @@ function demo_rota_enemy_level(_origem_index, _destino_index) {
     return dificuldade_nivel(irandom_range(_range[0], _range[1]));
 }
 
-function demo_pokemon_tags_contem(_pokemon, _tags) {
-    if (!is_struct(_pokemon) || !variable_struct_exists(_pokemon, "BirthTags") || !is_array(_pokemon.BirthTags) || !is_array(_tags)) {
+function demo_criatura_tags_contem(_criatura, _tags) {
+    if (!is_struct(_criatura) || !variable_struct_exists(_criatura, "BirthTags") || !is_array(_criatura.BirthTags) || !is_array(_tags)) {
         return false;
     }
 
-    for (var _i = 0; _i < array_length(_pokemon.BirthTags); _i += 1) {
+    for (var _i = 0; _i < array_length(_criatura.BirthTags); _i += 1) {
         for (var _t = 0; _t < array_length(_tags); _t += 1) {
-            if (_pokemon.BirthTags[_i] == _tags[_t]) {
+            if (_criatura.BirthTags[_i] == _tags[_t]) {
                 return true;
             }
         }
@@ -5891,7 +5810,7 @@ function demo_pokemon_tags_contem(_pokemon, _tags) {
 
 function demo_rota_enemy_fallback_ids(_block_index) {
     // Sem lista fixa: usa criaturas em estagio inicial, das mais comuns as mais raras.
-    var _limite = _block_index <= 0 ? PokemonRaridade.COMMON : (_block_index == 1 ? PokemonRaridade.UNCOMMON : PokemonRaridade.RARE);
+    var _limite = _block_index <= 0 ? CriaturaRaridade.COMMON : (_block_index == 1 ? CriaturaRaridade.UNCOMMON : CriaturaRaridade.RARE);
     var _ids = criatura_ids();
     var _resultado = [];
 
@@ -5910,8 +5829,8 @@ function demo_rota_enemy_fallback_ids(_block_index) {
     return _resultado;
 }
 
-function demo_rota_enemy_permitido(_pokemon, _rota_info, _level, _contexto) {
-    if (!demo_pokemon_tags_contem(_pokemon, _rota_info.Biomas)) {
+function demo_rota_enemy_permitido(_criatura, _rota_info, _level, _contexto) {
+    if (!demo_criatura_tags_contem(_criatura, _rota_info.Biomas)) {
         return false;
     }
 
@@ -5921,8 +5840,8 @@ function demo_rota_enemy_permitido(_pokemon, _rota_info, _level, _contexto) {
         _block = demo_rota_block_index(rota_origem_index, rota_destino_index);
     }
 
-    var _raridade = variable_struct_exists(_pokemon, "RaridadePadrao") ? _pokemon.RaridadePadrao : PokemonRaridade.COMMON;
-    var _wild_min = variable_struct_exists(_pokemon, "WildMinLevel") ? _pokemon.WildMinLevel : pokemon_wild_min_level_atualizar(_pokemon);
+    var _raridade = variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON;
+    var _wild_min = variable_struct_exists(_criatura, "WildMinLevel") ? _criatura.WildMinLevel : criatura_wild_min_level_atualizar(_criatura);
     var _nivel_tolerado = _contexto == "treinador" ? _level + 1 : _level;
 
     if (_nivel_tolerado < _wild_min) {
@@ -5931,16 +5850,16 @@ function demo_rota_enemy_permitido(_pokemon, _rota_info, _level, _contexto) {
 
     if (_contexto == "selvagem") {
         if (_block <= 0) {
-            if (_raridade != PokemonRaridade.COMMON) {
+            if (_raridade != CriaturaRaridade.COMMON) {
                 return false;
             }
 
-            if (_pokemon.Tipo2 != PokemonTipo.NONE && _pokemon.Tipo1 != PokemonTipo.NORMAL) {
+            if (_criatura.Tipo2 != CriaturaTipo.NONE && _criatura.Tipo1 != CriaturaTipo.NORMAL) {
                 return false;
             }
         }
 
-        if (_level <= 3 && _raridade > PokemonRaridade.RARE) {
+        if (_level <= 3 && _raridade > CriaturaRaridade.RARE) {
             return false;
         }
     }
@@ -5948,18 +5867,18 @@ function demo_rota_enemy_permitido(_pokemon, _rota_info, _level, _contexto) {
     return true;
 }
 
-function demo_rota_enemy_weight(_pokemon, _level, _contexto) {
-    if (!is_struct(_pokemon)) {
+function demo_rota_enemy_weight(_criatura, _level, _contexto) {
+    if (!is_struct(_criatura)) {
         return 0;
     }
 
-    var _min_level = variable_struct_exists(_pokemon, "WildMinLevel") ? _pokemon.WildMinLevel : pokemon_wild_min_level_atualizar(_pokemon);
+    var _min_level = variable_struct_exists(_criatura, "WildMinLevel") ? _criatura.WildMinLevel : criatura_wild_min_level_atualizar(_criatura);
 
     if (_level < _min_level && _contexto != "treinador") {
         return 0;
     }
 
-    var _raridade = variable_struct_exists(_pokemon, "RaridadePadrao") ? _pokemon.RaridadePadrao : PokemonRaridade.COMMON;
+    var _raridade = variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON;
     var _diff = max(0, _level - _min_level);
     var _peso = 100 + min(40, _diff * 8);
 
@@ -5974,17 +5893,17 @@ function demo_rota_enemy_weight(_pokemon, _level, _contexto) {
     }
 
     switch (_raridade) {
-        case PokemonRaridade.UNCOMMON:
+        case CriaturaRaridade.UNCOMMON:
             _peso *= 0.78;
             break;
-        case PokemonRaridade.RARE:
+        case CriaturaRaridade.RARE:
             _peso *= 0.52;
             break;
-        case PokemonRaridade.EPIC:
+        case CriaturaRaridade.EPIC:
             _peso *= 0.24;
             break;
-        case PokemonRaridade.LEGENDARY:
-        case PokemonRaridade.ULTRA_RARE:
+        case CriaturaRaridade.LEGENDARY:
+        case CriaturaRaridade.ULTRA_RARE:
             _peso *= 0.05;
             break;
     }
@@ -6005,7 +5924,7 @@ function demo_rota_enemy_id(_rota_info) {
         _block = demo_rota_block_index(rota_origem_index, rota_destino_index);
     }
 
-    if (!is_struct(_rota_info) || !is_array(_rota_info.Biomas) || !variable_global_exists("pokedex")) {
+    if (!is_struct(_rota_info) || !is_array(_rota_info.Biomas) || !variable_global_exists("bestiario")) {
         var _fallback_ids = demo_rota_enemy_fallback_ids(_block);
         return _fallback_ids[irandom(array_length(_fallback_ids) - 1)];
     }
@@ -6017,7 +5936,7 @@ function demo_rota_enemy_id(_rota_info) {
 
     for (var _idx = 0; _idx < array_length(_ids_criaturas); _idx += 1) {
         var _id = _ids_criaturas[_idx];
-        var _base = pokemon_db_get(global.pokedex, _id);
+        var _base = criatura_db_get(global.bestiario, _id);
 
         if (demo_rota_enemy_permitido(_base, _rota_info, _level, _contexto)) {
             var _peso = demo_rota_enemy_weight(_base, _level, _contexto);
@@ -6048,7 +5967,7 @@ function demo_rota_enemy_id(_rota_info) {
 
     for (var _fb = 0; _fb < array_length(_fallback_ids); _fb += 1) {
         var _fallback_id = _fallback_ids[_fb];
-        var _fallback_base = pokemon_db_get(global.pokedex, _fallback_id);
+        var _fallback_base = criatura_db_get(global.bestiario, _fallback_id);
 
         if (demo_rota_enemy_permitido(_fallback_base, _rota_info, _level, _contexto)) {
             array_push(_fallback_validos, _fallback_id);
@@ -6068,7 +5987,7 @@ function demo_rota_encontro_selvagem_iniciar(_controller) {
         var _escopo = diario_escopo("selvagem:" + string(rota_origem_index) + ">" + string(rota_destino_index) + ":" + string(route_steps));
         var _enemy_level = demo_rota_enemy_level(rota_origem_index, rota_destino_index);
         var _enemy_id = demo_rota_enemy_id(rota_atual, _enemy_level, "selvagem");
-        enemy_pokemon_data = demo_criar_pokemon_data(_enemy_id, _enemy_level, true, true, true, "selvagem");
+        enemy_criatura_data = demo_criar_criatura_data(_enemy_id, _enemy_level, true, true, true, "selvagem");
         diario_escopo_fim(_escopo);
         battle_context = "rota";
         demo_start_battle(id);
@@ -6094,81 +6013,35 @@ function demo_rota_trainer_route_chance(_origem_index, _destino_index) {
     return clamp(0.26 + (_block * 0.035) + _meta_bonus, 0.26, 0.65);
 }
 
+// Classes de treinador vem de datafiles/data/treinadores.json.
 function demo_rota_trainer_classe(_rota_info, _block_index) {
+    var _dados = conteudo_dados("treinadores");
     var _candidatos = [];
 
     if (_block_index <= 0) {
-        return choose(
-            { Nome: "Jovem Treinador", Sprite: "jovem.png" },
-            { Nome: "Estudante", Sprite: "estudante.png" },
-            { Nome: "Excursionista", Sprite: "excursionista.png" },
-            { Nome: "Jardineira", Sprite: "jardineira.png" }
-        );
+        var _inicio = conteudo_struct_get(_dados, "inicio", []);
+
+        if (array_length(_inicio) > 0) {
+            var _e = _inicio[irandom(array_length(_inicio) - 1)];
+            return { Nome: _e.nome, Sprite: _e.sprite };
+        }
     }
+
+    var _por_bioma = conteudo_struct_get(_dados, "por_bioma", {});
 
     if (is_struct(_rota_info) && is_array(_rota_info.Biomas)) {
         for (var _i = 0; _i < array_length(_rota_info.Biomas); _i += 1) {
-            var _tag = _rota_info.Biomas[_i];
+            var _classe = conteudo_struct_get(_por_bioma, _rota_info.Biomas[_i], undefined);
 
-            switch (_tag) {
-                case "inseto":
-                    array_push(_candidatos, { Nome: "Colecionador de Insetos", Sprite: "colecionador.png" });
-                    break;
-                case "grama":
-                case "fazenda":
-                    array_push(_candidatos, { Nome: "Jardineira", Sprite: "jardineira.png" });
-                    break;
-                case "veneno":
-                    array_push(_candidatos, { Nome: "Motoqueiro", Sprite: "motoqueiro.png" });
-                    break;
-                case "agua":
-                    array_push(_candidatos, { Nome: choose("Nadador", "Marinheira"), Sprite: "nadador.png" });
-                    break;
-                case "fogo":
-                    array_push(_candidatos, { Nome: "Campista", Sprite: "campista.png" });
-                    break;
-                case "eletrico":
-                case "aco":
-                    array_push(_candidatos, { Nome: choose("Engenheiro", "Cientista"), Sprite: "engenheiro.png" });
-                    break;
-                case "caverna":
-                case "pedra":
-                case "terra":
-                    array_push(_candidatos, { Nome: choose("Montanhista", "Arqueologo"), Sprite: "montanhista.png" });
-                    break;
-                case "fada":
-                case "psiquico":
-                    array_push(_candidatos, { Nome: "Vidente", Sprite: "vidente.png" });
-                    break;
-                case "fantasma":
-                    array_push(_candidatos, { Nome: "Medium", Sprite: "medium.png" });
-                    break;
-                case "gelo":
-                case "dragao":
-                    array_push(_candidatos, { Nome: "Veterano", Sprite: "veterano.png" });
-                    break;
-                case "voador":
-                    array_push(_candidatos, { Nome: "Falcoeira", Sprite: "falcoeira.png" });
-                    break;
-                case "luta":
-                    array_push(_candidatos, { Nome: "Lutadora de Rua", Sprite: "lutadora.png" });
-                    break;
-                case "sombrio":
-                    array_push(_candidatos, { Nome: "Agente do Eclipse", Sprite: "agente_eclipse.png" });
-                    break;
-                case "normal":
-                    array_push(_candidatos, { Nome: choose("Jovem Treinador", "Estudante", "Excursionista"), Sprite: "jovem.png" });
-                    break;
+            if (is_struct(_classe)) {
+                array_push(_candidatos, { Nome: _classe.nomes[irandom(array_length(_classe.nomes) - 1)], Sprite: _classe.sprite });
             }
         }
     }
 
     if (array_length(_candidatos) <= 0) {
-        if (_block_index >= 4) {
-            array_push(_candidatos, { Nome: "Veterano", Sprite: "veterano.png" });
-        } else {
-            array_push(_candidatos, { Nome: choose("Jovem Treinador", "Estudante"), Sprite: "jovem.png" });
-        }
+        var _reserva = conteudo_struct_get(_dados, _block_index >= 4 ? "sem_bioma_avancado" : "sem_bioma", { nomes: ["Treinador"], sprite: "jovem.png" });
+        array_push(_candidatos, { Nome: _reserva.nomes[irandom(array_length(_reserva.nomes) - 1)], Sprite: _reserva.sprite });
     }
 
     return _candidatos[irandom(array_length(_candidatos) - 1)];
@@ -6214,10 +6087,10 @@ function demo_rota_trainer_party_criar(_controller) {
     for (var _i = 0; _i < _count; _i += 1) {
         var _level = demo_rota_trainer_level(_controller);
         var _enemy_id = demo_rota_enemy_id(_controller.rota_atual, _level, "treinador");
-        var _pokemon = demo_criar_pokemon_data(_enemy_id, _level, true, false, true, "treinador");
+        var _criatura = demo_criar_criatura_data(_enemy_id, _level, true, false, true, "treinador");
 
-        if (is_struct(_pokemon)) {
-            array_push(_party, _pokemon);
+        if (is_struct(_criatura)) {
+            array_push(_party, _criatura);
         }
     }
 
@@ -6247,7 +6120,7 @@ function demo_rota_trainer_iniciar_base(_controller) {
     _controller.route_trainer_data = demo_rota_trainer_classe(_controller.rota_atual, _block);
     _controller.trainer_party = _party;
     _controller.trainer_party_index = 0;
-    _controller.enemy_pokemon_data = _party[0];
+    _controller.enemy_criatura_data = _party[0];
     _controller.battle_context = "treinador";
     demo_start_battle(_controller);
     return true;
@@ -6273,8 +6146,8 @@ function demo_trainer_enviar_proximo(_controller) {
     }
 
     _controller.trainer_party_index += 1;
-    _controller.enemy_pokemon_data = _controller.trainer_party[_controller.trainer_party_index];
-    _controller.enemy_inst = pokemon_batalha_criar(room_width * 0.75, room_height * 0.69, _controller.enemy_pokemon_data, "Instances", LadoBatalha.INIMIGO);
+    _controller.enemy_criatura_data = _controller.trainer_party[_controller.trainer_party_index];
+    _controller.enemy_inst = criatura_batalha_criar(room_width * 0.75, room_height * 0.69, _controller.enemy_criatura_data, "Instances", LadoBatalha.INIMIGO);
     _controller.enemy_inst.visible = false;
 
     if (instance_exists(_controller.battle_manager)) {
@@ -6290,15 +6163,15 @@ function demo_trainer_enviar_proximo(_controller) {
             _controller.player_inst.hp_atual = min(_controller.player_inst.hp_max, _controller.player_inst.hp_atual + (_controller.player_inst.hp_max * _cura));
         }
 
-        var _fala = variable_struct_exists(_controller.enemy_pokemon_data, "FalaChefe") ? " " + _controller.enemy_pokemon_data.FalaChefe : "";
-        _controller.message = "O rasgo se alarga: " + _controller.enemy_pokemon_data.Nome + "!" + _fala;
+        var _fala = variable_struct_exists(_controller.enemy_criatura_data, "FalaChefe") ? " " + _controller.enemy_criatura_data.FalaChefe : "";
+        _controller.message = "O rasgo se alarga: " + _controller.enemy_criatura_data.Nome + "!" + _fala;
         battle_log_force(_controller.message);
         battle_log_push(string_join_ext(" e ", conteudo_struct_get(_mundo, "guardioes", ["Os guardioes"])) + " renovam sua equipe.");
         battle_screen_shake(10, 0.5);
         return true;
     }
 
-    _controller.message = _controller.battle_trainer_name + " enviou " + _controller.enemy_pokemon_data.Nome + "!";
+    _controller.message = _controller.battle_trainer_name + " enviou " + _controller.enemy_criatura_data.Nome + "!";
     battle_log_force(_controller.message);
     return true;
 }
@@ -6399,7 +6272,7 @@ function demo_exp_base_por_level(_level) {
     return 36 + (_level * 14);
 }
 
-function demo_exp_recompensa(_pokemon_vencedor, _enemy_level, _tipo_encontro, _capturado) {
+function demo_exp_recompensa(_criatura_vencedor, _enemy_level, _tipo_encontro, _capturado) {
     var _mult = 1.0;
 
     switch (_tipo_encontro) {
@@ -6415,7 +6288,7 @@ function demo_exp_recompensa(_pokemon_vencedor, _enemy_level, _tipo_encontro, _c
 
     var _catchup = 1.0;
 
-    if (is_struct(_pokemon_vencedor) && _pokemon_vencedor.Level < _enemy_level - 4) {
+    if (is_struct(_criatura_vencedor) && _criatura_vencedor.Level < _enemy_level - 4) {
         _catchup = 4.0;
     }
 
@@ -6434,7 +6307,7 @@ function demo_chefe_final_party_criar() {
 
     for (var _i = 0; _i < array_length(_fases); _i += 1) {
         var _f = _fases[_i];
-        var _p = demo_criar_pokemon_data(_id, floor(conteudo_struct_get(_f, "nivel", 30)), true, false, true, "ginasio");
+        var _p = demo_criar_criatura_data(_id, floor(conteudo_struct_get(_f, "nivel", 30)), true, false, true, "ginasio");
 
         if (!is_struct(_p)) {
             continue;
@@ -6452,7 +6325,7 @@ function demo_chefe_final_party_criar() {
     }
 
     if (array_length(_party) <= 0) {
-        array_push(_party, demo_criar_pokemon_data(_id, 30, true, false, true, "ginasio"));
+        array_push(_party, demo_criar_criatura_data(_id, 30, true, false, true, "ginasio"));
     }
 
     return _party;
@@ -7419,13 +7292,13 @@ function demo_dialog_sprite_cidade(_controller, _fallback_sprite) {
     return _fallback_sprite;
 }
 
-function demo_draw_pokemon_sprite(_pokemon_id, _x, _y, _scale, _face_dir, _flash) {
-    var _bob = sin(current_time * 0.006 + _pokemon_id) * 3 * _scale;
+function demo_draw_criatura_sprite(_criatura_id, _x, _y, _scale, _face_dir, _flash) {
+    var _bob = sin(current_time * 0.006 + _criatura_id) * 3 * _scale;
     var _sx = _scale * _face_dir;
-    var _sy = _scale * (1 + sin(current_time * 0.006 + _pokemon_id) * 0.035);
+    var _sy = _scale * (1 + sin(current_time * 0.006 + _criatura_id) * 0.035);
     var _yy = _y + _bob;
     var _blend = _flash > 0 ? c_red : c_white;
-    var _sprite = demo_get_pokemon_sprite(_pokemon_id);
+    var _sprite = demo_get_criatura_sprite(_criatura_id);
 
     draw_set_color(c_black);
     draw_ellipse(_x - 30 * _scale, _y - 7 * _scale, _x + 30 * _scale, _y + 6 * _scale, false);
@@ -7447,7 +7320,7 @@ function demo_draw_pokemon_sprite(_pokemon_id, _x, _y, _scale, _face_dir, _flash
     draw_set_color(c_white);
 }
 
-function demo_draw_battle_pokemon_instance(_inst) {
+function demo_draw_battle_criatura_instance(_inst) {
     if (!instance_exists(_inst) || !_inst.vivo) {
         return;
     }
@@ -7472,8 +7345,8 @@ function demo_draw_battle_pokemon_instance(_inst) {
     var _base_scale = 2.05;
 
     // O chefe final cresce a cada fase.
-    if (variable_instance_exists(_inst, "pokemon_data") && is_struct(_inst.pokemon_data) && variable_struct_exists(_inst.pokemon_data, "FaseChefe")) {
-        _base_scale *= 1.2 + (0.12 * _inst.pokemon_data.FaseChefe);
+    if (variable_instance_exists(_inst, "criatura_data") && is_struct(_inst.criatura_data) && variable_struct_exists(_inst.criatura_data, "FaseChefe")) {
+        _base_scale *= 1.2 + (0.12 * _inst.criatura_data.FaseChefe);
     }
 
     var _scale = _base_scale;
@@ -7542,7 +7415,7 @@ function demo_draw_battle_pokemon_instance(_inst) {
         draw_sprite_ext(_spr, 0, _draw_x, _draw_y, _xscale * _scale, _scale, 0, _blend, 1);
         draw_set_alpha(1);
     } else {
-        demo_draw_pokemon_sprite(_inst.pokemon_id, _draw_x, _draw_y, _scale, _xscale, _inst.visual_flash);
+        demo_draw_criatura_sprite(_inst.criatura_id, _draw_x, _draw_y, _scale, _xscale, _inst.visual_flash);
     }
 
     battle_status_draw_world_effects(_inst, _shadow_x, _shadow_y, _scale, _alpha);
@@ -7683,7 +7556,7 @@ function demo_draw_result_panel(_controller) {
     if (is_struct(_info.Capturado)) {
         var _capturado = _info.Capturado;
         var _is_shiny = variable_struct_exists(_capturado, "IsShiny") && _capturado.IsShiny;
-        var _icon = demo_pokemon_icon_get(_capturado.ID, _is_shiny);
+        var _icon = demo_criatura_icon_get(_capturado.ID, _is_shiny);
 
         battle_ui_draw_nineslice_panel(_inner_x, _content_y, _inner_w, 82);
 
@@ -7723,14 +7596,14 @@ function demo_draw_result_panel(_controller) {
         for (var _i = 0; _i < min(4, array_length(_info.Ganhos)); _i += 1) {
             var _gain = _info.Ganhos[_i];
 
-            if (!is_struct(_gain) || !is_struct(_gain.Pokemon)) {
+            if (!is_struct(_gain) || !is_struct(_gain.Criatura)) {
                 continue;
             }
 
-            var _pokemon = _gain.Pokemon;
+            var _criatura = _gain.Criatura;
             var _label = _gain.Participou ? "100%" : "50%";
             var _level_txt = _gain.LevelDepois > _gain.LevelAntes ? "  Lv." + string(_gain.LevelAntes) + " > " + string(_gain.LevelDepois) : "";
-            draw_text(_inner_x + 24, _content_y, _pokemon.Nome + ": +" + string(_gain.XP) + " EXP (" + _label + ")" + _level_txt);
+            draw_text(_inner_x + 24, _content_y, _criatura.Nome + ": +" + string(_gain.XP) + " EXP (" + _label + ")" + _level_txt);
             _content_y += 24;
 
             if (variable_struct_exists(_gain, "Evolucoes") && is_array(_gain.Evolucoes)) {
@@ -7783,8 +7656,8 @@ function demo_draw_result_panel(_controller) {
 }
 
 function demo_inicializar_globals() {
-    if (!variable_global_exists("pokedex")) {
-        global.pokedex = pokemon_db_criar();
+    if (!variable_global_exists("bestiario")) {
+        global.bestiario = criatura_db_criar();
     }
 
     if (!variable_global_exists("item_db")) {
@@ -7799,29 +7672,29 @@ function demo_inicializar_globals() {
         global.velocidade_jogo = global.time_scale;
     }
 
-    if (!variable_global_exists("pokedex_overlay_aberto")) {
-        global.pokedex_overlay_aberto = false;
+    if (!variable_global_exists("bestiario_overlay_aberto")) {
+        global.bestiario_overlay_aberto = false;
     }
 
     battle_ui_init();
-    pokedex_inicializar(global.pokedex);
+    bestiario_inicializar(global.bestiario);
 }
 
-function demo_pokemon_shiny_chance() {
+function demo_criatura_shiny_chance() {
     var _bonus = variable_global_exists("demo_meta_shiny_bonus") ? global.demo_meta_shiny_bonus : 0;
     return clamp(0.01 + _bonus, 0.01, 0.035);
 }
 
-function demo_pokemon_roll_female(_pokemon_id) {
-    return random(1) < 0.5 && pokemon_sprite_path(_pokemon_id, "", false, true) != "";
+function demo_criatura_roll_female(_criatura_id) {
+    return random(1) < 0.5 && criatura_sprite_path(_criatura_id, "", false, true) != "";
 }
 
-function demo_pokemon_aplicar_shiny(_pokemon) {
-    return pokemon_data_aplicar_shiny(_pokemon);
+function demo_criatura_aplicar_shiny(_criatura) {
+    return criatura_data_aplicar_shiny(_criatura);
 }
 
-function demo_aplicar_balanceamento_selvagem(_pokemon, _level) {
-    if (!is_struct(_pokemon)) {
+function demo_aplicar_balanceamento_selvagem(_criatura, _level) {
+    if (!is_struct(_criatura)) {
         return;
     }
 
@@ -7838,21 +7711,21 @@ function demo_aplicar_balanceamento_selvagem(_pokemon, _level) {
     }
 
     if (_ratio < 1) {
-        pokemon_data_aplicar_multiplicador_atributos(_pokemon, _ratio);
+        criatura_data_aplicar_multiplicador_atributos(_criatura, _ratio);
     }
 
-    var _raridade = variable_struct_exists(_pokemon, "RaridadeEfetiva") ? _pokemon.RaridadeEfetiva : PokemonRaridade.COMMON;
+    var _raridade = variable_struct_exists(_criatura, "RaridadeEfetiva") ? _criatura.RaridadeEfetiva : CriaturaRaridade.COMMON;
 
-    if (_level <= 3 && _raridade == PokemonRaridade.RARE) {
-        pokemon_data_aplicar_multiplicador_atributos(_pokemon, 0.88);
-    } else if (_level <= 6 && _raridade >= PokemonRaridade.EPIC) {
-        pokemon_data_aplicar_multiplicador_atributos(_pokemon, 0.82);
+    if (_level <= 3 && _raridade == CriaturaRaridade.RARE) {
+        criatura_data_aplicar_multiplicador_atributos(_criatura, 0.88);
+    } else if (_level <= 6 && _raridade >= CriaturaRaridade.EPIC) {
+        criatura_data_aplicar_multiplicador_atributos(_criatura, 0.82);
     }
 
-    _pokemon.HpAtual = _pokemon.HpMax;
+    _criatura.HpAtual = _criatura.HpMax;
 }
 
-function demo_criar_pokemon_data(_id, _level, _auto_resolver_progressao) {
+function demo_criar_criatura_data(_id, _level, _auto_resolver_progressao) {
     if (argument_count < 3) {
         _auto_resolver_progressao = false;
     }
@@ -7860,29 +7733,29 @@ function demo_criar_pokemon_data(_id, _level, _auto_resolver_progressao) {
     var _permitir_shiny = argument_count >= 4 ? argument[3] : false;
     var _permitir_female = argument_count >= 5 ? argument[4] : false;
     var _build_context = argument_count >= 6 ? argument[5] : "";
-    var _base = pokemon_db_get(global.pokedex, _id);
-    var _pokemon = pokemon_data_clonar(_base, _level);
+    var _base = criatura_db_get(global.bestiario, _id);
+    var _criatura = criatura_data_clonar(_base, _level);
 
-    if (is_struct(_pokemon)) {
-        _pokemon.HpAtual = _pokemon.HpMax;
-        _pokemon.IsFemale = _permitir_female ? demo_pokemon_roll_female(_id) : false;
+    if (is_struct(_criatura)) {
+        _criatura.HpAtual = _criatura.HpMax;
+        _criatura.IsFemale = _permitir_female ? demo_criatura_roll_female(_id) : false;
 
         if (_auto_resolver_progressao && _build_context != "") {
-            pokemon_progressao_inimigo_randomizar_build(_pokemon, _build_context);
+            criatura_progressao_inimigo_randomizar_build(_criatura, _build_context);
         } else if (_auto_resolver_progressao) {
-            pokemon_progressao_auto_resolver_ate_level(_pokemon);
+            criatura_progressao_auto_resolver_ate_level(_criatura);
         }
 
         if (_build_context == "selvagem") {
-            demo_aplicar_balanceamento_selvagem(_pokemon, _level);
+            demo_aplicar_balanceamento_selvagem(_criatura, _level);
         }
 
-        if (_permitir_shiny && random(1) < demo_pokemon_shiny_chance()) {
-            demo_pokemon_aplicar_shiny(_pokemon);
+        if (_permitir_shiny && random(1) < demo_criatura_shiny_chance()) {
+            demo_criatura_aplicar_shiny(_criatura);
         }
     }
 
-    return _pokemon;
+    return _criatura;
 }
 
 function demo_start_battle(_controller) {
@@ -7899,14 +7772,14 @@ function demo_start_battle(_controller) {
         }
 
         battle_manager = instance_create_layer(0, 0, "Instances", obj_gerenciador_batalha);
-        player_inst = pokemon_batalha_criar(room_width * 0.25, room_height * 0.69, player_pokemon_data, "Instances", LadoBatalha.ALIADO);
-        enemy_inst = pokemon_batalha_criar(room_width * 0.75, room_height * 0.69, enemy_pokemon_data, "Instances", LadoBatalha.INIMIGO);
+        player_inst = criatura_batalha_criar(room_width * 0.25, room_height * 0.69, player_criatura_data, "Instances", LadoBatalha.ALIADO);
+        enemy_inst = criatura_batalha_criar(room_width * 0.75, room_height * 0.69, enemy_criatura_data, "Instances", LadoBatalha.INIMIGO);
         player_inst.visible = false;
         enemy_inst.visible = false;
         battle_manager.aliados_campo = [player_inst];
         battle_manager.inimigos_campo = [enemy_inst];
         battle_participants = [];
-        demo_battle_marcar_participante(id, player_pokemon_data);
+        demo_battle_marcar_participante(id, player_criatura_data);
         demo_battle_rewards_resetar(id);
         battle_result_info = undefined;
         battle_time_scale_restore_preferido();
@@ -7914,7 +7787,7 @@ function demo_start_battle(_controller) {
 
         if (battle_context == "ginasio") {
             if (sprite_exists(gym_trainer_sprite)) {
-                pokemon_sprite_liberar(gym_trainer_sprite);
+                criatura_sprite_liberar(gym_trainer_sprite);
             }
 
             battle_trainer_active = true;
@@ -7923,7 +7796,7 @@ function demo_start_battle(_controller) {
             message = battle_trainer_name + " esta mantendo uma fenda aberta no ginasio!";
         } else if (battle_context == "treinador") {
             if (sprite_exists(gym_trainer_sprite)) {
-                pokemon_sprite_liberar(gym_trainer_sprite);
+                criatura_sprite_liberar(gym_trainer_sprite);
             }
 
             battle_trainer_active = true;
@@ -7939,13 +7812,13 @@ function demo_start_battle(_controller) {
         } else if (battle_context == "chefe") {
             battle_trainer_active = false;
             battle_trainer_name = conteudo_mundo_texto("chefe_final", "Aeonox");
-            var _fala_chefe = variable_struct_exists(enemy_pokemon_data, "FalaChefe") ? " " + enemy_pokemon_data.FalaChefe : "";
+            var _fala_chefe = variable_struct_exists(enemy_criatura_data, "FalaChefe") ? " " + enemy_criatura_data.FalaChefe : "";
             message = "O Rasgo Temporal se abre!" + _fala_chefe;
         } else {
             battle_trainer_active = false;
             battle_trainer_name = "";
-            var _shiny_prefix = is_struct(enemy_pokemon_data) && variable_struct_exists(enemy_pokemon_data, "IsShiny") && enemy_pokemon_data.IsShiny ? " CROMATICO" : "";
-            message = "Um" + _shiny_prefix + " " + enemy_pokemon_data.Nome + " selvagem apareceu!";
+            var _shiny_prefix = is_struct(enemy_criatura_data) && variable_struct_exists(enemy_criatura_data, "IsShiny") && enemy_criatura_data.IsShiny ? " CROMATICO" : "";
+            message = "Um" + _shiny_prefix + " " + enemy_criatura_data.Nome + " selvagem apareceu!";
         }
 
         battle_log_force(message);
@@ -7971,7 +7844,7 @@ function demo_cleanup_battle(_controller) {
         }
 
         if (sprite_exists(gym_trainer_sprite)) {
-            pokemon_sprite_liberar(gym_trainer_sprite);
+            criatura_sprite_liberar(gym_trainer_sprite);
             gym_trainer_sprite = -1;
         }
 
@@ -7984,7 +7857,7 @@ function demo_cleanup_battle(_controller) {
         }
 
         battle_time_scale_restore_preferido();
-        global.pokedex_overlay_aberto = false;
+        global.bestiario_overlay_aberto = false;
         global.mochila_overlay_aberta = false;
         global.troca_overlay_aberta = false;
         global.battle_fugir_solicitado = false;
@@ -7992,7 +7865,7 @@ function demo_cleanup_battle(_controller) {
         capture_pending_item = "";
         capture_pending_success = false;
         capture_replace_open = false;
-        capture_replace_pokemon = undefined;
+        capture_replace_criatura = undefined;
         battle_trainer_active = false;
         battle_trainer_name = "";
 

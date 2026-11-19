@@ -28,7 +28,7 @@ function sinergias_db() {
 
 function sinergia_tipo_habilidade(_habilidade) {
     if (!is_struct(_habilidade)) {
-        return PokemonTipo.NONE;
+        return CriaturaTipo.NONE;
     }
 
     return variable_struct_exists(_habilidade, "TipoElementar") ? _habilidade.TipoElementar : _habilidade.Tipo;
@@ -39,7 +39,7 @@ function sinergias_ativas(_equipadas, _habilidade) {
     var _ativas = [];
     var _tipo = sinergia_tipo_habilidade(_habilidade);
 
-    if (_tipo == PokemonTipo.NONE || !is_array(_equipadas)) {
+    if (_tipo == CriaturaTipo.NONE || !is_array(_equipadas)) {
         return _ativas;
     }
 
@@ -82,8 +82,8 @@ function sinergia_aplicar(_atacante, _alvo, _habilidade) {
             continue;
         }
 
-        pokemon_status_aplicar(_alvo, _regra.Efeito, pokemon_combate_status_duracao_padrao(_regra.Efeito));
-        battle_log_push("SINERGIA (" + string_upper(_regra.Nome) + ")! " + string_upper(_alvo.pokemon_nome) + " ficou " + string_upper(_regra.Efeito) + "!");
+        criatura_status_aplicar(_alvo, _regra.Efeito, criatura_combate_status_duracao_padrao(_regra.Efeito));
+        battle_log_push("SINERGIA (" + string_upper(_regra.Nome) + ")! " + string_upper(_alvo.criatura_nome) + " ficou " + string_upper(_regra.Efeito) + "!");
         _aplicadas += 1;
     }
 
@@ -191,23 +191,23 @@ function battle_particula_tipo(_tipo) {
     var _vel_max = 4.5;
 
     switch (_tipo) {
-        case PokemonTipo.FIRE: _shape = pt_shape_flare; _gravidade = -0.06; break;
-        case PokemonTipo.WATER: _shape = pt_shape_disk; _gravidade = 0.12; break;
-        case PokemonTipo.GRASS: _shape = pt_shape_square; _gravidade = 0.03; break;
-        case PokemonTipo.ELECTRIC: _shape = pt_shape_spark; _vel_min = 3; _vel_max = 7; break;
-        case PokemonTipo.ICE: _shape = pt_shape_snow; _gravidade = 0.04; break;
-        case PokemonTipo.POISON: _shape = pt_shape_sphere; _gravidade = -0.03; _vel_max = 2.5; break;
-        case PokemonTipo.GROUND: _shape = pt_shape_smoke; _gravidade = 0.08; break;
-        case PokemonTipo.ROCK: _shape = pt_shape_square; _gravidade = 0.18; break;
-        case PokemonTipo.FLYING: _shape = pt_shape_line; _vel_min = 3; _vel_max = 6; break;
-        case PokemonTipo.PSYCHIC: _shape = pt_shape_ring; _vel_max = 2.5; break;
-        case PokemonTipo.BUG: _shape = pt_shape_pixel; _vel_min = 2; _vel_max = 5; break;
-        case PokemonTipo.GHOST: _shape = pt_shape_cloud; _gravidade = -0.05; _vel_max = 2; break;
-        case PokemonTipo.DRAGON: _shape = pt_shape_explosion; break;
-        case PokemonTipo.DARK: _shape = pt_shape_smoke; _vel_max = 3; break;
-        case PokemonTipo.STEEL: _shape = pt_shape_star; _gravidade = 0.06; break;
-        case PokemonTipo.FAIRY: _shape = pt_shape_star; _gravidade = -0.02; _vel_max = 3; break;
-        case PokemonTipo.FIGHTING: _shape = pt_shape_explosion; _vel_max = 3.5; break;
+        case CriaturaTipo.FIRE: _shape = pt_shape_flare; _gravidade = -0.06; break;
+        case CriaturaTipo.WATER: _shape = pt_shape_disk; _gravidade = 0.12; break;
+        case CriaturaTipo.GRASS: _shape = pt_shape_square; _gravidade = 0.03; break;
+        case CriaturaTipo.ELECTRIC: _shape = pt_shape_spark; _vel_min = 3; _vel_max = 7; break;
+        case CriaturaTipo.ICE: _shape = pt_shape_snow; _gravidade = 0.04; break;
+        case CriaturaTipo.POISON: _shape = pt_shape_sphere; _gravidade = -0.03; _vel_max = 2.5; break;
+        case CriaturaTipo.GROUND: _shape = pt_shape_smoke; _gravidade = 0.08; break;
+        case CriaturaTipo.ROCK: _shape = pt_shape_square; _gravidade = 0.18; break;
+        case CriaturaTipo.FLYING: _shape = pt_shape_line; _vel_min = 3; _vel_max = 6; break;
+        case CriaturaTipo.PSYCHIC: _shape = pt_shape_ring; _vel_max = 2.5; break;
+        case CriaturaTipo.BUG: _shape = pt_shape_pixel; _vel_min = 2; _vel_max = 5; break;
+        case CriaturaTipo.GHOST: _shape = pt_shape_cloud; _gravidade = -0.05; _vel_max = 2; break;
+        case CriaturaTipo.DRAGON: _shape = pt_shape_explosion; break;
+        case CriaturaTipo.DARK: _shape = pt_shape_smoke; _vel_max = 3; break;
+        case CriaturaTipo.STEEL: _shape = pt_shape_star; _gravidade = 0.06; break;
+        case CriaturaTipo.FAIRY: _shape = pt_shape_star; _gravidade = -0.02; _vel_max = 3; break;
+        case CriaturaTipo.FIGHTING: _shape = pt_shape_explosion; _vel_max = 3.5; break;
     }
 
     part_type_shape(_pt, _shape);
@@ -223,7 +223,7 @@ function battle_particula_tipo(_tipo) {
         part_type_gravity(_pt, abs(_gravidade), _gravidade > 0 ? 270 : 90);
     }
 
-    if (_tipo == PokemonTipo.FIRE || _tipo == PokemonTipo.ELECTRIC || _tipo == PokemonTipo.FAIRY || _tipo == PokemonTipo.PSYCHIC || _tipo == PokemonTipo.DRAGON) {
+    if (_tipo == CriaturaTipo.FIRE || _tipo == CriaturaTipo.ELECTRIC || _tipo == CriaturaTipo.FAIRY || _tipo == CriaturaTipo.PSYCHIC || _tipo == CriaturaTipo.DRAGON) {
         part_type_blend(_pt, true);
     }
 
@@ -243,7 +243,7 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
     var _d = _direcao == 0 ? 1 : _direcao;
 
     switch (_tipo) {
-        case PokemonTipo.FIRE:
+        case CriaturaTipo.FIRE:
             for (var _f = 3; _f >= 0; _f -= 1) {
                 draw_set_alpha(0.25 + (0.18 * (3 - _f)));
                 draw_set_color(_f > 1 ? _cor : make_color_rgb(255, 230, 120));
@@ -251,7 +251,7 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             }
             break;
 
-        case PokemonTipo.WATER:
+        case CriaturaTipo.WATER:
             draw_set_color(_cor);
             draw_circle(_x, _y, 7, false);
             draw_triangle(_x - (_d * 4), _y - 6, _x - (_d * 4), _y + 6, _x - (_d * 16), _y, false);
@@ -259,8 +259,8 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             draw_circle(_x + (_d * 2), _y - 2, 2.5, false);
             break;
 
-        case PokemonTipo.GRASS:
-        case PokemonTipo.BUG:
+        case CriaturaTipo.GRASS:
+        case CriaturaTipo.BUG:
             for (var _g = 0; _g < 3; _g += 1) {
                 var _ang = (_t * 4) + (_g * 120);
                 var _gx = _x + lengthdir_x(9, _ang);
@@ -270,7 +270,7 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             }
             break;
 
-        case PokemonTipo.ELECTRIC:
+        case CriaturaTipo.ELECTRIC:
             draw_set_color(_cor);
             var _px = _x - 18;
             var _py = _y;
@@ -287,8 +287,8 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             draw_circle(_x, _y, 3, false);
             break;
 
-        case PokemonTipo.ICE:
-        case PokemonTipo.STEEL:
+        case CriaturaTipo.ICE:
+        case CriaturaTipo.STEEL:
             draw_set_color(_cor);
             draw_triangle(_x, _y - 9, _x + 7, _y, _x, _y + 9, false);
             draw_triangle(_x, _y - 9, _x - 7, _y, _x, _y + 9, false);
@@ -296,8 +296,8 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             draw_triangle(_x, _y - 6, _x + 3, _y, _x, _y + 2, false);
             break;
 
-        case PokemonTipo.POISON:
-        case PokemonTipo.GHOST:
+        case CriaturaTipo.POISON:
+        case CriaturaTipo.GHOST:
             for (var _p = 0; _p < 4; _p += 1) {
                 draw_set_alpha(0.75 - (_p * 0.15));
                 draw_set_color(_p == 0 ? _claro : _cor);
@@ -305,15 +305,15 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             }
             break;
 
-        case PokemonTipo.GROUND:
-        case PokemonTipo.ROCK:
+        case CriaturaTipo.GROUND:
+        case CriaturaTipo.ROCK:
             draw_set_color(_escuro);
             draw_circle(_x, _y, 8, false);
             draw_set_color(_cor);
             draw_triangle(_x - 6, _y - 5, _x + 7, _y - 3, _x + 1, _y + 6, false);
             break;
 
-        case PokemonTipo.FLYING:
+        case CriaturaTipo.FLYING:
             draw_set_color(c_white);
             draw_line_width(_x - (_d * 18), _y - 6, _x + (_d * 4), _y - 2, 2);
             draw_line_width(_x - (_d * 14), _y + 5, _x + (_d * 6), _y + 2, 2);
@@ -321,8 +321,8 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             draw_circle(_x + (_d * 4), _y, 4, false);
             break;
 
-        case PokemonTipo.PSYCHIC:
-        case PokemonTipo.FAIRY:
+        case CriaturaTipo.PSYCHIC:
+        case CriaturaTipo.FAIRY:
             draw_set_color(_cor);
             draw_circle(_x, _y, 6 + (sin(_t * 3) * 2), true);
             draw_circle(_x, _y, 11 + (sin(_t * 3 + 1) * 2), true);
@@ -330,7 +330,7 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             draw_circle(_x, _y, 3, false);
             break;
 
-        case PokemonTipo.DRAGON:
+        case CriaturaTipo.DRAGON:
             draw_set_alpha(0.5);
             draw_set_color(make_color_rgb(255, 150, 70));
             draw_circle(_x, _y, 12, false);
@@ -339,14 +339,14 @@ function battle_vfx_draw_projetil(_x, _y, _tipo, _direcao, _t) {
             draw_circle(_x, _y, 8, false);
             break;
 
-        case PokemonTipo.DARK:
+        case CriaturaTipo.DARK:
             draw_set_color(_escuro);
             draw_line_width(_x - 10, _y + 10, _x + 10, _y - 10, 5);
             draw_set_color(_cor);
             draw_line_width(_x - 8, _y + 8, _x + 8, _y - 8, 2);
             break;
 
-        case PokemonTipo.FIGHTING:
+        case CriaturaTipo.FIGHTING:
             draw_set_color(_cor);
             draw_circle(_x, _y, 8, false);
             draw_set_color(c_white);

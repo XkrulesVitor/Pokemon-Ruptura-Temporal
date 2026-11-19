@@ -34,12 +34,12 @@ vence os líderes das cidades e precisa fechar o rasgo.
 ## 5. Sprints
 - [x] **Sprint 0: Fundação**: git com commit base, caminhos fixos removidos, scripts soltos em `tools/legacy`, autoteste com screenshots.
 - [x] **Sprint 1/2 (parte 1): Troca de conteúdo**: roster e mundo originais em JSON, textos da tela trocados, placeholders no lugar da arte de terceiros.
-- [ ] **Sprint 1/2 (parte 2): Restante da troca**
-  - Levar itens, rotas e classes de treinador para JSON (ainda estão no código, já com nomes próprios).
-  - Renomear identificadores internos `pokemon_*` / `Pokemon*` e os recursos `scr_pokemon_*`, `obj_pokemon_batalha` (refatoração mecânica, sem mudar comportamento).
-  - Revisar `docs/*_balance_report*` e `docs/type_archetype_skill_catalog.txt`, que ainda citam as espécies antigas.
-  - Arte original de criaturas, treinadores, cidades, itens e interface (o usuário adiciona; o jogo já procura os arquivos).
-  - Fontes com licença livre em `datafiles/fonts_jogo/`.
+- [x] **Sprint 1/2 (parte 2): Restante da troca**
+  - Itens, lojas por cidade e ordem da mochila em `datafiles/data/itens.json`; rotas em `rotas.json`; classes de treinador em `treinadores.json`.
+  - Identificadores internos renomeados (`tools/renomear_identificadores.py`): `pokemon_*` -> `criatura_*`, `Pokemon*` -> `Criatura*`, `pokedex_*` -> `bestiario_*`, recursos `scr_criatura_*`, `scr_bestiario`, `obj_criatura_batalha`. O arquivo do projeto continua `PokemonRogueLike.yyp` e os IDs internos de itens (ex.: `pokebola`) ficam iguais para nao quebrar saves.
+  - Save da loja permanente migra sozinho de `pokemon_roguelike_meta.ini` para `meta_progresso.ini`.
+  - Relatorios de balanceamento antigos movidos para `docs/legado/`.
+  - Pendente: arte original (o usuario adiciona) e fontes livres em `datafiles/fonts_jogo/`.
 - [x] **Sprint 3: Fechar a run**
   - [x] Chefe final: depois de vencer o último líder, aparece o marcador "Rasgo Temporal" (X) na última cidade. Aeonox luta em 3 fases (`chefe_fases` em `mundo.json`, todas no nível 30, que é o máximo do jogo). Entre fases a criatura ativa recupera 25% do HP. Usa o mesmo sistema de time dos treinadores (`battle_context == "chefe"`).
   - [x] Tela de vitória (`DemoEstado.VITORIA_FINAL`): céu com a fenda se fechando, equipe vencedora, créditos rolando (`creditos` em `mundo.json`), +12 Fragmentos. No Desafio Diário, vencer o chefe vale +5000 pontos.
@@ -74,7 +74,7 @@ vence os líderes das cidades e precisa fechar o rasgo.
 - [ ] **Sprint 8: Lançamento**: BGM/SFX com licença livre, PT-BR/EN-US, balanceamento, build testado em máquina limpa.
 
 ## 6. Regras para a IA
-* Leia `scr_conteudo`, `scr_pokemon_data`, `scr_pokemon_progressao` e `scr_demo_playable` antes de grandes refatorações.
+* Leia `scr_conteudo`, `scr_criatura_data`, `scr_criatura_progressao` e `scr_demo_playable` antes de grandes refatorações.
 * Depois de mudar código, compile (`.codex_tools\gms.cmd compile --target=windows --errors-only PokemonRogueLike.yyp`)
   e rode `tools\autoteste.ps1`; confira o `log.txt` e os screenshots.
 * Novo conteúdo nunca pode copiar nomes, personagens, arte, músicas ou mapas de jogos existentes.

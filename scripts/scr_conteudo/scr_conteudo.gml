@@ -4,39 +4,39 @@
 
 function conteudo_tipo_de_texto(_texto) {
     switch (string_lower(string(_texto))) {
-        case "normal": return PokemonTipo.NORMAL;
-        case "fogo": return PokemonTipo.FIRE;
-        case "agua": return PokemonTipo.WATER;
-        case "grama": return PokemonTipo.GRASS;
-        case "eletrico": return PokemonTipo.ELECTRIC;
-        case "gelo": return PokemonTipo.ICE;
-        case "lutador": return PokemonTipo.FIGHTING;
-        case "veneno": return PokemonTipo.POISON;
-        case "terra": return PokemonTipo.GROUND;
-        case "voador": return PokemonTipo.FLYING;
-        case "psiquico": return PokemonTipo.PSYCHIC;
-        case "inseto": return PokemonTipo.BUG;
-        case "pedra": return PokemonTipo.ROCK;
-        case "fantasma": return PokemonTipo.GHOST;
-        case "dragao": return PokemonTipo.DRAGON;
-        case "sombrio": return PokemonTipo.DARK;
-        case "aco": return PokemonTipo.STEEL;
-        case "fada": return PokemonTipo.FAIRY;
+        case "normal": return CriaturaTipo.NORMAL;
+        case "fogo": return CriaturaTipo.FIRE;
+        case "agua": return CriaturaTipo.WATER;
+        case "grama": return CriaturaTipo.GRASS;
+        case "eletrico": return CriaturaTipo.ELECTRIC;
+        case "gelo": return CriaturaTipo.ICE;
+        case "lutador": return CriaturaTipo.FIGHTING;
+        case "veneno": return CriaturaTipo.POISON;
+        case "terra": return CriaturaTipo.GROUND;
+        case "voador": return CriaturaTipo.FLYING;
+        case "psiquico": return CriaturaTipo.PSYCHIC;
+        case "inseto": return CriaturaTipo.BUG;
+        case "pedra": return CriaturaTipo.ROCK;
+        case "fantasma": return CriaturaTipo.GHOST;
+        case "dragao": return CriaturaTipo.DRAGON;
+        case "sombrio": return CriaturaTipo.DARK;
+        case "aco": return CriaturaTipo.STEEL;
+        case "fada": return CriaturaTipo.FAIRY;
     }
 
-    return PokemonTipo.NONE;
+    return CriaturaTipo.NONE;
 }
 
 function conteudo_raridade_de_texto(_texto) {
     switch (string_lower(string(_texto))) {
-        case "incomum": return PokemonRaridade.UNCOMMON;
-        case "raro": return PokemonRaridade.RARE;
-        case "epico": return PokemonRaridade.EPIC;
-        case "lendario": return PokemonRaridade.LEGENDARY;
-        case "ultra_raro": return PokemonRaridade.ULTRA_RARE;
+        case "incomum": return CriaturaRaridade.UNCOMMON;
+        case "raro": return CriaturaRaridade.RARE;
+        case "epico": return CriaturaRaridade.EPIC;
+        case "lendario": return CriaturaRaridade.LEGENDARY;
+        case "ultra_raro": return CriaturaRaridade.ULTRA_RARE;
     }
 
-    return PokemonRaridade.COMMON;
+    return CriaturaRaridade.COMMON;
 }
 
 function conteudo_ler_json(_relativo) {
@@ -120,8 +120,8 @@ function conteudo_garantir() {
             Sprite: string(conteudo_struct_get(_c, "sprite", ""))
         };
 
-        if (_info.Tipo1 == PokemonTipo.NONE) {
-            _info.Tipo1 = PokemonTipo.NORMAL;
+        if (_info.Tipo1 == CriaturaTipo.NONE) {
+            _info.Tipo1 = CriaturaTipo.NORMAL;
         }
 
         variable_struct_set(_conteudo.Criaturas, string(_id), _info);
@@ -224,4 +224,23 @@ function conteudo_mundo_texto(_chave, _padrao) {
 function conteudo_cidades() {
     var _mundo = conteudo_garantir().Mundo;
     return conteudo_struct_get(_mundo, "cidades", []);
+}
+
+// Arquivos de dados auxiliares (itens, rotas, treinadores), lidos uma vez e guardados.
+function conteudo_dados(_nome) {
+    if (!variable_global_exists("conteudo_dados_cache") || !is_struct(global.conteudo_dados_cache)) {
+        global.conteudo_dados_cache = {};
+    }
+
+    if (!variable_struct_exists(global.conteudo_dados_cache, _nome)) {
+        var _json = conteudo_ler_json("datafiles/data/" + _nome + ".json");
+
+        if (!is_struct(_json)) {
+            show_error("Nao foi possivel carregar datafiles/data/" + _nome + ".json.", true);
+        }
+
+        variable_struct_set(global.conteudo_dados_cache, _nome, _json);
+    }
+
+    return variable_struct_get(global.conteudo_dados_cache, _nome);
 }

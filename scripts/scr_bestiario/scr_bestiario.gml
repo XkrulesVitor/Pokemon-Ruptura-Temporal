@@ -1,4 +1,4 @@
-function PokedexEntrada(_id, _nome, _tipo1, _tipo2, _hp, _atk, _def, _spd) constructor {
+function BestiarioEntrada(_id, _nome, _tipo1, _tipo2, _hp, _atk, _def, _spd) constructor {
     ID = _id;
     Nome = _nome;
     Tipo1 = _tipo1;
@@ -7,81 +7,81 @@ function PokedexEntrada(_id, _nome, _tipo1, _tipo2, _hp, _atk, _def, _spd) const
     Attack = _atk;
     Defense = _def;
     Speed = _spd;
-    RaridadePadrao = argument_count >= 9 ? argument[8] : PokemonRaridade.COMMON;
+    RaridadePadrao = argument_count >= 9 ? argument[8] : CriaturaRaridade.COMMON;
     HabilidadeInicialNome = argument_count >= 10 ? argument[9] : "-";
-    HabilidadeInicialTipo = argument_count >= 11 ? argument[10] : PokemonTipo.NONE;
+    HabilidadeInicialTipo = argument_count >= 11 ? argument[10] : CriaturaTipo.NONE;
     Descoberto = false;
     Capturado = false;
     Capturas = 0;
 }
 
-function pokedex_save_path() {
+function bestiario_save_path() {
     return (autoteste_ativo() ? "autoteste_" : "") + "bestiario_save.json";
 }
 
-function pokedex_inicializar() {
-    var _pokedex_db = argument_count > 0 ? argument[0] : undefined;
+function bestiario_inicializar() {
+    var _bestiario_db = argument_count > 0 ? argument[0] : undefined;
 
-    if (argument_count < 1 || !is_struct(_pokedex_db)) {
-        if (variable_global_exists("pokedex")) {
-            _pokedex_db = global.pokedex;
+    if (argument_count < 1 || !is_struct(_bestiario_db)) {
+        if (variable_global_exists("bestiario")) {
+            _bestiario_db = global.bestiario;
         } else {
-            _pokedex_db = pokemon_db_criar();
-            global.pokedex = _pokedex_db;
+            _bestiario_db = criatura_db_criar();
+            global.bestiario = _bestiario_db;
         }
     }
 
-    global.pokedex_estado = {};
+    global.bestiario_estado = {};
 
-    var _ids = variable_struct_get_names(_pokedex_db);
+    var _ids = variable_struct_get_names(_bestiario_db);
 
     for (var _i = 0; _i < array_length(_ids); _i += 1) {
         var _key = _ids[_i];
-        var _pokemon = variable_struct_get(_pokedex_db, _key);
-        var _habilidade_inicial = pokemon_habilidade_inicial_get(_pokemon);
+        var _criatura = variable_struct_get(_bestiario_db, _key);
+        var _habilidade_inicial = criatura_habilidade_inicial_get(_criatura);
 
         variable_struct_set(
-            global.pokedex_estado,
+            global.bestiario_estado,
             _key,
-            new PokedexEntrada(
-                _pokemon.ID,
-                _pokemon.Nome,
-                _pokemon.Tipo1,
-                _pokemon.Tipo2,
-                _pokemon.HpMax,
-                _pokemon.Attack,
-                _pokemon.Defense,
-                _pokemon.Speed,
-                variable_struct_exists(_pokemon, "RaridadePadrao") ? _pokemon.RaridadePadrao : PokemonRaridade.COMMON,
+            new BestiarioEntrada(
+                _criatura.ID,
+                _criatura.Nome,
+                _criatura.Tipo1,
+                _criatura.Tipo2,
+                _criatura.HpMax,
+                _criatura.Attack,
+                _criatura.Defense,
+                _criatura.Speed,
+                variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON,
                 is_struct(_habilidade_inicial) ? _habilidade_inicial.Nome : "-",
-                is_struct(_habilidade_inicial) ? _habilidade_inicial.TipoElementar : PokemonTipo.NONE
+                is_struct(_habilidade_inicial) ? _habilidade_inicial.TipoElementar : CriaturaTipo.NONE
             )
         );
     }
 
-    pokedex_carregar();
+    bestiario_carregar();
 }
 
-function pokedex_garantir() {
-    if (!variable_global_exists("pokedex_estado") || !is_struct(global.pokedex_estado)) {
-        pokedex_inicializar();
+function bestiario_garantir() {
+    if (!variable_global_exists("bestiario_estado") || !is_struct(global.bestiario_estado)) {
+        bestiario_inicializar();
     }
 }
 
-function pokedex_get(_id) {
-    pokedex_garantir();
+function bestiario_get(_id) {
+    bestiario_garantir();
 
     var _key = string(_id);
 
-    if (!variable_struct_exists(global.pokedex_estado, _key)) {
+    if (!variable_struct_exists(global.bestiario_estado, _key)) {
         return undefined;
     }
 
-    return variable_struct_get(global.pokedex_estado, _key);
+    return variable_struct_get(global.bestiario_estado, _key);
 }
 
-function pokedex_descobrir(_id) {
-    var _entry = pokedex_get(_id);
+function bestiario_descobrir(_id) {
+    var _entry = bestiario_get(_id);
 
     if (!is_struct(_entry)) {
         return false;
@@ -90,8 +90,8 @@ function pokedex_descobrir(_id) {
     return _entry.Capturado;
 }
 
-function pokedex_capturar(_id) {
-    var _entry = pokedex_get(_id);
+function bestiario_capturar(_id) {
+    var _entry = bestiario_get(_id);
 
     if (!is_struct(_entry)) {
         return false;
@@ -100,19 +100,19 @@ function pokedex_capturar(_id) {
     _entry.Descoberto = true;
     _entry.Capturado = true;
     _entry.Capturas = variable_struct_exists(_entry, "Capturas") ? (_entry.Capturas + 1) : 1;
-    pokedex_salvar();
+    bestiario_salvar();
     return true;
 }
 
-function pokedex_exportar_save_struct() {
-    pokedex_garantir();
+function bestiario_exportar_save_struct() {
+    bestiario_garantir();
 
     var _save = {};
-    var _ids = variable_struct_get_names(global.pokedex_estado);
+    var _ids = variable_struct_get_names(global.bestiario_estado);
 
     for (var _i = 0; _i < array_length(_ids); _i += 1) {
         var _key = _ids[_i];
-        var _entry = variable_struct_get(global.pokedex_estado, _key);
+        var _entry = variable_struct_get(global.bestiario_estado, _key);
 
         variable_struct_set(_save, _key, {
             descoberto: _entry.Descoberto,
@@ -124,21 +124,21 @@ function pokedex_exportar_save_struct() {
     return _save;
 }
 
-function pokedex_salvar() {
-    pokedex_garantir();
+function bestiario_salvar() {
+    bestiario_garantir();
 
-    var _json = json_stringify(pokedex_exportar_save_struct());
-    var _file = file_text_open_write(pokedex_save_path());
+    var _json = json_stringify(bestiario_exportar_save_struct());
+    var _file = file_text_open_write(bestiario_save_path());
     file_text_write_string(_file, _json);
     file_text_close(_file);
 }
 
-function pokedex_carregar() {
-    if (!file_exists(pokedex_save_path())) {
+function bestiario_carregar() {
+    if (!file_exists(bestiario_save_path())) {
         return false;
     }
 
-    var _file = file_text_open_read(pokedex_save_path());
+    var _file = file_text_open_read(bestiario_save_path());
     var _json = "";
 
     while (!file_text_eof(_file)) {
@@ -163,11 +163,11 @@ function pokedex_carregar() {
     for (var _i = 0; _i < array_length(_ids); _i += 1) {
         var _key = _ids[_i];
 
-        if (!variable_struct_exists(global.pokedex_estado, _key)) {
+        if (!variable_struct_exists(global.bestiario_estado, _key)) {
             continue;
         }
 
-        var _entry = variable_struct_get(global.pokedex_estado, _key);
+        var _entry = variable_struct_get(global.bestiario_estado, _key);
         var _saved = variable_struct_get(_save, _key);
         _entry.Descoberto = variable_struct_exists(_saved, "descoberto") && _saved.descoberto;
         _entry.Capturado = variable_struct_exists(_saved, "capturado") && _saved.capturado;
@@ -177,7 +177,7 @@ function pokedex_carregar() {
     return true;
 }
 
-function pokedex_ui_get_sprite(_id) {
+function bestiario_ui_get_sprite(_id) {
     if (!instance_exists(obj_game_manager)) {
         return -1;
     }
@@ -185,82 +185,82 @@ function pokedex_ui_get_sprite(_id) {
     var _key = string(_id);
     var _gm = instance_find(obj_game_manager, 0);
 
-    if (variable_struct_exists(_gm.pokedex_ui_sprites, _key)) {
-        return variable_struct_get(_gm.pokedex_ui_sprites, _key);
+    if (variable_struct_exists(_gm.bestiario_ui_sprites, _key)) {
+        return variable_struct_get(_gm.bestiario_ui_sprites, _key);
     }
 
-    var _sprite = pokemon_sprite_carregar_pose(_id, "idle", -1);
-    variable_struct_set(_gm.pokedex_ui_sprites, _key, _sprite);
+    var _sprite = criatura_sprite_carregar_pose(_id, "idle", -1);
+    variable_struct_set(_gm.bestiario_ui_sprites, _key, _sprite);
     return _sprite;
 }
 
-function pokedex_ui_liberar_sprites() {
+function bestiario_ui_liberar_sprites() {
     if (!instance_exists(obj_game_manager)) {
         return;
     }
 
     var _gm = instance_find(obj_game_manager, 0);
-    var _keys = variable_struct_get_names(_gm.pokedex_ui_sprites);
+    var _keys = variable_struct_get_names(_gm.bestiario_ui_sprites);
 
     for (var _i = 0; _i < array_length(_keys); _i += 1) {
-        var _sprite = variable_struct_get(_gm.pokedex_ui_sprites, _keys[_i]);
-        pokemon_sprite_liberar(_sprite);
+        var _sprite = variable_struct_get(_gm.bestiario_ui_sprites, _keys[_i]);
+        criatura_sprite_liberar(_sprite);
     }
 
-    _gm.pokedex_ui_sprites = {};
+    _gm.bestiario_ui_sprites = {};
 }
 
-function pokedex_tipo_nome(_tipo) {
-    if (_tipo == PokemonTipo.NONE) {
+function bestiario_tipo_nome(_tipo) {
+    if (_tipo == CriaturaTipo.NONE) {
         return "-";
     }
 
-    return pokemon_nome_tipo(_tipo);
+    return criatura_nome_tipo(_tipo);
 }
 
-function pokedex_geracao_por_id(_id) {
+function bestiario_geracao_por_id(_id) {
     // O filtro antigo de "geracao" agora filtra por estagio evolutivo (1, 2 ou 3).
     var _info = criatura_info(_id);
     return is_struct(_info) ? _info.Estagio : 0;
 }
 
-function pokedex_ui_filtros_init() {
-    if (!variable_global_exists("pokedex_filtro_geracao")) {
-        global.pokedex_filtro_geracao = 0;
+function bestiario_ui_filtros_init() {
+    if (!variable_global_exists("bestiario_filtro_geracao")) {
+        global.bestiario_filtro_geracao = 0;
     }
 
-    if (!variable_global_exists("pokedex_filtro_raridade")) {
-        global.pokedex_filtro_raridade = -1;
+    if (!variable_global_exists("bestiario_filtro_raridade")) {
+        global.bestiario_filtro_raridade = -1;
     }
 }
 
-function pokedex_ui_raridade_filtros() {
+function bestiario_ui_raridade_filtros() {
     return [
         -1,
-        PokemonRaridade.COMMON,
-        PokemonRaridade.UNCOMMON,
-        PokemonRaridade.RARE,
-        PokemonRaridade.EPIC,
-        PokemonRaridade.LEGENDARY
+        CriaturaRaridade.COMMON,
+        CriaturaRaridade.UNCOMMON,
+        CriaturaRaridade.RARE,
+        CriaturaRaridade.EPIC,
+        CriaturaRaridade.LEGENDARY
     ];
 }
 
-function pokedex_ui_raridade_filtro_nome(_raridade) {
+function bestiario_ui_raridade_filtro_nome(_raridade) {
     if (_raridade < 0) {
         return "Todas";
     }
 
-    return pokemon_raridade_nome(_raridade);
+    return criatura_raridade_nome(_raridade);
 }
 
-function pokedex_ui_button_hit(_mx, _my, _x, _y, _w, _h) {
+function bestiario_ui_button_hit(_mx, _my, _x, _y, _w, _h) {
     return _mx >= _x && _mx <= _x + _w && _my >= _y && _my <= _y + _h;
 }
 
-function pokedex_ui_draw_filter_button(_label, _x, _y, _w, _h, _active) {
+function bestiario_ui_draw_filter_button(_label, _x, _y, _w, _h, _active) {
     var _mx = device_mouse_x_to_gui(0);
     var _my = device_mouse_y_to_gui(0);
-    var _hover = pokedex_ui_button_hit(_mx, _my, _x, _y, _w, _h);
+    var _hover = bestiario_ui_button_hit(_mx, _my, _x, _y, _w, _h);
     var _grow = _hover ? 2 : 0;
     var _dx = _x - _grow;
     var _dy = _y - _grow;
@@ -284,28 +284,28 @@ function pokedex_ui_draw_filter_button(_label, _x, _y, _w, _h, _active) {
     battle_ui_draw_text_center_fit(_dx + (_dw * 0.5), _dy + (_dh * 0.5), _label, _dw - 12, _dh - 8, 0.62, sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
 }
 
-function pokedex_ui_entry_passes_filters(_entry) {
+function bestiario_ui_entry_passes_filters(_entry) {
     if (!is_struct(_entry) || !_entry.Capturado) {
         return false;
     }
 
-    if (global.pokedex_filtro_geracao > 0 && pokedex_geracao_por_id(_entry.ID) != global.pokedex_filtro_geracao) {
+    if (global.bestiario_filtro_geracao > 0 && bestiario_geracao_por_id(_entry.ID) != global.bestiario_filtro_geracao) {
         return false;
     }
 
-    if (global.pokedex_filtro_raridade >= 0 && _entry.RaridadePadrao != global.pokedex_filtro_raridade) {
+    if (global.bestiario_filtro_raridade >= 0 && _entry.RaridadePadrao != global.bestiario_filtro_raridade) {
         return false;
     }
 
     return true;
 }
 
-function pokedex_ui_step() {
-    if (!variable_global_exists("pokedex_overlay_aberto") || !global.pokedex_overlay_aberto) {
+function bestiario_ui_step() {
+    if (!variable_global_exists("bestiario_overlay_aberto") || !global.bestiario_overlay_aberto) {
         return false;
     }
 
-    pokedex_ui_filtros_init();
+    bestiario_ui_filtros_init();
 
     if (!mouse_check_button_pressed(mb_left)) {
         return false;
@@ -320,20 +320,20 @@ function pokedex_ui_step() {
     for (var _g = 0; _g <= 3; _g += 1) {
         var _btn_x = _x + 88 + (_g * 72);
 
-        if (pokedex_ui_button_hit(_mx, _my, _btn_x, _gen_y, 66, 28)) {
-            global.pokedex_filtro_geracao = _g;
+        if (bestiario_ui_button_hit(_mx, _my, _btn_x, _gen_y, 66, 28)) {
+            global.bestiario_filtro_geracao = _g;
             return true;
         }
     }
 
-    var _rarities = pokedex_ui_raridade_filtros();
+    var _rarities = bestiario_ui_raridade_filtros();
     var _rar_x = _x + 88;
 
     for (var _r = 0; _r < array_length(_rarities); _r += 1) {
         var _rar_w = _r == 0 ? 76 : 94;
 
-        if (pokedex_ui_button_hit(_mx, _my, _rar_x, _rar_y, _rar_w, 28)) {
-            global.pokedex_filtro_raridade = _rarities[_r];
+        if (bestiario_ui_button_hit(_mx, _my, _rar_x, _rar_y, _rar_w, 28)) {
+            global.bestiario_filtro_raridade = _rarities[_r];
             return true;
         }
 
@@ -343,9 +343,9 @@ function pokedex_ui_step() {
     return false;
 }
 
-function pokedex_ui_draw_overlay() {
-    pokedex_garantir();
-    pokedex_ui_filtros_init();
+function bestiario_ui_draw_overlay() {
+    bestiario_garantir();
+    bestiario_ui_filtros_init();
 
     var _gw = display_get_gui_width();
     var _gh = display_get_gui_height();
@@ -361,18 +361,18 @@ function pokedex_ui_draw_overlay() {
     draw_set_color(_text_color);
     draw_text(56, 44, "BESTIARIO");
 
-    var _ids = variable_struct_get_names(global.pokedex_estado);
+    var _ids = variable_struct_get_names(global.bestiario_estado);
     var _capturados_total = 0;
     var _filtered = [];
 
     for (var _count_i = 0; _count_i < array_length(_ids); _count_i += 1) {
-        var _count_entry = variable_struct_get(global.pokedex_estado, _ids[_count_i]);
+        var _count_entry = variable_struct_get(global.bestiario_estado, _ids[_count_i]);
 
         if (_count_entry.Capturado) {
             _capturados_total += 1;
         }
 
-        if (pokedex_ui_entry_passes_filters(_count_entry)) {
+        if (bestiario_ui_entry_passes_filters(_count_entry)) {
             array_push(_filtered, _ids[_count_i]);
         }
     }
@@ -383,17 +383,17 @@ function pokedex_ui_draw_overlay() {
 
     for (var _g = 0; _g <= 3; _g += 1) {
         var _gen_label = _g == 0 ? "Todos" : "Est. " + string(_g);
-        pokedex_ui_draw_filter_button(_gen_label, 144 + (_g * 72), 92, 66, 28, global.pokedex_filtro_geracao == _g);
+        bestiario_ui_draw_filter_button(_gen_label, 144 + (_g * 72), 92, 66, 28, global.bestiario_filtro_geracao == _g);
     }
 
     draw_text(56, 136, "Raridade");
-    var _rarities = pokedex_ui_raridade_filtros();
+    var _rarities = bestiario_ui_raridade_filtros();
     var _rar_x = 144;
 
     for (var _r = 0; _r < array_length(_rarities); _r += 1) {
         var _raridade = _rarities[_r];
         var _rar_w = _r == 0 ? 76 : 94;
-        pokedex_ui_draw_filter_button(pokedex_ui_raridade_filtro_nome(_raridade), _rar_x, 130, _rar_w, 28, global.pokedex_filtro_raridade == _raridade);
+        bestiario_ui_draw_filter_button(bestiario_ui_raridade_filtro_nome(_raridade), _rar_x, 130, _rar_w, 28, global.bestiario_filtro_raridade == _raridade);
         _rar_x += _rar_w + 8;
     }
 
@@ -416,7 +416,7 @@ function pokedex_ui_draw_overlay() {
     }
 
     for (var _i = 0; _i < _shown; _i += 1) {
-        var _entry = variable_struct_get(global.pokedex_estado, _filtered[_i]);
+        var _entry = variable_struct_get(global.bestiario_estado, _filtered[_i]);
         var _col = _i mod _cols;
         var _row = floor(_i / _cols);
         var _x = _start_x + (_col * (_cell_w + _gap));
@@ -430,9 +430,9 @@ function pokedex_ui_draw_overlay() {
 
         draw_set_color(make_color_rgb(196, 46, 54));
         draw_rectangle(_x + 4, _y + 4, _x + _cell_w - 4, _y + 32, false);
-        pokemon_raridade_draw_icon(_entry.RaridadePadrao, _x + 12, _y + 8, 20);
+        criatura_raridade_draw_icon(_entry.RaridadePadrao, _x + 12, _y + 8, 20);
 
-        var _sprite = pokedex_ui_get_sprite(_entry.ID);
+        var _sprite = bestiario_ui_get_sprite(_entry.ID);
 
         if (sprite_exists(_sprite)) {
             var _spr_scale = min(1.15, 62 / max(1, max(sprite_get_width(_sprite), sprite_get_height(_sprite))));
@@ -447,9 +447,9 @@ function pokedex_ui_draw_overlay() {
 
         var _card_text = make_color_rgb(58, 42, 36); // corpo do card e claro
         draw_set_color(_card_text);
-        battle_ui_draw_text_fit(_x + 106, _y + 44, pokedex_tipo_nome(_entry.Tipo1) + " / " + pokedex_tipo_nome(_entry.Tipo2), _cell_w - 122, 0.62, _card_text);
+        battle_ui_draw_text_fit(_x + 106, _y + 44, bestiario_tipo_nome(_entry.Tipo1) + " / " + bestiario_tipo_nome(_entry.Tipo2), _cell_w - 122, 0.62, _card_text);
         battle_ui_draw_text_fit(_x + 106, _y + 66, "Inicial: " + _entry.HabilidadeInicialNome, _cell_w - 122, 0.58, _card_text);
-        battle_ui_draw_text_fit(_x + 106, _y + 88, "Raridade: " + pokemon_raridade_nome(_entry.RaridadePadrao), _cell_w - 122, 0.58, _card_text);
+        battle_ui_draw_text_fit(_x + 106, _y + 88, "Raridade: " + criatura_raridade_nome(_entry.RaridadePadrao), _cell_w - 122, 0.58, _card_text);
         battle_ui_draw_text_fit(_x + 106, _y + 106, "HP " + string(_entry.HpMax) + "  ATK " + string(_entry.Attack) + "  DEF " + string(_entry.Defense) + "  VEL " + string(_entry.Speed), _cell_w - 122, 0.52, _card_text);
     }
 

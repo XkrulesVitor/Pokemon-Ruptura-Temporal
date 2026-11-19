@@ -2,16 +2,16 @@
   "$GMFolder":"",
   "%Name":"Scripts",
   "children":[
-    {"name":"scr_pokemon_data","path":"scripts/scr_pokemon_data/scr_pokemon_data.yy",},
-    {"name":"scr_pokemon_progressao","path":"scripts/scr_pokemon_progressao/scr_pokemon_progressao.yy",},
-    {"name":"scr_pokemon_combate","path":"scripts/scr_pokemon_combate/scr_pokemon_combate.yy",},
+    {"name":"scr_criatura_data","path":"scripts/scr_criatura_data/scr_criatura_data.yy",},
+    {"name":"scr_criatura_progressao","path":"scripts/scr_criatura_progressao/scr_criatura_progressao.yy",},
+    {"name":"scr_criatura_combate","path":"scripts/scr_criatura_combate/scr_criatura_combate.yy",},
     {"name":"scr_roguelike_run","path":"scripts/scr_roguelike_run/scr_roguelike_run.yy",},
     {"name":"scr_event_manager","path":"scripts/scr_event_manager/scr_event_manager.yy",},
-    {"name":"scr_pokedex","path":"scripts/scr_pokedex/scr_pokedex.yy",},
+    {"name":"scr_bestiario","path":"scripts/scr_bestiario/scr_bestiario.yy",},
     {"name":"scr_battle_ui","path":"scripts/scr_battle_ui/scr_battle_ui.yy",},
     {"name":"scr_demo_playable","path":"scripts/scr_demo_playable/scr_demo_playable.yy",},
-    {"name":"scr_pokemon_sprites","path":"scripts/scr_pokemon_sprites/scr_pokemon_sprites.yy",},
-    {"name":"scr_pokemon_batalha_api","path":"scripts/scr_pokemon_batalha_api/scr_pokemon_batalha_api.yy",}
+    {"name":"scr_criatura_sprites","path":"scripts/scr_criatura_sprites/scr_criatura_sprites.yy",},
+    {"name":"scr_criatura_batalha_api","path":"scripts/scr_criatura_batalha_api/scr_criatura_batalha_api.yy",}
   ],
   "filterType":"GMScript",
   "folderPath":"folders/Scripts.yy",

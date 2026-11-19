@@ -46,8 +46,8 @@ function battle_ui_init() {
         global.velocidade_jogo = global.time_scale;
     }
 
-    if (!variable_global_exists("pokedex_overlay_aberto")) {
-        global.pokedex_overlay_aberto = false;
+    if (!variable_global_exists("bestiario_overlay_aberto")) {
+        global.bestiario_overlay_aberto = false;
     }
 
     if (!variable_global_exists("mochila_overlay_aberta")) {
@@ -276,24 +276,24 @@ function battle_ui_draw_text_center_fit(_x, _y, _text, _max_w, _max_h, _scale, _
 
 function battle_ui_type_row(_tipo) {
     switch (_tipo) {
-        case PokemonTipo.NORMAL: return 0;
-        case PokemonTipo.FIGHTING: return 1;
-        case PokemonTipo.FLYING: return 2;
-        case PokemonTipo.POISON: return 3;
-        case PokemonTipo.GROUND: return 4;
-        case PokemonTipo.ROCK: return 5;
-        case PokemonTipo.BUG: return 6;
-        case PokemonTipo.GHOST: return 7;
-        case PokemonTipo.STEEL: return 8;
-        case PokemonTipo.FIRE: return 10;
-        case PokemonTipo.WATER: return 11;
-        case PokemonTipo.GRASS: return 12;
-        case PokemonTipo.ELECTRIC: return 13;
-        case PokemonTipo.PSYCHIC: return 14;
-        case PokemonTipo.ICE: return 15;
-        case PokemonTipo.DRAGON: return 16;
-        case PokemonTipo.DARK: return 17;
-        case PokemonTipo.FAIRY: return 18;
+        case CriaturaTipo.NORMAL: return 0;
+        case CriaturaTipo.FIGHTING: return 1;
+        case CriaturaTipo.FLYING: return 2;
+        case CriaturaTipo.POISON: return 3;
+        case CriaturaTipo.GROUND: return 4;
+        case CriaturaTipo.ROCK: return 5;
+        case CriaturaTipo.BUG: return 6;
+        case CriaturaTipo.GHOST: return 7;
+        case CriaturaTipo.STEEL: return 8;
+        case CriaturaTipo.FIRE: return 10;
+        case CriaturaTipo.WATER: return 11;
+        case CriaturaTipo.GRASS: return 12;
+        case CriaturaTipo.ELECTRIC: return 13;
+        case CriaturaTipo.PSYCHIC: return 14;
+        case CriaturaTipo.ICE: return 15;
+        case CriaturaTipo.DRAGON: return 16;
+        case CriaturaTipo.DARK: return 17;
+        case CriaturaTipo.FAIRY: return 18;
     }
 
     return 9;
@@ -301,23 +301,23 @@ function battle_ui_type_row(_tipo) {
 
 function battle_ui_type_color(_tipo) {
     switch (_tipo) {
-        case PokemonTipo.FIRE: return make_color_rgb(238, 116, 48);
-        case PokemonTipo.WATER: return make_color_rgb(80, 136, 232);
-        case PokemonTipo.GRASS: return make_color_rgb(104, 184, 72);
-        case PokemonTipo.ELECTRIC: return make_color_rgb(248, 208, 48);
-        case PokemonTipo.POISON: return make_color_rgb(160, 64, 160);
-        case PokemonTipo.FIGHTING: return make_color_rgb(194, 76, 48);
-        case PokemonTipo.GROUND: return make_color_rgb(210, 172, 96);
-        case PokemonTipo.ROCK: return make_color_rgb(176, 144, 80);
-        case PokemonTipo.FLYING: return make_color_rgb(144, 168, 232);
-        case PokemonTipo.PSYCHIC: return make_color_rgb(236, 88, 136);
-        case PokemonTipo.BUG: return make_color_rgb(146, 188, 58);
-        case PokemonTipo.GHOST: return make_color_rgb(112, 88, 152);
-        case PokemonTipo.DRAGON: return make_color_rgb(112, 88, 216);
-        case PokemonTipo.STEEL: return make_color_rgb(168, 184, 196);
-        case PokemonTipo.DARK: return make_color_rgb(88, 72, 104);
-        case PokemonTipo.FAIRY: return make_color_rgb(238, 153, 172);
-        case PokemonTipo.NORMAL: return make_color_rgb(168, 168, 120);
+        case CriaturaTipo.FIRE: return make_color_rgb(238, 116, 48);
+        case CriaturaTipo.WATER: return make_color_rgb(80, 136, 232);
+        case CriaturaTipo.GRASS: return make_color_rgb(104, 184, 72);
+        case CriaturaTipo.ELECTRIC: return make_color_rgb(248, 208, 48);
+        case CriaturaTipo.POISON: return make_color_rgb(160, 64, 160);
+        case CriaturaTipo.FIGHTING: return make_color_rgb(194, 76, 48);
+        case CriaturaTipo.GROUND: return make_color_rgb(210, 172, 96);
+        case CriaturaTipo.ROCK: return make_color_rgb(176, 144, 80);
+        case CriaturaTipo.FLYING: return make_color_rgb(144, 168, 232);
+        case CriaturaTipo.PSYCHIC: return make_color_rgb(236, 88, 136);
+        case CriaturaTipo.BUG: return make_color_rgb(146, 188, 58);
+        case CriaturaTipo.GHOST: return make_color_rgb(112, 88, 152);
+        case CriaturaTipo.DRAGON: return make_color_rgb(112, 88, 216);
+        case CriaturaTipo.STEEL: return make_color_rgb(168, 184, 196);
+        case CriaturaTipo.DARK: return make_color_rgb(88, 72, 104);
+        case CriaturaTipo.FAIRY: return make_color_rgb(238, 153, 172);
+        case CriaturaTipo.NORMAL: return make_color_rgb(168, 168, 120);
     }
 
     return make_color_rgb(120, 120, 120);
@@ -325,24 +325,24 @@ function battle_ui_type_color(_tipo) {
 
 function battle_ui_type_label(_tipo) {
     switch (_tipo) {
-        case PokemonTipo.FIRE: return "FOGO";
-        case PokemonTipo.WATER: return "AGUA";
-        case PokemonTipo.GRASS: return "GRAMA";
-        case PokemonTipo.ELECTRIC: return "ELETRICO";
-        case PokemonTipo.POISON: return "VENENO";
-        case PokemonTipo.NORMAL: return "NORMAL";
-        case PokemonTipo.FIGHTING: return "LUTADOR";
-        case PokemonTipo.FLYING: return "VOADOR";
-        case PokemonTipo.GROUND: return "TERRA";
-        case PokemonTipo.ROCK: return "PEDRA";
-        case PokemonTipo.BUG: return "INSETO";
-        case PokemonTipo.GHOST: return "FANTASMA";
-        case PokemonTipo.STEEL: return "ACO";
-        case PokemonTipo.PSYCHIC: return "PSIQUICO";
-        case PokemonTipo.ICE: return "GELO";
-        case PokemonTipo.DRAGON: return "DRAGAO";
-        case PokemonTipo.DARK: return "SOMBRIO";
-        case PokemonTipo.FAIRY: return "FADA";
+        case CriaturaTipo.FIRE: return "FOGO";
+        case CriaturaTipo.WATER: return "AGUA";
+        case CriaturaTipo.GRASS: return "GRAMA";
+        case CriaturaTipo.ELECTRIC: return "ELETRICO";
+        case CriaturaTipo.POISON: return "VENENO";
+        case CriaturaTipo.NORMAL: return "NORMAL";
+        case CriaturaTipo.FIGHTING: return "LUTADOR";
+        case CriaturaTipo.FLYING: return "VOADOR";
+        case CriaturaTipo.GROUND: return "TERRA";
+        case CriaturaTipo.ROCK: return "PEDRA";
+        case CriaturaTipo.BUG: return "INSETO";
+        case CriaturaTipo.GHOST: return "FANTASMA";
+        case CriaturaTipo.STEEL: return "ACO";
+        case CriaturaTipo.PSYCHIC: return "PSIQUICO";
+        case CriaturaTipo.ICE: return "GELO";
+        case CriaturaTipo.DRAGON: return "DRAGAO";
+        case CriaturaTipo.DARK: return "SOMBRIO";
+        case CriaturaTipo.FAIRY: return "FADA";
     }
 
     return "TIPO";
@@ -377,7 +377,7 @@ function battle_ui_skill_damage_text(_skill) {
     }
 
     if (variable_struct_exists(_skill, "TipoOpcao") && _skill.TipoOpcao == "upgrade") {
-        return pokemon_habilidade_tier_nome(_skill.TierAtual) + " > " + pokemon_habilidade_tier_nome(_skill.ProximoTier);
+        return criatura_habilidade_tier_nome(_skill.TierAtual) + " > " + criatura_habilidade_tier_nome(_skill.ProximoTier);
     }
 
     return _skill.DanoBase > 0 ? "Dano " + string(_skill.DanoBase) : "Suporte";
@@ -405,7 +405,7 @@ function battle_ui_draw_skill_summary(_skill, _x, _y, _w, _show_description) {
             var _upgrade_note = "Upgrade de tier da habilidade equipada.";
 
             if (variable_struct_exists(_skill, "ProximoTier")) {
-                _upgrade_note = pokemon_habilidade_tier_nome(_skill.TierAtual) + " > " + pokemon_habilidade_tier_nome(_skill.ProximoTier);
+                _upgrade_note = criatura_habilidade_tier_nome(_skill.TierAtual) + " > " + criatura_habilidade_tier_nome(_skill.ProximoTier);
             }
 
             draw_text_ext(_x, _y + 128, _upgrade_note, 24, _w);
@@ -1123,8 +1123,8 @@ function battle_ui_get_next_skill(_inst) {
 }
 
 function battle_ui_get_primary_ally() {
-    for (var _i = 0; _i < instance_number(obj_pokemon_batalha); _i += 1) {
-        var _inst = instance_find(obj_pokemon_batalha, _i);
+    for (var _i = 0; _i < instance_number(obj_criatura_batalha); _i += 1) {
+        var _inst = instance_find(obj_criatura_batalha, _i);
 
         if (instance_exists(_inst) && _inst.vivo && _inst.lado_batalha == LadoBatalha.ALIADO) {
             return _inst;
@@ -1162,12 +1162,12 @@ function battle_ui_draw_status_box(_inst) {
     draw_set_valign(fa_top);
     draw_set_color(_text_color);
     var _genero = _inst.genero == "" ? "" : " " + _inst.genero;
-    var _nome = string_upper(_inst.pokemon_nome) + _genero;
+    var _nome = string_upper(_inst.criatura_nome) + _genero;
     var _name_x = _x + (_is_ally ? 34 : 24);
     battle_ui_draw_text_fit(_name_x, _y + 9, _nome, _w - 150, 0.80, _text_color);
 
-    if (is_struct(_inst.pokemon_data)) {
-        var _raridade_box = variable_struct_exists(_inst.pokemon_data, "RaridadeEfetiva") ? _inst.pokemon_data.RaridadeEfetiva : (variable_struct_exists(_inst.pokemon_data, "RaridadePadrao") ? _inst.pokemon_data.RaridadePadrao : PokemonRaridade.COMMON);
+    if (is_struct(_inst.criatura_data)) {
+        var _raridade_box = variable_struct_exists(_inst.criatura_data, "RaridadeEfetiva") ? _inst.criatura_data.RaridadeEfetiva : (variable_struct_exists(_inst.criatura_data, "RaridadePadrao") ? _inst.criatura_data.RaridadePadrao : CriaturaRaridade.COMMON);
         var _raridade_x = _x + _w - (_is_ally ? 94 : 104);
         var _raridade_y = _y + 12;
         var _raridade_size = 14;
@@ -1182,11 +1182,11 @@ function battle_ui_draw_status_box(_inst) {
             draw_set_alpha(1);
         }
 
-        pokemon_raridade_draw_icon(_raridade_box, _raridade_x, _raridade_y, _raridade_size);
+        criatura_raridade_draw_icon(_raridade_box, _raridade_x, _raridade_y, _raridade_size);
 
         if (_raridade_hover) {
             _tooltip = {
-                Texto: "Raridade: " + pokemon_raridade_nome(_raridade_box),
+                Texto: "Raridade: " + criatura_raridade_nome(_raridade_box),
                 X: _raridade_x + (_raridade_size * 0.5),
                 Y: _raridade_y - 8,
                 W: _raridade_size
@@ -1215,9 +1215,9 @@ function battle_ui_draw_status_box(_inst) {
 
     var _xp_pct = 0;
 
-    if (is_struct(_inst.pokemon_data)) {
-        if (_inst.pokemon_data.ExpNecessaria > 0) {
-            _xp_pct = clamp(_inst.pokemon_data.ExpAtual / max(1, _inst.pokemon_data.ExpNecessaria), 0, 1);
+    if (is_struct(_inst.criatura_data)) {
+        if (_inst.criatura_data.ExpNecessaria > 0) {
+            _xp_pct = clamp(_inst.criatura_data.ExpAtual / max(1, _inst.criatura_data.ExpNecessaria), 0, 1);
         } else {
             _xp_pct = 1;
         }
@@ -1232,7 +1232,7 @@ function battle_ui_draw_status_box(_inst) {
     draw_set_color(make_color_rgb(72, 168, 248));
     draw_rectangle(_xp_bar_x, _xp_bar_y, _xp_bar_x + (_xp_bar_w * _xp_pct), _xp_bar_y + _xp_bar_h, false);
 
-    if (is_struct(_inst.pokemon_data)) {
+    if (is_struct(_inst.criatura_data)) {
         var _type_y = _y + (_is_ally ? 33 : 28);
         var _type_scale = _is_ally ? 0.56 : 0.56;
         var _type_w = 58 * _type_scale;
@@ -1244,11 +1244,11 @@ function battle_ui_draw_status_box(_inst) {
         var _type_gap = _type_w + 3;
         var _type_count = 0;
 
-        if (_inst.pokemon_data.Tipo1 != PokemonTipo.NONE) {
+        if (_inst.criatura_data.Tipo1 != CriaturaTipo.NONE) {
             _type_count += 1;
         }
 
-        if (_inst.pokemon_data.Tipo2 != PokemonTipo.NONE && _inst.pokemon_data.Tipo2 != _inst.pokemon_data.Tipo1) {
+        if (_inst.criatura_data.Tipo2 != CriaturaTipo.NONE && _inst.criatura_data.Tipo2 != _inst.criatura_data.Tipo1) {
             _type_count += 1;
         }
 
@@ -1263,13 +1263,13 @@ function battle_ui_draw_status_box(_inst) {
 
         var _status_x = clamp(_type_start, _type_left_limit, max(_type_left_limit, _type_right_limit));
 
-        if (_inst.pokemon_data.Tipo1 != PokemonTipo.NONE) {
-            battle_ui_draw_type_icon(_inst.pokemon_data.Tipo1, _status_x, _type_y, _type_scale);
+        if (_inst.criatura_data.Tipo1 != CriaturaTipo.NONE) {
+            battle_ui_draw_type_icon(_inst.criatura_data.Tipo1, _status_x, _type_y, _type_scale);
             _status_x += _type_gap;
         }
 
-        if (_inst.pokemon_data.Tipo2 != PokemonTipo.NONE && _inst.pokemon_data.Tipo2 != _inst.pokemon_data.Tipo1) {
-            battle_ui_draw_type_icon(_inst.pokemon_data.Tipo2, _status_x, _type_y, _type_scale);
+        if (_inst.criatura_data.Tipo2 != CriaturaTipo.NONE && _inst.criatura_data.Tipo2 != _inst.criatura_data.Tipo1) {
+            battle_ui_draw_type_icon(_inst.criatura_data.Tipo2, _status_x, _type_y, _type_scale);
             _status_x += _type_gap;
         }
     }
@@ -1407,7 +1407,7 @@ function battle_ui_draw_control_panel() {
             case "1.5x": _active = global.time_scale == 1.5; break;
             case "2x": _active = global.time_scale == 2.0; break;
             case "3x": _active = global.time_scale == 3.0; break;
-            case "BESTIARIO": _active = global.pokedex_overlay_aberto; break;
+            case "BESTIARIO": _active = global.bestiario_overlay_aberto; break;
             case "MOCHILA": _active = global.mochila_overlay_aberta; break;
             case "TROCAR": _active = global.troca_overlay_aberta; break;
         }
@@ -1531,9 +1531,9 @@ function battle_ui_draw_switch_overlay() {
         var _row = _i div 2;
         var _x = _start_x + (_col * (_card_w + _gap_x));
         var _y = _start_y + (_row * (_card_h + _gap_y));
-        var _pokemon = _i < array_length(_party) ? _party[_i] : undefined;
+        var _criatura = _i < array_length(_party) ? _party[_i] : undefined;
         var _active = _i == _demo.player_party_active_index;
-        var _can_switch = is_struct(_pokemon) && !_active && (!variable_struct_exists(_pokemon, "HpAtual") || _pokemon.HpAtual > 0);
+        var _can_switch = is_struct(_criatura) && !_active && (!variable_struct_exists(_criatura, "HpAtual") || _criatura.HpAtual > 0);
         var _hover = _can_switch && battle_ui_button_hit(_mx, _my, _x, _y, _card_w, _card_h);
 
         battle_ui_draw_nineslice_panel(_x, _y, _card_w, _card_h);
@@ -1545,13 +1545,13 @@ function battle_ui_draw_switch_overlay() {
             draw_set_alpha(1);
         }
 
-        if (!is_struct(_pokemon)) {
+        if (!is_struct(_criatura)) {
             draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(80, 72, 66) : c_white);
             draw_text(_x + 24, _y + 42, "Slot vazio");
             continue;
         }
 
-        var _spr = demo_get_pokemon_sprite(_pokemon.ID);
+        var _spr = demo_get_criatura_sprite(_criatura.ID);
 
         if (sprite_exists(_spr)) {
             var _scale = 1.25;
@@ -1559,10 +1559,10 @@ function battle_ui_draw_switch_overlay() {
         }
 
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-        var _name = (variable_struct_exists(_pokemon, "IsShiny") && _pokemon.IsShiny ? "CROMATICO " : "") + _pokemon.Nome;
-        draw_text(_x + 112, _y + 18, _name + "  Lv." + string(_pokemon.Level));
-        var _hp = variable_struct_exists(_pokemon, "HpAtual") ? _pokemon.HpAtual : _pokemon.HpMax;
-        var _hp_pct = clamp(_hp / max(1, _pokemon.HpMax), 0, 1);
+        var _name = (variable_struct_exists(_criatura, "IsShiny") && _criatura.IsShiny ? "CROMATICO " : "") + _criatura.Nome;
+        draw_text(_x + 112, _y + 18, _name + "  Lv." + string(_criatura.Level));
+        var _hp = variable_struct_exists(_criatura, "HpAtual") ? _criatura.HpAtual : _criatura.HpMax;
+        var _hp_pct = clamp(_hp / max(1, _criatura.HpMax), 0, 1);
         draw_text(_x + 112, _y + 44, "HP");
         draw_set_color(c_dkgray);
         draw_rectangle(_x + 148, _y + 48, _x + _card_w - 28, _y + 58, false);
@@ -1703,19 +1703,19 @@ function battle_ui_step(_dt) {
                 break;
 
             case "BESTIARIO":
-                if (!global.pokedex_overlay_aberto) {
-                    global.pokedex_overlay_time_scale_anterior = global.time_scale;
+                if (!global.bestiario_overlay_aberto) {
+                    global.bestiario_overlay_time_scale_anterior = global.time_scale;
                 }
 
-                global.pokedex_overlay_aberto = !global.pokedex_overlay_aberto;
+                global.bestiario_overlay_aberto = !global.bestiario_overlay_aberto;
                 global.mochila_overlay_aberta = false;
                 global.troca_overlay_aberta = false;
-                global.time_scale = global.pokedex_overlay_aberto ? 0 : (variable_global_exists("pokedex_overlay_time_scale_anterior") ? global.pokedex_overlay_time_scale_anterior : global.time_scale_preferido);
+                global.time_scale = global.bestiario_overlay_aberto ? 0 : (variable_global_exists("bestiario_overlay_time_scale_anterior") ? global.bestiario_overlay_time_scale_anterior : global.time_scale_preferido);
                 break;
 
             case "MOCHILA":
                 global.mochila_overlay_aberta = !global.mochila_overlay_aberta;
-                global.pokedex_overlay_aberto = false;
+                global.bestiario_overlay_aberto = false;
                 global.troca_overlay_aberta = false;
 
                 if (global.mochila_overlay_aberta) {
@@ -1728,7 +1728,7 @@ function battle_ui_step(_dt) {
 
             case "TROCAR":
                 global.troca_overlay_aberta = !global.troca_overlay_aberta;
-                global.pokedex_overlay_aberto = false;
+                global.bestiario_overlay_aberto = false;
                 global.mochila_overlay_aberta = false;
 
                 if (global.troca_overlay_aberta) {
@@ -1761,8 +1761,8 @@ function battle_ui_draw_gui() {
 
     var _status_tooltip = undefined;
 
-    for (var _status_i = 0; _status_i < instance_number(obj_pokemon_batalha); _status_i += 1) {
-        var _status_inst = instance_find(obj_pokemon_batalha, _status_i);
+    for (var _status_i = 0; _status_i < instance_number(obj_criatura_batalha); _status_i += 1) {
+        var _status_inst = instance_find(obj_criatura_batalha, _status_i);
 
         if (instance_exists(_status_inst) && _status_inst.vivo) {
             var _box_tooltip = battle_ui_draw_status_box(_status_inst);
@@ -1813,12 +1813,12 @@ function battle_vfx_criar(_atacante, _alvo, _texto_impacto) {
         return noone;
     }
 
-    var _tipo = argument_count >= 4 ? argument[3] : PokemonTipo.NONE;
+    var _tipo = argument_count >= 4 ? argument[3] : CriaturaTipo.NONE;
     var _vfx = instance_create_layer(_atacante.x, _atacante.y - 28, "Instances", obj_vfx_ataque);
     _vfx.alvo = _alvo;
     _vfx.texto_impacto = _texto_impacto;
     _vfx.direcao = sign(_alvo.x - _atacante.x);
-    _vfx.speed_px = _tipo == PokemonTipo.ELECTRIC ? 760 : 520;
+    _vfx.speed_px = _tipo == CriaturaTipo.ELECTRIC ? 760 : 520;
     _vfx.tipo = _tipo;
     _vfx.depth = -100;
     return _vfx;

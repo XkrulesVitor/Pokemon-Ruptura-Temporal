@@ -1,0 +1,252 @@
+{
+ "versao": 1,
+ "itens": [
+  {
+   "id": "pokebola",
+   "nome": "Capsula Simples",
+   "tipo": "captura",
+   "valor": 0.25,
+   "preco": 20,
+   "descricao": "Captura basica. Funciona melhor com o alvo ferido ou com status.",
+   "status": ""
+  },
+  {
+   "id": "great_ball",
+   "nome": "Capsula Reforcada",
+   "tipo": "captura",
+   "valor": 0.5,
+   "preco": 60,
+   "descricao": "Captura reforcada: o dobro da forca da Capsula Simples.",
+   "status": ""
+  },
+  {
+   "id": "ultra_ball",
+   "nome": "Capsula Avancada",
+   "tipo": "captura",
+   "valor": 0.75,
+   "preco": 150,
+   "descricao": "Captura avancada: o triplo da forca da Capsula Simples.",
+   "status": ""
+  },
+  {
+   "id": "master_ball",
+   "nome": "Capsula Mestra",
+   "tipo": "captura",
+   "valor": 1.0,
+   "preco": 0,
+   "descricao": "Captura garantida. Recompensa rarissima.",
+   "status": ""
+  },
+  {
+   "id": "potion",
+   "nome": "Pocao",
+   "tipo": "cura",
+   "valor": 0.25,
+   "preco": 30,
+   "descricao": "Cura 25% do HP maximo.",
+   "status": ""
+  },
+  {
+   "id": "super_potion",
+   "nome": "Pocao Forte",
+   "tipo": "cura",
+   "valor": 0.5,
+   "preco": 80,
+   "descricao": "Cura 50% do HP maximo.",
+   "status": ""
+  },
+  {
+   "id": "hyper_potion",
+   "nome": "Pocao Maxima",
+   "tipo": "cura",
+   "valor": 0.75,
+   "preco": 200,
+   "descricao": "Cura 75% do HP maximo.",
+   "status": ""
+  },
+  {
+   "id": "full_restore",
+   "nome": "Elixir Total",
+   "tipo": "cura_status",
+   "valor": 1.0,
+   "preco": 400,
+   "descricao": "Cura todo HP e remove status.",
+   "status": ""
+  },
+  {
+   "id": "antidote",
+   "nome": "Antidoto",
+   "tipo": "status",
+   "valor": 0.0,
+   "preco": 15,
+   "descricao": "Remove Veneno.",
+   "status": ""
+  },
+  {
+   "id": "burn_heal",
+   "nome": "Pomada Fria",
+   "tipo": "status",
+   "valor": 0.0,
+   "preco": 20,
+   "descricao": "Remove Queimadura.",
+   "status": ""
+  },
+  {
+   "id": "awakening",
+   "nome": "Sal de Despertar",
+   "tipo": "status",
+   "valor": 0.0,
+   "preco": 20,
+   "descricao": "Remove Sono.",
+   "status": ""
+  },
+  {
+   "id": "full_heal",
+   "nome": "Tonico Puro",
+   "tipo": "status",
+   "valor": 0.0,
+   "preco": 40,
+   "descricao": "Remove qualquer status.",
+   "status": ""
+  },
+  {
+   "id": "oran_berry",
+   "nome": "Fruta Anil",
+   "tipo": "berry",
+   "valor": 0.25,
+   "preco": 50,
+   "descricao": "Auto: cura 25% abaixo de 30% HP.",
+   "status": ""
+  },
+  {
+   "id": "cheri_berry",
+   "nome": "Fruta Rubra",
+   "tipo": "berry",
+   "valor": 0.0,
+   "preco": 60,
+   "descricao": "Auto: cura Paralisia.",
+   "status": ""
+  },
+  {
+   "id": "leppa_berry",
+   "nome": "Fruta Ambar",
+   "tipo": "cooldown",
+   "valor": 0.5,
+   "preco": 120,
+   "descricao": "Reduz cooldowns em 50% uma vez.",
+   "status": ""
+  },
+  {
+   "id": "rare_candy",
+   "nome": "Cristal de Nivel",
+   "tipo": "level",
+   "valor": 1.0,
+   "preco": 900,
+   "descricao": "Sobe 1 nivel do monstro ativo.",
+   "status": ""
+  },
+  {
+   "id": "po_ataque",
+   "nome": "Po de Furia",
+   "tipo": "buff",
+   "valor": 0.0,
+   "preco": 140,
+   "descricao": "Na batalha: o monstro ativo fica com IMPETO OFENSIVO por um tempo.",
+   "status": "ImpetoOfensivo"
+  },
+  {
+   "id": "po_defesa",
+   "nome": "Po de Couraca",
+   "tipo": "buff",
+   "valor": 0.0,
+   "preco": 140,
+   "descricao": "Na batalha: o monstro ativo fica FORTIFICADO por um tempo.",
+   "status": "Fortificado"
+  },
+  {
+   "id": "po_velocidade",
+   "nome": "Po de Vento",
+   "tipo": "buff",
+   "valor": 0.0,
+   "preco": 160,
+   "descricao": "Na batalha: as recargas do monstro ativo correm mais rapido.",
+   "status": "FluxoAcelerado"
+  }
+ ],
+ "lojas_por_cidade": [
+  [
+   "pokebola",
+   "potion",
+   "antidote"
+  ],
+  [
+   "pokebola",
+   "potion",
+   "antidote"
+  ],
+  [
+   "pokebola",
+   "great_ball",
+   "potion",
+   "antidote",
+   "burn_heal",
+   "awakening",
+   "po_ataque"
+  ],
+  [
+   "great_ball",
+   "super_potion",
+   "oran_berry",
+   "full_heal",
+   "po_ataque",
+   "po_defesa"
+  ],
+  [
+   "ultra_ball",
+   "hyper_potion",
+   "leppa_berry",
+   "full_heal",
+   "po_defesa",
+   "po_velocidade"
+  ],
+  [
+   "ultra_ball",
+   "hyper_potion",
+   "full_restore",
+   "leppa_berry",
+   "rare_candy",
+   "po_ataque",
+   "po_velocidade"
+  ],
+  [
+   "ultra_ball",
+   "hyper_potion",
+   "full_restore",
+   "leppa_berry",
+   "rare_candy",
+   "po_ataque",
+   "po_velocidade"
+  ]
+ ],
+ "ordem_mochila": [
+  "potion",
+  "super_potion",
+  "hyper_potion",
+  "full_restore",
+  "antidote",
+  "burn_heal",
+  "awakening",
+  "full_heal",
+  "rare_candy",
+  "po_ataque",
+  "po_defesa",
+  "po_velocidade",
+  "oran_berry",
+  "cheri_berry",
+  "leppa_berry",
+  "pokebola",
+  "great_ball",
+  "ultra_ball",
+  "master_ball"
+ ]
+}

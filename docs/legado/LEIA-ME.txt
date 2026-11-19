@@ -1,0 +1,6 @@
+RELATORIOS LEGADOS
+==================
+Estes relatorios de balanceamento foram feitos para o roster antigo (especies que foram
+removidas do jogo; veja docs/registro_de_mudancas.txt). Eles ficam aqui so como referencia
+do raciocinio de balanceamento por tipo e arquetipo. Os numeros e nomes de especies citados
+nao valem para o roster atual (datafiles/data/criaturas.json).

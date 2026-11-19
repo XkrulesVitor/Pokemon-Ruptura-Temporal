@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_pokedex",
+  "%Name":"scr_bestiario",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_pokedex",
+  "name":"scr_bestiario",
   "parent":{
     "name":"PokemonRogueLike",
     "path":"PokemonRogueLike.yyp",

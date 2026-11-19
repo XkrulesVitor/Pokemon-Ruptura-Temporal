@@ -13,11 +13,11 @@ if (!variable_global_exists("run")) {
     global.run = undefined;
 }
 
-if (!variable_global_exists("pokedex")) {
-    global.pokedex = pokemon_db_criar();
+if (!variable_global_exists("bestiario")) {
+    global.bestiario = criatura_db_criar();
 }
 
-pokedex_inicializar(global.pokedex);
+bestiario_inicializar(global.bestiario);
 
 if (!variable_global_exists("time_scale")) {
     global.time_scale = 1.0;
@@ -31,9 +31,9 @@ if (!variable_global_exists("velocidade_jogo")) {
     global.velocidade_jogo = global.time_scale;
 }
 
-if (!variable_global_exists("pokedex_overlay_aberto")) {
-    global.pokedex_overlay_aberto = false;
+if (!variable_global_exists("bestiario_overlay_aberto")) {
+    global.bestiario_overlay_aberto = false;
 }
 
 time_scale_antes_overlay = global.time_scale_preferido;
-pokedex_ui_sprites = {};
+bestiario_ui_sprites = {};

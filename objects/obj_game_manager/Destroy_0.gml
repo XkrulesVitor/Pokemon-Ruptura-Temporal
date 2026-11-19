@@ -1,2 +1,2 @@
-pokedex_salvar();
-pokedex_ui_liberar_sprites();
+bestiario_salvar();
+bestiario_ui_liberar_sprites();

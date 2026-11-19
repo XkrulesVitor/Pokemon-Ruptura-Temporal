@@ -1,0 +1,164 @@
+{
+ "versao": 1,
+ "inicio": [
+  {
+   "nome": "Jovem Treinador",
+   "sprite": "jovem.png"
+  },
+  {
+   "nome": "Estudante",
+   "sprite": "estudante.png"
+  },
+  {
+   "nome": "Excursionista",
+   "sprite": "excursionista.png"
+  },
+  {
+   "nome": "Jardineira",
+   "sprite": "jardineira.png"
+  }
+ ],
+ "por_bioma": {
+  "inseto": {
+   "nomes": [
+    "Colecionador de Insetos"
+   ],
+   "sprite": "colecionador.png"
+  },
+  "grama": {
+   "nomes": [
+    "Jardineira"
+   ],
+   "sprite": "jardineira.png"
+  },
+  "fazenda": {
+   "nomes": [
+    "Jardineira"
+   ],
+   "sprite": "jardineira.png"
+  },
+  "veneno": {
+   "nomes": [
+    "Motoqueiro"
+   ],
+   "sprite": "motoqueiro.png"
+  },
+  "agua": {
+   "nomes": [
+    "Nadador",
+    "Marinheira"
+   ],
+   "sprite": "nadador.png"
+  },
+  "fogo": {
+   "nomes": [
+    "Campista"
+   ],
+   "sprite": "campista.png"
+  },
+  "eletrico": {
+   "nomes": [
+    "Engenheiro",
+    "Cientista"
+   ],
+   "sprite": "engenheiro.png"
+  },
+  "aco": {
+   "nomes": [
+    "Engenheiro",
+    "Cientista"
+   ],
+   "sprite": "engenheiro.png"
+  },
+  "caverna": {
+   "nomes": [
+    "Montanhista",
+    "Arqueologo"
+   ],
+   "sprite": "montanhista.png"
+  },
+  "pedra": {
+   "nomes": [
+    "Montanhista",
+    "Arqueologo"
+   ],
+   "sprite": "montanhista.png"
+  },
+  "terra": {
+   "nomes": [
+    "Montanhista",
+    "Arqueologo"
+   ],
+   "sprite": "montanhista.png"
+  },
+  "fada": {
+   "nomes": [
+    "Vidente"
+   ],
+   "sprite": "vidente.png"
+  },
+  "psiquico": {
+   "nomes": [
+    "Vidente"
+   ],
+   "sprite": "vidente.png"
+  },
+  "fantasma": {
+   "nomes": [
+    "Medium"
+   ],
+   "sprite": "medium.png"
+  },
+  "gelo": {
+   "nomes": [
+    "Veterano"
+   ],
+   "sprite": "veterano.png"
+  },
+  "dragao": {
+   "nomes": [
+    "Veterano"
+   ],
+   "sprite": "veterano.png"
+  },
+  "voador": {
+   "nomes": [
+    "Falcoeira"
+   ],
+   "sprite": "falcoeira.png"
+  },
+  "luta": {
+   "nomes": [
+    "Lutadora de Rua"
+   ],
+   "sprite": "lutadora.png"
+  },
+  "sombrio": {
+   "nomes": [
+    "Agente do Eclipse"
+   ],
+   "sprite": "agente_eclipse.png"
+  },
+  "normal": {
+   "nomes": [
+    "Jovem Treinador",
+    "Estudante",
+    "Excursionista"
+   ],
+   "sprite": "jovem.png"
+  }
+ },
+ "sem_bioma_avancado": {
+  "nomes": [
+   "Veterano"
+  ],
+  "sprite": "veterano.png"
+ },
+ "sem_bioma": {
+  "nomes": [
+   "Jovem Treinador",
+   "Estudante"
+  ],
+  "sprite": "jovem.png"
+ }
+}

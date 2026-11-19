@@ -7,7 +7,7 @@
     {"name":"obj_demo_game","path":"objects/obj_demo_game/obj_demo_game.yy",},
     {"name":"obj_gerenciador_batalha","path":"objects/obj_gerenciador_batalha/obj_gerenciador_batalha.yy",},
     {"name":"obj_vfx_ataque","path":"objects/obj_vfx_ataque/obj_vfx_ataque.yy",},
-    {"name":"obj_pokemon_batalha","path":"objects/obj_pokemon_batalha/obj_pokemon_batalha.yy",}
+    {"name":"obj_criatura_batalha","path":"objects/obj_criatura_batalha/obj_criatura_batalha.yy",}
   ],
   "filterType":"GMObject",
   "folderPath":"folders/Objects.yy",

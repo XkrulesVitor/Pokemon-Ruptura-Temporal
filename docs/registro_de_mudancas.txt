@@ -143,6 +143,24 @@ HABILIDADES RENOMEADAS (nomes que vinham de golpes de Pokemon)
   Twister              ->  Torvelinho
   Venenochoque         ->  Choque Venenoso
 
+RECURSOS DO PROJETO RENOMEADOS
+------------------------------
+  obj_pokemon_batalha      ->  obj_criatura_batalha
+  scr_pokedex              ->  scr_bestiario
+  scr_pokemon_batalha_api  ->  scr_criatura_batalha_api
+  scr_pokemon_combate      ->  scr_criatura_combate
+  scr_pokemon_data         ->  scr_criatura_data
+  scr_pokemon_progressao   ->  scr_criatura_progressao
+  scr_pokemon_sprites      ->  scr_criatura_sprites
+
+NOMES INTERNOS NO CODIGO (tools/renomear_identificadores.py)
+------------------------------------------------------------
+  pokemon_* (funcoes e variaveis)                               ->  criatura_*
+  Pokemon* (construtores e enums: PokemonData, PokemonTipo...)  ->  Criatura* (CriaturaData, CriaturaTipo...)
+  pokedex_* / global.pokedex                                    ->  bestiario_* / global.bestiario
+  Save pokemon_roguelike_meta.ini                               ->  meta_progresso.ini (migrado sozinho)
+  Mantidos                                                      ->  PokemonRogueLike.yyp (arquivo do projeto) e IDs de itens como pokebola
+
 ARTE
 ----
   Sprites de criaturas (black-white, national, icons, Essentials)  ->  placeholder procedural por tipo/estagio; arte nova em datafiles/sprites/criaturas/
@@ -309,10 +327,13 @@ ARQUIVOS ALTERADOS (desde o commit base)
   ARQUIVO                                                            LINHAS +ADICIONADAS -REMOVIDAS
   .agents/AGENTS.md                                                  +2 -1
   .gitignore                                                         +6 -0
-  PokemonRogueLike.yyp                                               +25 -786
+  PokemonRogueLike.yyp                                               +35 -793
   datafiles/data/criaturas.json                                      +2149 -0
+  datafiles/data/itens.json                                          +252 -0
   datafiles/data/mundo.json                                          +317 -0
+  datafiles/data/rotas.json                                          +643 -0
   datafiles/data/sinergias.json                                      +152 -0
+  datafiles/data/treinadores.json                                    +164 -0
   datafiles/fonts/power_clear_bold.ttf                               +- --
   datafiles/fonts/power_red_blue.ttf                                 +- --
   datafiles/sprites/background.png                                   +- --
@@ -1112,18 +1133,46 @@ ARQUIVOS ALTERADOS (desde o commit base)
   datafiles/sprites/ui/battle/overlay_message.png                    +- --
   datafiles/sprites/ui/types.png                                     +- --
   docs/como_adicionar_artes.txt                                      +55 -0
+  docs/legado/LEIA-ME.txt                                            +6 -0
+  docs/{ => legado}/bug_balance_report.md                            +0 -0
+  docs/{ => legado}/dark_balance_report.md                           +0 -0
+  docs/{ => legado}/dragon_balance_report.md                         +0 -0
+  docs/{ => legado}/dragon_steel_balance_report.txt                  +0 -0
+  docs/{ => legado}/electric_ice_balance_report.txt                  +0 -0
+  docs/{ => legado}/fairy_normal_balance_report.txt                  +0 -0
+  docs/{ => legado}/fighting_ground_balance_report.txt               +0 -0
+  docs/{ => legado}/fire_balance_report.md                           +0 -0
+  docs/{ => legado}/fire_water_balance_report.txt                    +0 -0
+  docs/{ => legado}/flying_psychic_balance_report.txt                +0 -0
+  docs/{ => legado}/grass_attribute_distribution_report.txt          +0 -0
+  docs/{ => legado}/grass_balance_report.txt                         +0 -0
+  docs/{ => legado}/poison_balance_report.txt                        +0 -0
+  docs/{ => legado}/rock_ghost_balance_report.txt                    +0 -0
+  docs/{ => legado}/steel_balance_report.md                          +0 -0
+  docs/{ => legado}/water_balance_report.md                          +0 -0
   estado_do_jogo.md                                                  +72 -82
-  objects/obj_demo_game/Create_0.gml                                 +57 -57
-  objects/obj_demo_game/Draw_0.gml                                   +8 -0
-  objects/obj_demo_game/Draw_64.gml                                  +42 -9
-  objects/obj_demo_game/Step_0.gml                                   +109 -20
-  objects/obj_game_manager/Create_0.gml                              +1 -2
+  folders/Objects.yy                                                 +1 -1
+  folders/Scripts.yy                                                 +6 -6
+  objects/{obj_pokemon_batalha => obj_criatura_batalha}/Create_0.gml +3 -3
+  objects/obj_criatura_batalha/Destroy_0.gml                         +7 -0
+  objects/{obj_pokemon_batalha => obj_criatura_batalha}/Draw_0.gml   +1 -1
+  objects/{obj_pokemon_batalha => obj_criatura_batalha}/Step_0.gml   +2 -2
+  objects/{obj_pokemon_batalha/obj_pokemon_batalha.yy => obj_criatura_batalha/obj_criatura_batalha.yy} +2 -2
+  objects/obj_demo_game/Create_0.gml                                 +60 -60
+  objects/obj_demo_game/Destroy_0.gml                                +46 -46
+  objects/obj_demo_game/Draw_0.gml                                   +10 -2
+  objects/obj_demo_game/Draw_64.gml                                  +53 -20
+  objects/obj_demo_game/Step_0.gml                                   +134 -45
+  objects/obj_game_manager/Create_0.gml                              +7 -8
+  objects/obj_game_manager/Destroy_0.gml                             +2 -2
+  objects/obj_game_manager/Draw_64.gml                               +2 -2
   objects/obj_game_manager/Draw_75.gml                               +1 -0
-  objects/obj_game_manager/Step_0.gml                                +1 -0
+  objects/obj_game_manager/Step_0.gml                                +14 -13
   objects/obj_game_manager/obj_game_manager.yy                       +1 -0
+  objects/obj_pokemon_batalha/Destroy_0.gml                          +0 -7
   objects/obj_vfx_ataque/Create_0.gml                                +1 -0
   objects/obj_vfx_ataque/Draw_0.gml                                  +2 -4
-  objects/obj_vfx_ataque/Step_0.gml                                  +1 -0
+  objects/obj_vfx_ataque/Step_0.gml                                  +2 -1
   options/android/options_android.yy                                 +1 -1
   options/html5/options_html5.yy                                     +1 -1
   options/ios/options_ios.yy                                         +1 -1
@@ -1132,25 +1181,37 @@ ARQUIVOS ALTERADOS (desde o commit base)
   options/tvos/options_tvos.yy                                       +1 -1
   options/windows/options_windows.yy                                 +3 -3
   scripts/scr_autoteste/scr_autoteste.gml                            +559 -0
-  scripts/{scr_event_manager/scr_event_manager.yy => scr_autoteste/scr_autoteste.yy} +2 -2
-  scripts/scr_battle_ui/scr_battle_ui.gml                            +105 -58
+  scripts/{scr_pokemon_data/scr_pokemon_data.yy => scr_autoteste/scr_autoteste.yy} +2 -2
+  scripts/scr_battle_ui/scr_battle_ui.gml                            +176 -129
+  scripts/{scr_pokedex/scr_pokedex.gml => scr_bestiario/scr_bestiario.gml} +124 -126
+  scripts/{scr_event_manager/scr_event_manager.yy => scr_bestiario/scr_bestiario.yy} +2 -2
   scripts/scr_combate_extras/scr_combate_extras.gml                  +370 -0
   scripts/scr_combate_extras/scr_combate_extras.yy                   +13 -0
-  scripts/scr_conteudo/scr_conteudo.gml                              +227 -0
+  scripts/scr_conteudo/scr_conteudo.gml                              +246 -0
   scripts/{scr_roguelike_run/scr_roguelike_run.yy => scr_conteudo/scr_conteudo.yy} +2 -2
-  scripts/scr_demo_playable/scr_demo_playable.gml                    +766 -501
+  scripts/scr_criatura_batalha_api/scr_criatura_batalha_api.gml      +165 -0
+  scripts/scr_criatura_batalha_api/scr_criatura_batalha_api.yy       +13 -0
+  scripts/{scr_pokemon_combate/scr_pokemon_combate.gml => scr_criatura_combate/scr_criatura_combate.gml} +312 -284
+  scripts/{scr_pokemon_combate/scr_pokemon_combate.yy => scr_criatura_combate/scr_criatura_combate.yy} +2 -2
+  scripts/scr_criatura_data/scr_criatura_data.gml                    +4707 -0
+  scripts/scr_criatura_data/scr_criatura_data.yy                     +13 -0
+  scripts/{scr_pokemon_progressao/scr_pokemon_progressao.gml => scr_criatura_progressao/scr_criatura_progressao.gml} +233 -225
+  scripts/{scr_pokemon_batalha_api/scr_pokemon_batalha_api.yy => scr_criatura_progressao/scr_criatura_progressao.yy} +2 -2
+  scripts/scr_criatura_sprites/scr_criatura_sprites.gml              +201 -0
+  scripts/scr_criatura_sprites/scr_criatura_sprites.yy               +13 -0
+  scripts/scr_demo_playable/scr_demo_playable.gml                    +1066 -928
   scripts/scr_desafio_diario/scr_desafio_diario.gml                  +433 -0
   scripts/scr_desafio_diario/scr_desafio_diario.yy                   +13 -0
   scripts/scr_event_manager/scr_event_manager.gml                    +0 -331
   scripts/scr_missoes/scr_missoes.gml                                +318 -0
-  scripts/scr_missoes/scr_missoes.yy                                 +13 -0
+  scripts/{scr_pokedex/scr_pokedex.yy => scr_missoes/scr_missoes.yy} +2 -2
   scripts/scr_placeholders/scr_placeholders.gml                      +535 -0
   scripts/scr_placeholders/scr_placeholders.yy                       +13 -0
-  scripts/scr_pokedex/scr_pokedex.gml                                +18 -20
-  scripts/scr_pokemon_combate/scr_pokemon_combate.gml                +29 -1
-  scripts/scr_pokemon_data/scr_pokemon_data.gml                      +96 -903
-  scripts/scr_pokemon_progressao/scr_pokemon_progressao.gml          +8 -0
-  scripts/scr_pokemon_sprites/scr_pokemon_sprites.gml                +80 -139
+  scripts/scr_pokemon_batalha_api/scr_pokemon_batalha_api.gml        +0 -165
+  scripts/scr_pokemon_data/scr_pokemon_data.gml                      +0 -5514
+  scripts/scr_pokemon_progressao/scr_pokemon_progressao.yy           +0 -13
+  scripts/scr_pokemon_sprites/scr_pokemon_sprites.gml                +0 -260
+  scripts/scr_pokemon_sprites/scr_pokemon_sprites.yy                 +0 -13
   scripts/scr_rejogabilidade/scr_rejogabilidade.gml                  +575 -0
   scripts/scr_rejogabilidade/scr_rejogabilidade.yy                   +13 -0
   scripts/scr_roguelike_run/scr_roguelike_run.gml                    +0 -636
@@ -1158,7 +1219,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   scripts/scr_run_save/scr_run_save.yy                               +13 -0
   tools/autoteste.ps1                                                +14 -0
   tools/gerar_conteudo.py                                            +313 -0
-  tools/gerar_registro.py                                            +219 -0
+  tools/gerar_registro.py                                            +228 -0
   tools/gml_patch.py                                                 +67 -0
   extrair_habilidades.py => tools/legacy/extrair_habilidades.py      +0 -0
   injetar_passivas.ps1 => tools/legacy/injetar_passivas.ps1          +0 -0
@@ -1167,5 +1228,6 @@ ARQUIVOS ALTERADOS (desde o commit base)
   limpar_passivas.ps1 => tools/legacy/limpar_passivas.ps1            +0 -0
   tools/recortar_elementos.py                                        +124 -0
   tools/renomear_habilidades.py                                      +39 -0
+  tools/renomear_identificadores.py                                  +124 -0
   tools/trocar_textos.py                                             +142 -0
   tools/yyp_util.py                                                  +90 -0

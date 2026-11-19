@@ -98,7 +98,7 @@ function diario_pool_iniciais() {
     for (var _i = 0; _i < array_length(_ids); _i += 1) {
         var _info = criatura_info(_ids[_i]);
 
-        if (is_struct(_info) && _info.EvoluiDe <= 0 && _info.Raridade <= PokemonRaridade.RARE) {
+        if (is_struct(_info) && _info.EvoluiDe <= 0 && _info.Raridade <= CriaturaRaridade.RARE) {
             array_push(_pool, _ids[_i]);
         }
     }
@@ -187,7 +187,7 @@ function diario_info_hoje() {
             Chave: _chave,
             Sujo: false,
             InicialID: _inicial,
-            InicialNome: demo_pokemon_nome(_inicial),
+            InicialNome: demo_criatura_nome(_inicial),
             OficialUsada: is_struct(_registro),
             Pontos: is_struct(_registro) ? _registro.Pontos : 0,
             Sequencia: _save.Sequencia,

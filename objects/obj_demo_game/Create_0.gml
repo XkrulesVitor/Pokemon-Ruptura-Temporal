@@ -41,12 +41,12 @@ intro_destroyed_horizon_day_sprite = demo_asset_sprite("datafiles/sprites/cutsce
 intro_destroyed_horizon_night_sprite = demo_asset_sprite("datafiles/sprites/cutscene/intro_destroyed_horizon_night.png");
 // Personagens da intro: chefe final e guardioes definidos em mundo.json.
 // (os nomes das variaveis foram mantidos para nao mexer no resto do codigo da intro)
-intro_mewtwo_back_sprite = pokemon_sprite_carregar_pose(demo_intro_id_chefe(), "back", -1);
-intro_mewtwo_front_sprite = pokemon_sprite_carregar_pose(demo_intro_id_chefe(), "front", -1);
-intro_mew_back_sprite = pokemon_sprite_carregar_pose(demo_intro_id_guardiao(0), "back", -1);
-intro_mew_front_sprite = pokemon_sprite_carregar_pose(demo_intro_id_guardiao(0), "front", -1);
-intro_celebi_back_sprite = pokemon_sprite_carregar_pose(demo_intro_id_guardiao(1), "back", -1);
-intro_celebi_front_sprite = pokemon_sprite_carregar_pose(demo_intro_id_guardiao(1), "front", -1);
+intro_mewtwo_back_sprite = criatura_sprite_carregar_pose(demo_intro_id_chefe(), "back", -1);
+intro_mewtwo_front_sprite = criatura_sprite_carregar_pose(demo_intro_id_chefe(), "front", -1);
+intro_mew_back_sprite = criatura_sprite_carregar_pose(demo_intro_id_guardiao(0), "back", -1);
+intro_mew_front_sprite = criatura_sprite_carregar_pose(demo_intro_id_guardiao(0), "front", -1);
+intro_celebi_back_sprite = criatura_sprite_carregar_pose(demo_intro_id_guardiao(1), "back", -1);
+intro_celebi_front_sprite = criatura_sprite_carregar_pose(demo_intro_id_guardiao(1), "front", -1);
 city_sprite_paths = []; // mapas vem de mundo.json (sprite_cidade) ou viram placeholder
 city_sprites = array_create(16, -1);
 city_pallet_sprite = -1;
@@ -87,8 +87,8 @@ if (route_trainer_placeholder) {
 professor_sprite = demo_trainer_sprite_carregar_generico("professor.png");
 mae_sprite = demo_trainer_sprite_carregar_generico("mae.png");
 starter_id = -1;
-player_pokemon_data = undefined;
-enemy_pokemon_data = undefined;
+player_criatura_data = undefined;
+enemy_criatura_data = undefined;
 player_party = [];
 player_party_active_index = 0;
 player_inst = noone;
@@ -146,7 +146,7 @@ capture_anim = undefined;
 capture_pending_item = "";
 capture_pending_success = false;
 capture_replace_open = false;
-capture_replace_pokemon = undefined;
+capture_replace_criatura = undefined;
 battle_participants = [];
 battle_result_info = undefined;
 

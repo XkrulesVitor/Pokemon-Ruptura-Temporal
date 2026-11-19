@@ -17,7 +17,7 @@ function StatusCombate(_id, _duracao) constructor {
     TickTimer = 1.0;
 }
 
-function pokemon_status_aplicar(_alvo, _status_id, _duracao) {
+function criatura_status_aplicar(_alvo, _status_id, _duracao) {
     if (!instance_exists(_alvo) || _status_id == "") {
         return false;
     }
@@ -39,7 +39,7 @@ function pokemon_status_aplicar(_alvo, _status_id, _duracao) {
     return true;
 }
 
-function pokemon_status_tem(_alvo, _status_id) {
+function criatura_status_tem(_alvo, _status_id) {
     if (!instance_exists(_alvo) || !is_struct(_alvo.status_map)) {
         return false;
     }
@@ -47,8 +47,8 @@ function pokemon_status_tem(_alvo, _status_id) {
     return variable_struct_exists(_alvo.status_map, string(_status_id));
 }
 
-function pokemon_status_consumir(_alvo, _status_id) {
-    if (!pokemon_status_tem(_alvo, _status_id)) {
+function criatura_status_consumir(_alvo, _status_id) {
+    if (!criatura_status_tem(_alvo, _status_id)) {
         return false;
     }
 
@@ -56,7 +56,7 @@ function pokemon_status_consumir(_alvo, _status_id) {
     return true;
 }
 
-function pokemon_status_tick(_inst, _dt) {
+function criatura_status_tick(_inst, _dt) {
     if (!instance_exists(_inst) || !is_struct(_inst.status_map)) {
         return;
     }
@@ -77,18 +77,18 @@ function pokemon_status_tick(_inst, _dt) {
                 var _dano_tick = max(1, floor(_inst.hp_max * (0.012 + (_stacks * 0.006))));
                 _inst.hp_atual = max(0, _inst.hp_atual - _dano_tick);
 
-                if (is_struct(_inst.pokemon_data)) {
-                    _inst.pokemon_data.HpAtual = _inst.hp_atual;
+                if (is_struct(_inst.criatura_data)) {
+                    _inst.criatura_data.HpAtual = _inst.hp_atual;
                 }
 
-                battle_log_push(string_upper(_inst.pokemon_nome) + " sofreu " + string(_dano_tick) + " de VENENO!");
+                battle_log_push(string_upper(_inst.criatura_nome) + " sofreu " + string(_dano_tick) + " de VENENO!");
 
                 if (_inst.hp_atual <= 0) {
                     _inst.vivo = false;
                     _inst.batalha_ativo = false;
 
-                    if (is_struct(_inst.pokemon_data)) {
-                        _inst.pokemon_data.Desmaiado = true;
+                    if (is_struct(_inst.criatura_data)) {
+                        _inst.criatura_data.Desmaiado = true;
                     }
                 }
             }
@@ -103,18 +103,18 @@ function pokemon_status_tick(_inst, _dt) {
                 var _dano_burn = max(1, floor(_inst.hp_max * (0.007 + (_burn_stacks * 0.003))));
                 _inst.hp_atual = max(0, _inst.hp_atual - _dano_burn);
 
-                if (is_struct(_inst.pokemon_data)) {
-                    _inst.pokemon_data.HpAtual = _inst.hp_atual;
+                if (is_struct(_inst.criatura_data)) {
+                    _inst.criatura_data.HpAtual = _inst.hp_atual;
                 }
 
-                battle_log_push(string_upper(_inst.pokemon_nome) + " sofreu " + string(_dano_burn) + " de QUEIMADURA!");
+                battle_log_push(string_upper(_inst.criatura_nome) + " sofreu " + string(_dano_burn) + " de QUEIMADURA!");
 
                 if (_inst.hp_atual <= 0) {
                     _inst.vivo = false;
                     _inst.batalha_ativo = false;
 
-                    if (is_struct(_inst.pokemon_data)) {
-                        _inst.pokemon_data.Desmaiado = true;
+                    if (is_struct(_inst.criatura_data)) {
+                        _inst.criatura_data.Desmaiado = true;
                     }
                 }
             }
@@ -129,18 +129,18 @@ function pokemon_status_tick(_inst, _dt) {
                 var _dano_hail = max(1, floor(_inst.hp_max * (0.004 + (_hail_stacks * 0.002))));
                 _inst.hp_atual = max(0, _inst.hp_atual - _dano_hail);
 
-                if (is_struct(_inst.pokemon_data)) {
-                    _inst.pokemon_data.HpAtual = _inst.hp_atual;
+                if (is_struct(_inst.criatura_data)) {
+                    _inst.criatura_data.HpAtual = _inst.hp_atual;
                 }
 
-                battle_log_push(string_upper(_inst.pokemon_nome) + " sofreu " + string(_dano_hail) + " de GRANIZO!");
+                battle_log_push(string_upper(_inst.criatura_nome) + " sofreu " + string(_dano_hail) + " de GRANIZO!");
 
                 if (_inst.hp_atual <= 0) {
                     _inst.vivo = false;
                     _inst.batalha_ativo = false;
 
-                    if (is_struct(_inst.pokemon_data)) {
-                        _inst.pokemon_data.Desmaiado = true;
+                    if (is_struct(_inst.criatura_data)) {
+                        _inst.criatura_data.Desmaiado = true;
                     }
                 }
             }
@@ -152,7 +152,7 @@ function pokemon_status_tick(_inst, _dt) {
     }
 }
 
-function pokemon_combate_encontrar_alvo(_atacante) {
+function criatura_combate_encontrar_alvo(_atacante) {
     if (!instance_exists(_atacante)) {
         return noone;
     }
@@ -160,7 +160,7 @@ function pokemon_combate_encontrar_alvo(_atacante) {
     var _melhor = noone;
     var _melhor_distancia = 100000000;
 
-    with (obj_pokemon_batalha) {
+    with (obj_criatura_batalha) {
         if (id != _atacante && batalha_ativo && vivo && lado_batalha != _atacante.lado_batalha) {
             var _distancia = abs(x - _atacante.x);
 
@@ -174,206 +174,206 @@ function pokemon_combate_encontrar_alvo(_atacante) {
     return _melhor;
 }
 
-function pokemon_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplicador) {
+function criatura_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplicador) {
     var _ataque_mult = 1 + clamp((_atacante.attack - 35) / 150, -0.12, 0.55);
 
-    if (pokemon_status_tem(_atacante, "CalorEscaldante")) {
+    if (criatura_status_tem(_atacante, "CalorEscaldante")) {
         _ataque_mult *= 0.90;
     }
 
-    if (pokemon_status_tem(_atacante, "ImpetoOfensivo")) {
+    if (criatura_status_tem(_atacante, "ImpetoOfensivo")) {
         var _impeto = variable_struct_get(_atacante.status_map, "ImpetoOfensivo");
         _ataque_mult *= 1 + min(0.18, clamp(_impeto.Stacks, 1, 4) * 0.04);
     }
 
-    if (pokemon_status_tem(_atacante, "EspiritoLuta")) {
+    if (criatura_status_tem(_atacante, "EspiritoLuta")) {
         var _hp_ratio_atacante = _atacante.hp_atual / max(1, _atacante.hp_max);
         _ataque_mult *= _hp_ratio_atacante <= 0.45 ? 1.12 : 1.04;
     }
 
-    if (pokemon_status_tem(_atacante, "Aterrado")) {
+    if (criatura_status_tem(_atacante, "Aterrado")) {
         _ataque_mult *= 1.04;
     }
 
-    if (pokemon_status_tem(_atacante, "VentoDeCauda")) {
+    if (criatura_status_tem(_atacante, "VentoDeCauda")) {
         _ataque_mult *= 1.05;
     }
 
-    if (pokemon_status_tem(_atacante, "PenasLeves")) {
+    if (criatura_status_tem(_atacante, "PenasLeves")) {
         _ataque_mult *= 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "FocoPsiquico")) {
+    if (criatura_status_tem(_atacante, "FocoPsiquico")) {
         _ataque_mult *= 1.08;
     }
 
-    if (pokemon_status_tem(_atacante, "ParalisiaMental")) {
+    if (criatura_status_tem(_atacante, "ParalisiaMental")) {
         _ataque_mult *= 0.92;
     }
 
-    if (pokemon_status_tem(_atacante, "AmnesiaInduzida")) {
+    if (criatura_status_tem(_atacante, "AmnesiaInduzida")) {
         _ataque_mult *= 0.94;
     }
 
-    if (pokemon_status_tem(_atacante, "EnxameAtivo")) {
+    if (criatura_status_tem(_atacante, "EnxameAtivo")) {
         _ataque_mult *= 1.05;
     }
 
-    if (pokemon_status_tem(_atacante, "Metamorfose")) {
+    if (criatura_status_tem(_atacante, "Metamorfose")) {
         _ataque_mult *= 1.06;
     }
 
-    if (pokemon_status_tem(_atacante, "SedaPresa")) {
+    if (criatura_status_tem(_atacante, "SedaPresa")) {
         _ataque_mult *= 0.96;
     }
 
-    if (pokemon_status_tem(_atacante, "Infestado")) {
+    if (criatura_status_tem(_atacante, "Infestado")) {
         _ataque_mult *= 0.97;
     }
 
-    if (pokemon_status_tem(_atacante, "ImpactoGeologico")) {
+    if (criatura_status_tem(_atacante, "ImpactoGeologico")) {
         _ataque_mult *= 1.08;
     }
 
-    if (pokemon_status_tem(_atacante, "TerrorCrescente")) {
+    if (criatura_status_tem(_atacante, "TerrorCrescente")) {
         var _terror = variable_struct_get(_atacante.status_map, "TerrorCrescente");
         _ataque_mult *= 1 + min(0.16, clamp(_terror.Stacks, 1, 4) * 0.04);
     }
 
-    if (pokemon_status_tem(_atacante, "EssenciaDrenada")) {
+    if (criatura_status_tem(_atacante, "EssenciaDrenada")) {
         _ataque_mult *= 1.05;
     }
 
-    if (pokemon_status_tem(_atacante, "Fragmentado")) {
+    if (criatura_status_tem(_atacante, "Fragmentado")) {
         _ataque_mult *= 0.97;
     }
 
-    if (pokemon_status_tem(_atacante, "Amedrontado")) {
+    if (criatura_status_tem(_atacante, "Amedrontado")) {
         _ataque_mult *= 0.94;
     }
 
-    if (pokemon_status_tem(_atacante, "FuriaDraconica")) {
+    if (criatura_status_tem(_atacante, "FuriaDraconica")) {
         var _hp_ratio_furia = _atacante.hp_atual / max(1, _atacante.hp_max);
         _ataque_mult *= _hp_ratio_furia <= 0.45 ? 1.14 : 1.06;
     }
 
-    if (pokemon_status_tem(_atacante, "AscensaoDraconica")) {
+    if (criatura_status_tem(_atacante, "AscensaoDraconica")) {
         var _ascensao = variable_struct_get(_atacante.status_map, "AscensaoDraconica");
         _ataque_mult *= 1 + min(0.15, clamp(_ascensao.Stacks, 1, 4) * 0.035);
     }
 
-    if (pokemon_status_tem(_atacante, "Predador")) {
+    if (criatura_status_tem(_atacante, "Predador")) {
         var _hp_ratio_predador_a = _atacante.hp_atual / max(1, _atacante.hp_max);
         var _hp_ratio_predador_b = _alvo.hp_atual / max(1, _alvo.hp_max);
         _ataque_mult *= _hp_ratio_predador_a >= _hp_ratio_predador_b ? 1.10 : 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "ImpactoPesado")) {
+    if (criatura_status_tem(_atacante, "ImpactoPesado")) {
         _ataque_mult *= 1 + clamp(_atacante.defense / 800, 0.04, 0.16);
     }
 
-    if (pokemon_status_tem(_atacante, "Fortificado")) {
+    if (criatura_status_tem(_atacante, "Fortificado")) {
         var _fort_atk = variable_struct_get(_atacante.status_map, "Fortificado");
         _ataque_mult *= 1 + min(0.10, clamp(_fort_atk.Stacks, 1, 4) * 0.025);
     }
 
-    if (pokemon_status_tem(_atacante, "BlindagemMagnetica")) {
+    if (criatura_status_tem(_atacante, "BlindagemMagnetica")) {
         _ataque_mult *= 1.04;
     }
 
-    if (pokemon_status_tem(_atacante, "LigaPesada")) {
+    if (criatura_status_tem(_atacante, "LigaPesada")) {
         _ataque_mult *= 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "GolpeBaixo")) {
+    if (criatura_status_tem(_atacante, "GolpeBaixo")) {
         var _golpe_baixo = variable_struct_get(_atacante.status_map, "GolpeBaixo");
         _ataque_mult *= 1 + min(0.14, clamp(_golpe_baixo.Stacks, 1, 4) * 0.035);
 
-        if (pokemon_status_tem(_alvo, "MarcadoSombrio")) {
+        if (criatura_status_tem(_alvo, "MarcadoSombrio")) {
             _ataque_mult *= 1.06;
         }
     }
 
-    if (pokemon_status_tem(_atacante, "JogoSujo")) {
+    if (criatura_status_tem(_atacante, "JogoSujo")) {
         _ataque_mult *= 1.06;
 
         var _alvo_debilitado_sombrio = false;
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Envenenado");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Corroendo");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Vulneravel");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Queimando");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "ArmaduraDerretida");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "PosturaQuebrada");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Ofuscado");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Amedrontado");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "ParalisiaMental");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "SedaPresa");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "Infestado");
-        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || pokemon_status_tem(_alvo, "MarcadoSombrio");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Envenenado");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Corroendo");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Vulneravel");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Queimando");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "ArmaduraDerretida");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "PosturaQuebrada");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Ofuscado");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Amedrontado");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "ParalisiaMental");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "SedaPresa");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "Infestado");
+        _alvo_debilitado_sombrio = _alvo_debilitado_sombrio || criatura_status_tem(_alvo, "MarcadoSombrio");
 
         if (_alvo_debilitado_sombrio) {
             _ataque_mult *= 1.08;
         }
     }
 
-    if (pokemon_status_tem(_atacante, "CamuflagemSombria")) {
+    if (criatura_status_tem(_atacante, "CamuflagemSombria")) {
         _ataque_mult *= 1.04;
     }
 
-    if (pokemon_status_tem(_atacante, "CopiaSombria")) {
+    if (criatura_status_tem(_atacante, "CopiaSombria")) {
         _ataque_mult *= 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "PerseguicaoSombria")) {
+    if (criatura_status_tem(_atacante, "PerseguicaoSombria")) {
         _ataque_mult *= 1.06;
 
         var _alvo_em_fuga_sombria = false;
-        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || pokemon_status_tem(_alvo, "Evasivo");
-        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || pokemon_status_tem(_alvo, "Intangivel");
-        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || pokemon_status_tem(_alvo, "VentoDeCauda");
-        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || pokemon_status_tem(_alvo, "PenasLeves");
-        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || pokemon_status_tem(_alvo, "FluxoAcelerado");
+        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || criatura_status_tem(_alvo, "Evasivo");
+        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || criatura_status_tem(_alvo, "Intangivel");
+        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || criatura_status_tem(_alvo, "VentoDeCauda");
+        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || criatura_status_tem(_alvo, "PenasLeves");
+        _alvo_em_fuga_sombria = _alvo_em_fuga_sombria || criatura_status_tem(_alvo, "FluxoAcelerado");
 
         if (_alvo_em_fuga_sombria) {
             _ataque_mult *= 1.08;
         }
     }
 
-    if (pokemon_status_tem(_atacante, "EncantoCarga")) {
+    if (criatura_status_tem(_atacante, "EncantoCarga")) {
         var _encanto_carga = variable_struct_get(_atacante.status_map, "EncantoCarga");
         _ataque_mult *= 1 + min(0.18, clamp(_encanto_carga.Stacks, 1, 4) * 0.045);
     }
 
-    if (pokemon_status_tem(_atacante, "LuzPurificadora")) {
+    if (criatura_status_tem(_atacante, "LuzPurificadora")) {
         _ataque_mult *= 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "AuraMistica")) {
+    if (criatura_status_tem(_atacante, "AuraMistica")) {
         _ataque_mult *= 1.05;
     }
 
-    if (pokemon_status_tem(_atacante, "ForcaNeutra")) {
+    if (criatura_status_tem(_atacante, "ForcaNeutra")) {
         _ataque_mult *= 1.04;
     }
 
-    if (pokemon_status_tem(_atacante, "EstoqueDefensivo")) {
+    if (criatura_status_tem(_atacante, "EstoqueDefensivo")) {
         var _estoque_atk = variable_struct_get(_atacante.status_map, "EstoqueDefensivo");
         _ataque_mult *= 1 + min(0.08, clamp(_estoque_atk.Stacks, 1, 4) * 0.02);
     }
 
-    if (pokemon_status_tem(_atacante, "LegadoAtivo")) {
+    if (criatura_status_tem(_atacante, "LegadoAtivo")) {
         _ataque_mult *= 1.04;
     }
 
-    if (pokemon_status_tem(_atacante, "MimetismoAtivo")) {
+    if (criatura_status_tem(_atacante, "MimetismoAtivo")) {
         _ataque_mult *= 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "ReciclagemAtiva")) {
+    if (criatura_status_tem(_atacante, "ReciclagemAtiva")) {
         _ataque_mult *= 1.03;
     }
 
-    if (pokemon_status_tem(_atacante, "BrilhoOfuscante")) {
+    if (criatura_status_tem(_atacante, "BrilhoOfuscante")) {
         _ataque_mult *= 0.94;
     }
 
@@ -384,189 +384,189 @@ function pokemon_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplic
     var _poder = _habilidade.DanoBase * 0.64 * _ataque_mult;
     var _defesa_efetiva = _alvo.defense;
 
-    if (pokemon_status_tem(_alvo, "Corroendo")) {
+    if (criatura_status_tem(_alvo, "Corroendo")) {
         _defesa_efetiva *= 0.78;
     }
 
-    if (pokemon_status_tem(_alvo, "Vulneravel")) {
+    if (criatura_status_tem(_alvo, "Vulneravel")) {
         _defesa_efetiva *= 0.88;
     }
 
-    if (pokemon_status_tem(_alvo, "ArmaduraDerretida")) {
+    if (criatura_status_tem(_alvo, "ArmaduraDerretida")) {
         _defesa_efetiva *= 0.84;
     }
 
-    if (pokemon_status_tem(_alvo, "Fragil")) {
+    if (criatura_status_tem(_alvo, "Fragil")) {
         _defesa_efetiva *= 0.90;
     }
 
-    if (pokemon_status_tem(_alvo, "MantoGelo")) {
+    if (criatura_status_tem(_alvo, "MantoGelo")) {
         _defesa_efetiva *= 1.14;
     }
 
-    if (pokemon_status_tem(_alvo, "PosturaQuebrada")) {
+    if (criatura_status_tem(_alvo, "PosturaQuebrada")) {
         _defesa_efetiva *= 0.84;
     }
 
-    if (pokemon_status_tem(_alvo, "Desabando")) {
+    if (criatura_status_tem(_alvo, "Desabando")) {
         _defesa_efetiva *= 0.90;
     }
 
-    if (pokemon_status_tem(_alvo, "AreiaMovedica")) {
+    if (criatura_status_tem(_alvo, "AreiaMovedica")) {
         _defesa_efetiva *= 0.96;
     }
 
-    if (pokemon_status_tem(_alvo, "BarreiraLama")) {
+    if (criatura_status_tem(_alvo, "BarreiraLama")) {
         _defesa_efetiva *= 1.14;
     }
 
-    if (pokemon_status_tem(_alvo, "Aterrado")) {
+    if (criatura_status_tem(_alvo, "Aterrado")) {
         _defesa_efetiva *= 1.06;
     }
 
-    if (pokemon_status_tem(_alvo, "MarcadoRasante")) {
+    if (criatura_status_tem(_alvo, "MarcadoRasante")) {
         _defesa_efetiva *= 0.90;
     }
 
-    if (pokemon_status_tem(_alvo, "Turbulento")) {
+    if (criatura_status_tem(_alvo, "Turbulento")) {
         _defesa_efetiva *= 0.94;
     }
 
-    if (pokemon_status_tem(_alvo, "Evasivo")) {
+    if (criatura_status_tem(_alvo, "Evasivo")) {
         _defesa_efetiva *= 1.08;
     }
 
-    if (pokemon_status_tem(_alvo, "PenasLeves")) {
+    if (criatura_status_tem(_alvo, "PenasLeves")) {
         _defesa_efetiva *= 1.06;
     }
 
-    if (pokemon_status_tem(_alvo, "EscudoCinetico")) {
+    if (criatura_status_tem(_alvo, "EscudoCinetico")) {
         _defesa_efetiva *= 1.14;
     }
 
-    if (pokemon_status_tem(_alvo, "DistorcaoEspacial")) {
+    if (criatura_status_tem(_alvo, "DistorcaoEspacial")) {
         _defesa_efetiva *= 0.88;
     }
 
-    if (pokemon_status_tem(_alvo, "AmnesiaInduzida")) {
+    if (criatura_status_tem(_alvo, "AmnesiaInduzida")) {
         _defesa_efetiva *= 0.92;
     }
 
-    if (pokemon_status_tem(_alvo, "CasuloRigido")) {
+    if (criatura_status_tem(_alvo, "CasuloRigido")) {
         _defesa_efetiva *= 1.16;
     }
 
-    if (pokemon_status_tem(_alvo, "Metamorfose")) {
+    if (criatura_status_tem(_alvo, "Metamorfose")) {
         _defesa_efetiva *= 1.04;
     }
 
-    if (pokemon_status_tem(_alvo, "SedaPresa")) {
+    if (criatura_status_tem(_alvo, "SedaPresa")) {
         _defesa_efetiva *= 0.94;
     }
 
-    if (pokemon_status_tem(_alvo, "Infestado")) {
+    if (criatura_status_tem(_alvo, "Infestado")) {
         _defesa_efetiva *= 0.96;
     }
 
-    if (pokemon_status_tem(_alvo, "CascaRocha")) {
+    if (criatura_status_tem(_alvo, "CascaRocha")) {
         _defesa_efetiva *= 1.18;
     }
 
-    if (pokemon_status_tem(_alvo, "FossilVivo")) {
+    if (criatura_status_tem(_alvo, "FossilVivo")) {
         _defesa_efetiva *= 1.08;
     }
 
-    if (pokemon_status_tem(_alvo, "Fragmentado")) {
+    if (criatura_status_tem(_alvo, "Fragmentado")) {
         _defesa_efetiva *= 0.90;
     }
 
-    if (pokemon_status_tem(_alvo, "Assombrado")) {
+    if (criatura_status_tem(_alvo, "Assombrado")) {
         _defesa_efetiva *= 0.94;
     }
 
-    if (pokemon_status_tem(_alvo, "Maldito")) {
+    if (criatura_status_tem(_alvo, "Maldito")) {
         _defesa_efetiva *= 0.92;
     }
 
-    if (pokemon_status_tem(_alvo, "Intangivel")) {
+    if (criatura_status_tem(_alvo, "Intangivel")) {
         _defesa_efetiva *= 1.10;
     }
 
-    if (pokemon_status_tem(_alvo, "Amedrontado")) {
+    if (criatura_status_tem(_alvo, "Amedrontado")) {
         _defesa_efetiva *= 0.96;
     }
 
-    if (pokemon_status_tem(_alvo, "MarcadoSombrio")) {
+    if (criatura_status_tem(_alvo, "MarcadoSombrio")) {
         _defesa_efetiva *= 0.94;
     }
 
-    if (pokemon_status_tem(_alvo, "CamuflagemSombria")) {
+    if (criatura_status_tem(_alvo, "CamuflagemSombria")) {
         _defesa_efetiva *= 1.08;
     }
 
-    if (pokemon_status_tem(_alvo, "CopiaSombria")) {
+    if (criatura_status_tem(_alvo, "CopiaSombria")) {
         _defesa_efetiva *= 1.12;
     }
 
-    if (pokemon_status_tem(_alvo, "EscamaImperial")) {
+    if (criatura_status_tem(_alvo, "EscamaImperial")) {
         _defesa_efetiva *= 1.14;
     }
 
-    if (pokemon_status_tem(_alvo, "FuriaDraconica")) {
+    if (criatura_status_tem(_alvo, "FuriaDraconica")) {
         _defesa_efetiva *= 0.97;
     }
 
-    if (pokemon_status_tem(_alvo, "EspinhosFerro")) {
+    if (criatura_status_tem(_alvo, "EspinhosFerro")) {
         _defesa_efetiva *= 1.06;
     }
 
-    if (pokemon_status_tem(_alvo, "Fortificado")) {
+    if (criatura_status_tem(_alvo, "Fortificado")) {
         var _fort_def = variable_struct_get(_alvo.status_map, "Fortificado");
         _defesa_efetiva *= 1 + min(0.18, clamp(_fort_def.Stacks, 1, 5) * 0.04);
     }
 
-    if (pokemon_status_tem(_alvo, "BlindagemMagnetica")) {
+    if (criatura_status_tem(_alvo, "BlindagemMagnetica")) {
         _defesa_efetiva *= 1.10;
     }
 
-    if (pokemon_status_tem(_alvo, "ImpactoPesado")) {
+    if (criatura_status_tem(_alvo, "ImpactoPesado")) {
         _defesa_efetiva *= 1.05;
     }
 
-    if (pokemon_status_tem(_alvo, "LigaPesada")) {
+    if (criatura_status_tem(_alvo, "LigaPesada")) {
         _defesa_efetiva *= 1.12;
     }
 
-    if (pokemon_status_tem(_alvo, "BrilhoOfuscante")) {
+    if (criatura_status_tem(_alvo, "BrilhoOfuscante")) {
         _defesa_efetiva *= 0.96;
     }
 
-    if (pokemon_status_tem(_alvo, "LuzPurificadora")) {
+    if (criatura_status_tem(_alvo, "LuzPurificadora")) {
         _defesa_efetiva *= 1.08;
     }
 
-    if (pokemon_status_tem(_alvo, "AuraMistica")) {
+    if (criatura_status_tem(_alvo, "AuraMistica")) {
         _defesa_efetiva *= 1.04;
     }
 
-    if (pokemon_status_tem(_alvo, "BarreiraFada")) {
+    if (criatura_status_tem(_alvo, "BarreiraFada")) {
         _defesa_efetiva *= 1.14;
     }
 
-    if (pokemon_status_tem(_alvo, "ForcaNeutra")) {
+    if (criatura_status_tem(_alvo, "ForcaNeutra")) {
         _defesa_efetiva *= 1.02;
     }
 
-    if (pokemon_status_tem(_alvo, "EstoqueDefensivo")) {
+    if (criatura_status_tem(_alvo, "EstoqueDefensivo")) {
         var _estoque_def = variable_struct_get(_alvo.status_map, "EstoqueDefensivo");
         _defesa_efetiva *= 1 + min(0.18, clamp(_estoque_def.Stacks, 1, 5) * 0.04);
     }
 
-    if (pokemon_status_tem(_alvo, "LegadoAtivo")) {
+    if (criatura_status_tem(_alvo, "LegadoAtivo")) {
         _defesa_efetiva *= 1.05;
     }
 
-    if (pokemon_status_tem(_alvo, "MimetismoAtivo")) {
+    if (criatura_status_tem(_alvo, "MimetismoAtivo")) {
         _defesa_efetiva *= 1.08;
     }
 
@@ -581,7 +581,7 @@ function pokemon_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplic
     return clamp(floor(_dano_bruto), 4, _limite_golpe);
 }
 
-function pokemon_combate_efetividade_log(_multiplicador_elemental) {
+function criatura_combate_efetividade_log(_multiplicador_elemental) {
     if (_multiplicador_elemental >= 1.30) {
         return " Foi super efetivo!";
     }
@@ -601,7 +601,7 @@ function pokemon_combate_efetividade_log(_multiplicador_elemental) {
     return "";
 }
 
-function pokemon_combate_status_duracao_padrao(_status_id) {
+function criatura_combate_status_duracao_padrao(_status_id) {
     switch (_status_id) {
         case "Enraizado": return 4.0;
         case "Crescimento": return 8.0;
@@ -691,7 +691,7 @@ function pokemon_combate_status_duracao_padrao(_status_id) {
     return 6.0;
 }
 
-function pokemon_combate_efeito_args(_efeito, _prefixo) {
+function criatura_combate_efeito_args(_efeito, _prefixo) {
     var _args = [];
 
     if (!is_string(_efeito) || string_pos(_prefixo, _efeito) != 1) {
@@ -716,7 +716,7 @@ function pokemon_combate_efeito_args(_efeito, _prefixo) {
     return _args;
 }
 
-function pokemon_combate_efeitos_coletar(_habilidade) {
+function criatura_combate_efeitos_coletar(_habilidade) {
     var _efeitos = [];
 
     if (!is_struct(_habilidade)) {
@@ -738,7 +738,7 @@ function pokemon_combate_efeitos_coletar(_habilidade) {
     return _efeitos;
 }
 
-function pokemon_combate_alvo_cooldown_score(_alvo) {
+function criatura_combate_alvo_cooldown_score(_alvo) {
     if (!instance_exists(_alvo) || !is_array(_alvo.habilidades_equipadas)) {
         return 0;
     }
@@ -759,13 +759,13 @@ function pokemon_combate_alvo_cooldown_score(_alvo) {
     return _maior_ratio;
 }
 
-function pokemon_combate_status_algum(_inst, _status_list) {
+function criatura_combate_status_algum(_inst, _status_list) {
     if (!instance_exists(_inst) || !is_array(_status_list)) {
         return false;
     }
 
     for (var _i = 0; _i < array_length(_status_list); _i += 1) {
-        if (pokemon_status_tem(_inst, _status_list[_i])) {
+        if (criatura_status_tem(_inst, _status_list[_i])) {
             return true;
         }
     }
@@ -773,147 +773,147 @@ function pokemon_combate_status_algum(_inst, _status_list) {
     return false;
 }
 
-function pokemon_combate_sinergia_tipo_status(_atacante, _alvo, _tipo) {
+function criatura_combate_sinergia_tipo_status(_atacante, _alvo, _tipo) {
     var _bonus = 0;
-    var _alvo_debilitado = pokemon_combate_status_algum(
+    var _alvo_debilitado = criatura_combate_status_algum(
         _alvo,
         ["Envenenado", "Corroendo", "Vulneravel", "Queimando", "ArmaduraDerretida", "PosturaQuebrada", "Ofuscado", "Amedrontado", "ParalisiaMental", "SedaPresa", "Infestado", "MarcadoSombrio", "Fragil", "Fragmentado", "Maldito"]
     );
 
     switch (_tipo) {
-        case PokemonTipo.NORMAL:
+        case CriaturaTipo.NORMAL:
             if (_alvo_debilitado) _bonus += 0.04;
-            if (pokemon_combate_status_algum(_atacante, ["ForcaNeutra", "MimetismoAtivo", "LegadoAtivo"])) _bonus += 0.04;
+            if (criatura_combate_status_algum(_atacante, ["ForcaNeutra", "MimetismoAtivo", "LegadoAtivo"])) _bonus += 0.04;
             break;
 
-        case PokemonTipo.FIRE:
-            if (pokemon_status_tem(_alvo, "ArmaduraDerretida")) _bonus += 0.08;
-            if (pokemon_combate_status_algum(_alvo, ["Envenenado", "Corroendo"])) _bonus += 0.05;
-            if (pokemon_status_tem(_alvo, "Enraizado")) _bonus += 0.04;
+        case CriaturaTipo.FIRE:
+            if (criatura_status_tem(_alvo, "ArmaduraDerretida")) _bonus += 0.08;
+            if (criatura_combate_status_algum(_alvo, ["Envenenado", "Corroendo"])) _bonus += 0.05;
+            if (criatura_status_tem(_alvo, "Enraizado")) _bonus += 0.04;
             break;
 
-        case PokemonTipo.WATER:
-            if (pokemon_combate_status_algum(_alvo, ["Queimando", "ArmaduraDerretida"])) _bonus += 0.07;
-            if (pokemon_status_tem(_alvo, "Molhado")) _bonus += 0.05;
-            if (pokemon_status_tem(_alvo, "AreiaMovedica")) _bonus += 0.04;
+        case CriaturaTipo.WATER:
+            if (criatura_combate_status_algum(_alvo, ["Queimando", "ArmaduraDerretida"])) _bonus += 0.07;
+            if (criatura_status_tem(_alvo, "Molhado")) _bonus += 0.05;
+            if (criatura_status_tem(_alvo, "AreiaMovedica")) _bonus += 0.04;
             break;
 
-        case PokemonTipo.GRASS:
-            if (pokemon_status_tem(_alvo, "Molhado")) _bonus += 0.06;
-            if (pokemon_combate_status_algum(_alvo, ["Envenenado", "Corroendo"])) _bonus += 0.06;
-            if (pokemon_status_tem(_alvo, "Enraizado")) _bonus += 0.08;
+        case CriaturaTipo.GRASS:
+            if (criatura_status_tem(_alvo, "Molhado")) _bonus += 0.06;
+            if (criatura_combate_status_algum(_alvo, ["Envenenado", "Corroendo"])) _bonus += 0.06;
+            if (criatura_status_tem(_alvo, "Enraizado")) _bonus += 0.08;
             break;
 
-        case PokemonTipo.ELECTRIC:
-            if (pokemon_status_tem(_alvo, "Molhado")) _bonus += 0.10;
-            if (pokemon_combate_status_algum(_alvo, ["Ofuscado", "ErroEletrico", "Paralisado"])) _bonus += 0.05;
+        case CriaturaTipo.ELECTRIC:
+            if (criatura_status_tem(_alvo, "Molhado")) _bonus += 0.10;
+            if (criatura_combate_status_algum(_alvo, ["Ofuscado", "ErroEletrico", "Paralisado"])) _bonus += 0.05;
             break;
 
-        case PokemonTipo.ICE:
-            if (pokemon_status_tem(_alvo, "Molhado")) _bonus += 0.07;
-            if (pokemon_combate_status_algum(_alvo, ["Gelado", "Congelando", "Fragil"])) _bonus += 0.08;
+        case CriaturaTipo.ICE:
+            if (criatura_status_tem(_alvo, "Molhado")) _bonus += 0.07;
+            if (criatura_combate_status_algum(_alvo, ["Gelado", "Congelando", "Fragil"])) _bonus += 0.08;
             break;
 
-        case PokemonTipo.FIGHTING:
-            if (pokemon_combate_status_algum(_alvo, ["PosturaQuebrada", "Vulneravel", "Desabando"])) _bonus += 0.08;
-            if (pokemon_combate_status_algum(_alvo, ["CascaRocha", "BarreiraLama"])) _bonus += 0.05;
+        case CriaturaTipo.FIGHTING:
+            if (criatura_combate_status_algum(_alvo, ["PosturaQuebrada", "Vulneravel", "Desabando"])) _bonus += 0.08;
+            if (criatura_combate_status_algum(_alvo, ["CascaRocha", "BarreiraLama"])) _bonus += 0.05;
             break;
 
-        case PokemonTipo.POISON:
-            if (pokemon_status_tem(_alvo, "Enraizado")) _bonus += 0.08;
-            if (pokemon_status_tem(_alvo, "Queimando")) _bonus += 0.04;
-            if (pokemon_combate_status_algum(_alvo, ["Envenenado", "Corroendo"])) _bonus += 0.06;
+        case CriaturaTipo.POISON:
+            if (criatura_status_tem(_alvo, "Enraizado")) _bonus += 0.08;
+            if (criatura_status_tem(_alvo, "Queimando")) _bonus += 0.04;
+            if (criatura_combate_status_algum(_alvo, ["Envenenado", "Corroendo"])) _bonus += 0.06;
             break;
 
-        case PokemonTipo.GROUND:
-            if (pokemon_status_tem(_alvo, "Molhado")) _bonus += 0.05;
-            if (pokemon_combate_status_algum(_alvo, ["Paralisado", "SedaPresa"])) _bonus += 0.05;
-            if (pokemon_combate_status_algum(_alvo, ["AreiaMovedica", "Desabando"])) _bonus += 0.08;
+        case CriaturaTipo.GROUND:
+            if (criatura_status_tem(_alvo, "Molhado")) _bonus += 0.05;
+            if (criatura_combate_status_algum(_alvo, ["Paralisado", "SedaPresa"])) _bonus += 0.05;
+            if (criatura_combate_status_algum(_alvo, ["AreiaMovedica", "Desabando"])) _bonus += 0.08;
             break;
 
-        case PokemonTipo.FLYING:
-            if (pokemon_combate_status_algum(_atacante, ["Evasivo", "VentoDeCauda", "PenasLeves"])) _bonus += 0.06;
-            if (pokemon_combate_status_algum(_alvo, ["MarcadoRasante", "Turbulento"])) _bonus += 0.08;
+        case CriaturaTipo.FLYING:
+            if (criatura_combate_status_algum(_atacante, ["Evasivo", "VentoDeCauda", "PenasLeves"])) _bonus += 0.06;
+            if (criatura_combate_status_algum(_alvo, ["MarcadoRasante", "Turbulento"])) _bonus += 0.08;
             break;
 
-        case PokemonTipo.PSYCHIC:
-            if (pokemon_combate_status_algum(_alvo, ["ParalisiaMental", "AmnesiaInduzida"])) _bonus += 0.08;
-            if (pokemon_combate_status_algum(_alvo, ["Ofuscado", "Amedrontado"])) _bonus += 0.06;
+        case CriaturaTipo.PSYCHIC:
+            if (criatura_combate_status_algum(_alvo, ["ParalisiaMental", "AmnesiaInduzida"])) _bonus += 0.08;
+            if (criatura_combate_status_algum(_alvo, ["Ofuscado", "Amedrontado"])) _bonus += 0.06;
             break;
 
-        case PokemonTipo.BUG:
-            if (pokemon_combate_status_algum(_alvo, ["Enraizado", "SedaPresa", "Infestado"])) _bonus += 0.08;
-            if (pokemon_status_tem(_alvo, "Envenenado")) _bonus += 0.04;
+        case CriaturaTipo.BUG:
+            if (criatura_combate_status_algum(_alvo, ["Enraizado", "SedaPresa", "Infestado"])) _bonus += 0.08;
+            if (criatura_status_tem(_alvo, "Envenenado")) _bonus += 0.04;
             break;
 
-        case PokemonTipo.ROCK:
-            if (pokemon_combate_status_algum(_alvo, ["Fragmentado", "Desabando", "PosturaQuebrada"])) _bonus += 0.07;
-            if (pokemon_combate_status_algum(_atacante, ["CascaRocha", "ImpactoGeologico"])) _bonus += 0.05;
+        case CriaturaTipo.ROCK:
+            if (criatura_combate_status_algum(_alvo, ["Fragmentado", "Desabando", "PosturaQuebrada"])) _bonus += 0.07;
+            if (criatura_combate_status_algum(_atacante, ["CascaRocha", "ImpactoGeologico"])) _bonus += 0.05;
             break;
 
-        case PokemonTipo.GHOST:
-            if (pokemon_combate_status_algum(_alvo, ["Assombrado", "Maldito", "TerrorCrescente", "Amedrontado"])) _bonus += 0.08;
-            if (pokemon_status_tem(_atacante, "EssenciaDrenada")) _bonus += 0.05;
+        case CriaturaTipo.GHOST:
+            if (criatura_combate_status_algum(_alvo, ["Assombrado", "Maldito", "TerrorCrescente", "Amedrontado"])) _bonus += 0.08;
+            if (criatura_status_tem(_atacante, "EssenciaDrenada")) _bonus += 0.05;
             break;
 
-        case PokemonTipo.DRAGON:
-            if (pokemon_combate_status_algum(_atacante, ["FuriaDraconica", "EscamaImperial", "AscensaoDraconica", "Predador"])) _bonus += 0.08;
-            if (pokemon_combate_status_algum(_alvo, ["Fragil", "Queimando", "Molhado"])) _bonus += 0.04;
+        case CriaturaTipo.DRAGON:
+            if (criatura_combate_status_algum(_atacante, ["FuriaDraconica", "EscamaImperial", "AscensaoDraconica", "Predador"])) _bonus += 0.08;
+            if (criatura_combate_status_algum(_alvo, ["Fragil", "Queimando", "Molhado"])) _bonus += 0.04;
             break;
 
-        case PokemonTipo.DARK:
+        case CriaturaTipo.DARK:
             if (_alvo_debilitado) _bonus += 0.06;
-            if (pokemon_combate_status_algum(_alvo, ["MarcadoSombrio", "Amedrontado"])) _bonus += 0.08;
+            if (criatura_combate_status_algum(_alvo, ["MarcadoSombrio", "Amedrontado"])) _bonus += 0.08;
             break;
 
-        case PokemonTipo.STEEL:
-            if (pokemon_combate_status_algum(_atacante, ["Fortificado", "ImpactoPesado", "BlindagemMagnetica"])) _bonus += 0.06;
-            if (pokemon_combate_status_algum(_alvo, ["Fragmentado", "PosturaQuebrada"])) _bonus += 0.06;
+        case CriaturaTipo.STEEL:
+            if (criatura_combate_status_algum(_atacante, ["Fortificado", "ImpactoPesado", "BlindagemMagnetica"])) _bonus += 0.06;
+            if (criatura_combate_status_algum(_alvo, ["Fragmentado", "PosturaQuebrada"])) _bonus += 0.06;
             break;
 
-        case PokemonTipo.FAIRY:
-            if (pokemon_combate_status_algum(_atacante, ["BrilhoOfuscante", "EncantoCarga", "AuraMistica"])) _bonus += 0.06;
-            if (pokemon_combate_status_algum(_alvo, ["MarcadoSombrio", "ParalisiaMental", "Amedrontado"])) _bonus += 0.07;
+        case CriaturaTipo.FAIRY:
+            if (criatura_combate_status_algum(_atacante, ["BrilhoOfuscante", "EncantoCarga", "AuraMistica"])) _bonus += 0.06;
+            if (criatura_combate_status_algum(_alvo, ["MarcadoSombrio", "ParalisiaMental", "Amedrontado"])) _bonus += 0.07;
             break;
     }
 
     return min(_bonus, 0.22);
 }
 
-function pokemon_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade) {
+function criatura_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade) {
     var _multiplicador = 1.0;
-    var _efeitos = pokemon_combate_efeitos_coletar(_habilidade);
+    var _efeitos = criatura_combate_efeitos_coletar(_habilidade);
 
     for (var _i = 0; _i < array_length(_efeitos); _i += 1) {
         var _efeito = _efeitos[_i];
-        var _args_alvo = pokemon_combate_efeito_args(_efeito, "bonus_dano_alvo_status:");
+        var _args_alvo = criatura_combate_efeito_args(_efeito, "bonus_dano_alvo_status:");
 
-        if (array_length(_args_alvo) >= 2 && pokemon_status_tem(_alvo, _args_alvo[0])) {
+        if (array_length(_args_alvo) >= 2 && criatura_status_tem(_alvo, _args_alvo[0])) {
             _multiplicador += real(_args_alvo[1]);
             continue;
         }
 
-        var _args_usuario = pokemon_combate_efeito_args(_efeito, "bonus_dano_usuario_status:");
+        var _args_usuario = criatura_combate_efeito_args(_efeito, "bonus_dano_usuario_status:");
 
-        if (array_length(_args_usuario) >= 2 && pokemon_status_tem(_atacante, _args_usuario[0])) {
+        if (array_length(_args_usuario) >= 2 && criatura_status_tem(_atacante, _args_usuario[0])) {
             _multiplicador += real(_args_usuario[1]);
             continue;
         }
 
-        var _args_sacrificio = pokemon_combate_efeito_args(_efeito, "bonus_dano_sacrificio:");
+        var _args_sacrificio = criatura_combate_efeito_args(_efeito, "bonus_dano_sacrificio:");
 
         if (array_length(_args_sacrificio) >= 1) {
             _multiplicador += real(_args_sacrificio[0]);
             continue;
         }
 
-        var _args_cd = pokemon_combate_efeito_args(_efeito, "bonus_dano_alvo_cd:");
+        var _args_cd = criatura_combate_efeito_args(_efeito, "bonus_dano_alvo_cd:");
 
         if (array_length(_args_cd) >= 1) {
-            _multiplicador += real(_args_cd[0]) * pokemon_combate_alvo_cooldown_score(_alvo);
+            _multiplicador += real(_args_cd[0]) * criatura_combate_alvo_cooldown_score(_alvo);
         }
 
-        var _args_hp_baixo = pokemon_combate_efeito_args(_efeito, "bonus_dano_alvo_hp_baixo:");
+        var _args_hp_baixo = criatura_combate_efeito_args(_efeito, "bonus_dano_alvo_hp_baixo:");
 
         if (array_length(_args_hp_baixo) >= 2 && instance_exists(_alvo) && _alvo.hp_max > 0) {
             var _hp_ratio = _alvo.hp_atual / max(1, _alvo.hp_max);
@@ -923,7 +923,7 @@ function pokemon_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade) {
             }
         }
 
-        var _args_usuario_hp_baixo = pokemon_combate_efeito_args(_efeito, "bonus_dano_usuario_hp_baixo:");
+        var _args_usuario_hp_baixo = criatura_combate_efeito_args(_efeito, "bonus_dano_usuario_hp_baixo:");
 
         if (array_length(_args_usuario_hp_baixo) >= 2 && instance_exists(_atacante) && _atacante.hp_max > 0) {
             var _hp_ratio_usuario = _atacante.hp_atual / max(1, _atacante.hp_max);
@@ -935,11 +935,11 @@ function pokemon_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade) {
     }
 
     var _tipo_ataque = variable_struct_exists(_habilidade, "TipoElementar") ? _habilidade.TipoElementar : _habilidade.Tipo;
-    _multiplicador += pokemon_combate_sinergia_tipo_status(_atacante, _alvo, _tipo_ataque);
+    _multiplicador += criatura_combate_sinergia_tipo_status(_atacante, _alvo, _tipo_ataque);
     return clamp(_multiplicador, 0.55, 1.65);
 }
 
-function pokemon_combate_curar(_inst, _quantidade) {
+function criatura_combate_curar(_inst, _quantidade) {
     if (!instance_exists(_inst) || _quantidade <= 0) {
         return 0;
     }
@@ -947,55 +947,55 @@ function pokemon_combate_curar(_inst, _quantidade) {
     var _antes = _inst.hp_atual;
     _inst.hp_atual = min(_inst.hp_max, _inst.hp_atual + _quantidade);
 
-    if (is_struct(_inst.pokemon_data)) {
-        _inst.pokemon_data.HpAtual = _inst.hp_atual;
+    if (is_struct(_inst.criatura_data)) {
+        _inst.criatura_data.HpAtual = _inst.hp_atual;
     }
 
     return _inst.hp_atual - _antes;
 }
 
-function pokemon_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano) {
+function criatura_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano) {
     var _efeito_especial = _habilidade.EfeitoEspecial;
 
     if (is_method(_efeito_especial)) {
         _efeito_especial(_atacante, _alvo, _habilidade);
     }
 
-    var _efeitos = pokemon_combate_efeitos_coletar(_habilidade);
+    var _efeitos = criatura_combate_efeitos_coletar(_habilidade);
 
     for (var _i = 0; _i < array_length(_efeitos); _i += 1) {
         var _efeito = _efeitos[_i];
-        var _status_alvo = pokemon_combate_efeito_args(_efeito, "aplicar_status:");
+        var _status_alvo = criatura_combate_efeito_args(_efeito, "aplicar_status:");
 
         if (array_length(_status_alvo) >= 1) {
             var _status_id = _status_alvo[0];
-            pokemon_status_aplicar(_alvo, _status_id, pokemon_combate_status_duracao_padrao(_status_id));
-            battle_log_push(string_upper(_alvo.pokemon_nome) + " ficou " + string_upper(_status_id) + "!");
+            criatura_status_aplicar(_alvo, _status_id, criatura_combate_status_duracao_padrao(_status_id));
+            battle_log_push(string_upper(_alvo.criatura_nome) + " ficou " + string_upper(_status_id) + "!");
             continue;
         }
 
-        var _status_usuario = pokemon_combate_efeito_args(_efeito, "aplicar_status_usuario:");
+        var _status_usuario = criatura_combate_efeito_args(_efeito, "aplicar_status_usuario:");
 
         if (array_length(_status_usuario) >= 1) {
             var _status_self = _status_usuario[0];
-            pokemon_status_aplicar(_atacante, _status_self, pokemon_combate_status_duracao_padrao(_status_self));
-            battle_log_push(string_upper(_atacante.pokemon_nome) + " ativou " + string_upper(_status_self) + "!");
+            criatura_status_aplicar(_atacante, _status_self, criatura_combate_status_duracao_padrao(_status_self));
+            battle_log_push(string_upper(_atacante.criatura_nome) + " ativou " + string_upper(_status_self) + "!");
             continue;
         }
 
-        var _cura_dano = pokemon_combate_efeito_args(_efeito, "curar_dano:");
+        var _cura_dano = criatura_combate_efeito_args(_efeito, "curar_dano:");
 
         if (array_length(_cura_dano) >= 1) {
-            var _curado = pokemon_combate_curar(_atacante, max(1, floor(_dano * real(_cura_dano[0]))));
+            var _curado = criatura_combate_curar(_atacante, max(1, floor(_dano * real(_cura_dano[0]))));
 
             if (_curado > 0) {
-                battle_log_push(string_upper(_atacante.pokemon_nome) + " recuperou " + string(_curado) + " HP!");
+                battle_log_push(string_upper(_atacante.criatura_nome) + " recuperou " + string(_curado) + " HP!");
             }
 
             continue;
         }
 
-        var _sacrificio_hp = pokemon_combate_efeito_args(_efeito, "sacrificar_hp_pct:");
+        var _sacrificio_hp = criatura_combate_efeito_args(_efeito, "sacrificar_hp_pct:");
 
         if (array_length(_sacrificio_hp) >= 1) {
             var _perda = max(1, floor(_atacante.hp_max * real(_sacrificio_hp[0])));
@@ -1004,29 +1004,29 @@ function pokemon_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano) {
             if (_perda > 0) {
                 _atacante.hp_atual -= _perda;
 
-                if (is_struct(_atacante.pokemon_data)) {
-                    _atacante.pokemon_data.HpAtual = _atacante.hp_atual;
+                if (is_struct(_atacante.criatura_data)) {
+                    _atacante.criatura_data.HpAtual = _atacante.hp_atual;
                 }
 
-                battle_log_push(string_upper(_atacante.pokemon_nome) + " converteu " + string(_perda) + " HP em forca!");
+                battle_log_push(string_upper(_atacante.criatura_nome) + " converteu " + string(_perda) + " HP em forca!");
             }
 
             continue;
         }
 
-        var _cura_dano_status = pokemon_combate_efeito_args(_efeito, "curar_dano_status:");
+        var _cura_dano_status = criatura_combate_efeito_args(_efeito, "curar_dano_status:");
 
-        if (array_length(_cura_dano_status) >= 2 && pokemon_status_tem(_alvo, _cura_dano_status[0])) {
-            var _curado_status = pokemon_combate_curar(_atacante, max(1, floor(_dano * real(_cura_dano_status[1]))));
+        if (array_length(_cura_dano_status) >= 2 && criatura_status_tem(_alvo, _cura_dano_status[0])) {
+            var _curado_status = criatura_combate_curar(_atacante, max(1, floor(_dano * real(_cura_dano_status[1]))));
 
             if (_curado_status > 0) {
-                battle_log_push(string_upper(_atacante.pokemon_nome) + " drenou " + string(_curado_status) + " HP!");
+                battle_log_push(string_upper(_atacante.criatura_nome) + " drenou " + string(_curado_status) + " HP!");
             }
 
             continue;
         }
 
-        var _reduzir_cds = pokemon_combate_efeito_args(_efeito, "reduzir_cooldowns_usuario:");
+        var _reduzir_cds = criatura_combate_efeito_args(_efeito, "reduzir_cooldowns_usuario:");
 
         if (array_length(_reduzir_cds) >= 1 && is_array(_atacante.habilidades_equipadas)) {
             var _reducao = real(_reduzir_cds[0]);
@@ -1039,11 +1039,11 @@ function pokemon_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano) {
                 }
             }
 
-            battle_log_push(string_upper(_atacante.pokemon_nome) + " acelerou seus COOLDOWNS!");
+            battle_log_push(string_upper(_atacante.criatura_nome) + " acelerou seus COOLDOWNS!");
             continue;
         }
 
-        var _aumentar_cds = pokemon_combate_efeito_args(_efeito, "aumentar_cooldowns_alvo:");
+        var _aumentar_cds = criatura_combate_efeito_args(_efeito, "aumentar_cooldowns_alvo:");
 
         if (array_length(_aumentar_cds) >= 1 && is_array(_alvo.habilidades_equipadas)) {
             var _atraso = real(_aumentar_cds[0]);
@@ -1056,72 +1056,72 @@ function pokemon_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano) {
                 }
             }
 
-            battle_log_push(string_upper(_alvo.pokemon_nome) + " teve os COOLDOWNS atrasados!");
+            battle_log_push(string_upper(_alvo.criatura_nome) + " teve os COOLDOWNS atrasados!");
             continue;
         }
 
-        var _cura_maxhp = pokemon_combate_efeito_args(_efeito, "curar_maxhp:");
+        var _cura_maxhp = criatura_combate_efeito_args(_efeito, "curar_maxhp:");
 
         if (array_length(_cura_maxhp) >= 1) {
-            var _curado_max = pokemon_combate_curar(_atacante, max(1, floor(_atacante.hp_max * real(_cura_maxhp[0]))));
+            var _curado_max = criatura_combate_curar(_atacante, max(1, floor(_atacante.hp_max * real(_cura_maxhp[0]))));
 
             if (_curado_max > 0) {
-                battle_log_push(string_upper(_atacante.pokemon_nome) + " recuperou " + string(_curado_max) + " HP!");
+                battle_log_push(string_upper(_atacante.criatura_nome) + " recuperou " + string(_curado_max) + " HP!");
             }
         }
     }
 }
 
-function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
+function criatura_combate_executar_habilidade(_atacante, _habilidade) {
     if (!instance_exists(_atacante) || !is_struct(_habilidade) || !_atacante.vivo) {
         return false;
     }
 
-    var _alvo = pokemon_combate_encontrar_alvo(_atacante);
+    var _alvo = criatura_combate_encontrar_alvo(_atacante);
 
     if (!instance_exists(_alvo)) {
         return false;
     }
 
-    if (pokemon_status_tem(_atacante, "Ofuscado")) {
-        pokemon_status_consumir(_atacante, "Ofuscado");
+    if (criatura_status_tem(_atacante, "Ofuscado")) {
+        criatura_status_consumir(_atacante, "Ofuscado");
 
         if (random(1) < 0.28) {
-            pokemon_status_aplicar(_atacante, "ErroEletrico", pokemon_combate_status_duracao_padrao("ErroEletrico"));
-            battle_log_push(string_upper(_atacante.pokemon_nome) + " errou o golpe por OFUSCACAO!");
+            criatura_status_aplicar(_atacante, "ErroEletrico", criatura_combate_status_duracao_padrao("ErroEletrico"));
+            battle_log_push(string_upper(_atacante.criatura_nome) + " errou o golpe por OFUSCACAO!");
             return true;
         }
     }
 
-    if (pokemon_status_tem(_alvo, "Intangivel")) {
+    if (criatura_status_tem(_alvo, "Intangivel")) {
         var _intangivel = variable_struct_get(_alvo.status_map, "Intangivel");
         var _chance_intangivel = min(0.28, 0.16 + (clamp(_intangivel.Stacks, 1, 3) * 0.04));
 
         if (random(1) < _chance_intangivel) {
-            pokemon_status_consumir(_alvo, "Intangivel");
-            battle_log_push(string_upper(_alvo.pokemon_nome) + " ficou INTANGIVEL e evitou o golpe!");
+            criatura_status_consumir(_alvo, "Intangivel");
+            battle_log_push(string_upper(_alvo.criatura_nome) + " ficou INTANGIVEL e evitou o golpe!");
             return true;
         }
     }
 
-    if (pokemon_status_tem(_alvo, "CopiaSombria")) {
+    if (criatura_status_tem(_alvo, "CopiaSombria")) {
         var _copia = variable_struct_get(_alvo.status_map, "CopiaSombria");
         var _chance_copia = min(0.30, 0.16 + (clamp(_copia.Stacks, 1, 4) * 0.035));
 
         if (random(1) < _chance_copia) {
-            pokemon_status_consumir(_alvo, "CopiaSombria");
-            battle_log_push(string_upper(_alvo.pokemon_nome) + " desviou usando COPIA SOMBRIA!");
+            criatura_status_consumir(_alvo, "CopiaSombria");
+            battle_log_push(string_upper(_alvo.criatura_nome) + " desviou usando COPIA SOMBRIA!");
             return true;
         }
     }
 
-    if (pokemon_status_tem(_alvo, "CamuflagemSombria")) {
+    if (criatura_status_tem(_alvo, "CamuflagemSombria")) {
         var _camuflagem = variable_struct_get(_alvo.status_map, "CamuflagemSombria");
         var _chance_camuflagem = min(0.24, 0.12 + (clamp(_camuflagem.Stacks, 1, 4) * 0.03));
 
         if (random(1) < _chance_camuflagem) {
-            pokemon_status_consumir(_alvo, "CamuflagemSombria");
-            battle_log_push(string_upper(_alvo.pokemon_nome) + " sumiu na CAMUFLAGEM!");
+            criatura_status_consumir(_alvo, "CamuflagemSombria");
+            battle_log_push(string_upper(_alvo.criatura_nome) + " sumiu na CAMUFLAGEM!");
             return true;
         }
     }
@@ -1130,31 +1130,31 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
     var _multiplicador_elemental = 1.0;
     var _combo_consumir = "";
 
-    if (is_string(_habilidade.ComboID) && _habilidade.ComboID != "" && pokemon_status_tem(_alvo, _habilidade.ComboID)) {
+    if (is_string(_habilidade.ComboID) && _habilidade.ComboID != "" && criatura_status_tem(_alvo, _habilidade.ComboID)) {
         _multiplicador += 0.25;
         _combo_consumir = _habilidade.ComboID;
     }
 
-    if (is_struct(_alvo.pokemon_data)) {
+    if (is_struct(_alvo.criatura_data)) {
         var _tipo_ataque = variable_struct_exists(_habilidade, "TipoElementar") ? _habilidade.TipoElementar : _habilidade.Tipo;
-        _multiplicador_elemental = calcular_dano_elemental(_tipo_ataque, _alvo.pokemon_data.Tipo1, _alvo.pokemon_data.Tipo2);
+        _multiplicador_elemental = calcular_dano_elemental(_tipo_ataque, _alvo.criatura_data.Tipo1, _alvo.criatura_data.Tipo2);
         _multiplicador *= _multiplicador_elemental;
     }
 
-    _multiplicador *= pokemon_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade);
+    _multiplicador *= criatura_combate_multiplicador_efeitos(_atacante, _alvo, _habilidade);
     var _tipo_golpe = variable_struct_exists(_habilidade, "TipoElementar") ? _habilidade.TipoElementar : _habilidade.Tipo;
-    var _bonus_tipo = pokemon_combate_sinergia_tipo_status(_atacante, _alvo, _tipo_golpe);
+    var _bonus_tipo = criatura_combate_sinergia_tipo_status(_atacante, _alvo, _tipo_golpe);
 
-    var _dano = pokemon_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplicador);
+    var _dano = criatura_combate_calcular_dano(_atacante, _alvo, _habilidade, _multiplicador);
     _alvo.hp_atual = max(0, _alvo.hp_atual - _dano);
-    pokemon_visual_mudar_estado(_atacante, ESTADO.ATACANDO, 0.22, _alvo);
+    criatura_visual_mudar_estado(_atacante, ESTADO.ATACANDO, 0.22, _alvo);
 
     var _houve_combo = _combo_consumir != "";
     var _impacto = _houve_combo ? "Combo!" : string(_dano);
     battle_vfx_criar(_atacante, _alvo, _impacto, _tipo_golpe);
-    battle_log_push(string_upper(_atacante.pokemon_nome) + " usou " + string_upper(_habilidade.Nome) + "!" + pokemon_combate_efetividade_log(_multiplicador_elemental));
+    battle_log_push(string_upper(_atacante.criatura_nome) + " usou " + string_upper(_habilidade.Nome) + "!" + criatura_combate_efetividade_log(_multiplicador_elemental));
 
-    pokemon_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano);
+    criatura_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano);
     var _sinergias = sinergia_aplicar(_atacante, _alvo, _habilidade);
 
     // Aviso na tela: combo de marca > dano sinergico (tipo x status) > sinergia cruzada.
@@ -1176,29 +1176,29 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
         }
     }
 
-    if (pokemon_status_tem(_alvo, "EspinhosFerro") && _alvo.hp_atual > 0 && _atacante.hp_atual > 0) {
+    if (criatura_status_tem(_alvo, "EspinhosFerro") && _alvo.hp_atual > 0 && _atacante.hp_atual > 0) {
         var _espinhos = variable_struct_get(_alvo.status_map, "EspinhosFerro");
         var _retorno_ratio = 0.08 + min(0.06, clamp(_espinhos.Stacks, 1, 4) * 0.015);
         var _retorno = max(1, floor(_dano * _retorno_ratio));
         _atacante.hp_atual = max(0, _atacante.hp_atual - _retorno);
 
-        if (is_struct(_atacante.pokemon_data)) {
-            _atacante.pokemon_data.HpAtual = _atacante.hp_atual;
+        if (is_struct(_atacante.criatura_data)) {
+            _atacante.criatura_data.HpAtual = _atacante.hp_atual;
         }
 
-        battle_log_push(string_upper(_atacante.pokemon_nome) + " sofreu " + string(_retorno) + " de ESPINHOS!");
+        battle_log_push(string_upper(_atacante.criatura_nome) + " sofreu " + string(_retorno) + " de ESPINHOS!");
     }
 
     if (_combo_consumir != "") {
-        pokemon_status_consumir(_alvo, _combo_consumir);
+        criatura_status_consumir(_alvo, _combo_consumir);
     }
 
     if (_atacante.hp_atual <= 0) {
         _atacante.vivo = false;
         _atacante.batalha_ativo = false;
 
-        if (is_struct(_atacante.pokemon_data)) {
-            _atacante.pokemon_data.Desmaiado = true;
+        if (is_struct(_atacante.criatura_data)) {
+            _atacante.criatura_data.Desmaiado = true;
         }
     }
 
@@ -1206,8 +1206,8 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
         _alvo.vivo = false;
         _alvo.batalha_ativo = false;
 
-        if (is_struct(_alvo.pokemon_data)) {
-            _alvo.pokemon_data.Desmaiado = true;
+        if (is_struct(_alvo.criatura_data)) {
+            _alvo.criatura_data.Desmaiado = true;
         }
     }
 
@@ -1218,7 +1218,7 @@ function pokemon_combate_executar_habilidade(_atacante, _habilidade) {
     return true;
 }
 
-function pokemon_visual_mudar_estado(_inst, _estado, _tempo, _referencia) {
+function criatura_visual_mudar_estado(_inst, _estado, _tempo, _referencia) {
     if (!instance_exists(_inst)) {
         return;
     }
@@ -1243,7 +1243,7 @@ function pokemon_visual_mudar_estado(_inst, _estado, _tempo, _referencia) {
     }
 }
 
-function pokemon_visual_step(_inst, _dt) {
+function criatura_visual_step(_inst, _dt) {
     if (!instance_exists(_inst)) {
         return;
     }
@@ -1261,7 +1261,7 @@ function pokemon_visual_step(_inst, _dt) {
     }
 }
 
-function pokemon_draw_action_queue(_inst) {
+function criatura_draw_action_queue(_inst) {
     if (!instance_exists(_inst)) {
         return;
     }
@@ -1295,22 +1295,22 @@ function pokemon_draw_action_queue(_inst) {
     draw_set_color(c_white);
 }
 
-function pokemon_combate_speed_cooldown_mult(_speed) {
+function criatura_combate_speed_cooldown_mult(_speed) {
     return 1 + clamp((_speed - 50) * 0.008, -0.18, 0.42);
 }
 
-function pokemon_combate_cooldown_reiniciar(_inst, _habilidade, _slot) {
+function criatura_combate_cooldown_reiniciar(_inst, _habilidade, _slot) {
     var _lado_jitter = _inst.lado_batalha == LadoBatalha.ALIADO ? 0.00 : 0.48;
     var _slot_jitter = (_slot mod 4) * 0.22;
     _habilidade.TempoRecargaAtual = _habilidade.TempoRecargaMax + _lado_jitter + _slot_jitter;
 }
 
-function pokemon_combate_step(_inst, _dt) {
+function criatura_combate_step(_inst, _dt) {
     if (!instance_exists(_inst) || !_inst.vivo || !_inst.batalha_ativo) {
         return;
     }
 
-    pokemon_status_tick(_inst, _dt);
+    criatura_status_tick(_inst, _dt);
 
     if (!_inst.vivo) {
         return;
@@ -1325,47 +1325,47 @@ function pokemon_combate_step(_inst, _dt) {
             continue;
         }
 
-        var _speed_mult = pokemon_combate_speed_cooldown_mult(_inst.stat_speed);
+        var _speed_mult = criatura_combate_speed_cooldown_mult(_inst.stat_speed);
 
-        if (pokemon_status_tem(_inst, "FluxoAcelerado")) {
+        if (criatura_status_tem(_inst, "FluxoAcelerado")) {
             _speed_mult *= 1.14;
         }
 
-        if (pokemon_status_tem(_inst, "EstaticaAtiva")) {
+        if (criatura_status_tem(_inst, "EstaticaAtiva")) {
             _speed_mult *= 1.13;
         }
 
-        if (pokemon_status_tem(_inst, "Paralisado")) {
+        if (criatura_status_tem(_inst, "Paralisado")) {
             _speed_mult *= 0.88;
         }
 
-        if (pokemon_status_tem(_inst, "NevoaEstagnante")) {
+        if (criatura_status_tem(_inst, "NevoaEstagnante")) {
             _speed_mult *= 0.88;
         }
 
-        if (pokemon_status_tem(_inst, "CalorEscaldante")) {
+        if (criatura_status_tem(_inst, "CalorEscaldante")) {
             _speed_mult *= 0.94;
         }
 
-        if (pokemon_status_tem(_inst, "Gelado")) {
+        if (criatura_status_tem(_inst, "Gelado")) {
             _speed_mult *= 0.90;
         }
 
-        if (pokemon_status_tem(_inst, "Congelando")) {
+        if (criatura_status_tem(_inst, "Congelando")) {
             _speed_mult *= 0.82;
         }
 
-        if (pokemon_status_tem(_inst, "MantoGelo")) {
+        if (criatura_status_tem(_inst, "MantoGelo")) {
             _speed_mult *= 0.94;
         }
 
         _habilidade.TempoRecargaAtual = max(0, _habilidade.TempoRecargaAtual - (_dt * _speed_mult));
 
         if (_habilidade.TempoRecargaAtual <= 0) {
-            var _executou = pokemon_combate_executar_habilidade(_inst, _habilidade);
+            var _executou = criatura_combate_executar_habilidade(_inst, _habilidade);
 
             if (_executou) {
-                pokemon_combate_cooldown_reiniciar(_inst, _habilidade, _i);
+                criatura_combate_cooldown_reiniciar(_inst, _habilidade, _i);
             }
         }
     }

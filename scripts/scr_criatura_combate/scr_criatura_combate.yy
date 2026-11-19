@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_pokemon_progressao",
+  "%Name":"scr_criatura_combate",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_pokemon_progressao",
+  "name":"scr_criatura_combate",
   "parent":{
     "name":"PokemonRogueLike",
     "path":"PokemonRogueLike.yyp",

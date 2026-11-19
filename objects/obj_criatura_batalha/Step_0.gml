@@ -9,5 +9,5 @@ if (_dt <= 0) {
     exit;
 }
 
-pokemon_visual_step(id, _dt);
-pokemon_combate_step(id, _dt);
+criatura_visual_step(id, _dt);
+criatura_combate_step(id, _dt);

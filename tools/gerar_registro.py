@@ -8,6 +8,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from renomear_habilidades import TROCAS as HABILIDADES
+from renomear_identificadores import RECURSOS
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAIDA = os.path.join(RAIZ, "docs", "registro_de_mudancas.txt")
@@ -158,6 +159,14 @@ def main():
         secao(f, "CLASSES DE TREINADOR", TREINADORES)
         secao(f, "PAPEIS DE CRIATURA COM EQUIVALENTE DIRETO", PAPEIS_CRIATURA)
         secao(f, "HABILIDADES RENOMEADAS (nomes que vinham de golpes de Pokemon)", sorted(HABILIDADES.items()))
+        secao(f, "RECURSOS DO PROJETO RENOMEADOS", sorted(RECURSOS.items()))
+        secao(f, "NOMES INTERNOS NO CODIGO (tools/renomear_identificadores.py)", [
+            ("pokemon_* (funcoes e variaveis)", "criatura_*"),
+            ("Pokemon* (construtores e enums: PokemonData, PokemonTipo...)", "Criatura* (CriaturaData, CriaturaTipo...)"),
+            ("pokedex_* / global.pokedex", "bestiario_* / global.bestiario"),
+            ("Save pokemon_roguelike_meta.ini", "meta_progresso.ini (migrado sozinho)"),
+            ("Mantidos", "PokemonRogueLike.yyp (arquivo do projeto) e IDs de itens como pokebola"),
+        ])
         secao(f, "ARTE", ARTE)
 
         f.write("\nROSTER DE CRIATURAS\n-------------------\n")

@@ -1,6 +1,6 @@
-pokemon_data = undefined;
-pokemon_id = -1;
-pokemon_nome = "";
+criatura_data = undefined;
+criatura_id = -1;
+criatura_nome = "";
 
 hp_atual = 0;
 hp_max = 0;

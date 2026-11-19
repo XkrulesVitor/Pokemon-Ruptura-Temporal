@@ -153,14 +153,14 @@ function run_save_carregar(_controller) {
 
     for (var _i = 0; _i < array_length(_party); _i += 1) {
         if (is_struct(_party[_i])) {
-            static_set(_party[_i], static_get(PokemonData));
+            static_set(_party[_i], static_get(CriaturaData));
         }
     }
 
     with (_controller) {
         player_party = _party;
         player_party_active_index = clamp(_dados.PartyAtiva, 0, max(0, array_length(_party) - 1));
-        player_pokemon_data = array_length(_party) > 0 ? _party[player_party_active_index] : undefined;
+        player_criatura_data = array_length(_party) > 0 ? _party[player_party_active_index] : undefined;
         starter_id = _dados.StarterID;
         dinheiro = _dados.Dinheiro;
         inventario = is_struct(_dados.Inventario) ? _dados.Inventario : demo_inventario_criar();

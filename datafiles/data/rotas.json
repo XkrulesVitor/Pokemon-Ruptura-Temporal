@@ -1,0 +1,643 @@
+{
+ "versao": 1,
+ "rotas_iniciais": [
+  {
+   "id": "rota_1",
+   "nome": "Trilha da Alvorada",
+   "descricao": "Estrada de grama classica",
+   "biomas": [
+    "grama",
+    "normal",
+    "voador"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  }
+ ],
+ "rotas_gerais": [
+  {
+   "id": "rota_2",
+   "nome": "Bosque Verdejante",
+   "descricao": "Mata fechada com insetos e flores toxicas",
+   "biomas": [
+    "inseto",
+    "grama",
+    "veneno"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_22",
+   "nome": "Caminho dos Desafiantes",
+   "descricao": "Trilha de treino entre lutadores e fadas",
+   "biomas": [
+    "luta",
+    "fada",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_23",
+   "nome": "Pantano das Fendas",
+   "descricao": "Lama, agua parada e insetos",
+   "biomas": [
+    "veneno",
+    "agua",
+    "inseto"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "rota_3_4",
+   "nome": "Gruta do Eco",
+   "descricao": "Entrada rochosa cheia de ecos",
+   "biomas": [
+    "caverna",
+    "pedra",
+    "terra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_42",
+   "nome": "Pico Congelado",
+   "descricao": "Vento gelado e asas no alto",
+   "biomas": [
+    "gelo",
+    "dragao",
+    "voador"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "rota_4_ferro",
+   "nome": "Fenda de Ferro",
+   "descricao": "Rochas metalicas e trilhos velhos",
+   "biomas": [
+    "aco",
+    "pedra",
+    "normal"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_5_6",
+   "nome": "Via Central",
+   "descricao": "Estrada movimentada e campos eletricos",
+   "biomas": [
+    "terra",
+    "eletrico",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_115",
+   "nome": "Vale Mistico",
+   "descricao": "Nevoa feerica e ecos psiquicos",
+   "biomas": [
+    "fada",
+    "psiquico",
+    "fantasma"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_9",
+   "nome": "Desfiladeiro Ardente",
+   "descricao": "Pedra quente e chao rachado",
+   "biomas": [
+    "fogo",
+    "terra",
+    "pedra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "rota_19_20",
+   "nome": "Mar Aberto",
+   "descricao": "Ondas, aves e sombras no fundo",
+   "biomas": [
+    "agua",
+    "sombrio",
+    "voador"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "rota_10",
+   "nome": "Usinas Destruidas",
+   "descricao": "Maquinas faiscando entre chamas",
+   "biomas": [
+    "aco",
+    "eletrico",
+    "fogo"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "rota_12",
+   "nome": "Abismo das Fendas",
+   "descricao": "Agua escura e vultos",
+   "biomas": [
+    "sombrio",
+    "fantasma",
+    "agua"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "rota_21",
+   "nome": "Canal Vulcanico",
+   "descricao": "Magma, dragoes e fumaca",
+   "biomas": [
+    "dragao",
+    "fogo",
+    "sombrio"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "bosque_venenoso",
+   "nome": "Bosque Venenoso",
+   "descricao": "Flores toxicas e insetos de fenda",
+   "biomas": [
+    "grama",
+    "veneno",
+    "inseto"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "trilha_cinzas",
+   "nome": "Trilha de Cinzas",
+   "descricao": "Terra quente e rochas instaveis",
+   "biomas": [
+    "fogo",
+    "terra",
+    "pedra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "canion_magnetico",
+   "nome": "Canion Magnetico",
+   "descricao": "Sucata antiga e campos eletricos",
+   "biomas": [
+    "eletrico",
+    "aco",
+    "terra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "praia_ventos",
+   "nome": "Praia dos Ventos",
+   "descricao": "Agua rasa, aves e trilha costeira",
+   "biomas": [
+    "agua",
+    "voador",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "ruinas_psiquicas",
+   "nome": "Ruinas Psiquicas",
+   "descricao": "Ecos mentais entre casas quebradas",
+   "biomas": [
+    "psiquico",
+    "fantasma",
+    "fada"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "glaciar_errante",
+   "nome": "Glaciar Errante",
+   "descricao": "Nevoa fria cortando a estrada",
+   "biomas": [
+    "gelo",
+    "agua",
+    "dragao"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "caverna_cristal",
+   "nome": "Caverna Cristal",
+   "descricao": "Pedras vivas e metal brilhante",
+   "biomas": [
+    "caverna",
+    "pedra",
+    "aco"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "campo_floral",
+   "nome": "Campo Floral",
+   "descricao": "Flores estranhas perto da fazenda",
+   "biomas": [
+    "fada",
+    "grama",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "dojo_abandonado",
+   "nome": "Dojo Abandonado",
+   "descricao": "Faixas rasgadas e passos no escuro",
+   "biomas": [
+    "luta",
+    "sombrio",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "ponte_sombria",
+   "nome": "Ponte Sombria",
+   "descricao": "Fenda noturna sobre agua parada",
+   "biomas": [
+    "sombrio",
+    "fantasma",
+    "veneno"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "ninho_correntes",
+   "nome": "Ninho das Correntes",
+   "descricao": "Vento forte e descargas no ar",
+   "biomas": [
+    "voador",
+    "eletrico",
+    "dragao"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "lamacal_antigo",
+   "nome": "Lamacal Antigo",
+   "descricao": "Agua barrenta e toxinas no solo",
+   "biomas": [
+    "agua",
+    "terra",
+    "veneno"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "bosque_seda",
+   "nome": "Bosque de Seda",
+   "descricao": "Teias, folhas e luzes feericas",
+   "biomas": [
+    "inseto",
+    "grama",
+    "fada"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "deserto_partido",
+   "nome": "Deserto Partido",
+   "descricao": "Areia quente e pedra rachada",
+   "biomas": [
+    "terra",
+    "pedra",
+    "fogo"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "usina_submersa",
+   "nome": "Usina Submersa",
+   "descricao": "Maquinas afogadas ainda ligadas",
+   "biomas": [
+    "eletrico",
+    "agua",
+    "aco"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "cratera_draconica",
+   "nome": "Cratera Draconica",
+   "descricao": "Calor, pedra e presenca ancestral",
+   "biomas": [
+    "dragao",
+    "fogo",
+    "pedra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "jardim_lunar",
+   "nome": "Jardim Lunar",
+   "descricao": "Clareira fria sob luz estranha",
+   "biomas": [
+    "fada",
+    "gelo",
+    "grama"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "trilho_sucata",
+   "nome": "Trilho de Sucata",
+   "descricao": "Linha ferrea tomada por metal vivo",
+   "biomas": [
+    "aco",
+    "eletrico",
+    "sombrio"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "corrego_oculto",
+   "nome": "Corrego Oculto",
+   "descricao": "Agua limpa cortando mato fechado",
+   "biomas": [
+    "agua",
+    "grama",
+    "psiquico"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "torre_ruida",
+   "nome": "Torre Ruida",
+   "descricao": "Pedra antiga e sombras no alto",
+   "biomas": [
+    "fantasma",
+    "voador",
+    "pedra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "planicie_raios",
+   "nome": "Planicie dos Raios",
+   "descricao": "Campo aberto carregado de eletricidade",
+   "biomas": [
+    "eletrico",
+    "normal",
+    "voador"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "mina_salgada",
+   "nome": "Mina Salgada",
+   "descricao": "Tuneis umidos perto do mar",
+   "biomas": [
+    "caverna",
+    "agua",
+    "pedra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "mata_crepusculo",
+   "nome": "Mata do Crepusculo",
+   "descricao": "Arvores densas e passos distantes",
+   "biomas": [
+    "sombrio",
+    "grama",
+    "inseto"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "floresta_eclipse",
+   "nome": "Floresta do Eclipse",
+   "descricao": "Noite fechada, lua baixa e teias nas trilhas",
+   "biomas": [
+    "sombrio",
+    "fantasma",
+    "inseto"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "sepulcro_raizes",
+   "nome": "Sepulcro de Raizes",
+   "descricao": "Tumulos tomados por musgo e veneno",
+   "biomas": [
+    "fantasma",
+    "grama",
+    "veneno"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "fornalha_ferro",
+   "nome": "Fornalha de Ferro",
+   "descricao": "Metal rubro, fuligem e vapor eletrico",
+   "biomas": [
+    "fogo",
+    "aco",
+    "eletrico"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "tunel_obsidiana",
+   "nome": "Tunel de Obsidiana",
+   "descricao": "Caverna quente com rochas negras",
+   "biomas": [
+    "caverna",
+    "fogo",
+    "pedra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "serra_gelida",
+   "nome": "Serra Gelida",
+   "descricao": "Vento cortante entre pedra e metal",
+   "biomas": [
+    "gelo",
+    "pedra",
+    "aco"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "lago_neblina",
+   "nome": "Lago da Neblina",
+   "descricao": "Agua fria sob ecos psiquicos",
+   "biomas": [
+    "agua",
+    "gelo",
+    "psiquico"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "altar_lunar",
+   "nome": "Altar Lunar",
+   "descricao": "Pedras antigas brilhando com energia feerica",
+   "biomas": [
+    "fada",
+    "fantasma",
+    "psiquico"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "penhasco_dragao",
+   "nome": "Penhasco do Dragao",
+   "descricao": "Correntes de ar sobre rochas escaldadas",
+   "biomas": [
+    "dragao",
+    "voador",
+    "fogo"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "pedreira_bruta",
+   "nome": "Pedreira Bruta",
+   "descricao": "Quebra-pedra, poeira e treino pesado",
+   "biomas": [
+    "pedra",
+    "luta",
+    "terra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "pantanoso_noturno",
+   "nome": "Pantano Noturno",
+   "descricao": "Agua escura com toxinas e insetos",
+   "biomas": [
+    "agua",
+    "sombrio",
+    "veneno"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "jardim_estilhacado",
+   "nome": "Jardim Estilhacado",
+   "descricao": "Flores feericas crescendo entre cristais",
+   "biomas": [
+    "fada",
+    "grama",
+    "pedra"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "trilha_carvao",
+   "nome": "Trilha do Carvao",
+   "descricao": "Cinzas no mato e calor vindo do subsolo",
+   "biomas": [
+    "fogo",
+    "grama",
+    "terra"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 5
+  },
+  {
+   "id": "observatorio_eco",
+   "nome": "Observatorio Eco",
+   "descricao": "Antenas quebradas lendo sinais mentais",
+   "biomas": [
+    "psiquico",
+    "eletrico",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  },
+  {
+   "id": "ninho_farpas",
+   "nome": "Ninho de Farpas",
+   "descricao": "Casulos, espinhos e sombra entre folhas",
+   "biomas": [
+    "inseto",
+    "sombrio",
+    "grama"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "dique_enferrujado",
+   "nome": "Dique Enferrujado",
+   "descricao": "Agua batendo em comportas antigas",
+   "biomas": [
+    "agua",
+    "aco",
+    "eletrico"
+   ],
+   "min_encontros": 4,
+   "max_encontros": 6
+  },
+  {
+   "id": "arena_poeira",
+   "nome": "Arena de Poeira",
+   "descricao": "Solo seco marcado por batalhas",
+   "biomas": [
+    "luta",
+    "terra",
+    "normal"
+   ],
+   "min_encontros": 3,
+   "max_encontros": 5
+  }
+ ]
+}

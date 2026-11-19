@@ -178,7 +178,7 @@ if (estado_demo == DemoEstado.ROTA) {
 
 if (estado_demo == DemoEstado.BATALHA || estado_demo == DemoEstado.CAPTURA) {
     if (instance_exists(player_inst)) {
-        demo_draw_battle_pokemon_instance(player_inst);
+        demo_draw_battle_criatura_instance(player_inst);
     }
 
     if (instance_exists(enemy_inst)) {
@@ -188,7 +188,7 @@ if (estado_demo == DemoEstado.BATALHA || estado_demo == DemoEstado.CAPTURA) {
             demo_draw_gym_trainer(gym_trainer_sprite, enemy_inst.x + 128, enemy_inst.y - 22);
         }
 
-        demo_draw_battle_pokemon_instance(enemy_inst);
+        demo_draw_battle_criatura_instance(enemy_inst);
     }
 
     if (estado_demo == DemoEstado.CAPTURA) {

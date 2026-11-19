@@ -139,7 +139,7 @@ function dificuldade_ia_itens(_inst) {
     _inst.ia_item_usado = true;
     _inst.hp_atual = min(_inst.hp_max, _inst.hp_atual + (_inst.hp_max * 0.4));
     _inst.status_map = {};
-    battle_log_push(string_upper(_inst.pokemon_nome) + " recebeu uma POCAO MAXIMA e limpou os status!");
+    battle_log_push(string_upper(_inst.criatura_nome) + " recebeu uma POCAO MAXIMA e limpou os status!");
     battle_float_text_push(_inst.x - 24, _inst.y - 84, "+CURA", make_color_rgb(120, 255, 140));
 }
 
@@ -206,15 +206,15 @@ function conquista_contador(_chave, _qtd) {
 }
 
 function conquistas_bestiario_capturados() {
-    if (!variable_global_exists("pokedex_estado") || !is_struct(global.pokedex_estado)) {
+    if (!variable_global_exists("bestiario_estado") || !is_struct(global.bestiario_estado)) {
         return 0;
     }
 
     var _total = 0;
-    var _ids = variable_struct_get_names(global.pokedex_estado);
+    var _ids = variable_struct_get_names(global.bestiario_estado);
 
     for (var _i = 0; _i < array_length(_ids); _i += 1) {
-        if (variable_struct_get(global.pokedex_estado, _ids[_i]).Capturado) {
+        if (variable_struct_get(global.bestiario_estado, _ids[_i]).Capturado) {
             _total += 1;
         }
     }
@@ -229,7 +229,7 @@ function conquista_evento(_evento, _dado) {
             conquista_desbloquear("primeira_captura");
 
             if (is_struct(_dado)) {
-                if (variable_struct_exists(_dado, "RaridadePadrao") && _dado.RaridadePadrao >= PokemonRaridade.LEGENDARY) conquista_desbloquear("lendario");
+                if (variable_struct_exists(_dado, "RaridadePadrao") && _dado.RaridadePadrao >= CriaturaRaridade.LEGENDARY) conquista_desbloquear("lendario");
                 if (variable_struct_exists(_dado, "IsShiny") && _dado.IsShiny) conquista_desbloquear("cromatico");
             }
 
@@ -364,7 +364,7 @@ function skin_aplicar(_controller) {
         return;
     }
 
-    pokemon_sprite_liberar(_controller.route_trainer_sprite);
+    criatura_sprite_liberar(_controller.route_trainer_sprite);
     _controller.route_trainer_sprite = placeholder_andarilho_folha(progresso().Skin);
 }
 
@@ -408,7 +408,7 @@ function buraco_negro_proxima_onda(_controller) {
     var _party = [];
 
     for (var _i = 0; _i < _qtd; _i += 1) {
-        var _p = demo_criar_pokemon_data(_ids[irandom(array_length(_ids) - 1)], 30, true, true, true, "ginasio");
+        var _p = demo_criar_criatura_data(_ids[irandom(array_length(_ids) - 1)], 30, true, true, true, "ginasio");
 
         if (!is_struct(_p)) {
             continue;
@@ -433,7 +433,7 @@ function buraco_negro_proxima_onda(_controller) {
 
         trainer_party = _party;
         trainer_party_index = 0;
-        enemy_pokemon_data = _party[0];
+        enemy_criatura_data = _party[0];
         battle_context = "buraco_negro";
         demo_start_battle(id);
     }

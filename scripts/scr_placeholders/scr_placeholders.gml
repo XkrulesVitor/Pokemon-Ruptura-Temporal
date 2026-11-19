@@ -48,11 +48,11 @@ function placeholder_cor_cromatica(_cor) {
 // e silhueta pelo papel (tanque, veloz, muralha...). Pose "back" desenha sem rosto.
 function placeholder_criatura_sprite(_id, _pose, _cromatico) {
     var _info = criatura_info(_id);
-    var _t1 = is_struct(_info) ? _info.Tipo1 : PokemonTipo.NORMAL;
-    var _t2 = is_struct(_info) ? _info.Tipo2 : PokemonTipo.NONE;
+    var _t1 = is_struct(_info) ? _info.Tipo1 : CriaturaTipo.NORMAL;
+    var _t2 = is_struct(_info) ? _info.Tipo2 : CriaturaTipo.NONE;
     var _estagio = is_struct(_info) ? clamp(_info.Estagio, 1, 3) : 1;
     var _papel = is_struct(_info) ? _info.Papel : "equilibrado";
-    var _lendario = is_struct(_info) && _info.Raridade >= PokemonRaridade.LEGENDARY;
+    var _lendario = is_struct(_info) && _info.Raridade >= CriaturaRaridade.LEGENDARY;
     var _icone = (_pose == "icon");
     var _costas = (_pose == "back");
     var _tam = _icone ? 40 : 96;
@@ -65,7 +65,7 @@ function placeholder_criatura_sprite(_id, _pose, _cromatico) {
     draw_set_alpha(1);
 
     var _cor = battle_ui_type_color(_t1);
-    var _cor2 = _t2 != PokemonTipo.NONE ? battle_ui_type_color(_t2) : merge_color(_cor, c_white, 0.45);
+    var _cor2 = _t2 != CriaturaTipo.NONE ? battle_ui_type_color(_t2) : merge_color(_cor, c_white, 0.45);
 
     if (_cromatico) {
         _cor = placeholder_cor_cromatica(_cor);
@@ -330,7 +330,7 @@ function placeholder_predio(_cx, _base_y, _w, _h, _telhado, _parede, _detalhe) {
 // cada um (loja, centro, ginasio...) e liga tudo por trilhas; o resto vira casas e arvores.
 function placeholder_cidade_sprite(_indice, _nome) {
     var _markers = argument_count >= 3 && is_array(argument[2]) ? argument[2] : [];
-    var _tipo = argument_count >= 4 ? argument[3] : PokemonTipo.NONE;
+    var _tipo = argument_count >= 4 ? argument[3] : CriaturaTipo.NONE;
     var _w = 768;
     var _h = 413;
     var _paletas = [
@@ -379,7 +379,7 @@ function placeholder_cidade_sprite(_indice, _nome) {
     }
 
     // Predios dos marcadores (a porta fica onde o marcador aparece).
-    var _cor_ginasio = _tipo != PokemonTipo.NONE ? battle_ui_type_color(_tipo) : make_color_rgb(180, 90, 70);
+    var _cor_ginasio = _tipo != CriaturaTipo.NONE ? battle_ui_type_color(_tipo) : make_color_rgb(180, 90, 70);
 
     for (var _m2 = 0; _m2 < array_length(_markers); _m2 += 1) {
         var _mk2 = _markers[_m2];

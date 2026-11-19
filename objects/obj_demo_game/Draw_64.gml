@@ -51,7 +51,7 @@ if (estado_demo == DemoEstado.MENU) {
         var _x = _start_x + (_i * (_card_w + _gap));
         var _id = starter_ids[_i];
         var _hover = _mx_hover >= _x && _mx_hover <= _x + _card_w && _my_hover >= _card_y && _my_hover <= _card_y + _card_h;
-        var _pokemon_preview = demo_pokemon_preview_get(_id);
+        var _criatura_preview = demo_criatura_preview_get(_id);
 
         if (_hover) {
             draw_set_alpha(0.28);
@@ -74,11 +74,11 @@ if (estado_demo == DemoEstado.MENU) {
         draw_rectangle(_x + 18, _card_y + 18, _x + 32, _card_y + 32, false);
 
         draw_set_color(c_white);
-        draw_text(_x + 42, _card_y + 20, string(_i + 1) + ". " + demo_pokemon_nome(_id));
+        draw_text(_x + 42, _card_y + 20, string(_i + 1) + ". " + demo_criatura_nome(_id));
         draw_set_halign(fa_right);
         draw_text(_x + _card_w - 78, _card_y + 20, "Lv. 5");
         draw_set_halign(fa_left);
-        var _raridade_card = is_struct(_pokemon_preview) && variable_struct_exists(_pokemon_preview, "RaridadePadrao") ? _pokemon_preview.RaridadePadrao : PokemonRaridade.COMMON;
+        var _raridade_card = is_struct(_criatura_preview) && variable_struct_exists(_criatura_preview, "RaridadePadrao") ? _criatura_preview.RaridadePadrao : CriaturaRaridade.COMMON;
         var _raridade_icon_x = _x + _card_w - 44;
         var _raridade_icon_y = _card_y + 15;
         var _raridade_icon_size = 28;
@@ -91,11 +91,11 @@ if (estado_demo == DemoEstado.MENU) {
             draw_set_alpha(1);
         }
 
-        pokemon_raridade_draw_icon(_raridade_card, _raridade_icon_x, _raridade_icon_y, _raridade_icon_size);
+        criatura_raridade_draw_icon(_raridade_card, _raridade_icon_x, _raridade_icon_y, _raridade_icon_size);
 
         if (_raridade_hover) {
             _status_tooltip = {
-                Texto: "Raridade: " + pokemon_raridade_nome(_raridade_card),
+                Texto: "Raridade: " + criatura_raridade_nome(_raridade_card),
                 X: _raridade_icon_x + (_raridade_icon_size * 0.5),
                 Y: _raridade_icon_y - 6,
                 W: _raridade_icon_size
@@ -111,7 +111,7 @@ if (estado_demo == DemoEstado.MENU) {
         draw_set_color(make_color_rgb(104, 172, 128));
         draw_line_width(_x + 42, _card_y + 246, _x + _card_w - 42, _card_y + 246, 2);
 
-        demo_draw_pokemon_sprite(
+        demo_draw_criatura_sprite(
             _id,
             _x + (_card_w * 0.5) + demo_card_sprite_offset_x(_id),
             _card_y + 238,
@@ -126,7 +126,7 @@ if (estado_demo == DemoEstado.MENU) {
         draw_rectangle(_x + 18, _stat_panel_y, _x + _card_w - 18, _stat_panel_y + _stat_panel_h, false);
         draw_set_color(make_color_rgb(108, 82, 68));
         draw_rectangle(_x + 18, _stat_panel_y, _x + _card_w - 18, _stat_panel_y + _stat_panel_h, true);
-        demo_draw_pokemon_stat_bars(_pokemon_preview, _x + 30, _stat_panel_y + 10, _card_w - 66, true);
+        demo_draw_criatura_stat_bars(_criatura_preview, _x + 30, _stat_panel_y + 10, _card_w - 66, true);
 
         draw_set_color(make_color_rgb(246, 238, 206));
         var _divider_y = _stat_panel_y + _stat_panel_h + 12;
@@ -164,7 +164,7 @@ if (estado_demo == DemoEstado.MENU) {
 
         draw_set_color(c_white);
         draw_set_halign(fa_center);
-        draw_text_transformed(_x + _card_w - 106, _card_y + 48, battle_ui_string_fit(pokemon_raridade_nome(_raridade_card), 76, 0.48), 0.48, 0.48, 0);
+        draw_text_transformed(_x + _card_w - 106, _card_y + 48, battle_ui_string_fit(criatura_raridade_nome(_raridade_card), 76, 0.48), 0.48, 0.48, 0);
         draw_set_halign(fa_left);
     }
 
@@ -492,16 +492,16 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
     var _start_x_draft = (_gw - _total_w_draft) * 0.5;
     var _card_y_draft = 292;
 
-    var _draft_pokemon_name = (variable_struct_exists(_draft, "Pokemon") && is_struct(_draft.Pokemon) && variable_struct_exists(_draft.Pokemon, "Nome")) ? string_upper(_draft.Pokemon.Nome) : "MONSTRO";
-    var _draft_title = _draft_pokemon_name + " - NIVEL " + string(_draft.Level);
+    var _draft_criatura_name = (variable_struct_exists(_draft, "Criatura") && is_struct(_draft.Criatura) && variable_struct_exists(_draft.Criatura, "Nome")) ? string_upper(_draft.Criatura.Nome) : "MONSTRO";
+    var _draft_title = _draft_criatura_name + " - NIVEL " + string(_draft.Level);
     var _draft_subtitle = "Escolha uma nova habilidade";
 
     if (variable_struct_exists(_draft, "TipoDraft")) {
         if (_draft.TipoDraft == "upgrade") {
-            _draft_title = _draft_pokemon_name + " - NIVEL " + string(_draft.Level);
+            _draft_title = _draft_criatura_name + " - NIVEL " + string(_draft.Level);
             _draft_subtitle = "Escolha uma habilidade para evoluir";
         } else if (_draft.TipoDraft == "slot_ou_upgrade") {
-            _draft_title = _draft_pokemon_name + " - NIVEL 20";
+            _draft_title = _draft_criatura_name + " - NIVEL 20";
             _draft_subtitle = "Escolha uma habilidade ou uma evolucao";
         }
     }

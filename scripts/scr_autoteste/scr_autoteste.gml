@@ -117,12 +117,12 @@ function autoteste_passos() {
             message = demo_cidade_nome(cidade_index);
         } },
         { Nome: "bestiario", Espera: 1.5, Foto: "09_bestiario", Acao: function() {
-            pokedex_garantir();
+            bestiario_garantir();
             var _ids = criatura_ids();
 
             // So marca em memoria (nao salva) para a foto mostrar entradas.
             for (var _i = 0; _i < min(24, array_length(_ids)); _i += 1) {
-                var _entrada = variable_struct_get(global.pokedex_estado, string(_ids[_i]));
+                var _entrada = variable_struct_get(global.bestiario_estado, string(_ids[_i]));
 
                 if (is_struct(_entrada)) {
                     _entrada.Capturado = true;
@@ -130,10 +130,10 @@ function autoteste_passos() {
                 }
             }
 
-            global.pokedex_overlay_aberto = true;
+            global.bestiario_overlay_aberto = true;
         } },
         { Nome: "mochila", Espera: 1.2, Foto: "10_mochila", Acao: function() {
-            global.pokedex_overlay_aberto = false;
+            global.bestiario_overlay_aberto = false;
             global.time_scale = 1;
             demo_inventario_adicionar(inventario, "pokebola", 5);
             demo_inventario_adicionar(inventario, "potion", 2);
@@ -160,11 +160,11 @@ function autoteste_passos() {
         { Nome: "batalha selvagem", Espera: 2.5, Foto: "14_batalha_inicio", Acao: function() {
             var _nivel = demo_rota_enemy_level(rota_origem_index, rota_destino_index);
             var _inimigo = demo_rota_enemy_id(rota_atual, _nivel, "selvagem");
-            enemy_pokemon_data = demo_criar_pokemon_data(_inimigo, _nivel, true, true, true, "selvagem");
+            enemy_criatura_data = demo_criar_criatura_data(_inimigo, _nivel, true, true, true, "selvagem");
             battle_context = "rota";
             route_steps += 1;
             demo_start_battle(id);
-            autoteste_log("selvagem: " + enemy_pokemon_data.Nome + " nv " + string(_nivel));
+            autoteste_log("selvagem: " + enemy_criatura_data.Nome + " nv " + string(_nivel));
         } },
         { Nome: "batalha acelerada", Espera: 4.0, Foto: "15_batalha_meio", Acao: function() {
             battle_time_scale_set(3.0, false);
@@ -185,7 +185,7 @@ function autoteste_passos() {
             }
 
             battle_time_scale_set(3.0, false);
-            autoteste_log("lider: " + (is_struct(enemy_pokemon_data) ? enemy_pokemon_data.Nome : "?"));
+            autoteste_log("lider: " + (is_struct(enemy_criatura_data) ? enemy_criatura_data.Nome : "?"));
         } },
         { Nome: "fim do lider", Espera: 1.0, Foto: "19_lider_resultado", AguardarBatalha: true, Acao: function() {} },
         { Nome: "game over", Espera: 1.5, Foto: "20_game_over", Acao: function() {
@@ -195,11 +195,11 @@ function autoteste_passos() {
         } },
         { Nome: "chefe: cidade final", Espera: 1.5, Foto: "21_cidade_final_rasgo", Acao: function() {
             demo_run_resetar(id, DemoEstado.CIDADE);
-            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[1], 28, true);
+            var _p = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[1], 28, true);
             _p.FoiCapturado = true;
             _p.Capturado = true;
             player_party = [_p];
-            player_pokemon_data = _p;
+            player_criatura_data = _p;
             player_party_active_index = 0;
             cidade_index = array_length(kanto_cidades) - 1;
             ginasios_vencidos[cidade_index] = true;
@@ -223,11 +223,11 @@ function autoteste_passos() {
             if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
         } },
         { Nome: "chefe: fase 3", Espera: 2.5, Foto: "24_chefe_fase3", Acao: function() {
-            autoteste_log("fase atual: " + enemy_pokemon_data.Nome);
+            autoteste_log("fase atual: " + enemy_criatura_data.Nome);
             if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
         } },
         { Nome: "chefe: derrotado", Espera: 1.5, Foto: "25_chefe_derrotado", Acao: function() {
-            autoteste_log("fase atual: " + enemy_pokemon_data.Nome);
+            autoteste_log("fase atual: " + enemy_criatura_data.Nome);
             if (instance_exists(enemy_inst)) enemy_inst.vivo = false;
         } },
         { Nome: "vitoria final", Espera: 3.0, Foto: "26_vitoria_final", Acao: function() {
@@ -238,13 +238,13 @@ function autoteste_passos() {
         { Nome: "save: preparar run", Espera: 1.5, Foto: "27_save_cidade", Acao: function() {
             autoteste_log("save apagado apos a vitoria final: " + string(!run_save_existe()));
             demo_run_resetar(id, DemoEstado.ROTA);
-            var _a = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[2], 14, true);
-            var _b = demo_criar_pokemon_data(criatura_id_por_nome("Gaviolento"), 12, true);
+            var _a = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[2], 14, true);
+            var _b = demo_criar_criatura_data(criatura_id_por_nome("Gaviolento"), 12, true);
             _a.Capturado = true;
             _b.Capturado = true;
             player_party = [_a, _b];
             player_party_active_index = 1;
-            player_pokemon_data = _b;
+            player_criatura_data = _b;
             dinheiro = 777;
             demo_inventario_adicionar(inventario, "great_ball", 3);
             ginasios_vencidos[2] = true;
@@ -272,7 +272,7 @@ function autoteste_passos() {
             autoteste_log("instanceof da criatura restaurada: " + instanceof(_a));
         } },
         { Nome: "save: batalha com a equipe restaurada", Espera: 3.0, Foto: "30_batalha_pos_save", Acao: function() {
-            enemy_pokemon_data = demo_criar_pokemon_data(criatura_id_por_nome("Peixote"), 10, true, true, true, "selvagem");
+            enemy_criatura_data = demo_criar_criatura_data(criatura_id_por_nome("Peixote"), 10, true, true, true, "selvagem");
             battle_context = "rota";
             demo_start_battle(id);
         } },
@@ -281,7 +281,7 @@ function autoteste_passos() {
         } },
         { Nome: "diario: inicio", Espera: 1.5, Foto: "32_diario_laboratorio", Acao: function() {
             diario_iniciar(id);
-            autoteste_log("diario " + global.diario.Chave + " oficial=" + string(global.diario.Oficial) + " inicial=" + demo_pokemon_nome(global.diario.InicialID));
+            autoteste_log("diario " + global.diario.Chave + " oficial=" + string(global.diario.Oficial) + " inicial=" + demo_criatura_nome(global.diario.InicialID));
         } },
         { Nome: "diario: cidade", Espera: 1.2, Foto: "33_diario_cidade", Acao: function() {
             autoteste_log("diario equipe: " + player_party[0].Nome + " nv " + string(player_party[0].Level) + " hp " + string(player_party[0].HpMax) + " atk " + string(player_party[0].Attack));
@@ -304,7 +304,7 @@ function autoteste_passos() {
             autoteste_log("diario passos da rota: " + string(route_steps_needed) + " treinador no passo " + string(route_trainer_step));
             route_steps += 1;
             demo_rota_encontro_selvagem_iniciar(id);
-            autoteste_log("diario selvagem: " + enemy_pokemon_data.Nome + " nv " + string(enemy_pokemon_data.Level) + " hp " + string(enemy_pokemon_data.HpMax));
+            autoteste_log("diario selvagem: " + enemy_criatura_data.Nome + " nv " + string(enemy_criatura_data.Level) + " hp " + string(enemy_criatura_data.HpMax));
         } },
         { Nome: "diario: game over", Espera: 1.5, Foto: "36_diario_game_over", Acao: function() {
             demo_cleanup_battle(id);
@@ -315,10 +315,10 @@ function autoteste_passos() {
         } },
         { Nome: "missao: cidade", Espera: 1.5, Foto: "37_missao_cidade", Acao: function() {
             demo_run_resetar(id, DemoEstado.ROTA);
-            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[0], 12, true);
+            var _p = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[0], 12, true);
             _p.Capturado = true;
             player_party = [_p];
-            player_pokemon_data = _p;
+            player_criatura_data = _p;
             dinheiro = 100;
             cidade_index = 1;
             message = demo_cidade_nome(1);
@@ -352,7 +352,7 @@ function autoteste_passos() {
 
             for (var _i = 0; _i < array_length(_ids); _i += 1) {
                 var _info = criatura_info(_ids[_i]);
-                if (_alvo == PokemonTipo.NONE || _info.Tipo1 == _alvo || _info.Tipo2 == _alvo) { _modelo = demo_criar_pokemon_data(_ids[_i], 5, false); break; }
+                if (_alvo == CriaturaTipo.NONE || _info.Tipo1 == _alvo || _info.Tipo2 == _alvo) { _modelo = demo_criar_criatura_data(_ids[_i], 5, false); break; }
             }
 
             for (var _n = 0; _n < _qtd + 1; _n += 1) {
@@ -370,31 +370,31 @@ function autoteste_passos() {
         } },
         { Nome: "combate: sinergia", Espera: 0.45, Foto: "41_combate_sinergia", Acao: function() {
             demo_run_resetar(id, DemoEstado.ROTA);
-            var _p = demo_criar_pokemon_data(criatura_id_por_nome("Larvinha"), 14, true);
+            var _p = demo_criar_criatura_data(criatura_id_por_nome("Larvinha"), 14, true);
             _p.Capturado = true;
             player_party = [_p];
-            player_pokemon_data = _p;
-            enemy_pokemon_data = demo_criar_pokemon_data(criatura_id_por_nome("Folhoca"), 10, true, false, false, "selvagem");
+            player_criatura_data = _p;
+            enemy_criatura_data = demo_criar_criatura_data(criatura_id_por_nome("Folhoca"), 10, true, false, false, "selvagem");
             battle_context = "rota";
             demo_start_battle(id);
             battle_time_scale_set(0, false);
             var _hab = player_inst.habilidades_equipadas;
             if (!is_struct(_hab[1])) { _hab[1] = variable_clone(_hab[0]); _hab[1].ID = "teste_veneno"; }
-            _hab[0].TipoElementar = PokemonTipo.BUG;
-            _hab[1].TipoElementar = PokemonTipo.POISON;
+            _hab[0].TipoElementar = CriaturaTipo.BUG;
+            _hab[1].TipoElementar = CriaturaTipo.POISON;
             var _n = sinergia_aplicar(player_inst, enemy_inst, _hab[0]);
             battle_combo_push(enemy_inst.x, enemy_inst.y - 132, "SINERGIA!", make_color_rgb(120, 230, 255));
-            autoteste_log("sinergias aplicadas: " + string(_n) + " | alvo envenenado: " + string(pokemon_status_tem(enemy_inst, "Envenenado")) + " | texto: " + sinergia_texto(_hab, _hab[0]));
+            autoteste_log("sinergias aplicadas: " + string(_n) + " | alvo envenenado: " + string(criatura_status_tem(enemy_inst, "Envenenado")) + " | texto: " + sinergia_texto(_hab, _hab[0]));
         } },
         { Nome: "combate: captura", Espera: 2.5, Foto: "42_combate_vfx", Acao: function() {
             var _bola = demo_item_get("pokebola");
             var _ultra = demo_item_get("ultra_ball");
             enemy_inst.hp_atual = enemy_inst.hp_max;
-            var _cheio = demo_capture_chance(id, _bola, enemy_pokemon_data);
+            var _cheio = demo_capture_chance(id, _bola, enemy_criatura_data);
             enemy_inst.hp_atual = max(1, enemy_inst.hp_max * 0.1);
-            var _baixo = demo_capture_chance(id, _bola, enemy_pokemon_data);
-            var _ultra_baixo = demo_capture_chance(id, _ultra, enemy_pokemon_data);
-            autoteste_log("captura comum: capsula HP cheio " + string_format(_cheio * 100, 1, 1) + "% | capsula 10% HP " + string_format(_baixo * 100, 1, 1) + "% | avancada 10% HP " + string_format(_ultra_baixo * 100, 1, 1) + "% | mestra " + string(demo_capture_chance(id, demo_item_get("master_ball"), enemy_pokemon_data) * 100) + "%");
+            var _baixo = demo_capture_chance(id, _bola, enemy_criatura_data);
+            var _ultra_baixo = demo_capture_chance(id, _ultra, enemy_criatura_data);
+            autoteste_log("captura comum: capsula HP cheio " + string_format(_cheio * 100, 1, 1) + "% | capsula 10% HP " + string_format(_baixo * 100, 1, 1) + "% | avancada 10% HP " + string_format(_ultra_baixo * 100, 1, 1) + "% | mestra " + string(demo_capture_chance(id, demo_item_get("master_ball"), enemy_criatura_data) * 100) + "%");
             enemy_inst.hp_atual = enemy_inst.hp_max;
             battle_time_scale_set(2.0, false);
         } },
@@ -405,9 +405,9 @@ function autoteste_passos() {
         } },
         { Nome: "rejog: rota cega", Espera: 1.2, Foto: "44_rota_cega", Acao: function() {
             demo_run_resetar(id, DemoEstado.ROTA);
-            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[0], 8, true);
+            var _p = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[0], 8, true);
             player_party = [_p];
-            player_pokemon_data = _p;
+            player_criatura_data = _p;
             cidade_index = 0;
             saida_destino_index = 1;
             estado_demo = DemoEstado.SAIR_CIDADE;
@@ -422,10 +422,10 @@ function autoteste_passos() {
         } },
         { Nome: "rejog: buraco negro onda 1", Espera: 2.0, Foto: "46_buraco_onda1", Acao: function() {
             demo_run_resetar(id, DemoEstado.ROTA);
-            var _a = demo_criar_pokemon_data(criatura_id_por_nome("Infernhal"), 30, true);
-            var _b = demo_criar_pokemon_data(criatura_id_por_nome("Abissauro"), 30, true);
+            var _a = demo_criar_criatura_data(criatura_id_por_nome("Infernhal"), 30, true);
+            var _b = demo_criar_criatura_data(criatura_id_por_nome("Abissauro"), 30, true);
             player_party = [_a, _b];
-            player_pokemon_data = _a;
+            player_criatura_data = _a;
             player_party_active_index = 0;
             buraco_negro_iniciar(id);
             autoteste_log("onda " + string(global.buraco_negro.Onda) + " | inimigos " + string(array_length(trainer_party)));
@@ -448,15 +448,15 @@ function autoteste_passos() {
         } },
         { Nome: "rejog: item de batalha", Espera: 1.5, Foto: "49_item_buff", Acao: function() {
             demo_run_resetar(id, DemoEstado.ROTA);
-            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[1], 12, true);
+            var _p = demo_criar_criatura_data(conteudo_pacote_iniciais("base")[1], 12, true);
             player_party = [_p];
-            player_pokemon_data = _p;
-            enemy_pokemon_data = demo_criar_pokemon_data(criatura_id_por_nome("Rataco"), 8, true, false, false, "selvagem");
+            player_criatura_data = _p;
+            enemy_criatura_data = demo_criar_criatura_data(criatura_id_por_nome("Rataco"), 8, true, false, false, "selvagem");
             battle_context = "rota";
             demo_start_battle(id);
             demo_inventario_adicionar(inventario, "po_ataque", 1);
             demo_item_usar(id, "po_ataque", true);
-            autoteste_log("po de furia: impeto ofensivo = " + string(pokemon_status_tem(player_inst, "ImpetoOfensivo")) + " | restam " + string(demo_inventario_quantidade(inventario, "po_ataque")));
+            autoteste_log("po de furia: impeto ofensivo = " + string(criatura_status_tem(player_inst, "ImpetoOfensivo")) + " | restam " + string(demo_inventario_quantidade(inventario, "po_ataque")));
         } }
     ];
 }
@@ -491,10 +491,10 @@ function autoteste_step() {
                 return;
             }
 
-            pokemon_draft_escolher(global.draft_habilidade_atual, 0, -1);
+            criatura_draft_escolher(global.draft_habilidade_atual, 0, -1);
 
             if (instance_exists(_jogo.player_inst)) {
-                pokemon_batalha_sincronizar_habilidades(_jogo.player_inst);
+                criatura_batalha_sincronizar_habilidades(_jogo.player_inst);
             }
 
             _t.Timer = 0;

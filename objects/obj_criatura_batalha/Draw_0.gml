@@ -20,5 +20,5 @@ if (sprite_exists(_spr)) {
     var _blend = visual_flash > 0 ? c_red : c_white;
     draw_sprite_ext(_spr, 0, _draw_x, _draw_y, _xscale * 1.32, 1.32, 0, _blend, 1);
 } else {
-    demo_draw_pokemon_sprite(pokemon_id, _draw_x, _draw_y, 1.32, _xscale, visual_flash);
+    demo_draw_criatura_sprite(criatura_id, _draw_x, _draw_y, 1.32, _xscale, visual_flash);
 }

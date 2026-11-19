@@ -17,8 +17,8 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
             var _x_draft = _start_x_draft + (_d * (_card_w_draft + _gap_draft));
 
             if (_mx_draft >= _x_draft && _mx_draft <= _x_draft + _card_w_draft && _my_draft >= _card_y_draft && _my_draft <= _card_y_draft + _card_h_draft) {
-                pokemon_draft_escolher(global.draft_habilidade_atual, _d, -1);
-                pokemon_batalha_sincronizar_habilidades(player_inst);
+                criatura_draft_escolher(global.draft_habilidade_atual, _d, -1);
+                criatura_batalha_sincronizar_habilidades(player_inst);
                 break;
             }
         }
@@ -194,14 +194,14 @@ switch (estado_demo) {
 
         if (starter_id > 0) {
             var _escopo_inicial = diario_escopo("inicial");
-            player_pokemon_data = demo_criar_pokemon_data(starter_id, 5, false);
+            player_criatura_data = demo_criar_criatura_data(starter_id, 5, false);
             diario_escopo_fim(_escopo_inicial);
-            player_pokemon_data.FoiCapturado = true;
-            player_pokemon_data.Capturado = true;
-            player_party = [player_pokemon_data];
+            player_criatura_data.FoiCapturado = true;
+            player_criatura_data.Capturado = true;
+            player_party = [player_criatura_data];
             player_party_active_index = 0;
             demo_meta_aplicar_inicio_run(id);
-            pokedex_capturar(starter_id);
+            bestiario_capturar(starter_id);
             estado_demo = DemoEstado.LAB_CARVALHO;
             professor_carvalho_visto = true;
             message = demo_dialogo_professor_carvalho();
@@ -372,8 +372,8 @@ switch (estado_demo) {
 
     case DemoEstado.BATALHA:
         if (instance_exists(enemy_inst) && !enemy_inst.vivo) {
-            if (instance_exists(player_inst) && is_struct(player_pokemon_data)) {
-                player_pokemon_data.HpAtual = max(1, player_inst.hp_atual);
+            if (instance_exists(player_inst) && is_struct(player_criatura_data)) {
+                player_criatura_data.HpAtual = max(1, player_inst.hp_atual);
             }
 
             var _xp_tipo = "selvagem";
@@ -384,8 +384,8 @@ switch (estado_demo) {
                 _xp_tipo = "rocket";
             }
 
-            var _xp_enemy_level = is_struct(enemy_pokemon_data) ? enemy_pokemon_data.Level : 1;
-            var _xp_reward = demo_exp_recompensa(player_pokemon_data, _xp_enemy_level, _xp_tipo, false);
+            var _xp_enemy_level = is_struct(enemy_criatura_data) ? enemy_criatura_data.Level : 1;
+            var _xp_reward = demo_exp_recompensa(player_criatura_data, _xp_enemy_level, _xp_tipo, false);
             var _xp_ganhos = demo_exp_compartilhar(id, _xp_reward);
             var _money_tipo = "selvagem";
 
@@ -397,9 +397,9 @@ switch (estado_demo) {
                 _money_tipo = "rocket";
             }
 
-            var _money_reward = demo_meta_dinheiro_aplicar(id, pokemon_recompensa_dinheiro(enemy_pokemon_data, _money_tipo));
+            var _money_reward = demo_meta_dinheiro_aplicar(id, criatura_recompensa_dinheiro(enemy_criatura_data, _money_tipo));
             demo_battle_reward_adicionar(id, _xp_reward, _xp_ganhos, _money_reward);
-            missao_evento(id, "vitoria", enemy_pokemon_data);
+            missao_evento(id, "vitoria", enemy_criatura_data);
             missao_evento(id, "checar", undefined);
 
             if ((battle_context == "treinador" || battle_context == "chefe" || battle_context == "buraco_negro") && demo_trainer_tem_proximo(id)) {
@@ -450,8 +450,8 @@ switch (estado_demo) {
                 battle_log_push("A equipe recuperou um pouco de HP.");
             }
         } else if (instance_exists(player_inst) && !player_inst.vivo) {
-            if (is_struct(player_pokemon_data)) {
-                player_pokemon_data.HpAtual = 0;
+            if (is_struct(player_criatura_data)) {
+                player_criatura_data.HpAtual = 0;
             }
 
             var _tem_reserva = false;
@@ -470,10 +470,10 @@ switch (estado_demo) {
                 if (!variable_global_exists("troca_overlay_aberta") || !global.troca_overlay_aberta) {
                     global.troca_overlay_aberta = true;
                     global.mochila_overlay_aberta = false;
-                    global.pokedex_overlay_aberto = false;
+                    global.bestiario_overlay_aberto = false;
                     global.time_scale = 0;
                     global.velocidade_jogo = 0;
-                    battle_log_force(player_pokemon_data.Nome + " desmaiou! Escolha outro monstro.");
+                    battle_log_force(player_criatura_data.Nome + " desmaiou! Escolha outro monstro.");
                 }
 
                 break;
@@ -494,39 +494,39 @@ switch (estado_demo) {
             if (capture_anim.Timer >= capture_anim.Duracao) {
                 if (capture_anim.Success) {
                     if (instance_exists(enemy_inst)) {
-                        if (is_struct(enemy_pokemon_data)) {
-                            enemy_pokemon_data.HpAtual = max(1, enemy_inst.hp_atual);
+                        if (is_struct(enemy_criatura_data)) {
+                            enemy_criatura_data.HpAtual = max(1, enemy_inst.hp_atual);
                         }
 
                         enemy_inst.vivo = false;
                         enemy_inst.batalha_ativo = false;
                     }
 
-                    var _xp_capture_level = is_struct(enemy_pokemon_data) ? enemy_pokemon_data.Level : 1;
-                    var _xp_capture_reward = demo_exp_recompensa(player_pokemon_data, _xp_capture_level, "captura", true);
+                    var _xp_capture_level = is_struct(enemy_criatura_data) ? enemy_criatura_data.Level : 1;
+                    var _xp_capture_reward = demo_exp_recompensa(player_criatura_data, _xp_capture_level, "captura", true);
                     var _xp_capture_ganhos = demo_exp_compartilhar(id, _xp_capture_reward);
-                    var _money_capture_reward = demo_meta_dinheiro_aplicar(id, pokemon_recompensa_dinheiro(enemy_pokemon_data, "captura"));
+                    var _money_capture_reward = demo_meta_dinheiro_aplicar(id, criatura_recompensa_dinheiro(enemy_criatura_data, "captura"));
                     dinheiro += _money_capture_reward;
                     estado_demo = DemoEstado.VITORIA;
                     diario_registrar_captura();
-                    missao_evento(id, "captura", enemy_pokemon_data);
-                    conquista_evento("captura", enemy_pokemon_data);
+                    missao_evento(id, "captura", enemy_criatura_data);
+                    conquista_evento("captura", enemy_criatura_data);
                     result_timer = 1.0;
-                    battle_result_info = demo_resultado_criar("captura", "Monstro capturado!", message, _xp_capture_reward, _xp_capture_ganhos, enemy_pokemon_data, _money_capture_reward);
+                    battle_result_info = demo_resultado_criar("captura", "Monstro capturado!", message, _xp_capture_reward, _xp_capture_ganhos, enemy_criatura_data, _money_capture_reward);
 
                     demo_party_garantir(id);
 
                     if (array_length(player_party) >= 4) {
-                        demo_capture_replace_abrir(id, enemy_pokemon_data);
-                        message = "Capturou " + enemy_pokemon_data.Nome + "! Escolha quem sai da equipe.";
+                        demo_capture_replace_abrir(id, enemy_criatura_data);
+                        message = "Capturou " + enemy_criatura_data.Nome + "! Escolha quem sai da equipe.";
                         battle_result_info.Mensagem = message;
-                        battle_log_force(enemy_pokemon_data.Nome + " foi capturado! Escolha quem sera substituido.");
+                        battle_log_force(enemy_criatura_data.Nome + " foi capturado! Escolha quem sera substituido.");
                     } else {
-                        demo_party_adicionar(id, enemy_pokemon_data);
+                        demo_party_adicionar(id, enemy_criatura_data);
                         var _pos_capture_heal = demo_party_curar_pos_batalha(id);
-                        message = "Capturou " + enemy_pokemon_data.Nome + "! Pressione ENTER ou clique para continuar.";
+                        message = "Capturou " + enemy_criatura_data.Nome + "! Pressione ENTER ou clique para continuar.";
                         battle_result_info.Mensagem = message;
-                        battle_log_force(enemy_pokemon_data.Nome + " foi capturado! +" + string(_xp_capture_reward) + " EXP e M$ " + string(_money_capture_reward) + ".");
+                        battle_log_force(enemy_criatura_data.Nome + " foi capturado! +" + string(_xp_capture_reward) + " EXP e M$ " + string(_money_capture_reward) + ".");
                         if (_pos_capture_heal > 0) {
                             battle_log_push("A equipe recuperou um pouco de HP.");
                         }
@@ -534,7 +534,7 @@ switch (estado_demo) {
                 } else {
                     estado_demo = DemoEstado.BATALHA;
                     battle_time_scale_restore_preferido();
-                    message = enemy_pokemon_data.Nome + " escapou da Capsula!";
+                    message = enemy_criatura_data.Nome + " escapou da Capsula!";
                     battle_log_force(message);
                 }
 
