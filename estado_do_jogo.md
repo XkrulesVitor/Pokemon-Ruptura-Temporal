@@ -43,7 +43,7 @@ vence os líderes das cidades e precisa fechar o rasgo.
 - [ ] **Sprint 3: Fechar a run**
   - [x] Chefe final: depois de vencer o último líder, aparece o marcador "Rasgo Temporal" (X) na última cidade. Aeonox luta em 3 fases (`chefe_fases` em `mundo.json`, todas no nível 30, que é o máximo do jogo). Entre fases a criatura ativa recupera 25% do HP. Usa o mesmo sistema de time dos treinadores (`battle_context == "chefe"`).
   - [x] Tela de vitória (`DemoEstado.VITORIA_FINAL`): céu com a fenda se fechando, equipe vencedora, créditos rolando (`creditos` em `mundo.json`), +12 Fragmentos. No Desafio Diário, vencer o chefe vale +5000 pontos.
-  - [ ] Save no meio da run (snapshot ao chegar em cada cidade + botão "Continuar" no menu).
+  - [x] Save no meio da run (`scripts/scr_run_save`): autosave sempre que o estado vira CIDADE (`run_save_step`), botão "CONTINUAR" (ou tecla C) no menu com resumo, um slot só (`run_salva.json`), apagado no game over e na vitória final. Runs do Desafio Diário salvam o estado do diário junto. Ao carregar, `static_set` religa as criaturas ao construtor `PokemonData`.
   - [ ] Missões de NPC nas cidades (portar `scr_event_manager`, hoje sem uso).
 - [x] **Sprint 4: Desafio Diário** (`scripts/scr_desafio_diario`)
   - Botão "DESAFIO DIARIO" no menu (ou tecla D). Semente = data em UTC (AAAAMMDD); para testar outra data use `RASGO_DIARIO_DATA=AAAAMMDD`.

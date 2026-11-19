@@ -137,6 +137,7 @@ intro_timer = 0;
 intro_step = 0;
 game_over_timer = 0;
 vitoria_final_timer = 0;
+estado_anterior_save = DemoEstado.MENU;
 vitoria_final_fragmentos = 0;
 capture_anim = undefined;
 capture_pending_item = "";

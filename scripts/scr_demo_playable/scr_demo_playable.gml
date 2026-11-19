@@ -297,11 +297,11 @@ function demo_menu_start_button_rect() {
 function demo_menu_shop_button_rect() {
     var _gw = display_get_gui_width();
     var _gh = display_get_gui_height();
-    var _w = 380;
+    var _w = run_save_existe() ? 300 : 380;
     var _h = 58;
 
     return {
-        X: (_gw - _w) * 0.5,
+        X: run_save_existe() ? (_gw * 0.5) + 10 : (_gw - _w) * 0.5,
         Y: _gh - 96,
         W: _w,
         H: _h
@@ -1599,6 +1599,7 @@ function demo_draw_menu_titulo(_controller) {
     demo_draw_title_button(_btn, "COMECAR RUN", _hover);
     demo_draw_title_button(_shop_btn, "LOJA DO ESPACO", _shop_hover);
     diario_draw_menu(_mx, _my);
+    run_save_draw_menu(_mx, _my);
 
     var _fragment_tooltip_title = undefined;
 
@@ -6426,6 +6427,7 @@ function demo_vitoria_final_iniciar(_controller) {
 
         estado_demo = DemoEstado.VITORIA_FINAL;
         message = "O Rasgo Temporal foi fechado.";
+        run_save_apagar();
     }
 }
 

@@ -32,11 +32,15 @@ if (variable_instance_exists(id, "capture_replace_open") && capture_replace_open
     exit;
 }
 
+// Autosave: grava a run sempre que o jogador volta para a cidade.
+run_save_step(id);
+
 switch (estado_demo) {
     case DemoEstado.MENU:
         var _start_menu = keyboard_check_pressed(vk_enter);
         var _open_meta_shop = false;
         var _open_daily = keyboard_check_pressed(ord("D"));
+        var _continuar = run_save_existe() && keyboard_check_pressed(ord("C"));
 
         if (mouse_check_button_pressed(mb_left)) {
             var _mx_menu = device_mouse_x_to_gui(0);
@@ -47,6 +51,16 @@ switch (estado_demo) {
             _open_meta_shop = demo_hover_rect(_mx_menu, _my_menu, _shop_btn_menu.X, _shop_btn_menu.Y, _shop_btn_menu.W, _shop_btn_menu.H);
             var _daily_btn_menu = demo_menu_daily_button_rect();
             _open_daily = demo_hover_rect(_mx_menu, _my_menu, _daily_btn_menu.X, _daily_btn_menu.Y, _daily_btn_menu.W, _daily_btn_menu.H);
+
+            if (run_save_existe()) {
+                var _continue_btn_menu = demo_menu_continue_button_rect();
+                _continuar = demo_hover_rect(_mx_menu, _my_menu, _continue_btn_menu.X, _continue_btn_menu.Y, _continue_btn_menu.W, _continue_btn_menu.H);
+            }
+        }
+
+        if (_continuar) {
+            run_save_carregar(id);
+            break;
         }
 
         if (_open_daily) {
@@ -523,6 +537,7 @@ switch (estado_demo) {
 
             if (estado_demo == DemoEstado.DERROTA) {
                 diario_finalizar(id);
+                run_save_apagar();
                 estado_demo = DemoEstado.GAME_OVER;
                 game_over_timer = 0;
                 message = "A run terminou.";

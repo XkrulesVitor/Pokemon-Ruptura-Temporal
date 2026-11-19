@@ -63,6 +63,7 @@ function autoteste_iniciar() {
         Log: [],
         DraftsVistos: 0,
         Executado: false,
+        Esperado: "",
         Fim: false
     };
 
@@ -233,6 +234,47 @@ function autoteste_passos() {
             autoteste_log("estado antes da vitoria final: " + string(estado_demo) + " | " + message);
             demo_cleanup_battle(id);
             demo_vitoria_final_iniciar(id);
+        } },
+        { Nome: "save: preparar run", Espera: 1.5, Foto: "27_save_cidade", Acao: function() {
+            autoteste_log("save apagado apos a vitoria final: " + string(!run_save_existe()));
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _a = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[2], 14, true);
+            var _b = demo_criar_pokemon_data(criatura_id_por_nome("Gaviolento"), 12, true);
+            _a.Capturado = true;
+            _b.Capturado = true;
+            player_party = [_a, _b];
+            player_party_active_index = 1;
+            player_pokemon_data = _b;
+            dinheiro = 777;
+            demo_inventario_adicionar(inventario, "great_ball", 3);
+            ginasios_vencidos[2] = true;
+            cidade_index = 3;
+            message = demo_cidade_nome(3);
+            estado_demo = DemoEstado.CIDADE; // a transicao ROTA -> CIDADE dispara o autosave
+            var _equipadas = 0;
+            for (var _i = 0; _i < 4; _i += 1) if (is_struct(_a.HabilidadesEquipadas[_i])) _equipadas += 1;
+            global.autoteste.Esperado = _a.Nome + " nv" + string(_a.Level) + " xp" + string(_a.ExpAtual) + " hab" + string(_equipadas) + " | " + _b.Nome + " nv" + string(_b.Level) + " | ativa 1 | $777 | cidade 3 | ginasio2 1 | great_ball 3";
+            autoteste_log("esperado: " + global.autoteste.Esperado);
+        } },
+        { Nome: "save: voltar ao menu", Espera: 1.2, Foto: "28_menu_continuar", Acao: function() {
+            autoteste_log("save existe: " + string(run_save_existe()));
+            demo_run_resetar(id, DemoEstado.MENU);
+        } },
+        { Nome: "save: continuar", Espera: 1.5, Foto: "29_run_retomada", Acao: function() {
+            var _ok = run_save_carregar(id);
+            var _a = player_party[0];
+            var _b = player_party[1];
+            var _equipadas = 0;
+            for (var _i = 0; _i < 4; _i += 1) if (is_struct(_a.HabilidadesEquipadas[_i])) _equipadas += 1;
+            var _obtido = _a.Nome + " nv" + string(_a.Level) + " xp" + string(_a.ExpAtual) + " hab" + string(_equipadas) + " | " + _b.Nome + " nv" + string(_b.Level) + " | ativa " + string(player_party_active_index) + " | $" + string(dinheiro) + " | cidade " + string(cidade_index) + " | ginasio2 " + string(ginasios_vencidos[2]) + " | great_ball " + string(demo_inventario_quantidade(inventario, "great_ball"));
+            autoteste_log("carregou: " + string(_ok) + " | obtido: " + _obtido);
+            autoteste_log(_obtido == global.autoteste.Esperado ? "SAVE OK: ida e volta identica" : "SAVE DIVERGENTE");
+            autoteste_log("instanceof da criatura restaurada: " + instanceof(_a));
+        } },
+        { Nome: "save: batalha com a equipe restaurada", Espera: 3.0, Foto: "30_batalha_pos_save", Acao: function() {
+            enemy_pokemon_data = demo_criar_pokemon_data(criatura_id_por_nome("Peixote"), 10, true, true, true, "selvagem");
+            battle_context = "rota";
+            demo_start_battle(id);
         } },
         { Nome: "menu com diario", Espera: 1.2, Foto: "31_menu_diario", Acao: function() {
             demo_run_resetar(id, DemoEstado.MENU);
