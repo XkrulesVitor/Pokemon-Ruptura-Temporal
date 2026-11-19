@@ -259,6 +259,7 @@ function criatura_draft_disparar(_criatura, _level) {
 
 function criatura_draft_disparar_base(_criatura, _level) {
     criatura_draft_garantir_globals();
+    audio_sfx("nivel");
 
     var _opcoes = criatura_sortear_opcoes_draft(_criatura, _level);
 

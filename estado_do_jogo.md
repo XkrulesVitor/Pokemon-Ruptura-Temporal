@@ -71,7 +71,11 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - 14 conquistas com aviso na tela e tela propria (botao no menu). Contadores de sinergias e combos.
   - Visuais do jogador (botao no menu): 6 paletas do personagem do mapa, liberadas por conquistas.
   - Itens de batalha novos: Po de Furia (Impeto Ofensivo), Po de Couraca (Fortificado), Po de Vento (recargas mais rapidas), vendidos a partir de Pedralia.
-- [ ] **Sprint 8: Lançamento**: BGM/SFX com licença livre, PT-BR/EN-US, balanceamento, build testado em máquina limpa.
+- [x] **Sprint 8: Audio, idiomas e build** (parcial: ver pendencias)
+  - Audio sintetizado no proprio jogo (`scripts/scr_audio`): 7 musicas em loop (menu, cidade, rota, batalha, chefe, Buraco Negro, vitoria final) geradas aos poucos em segundo plano e 12 efeitos (golpe, combo, cura, captura, nivel, vitoria, derrota, conquista, missao, clique). Arquivos .ogg em `datafiles/audio/` substituem os sintetizados. Opcao SOM no menu (ligado / so efeitos / mudo).
+  - Idiomas (`scripts/scr_idiomas`): PT-BR e EN-US, opcao IDIOMA no menu. Toda chamada de desenho de texto passa por `i18n_*`; dicionario em `datafiles/data/idiomas/en.json` (gerado por `tools/gerar_idiomas.py`). Interface principal traduzida; nomes e descricoes de habilidades/passivas e falas de NPC ainda so em portugues.
+  - Build: `gm-cli package` recusa com a licenca de convidado ("Unable to obtain permission to execute"). Para exportar o .exe e preciso entrar com a conta GameMaker (IDE ou `gm-cli login`). O jogo compilado ja roda fora da pasta do projeto (cache do GameMaker) com todos os dados carregando.
+  - Pendente: traducao de habilidades/passivas/falas, balanceamento jogando runs completas, exportacao do .exe com a conta do usuario, fontes com licenca livre.
 
 ## 6. Regras para a IA
 * Leia `scr_conteudo`, `scr_criatura_data`, `scr_criatura_progressao` e `scr_demo_playable` antes de grandes refatorações.

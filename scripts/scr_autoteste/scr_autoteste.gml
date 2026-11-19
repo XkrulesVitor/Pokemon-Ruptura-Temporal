@@ -457,6 +457,37 @@ function autoteste_passos() {
             demo_inventario_adicionar(inventario, "po_ataque", 1);
             demo_item_usar(id, "po_ataque", true);
             autoteste_log("po de furia: impeto ofensivo = " + string(criatura_status_tem(player_inst, "ImpetoOfensivo")) + " | restam " + string(demo_inventario_quantidade(inventario, "po_ataque")));
+        } },
+        { Nome: "audio: menu", Espera: 6.0, Foto: "50_menu_som", Acao: function() {
+            demo_run_resetar(id, DemoEstado.MENU);
+            autoteste_log("audio antes: " + string(variable_struct_get_names(audio_garantir().Sons)) + " | fps " + string(fps_real));
+        } },
+        { Nome: "audio: resultado", Espera: 0.2, Foto: "", Acao: function() {
+            var _a = audio_garantir();
+            autoteste_log("audio depois: " + string(variable_struct_get_names(_a.Sons)) + " | tocando: " + _a.MusicaAtual + " | job pendente: " + string(is_struct(_a.Job)) + " | fps " + string(fps_real));
+        } },
+        { Nome: "idioma: menu em ingles", Espera: 1.2, Foto: "51_menu_en", Acao: function() {
+            if (idioma_atual() == "pt") idioma_alternar();
+            demo_run_resetar(id, DemoEstado.MENU);
+            autoteste_log("idioma: " + idioma_atual() + " | exemplo: " + i18n_t("Voce chegou a Pedralia.") + " | " + i18n_t("COMECAR RUN"));
+        } },
+        { Nome: "idioma: escolha em ingles", Espera: 1.2, Foto: "52_escolha_en", Acao: function() {
+            estado_demo = DemoEstado.ESCOLHA_INICIAL;
+        } },
+        { Nome: "idioma: cidade em ingles", Espera: 1.2, Foto: "53_cidade_en", Acao: function() {
+            starter_id = starter_ids[0];
+            estado_demo = DemoEstado.CIDADE;
+            cidade_index = 2;
+            message = "Voce chegou a " + demo_cidade_nome(2) + ".";
+        } },
+        { Nome: "idioma: batalha em ingles", Espera: 2.5, Foto: "54_batalha_en", Acao: function() {
+            enemy_criatura_data = demo_criar_criatura_data(criatura_id_por_nome("Rataco"), 6, true, false, false, "selvagem");
+            battle_context = "rota";
+            demo_start_battle(id);
+        } },
+        { Nome: "idioma: volta ao portugues", Espera: 0.2, Foto: "", Acao: function() {
+            if (idioma_atual() == "en") idioma_alternar();
+            autoteste_log("idioma restaurado: " + idioma_atual());
         } }
     ];
 }
@@ -541,7 +572,7 @@ function autoteste_step() {
     }
 
     if (_passo.Foto != "") {
-        autoteste_log("foto " + _passo.Foto + " | estado " + string(_jogo.estado_demo) + " | " + string(_jogo.message));
+        autoteste_log("foto " + _passo.Foto + " | fps_real " + string(round(fps_real)) + " | estado " + string(_jogo.estado_demo) + " | " + string_copy(string(_jogo.message), 1, 60));
         autoteste_foto(_passo.Foto);
     }
     _t.Passo += 1;

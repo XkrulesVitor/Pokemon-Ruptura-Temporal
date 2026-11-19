@@ -235,17 +235,18 @@ function battle_time_scale_cycle() {
 }
 
 function battle_ui_string_fit(_text, _max_w, _scale) {
+    _text = i18n_t(_text);
     var _out = string(_text);
 
     if (_max_w <= 0) {
         return "";
     }
 
-    if (string_width(_out) * _scale <= _max_w) {
+    if (i18n_string_width(_out) * _scale <= _max_w) {
         return _out;
     }
 
-    while (string_length(_out) > 3 && string_width(_out + "...") * _scale > _max_w) {
+    while (string_length(_out) > 3 && i18n_string_width(_out + "...") * _scale > _max_w) {
         _out = string_delete(_out, string_length(_out), 1);
     }
 
@@ -254,13 +255,13 @@ function battle_ui_string_fit(_text, _max_w, _scale) {
 
 function battle_ui_draw_text_fit(_x, _y, _text, _max_w, _scale, _color) {
     draw_set_color(_color);
-    draw_text_transformed(_x, _y, battle_ui_string_fit(_text, _max_w, _scale), _scale, _scale, 0);
+    i18n_draw_text_transformed(_x, _y, battle_ui_string_fit(_text, _max_w, _scale), _scale, _scale, 0);
 }
 
 function battle_ui_draw_text_center_fit(_x, _y, _text, _max_w, _max_h, _scale, _color) {
     var _fit_scale = _scale;
-    var _tw = max(1, string_width(string(_text)));
-    var _th = max(1, string_height(string(_text)));
+    var _tw = max(1, i18n_string_width(string(_text)));
+    var _th = max(1, i18n_string_height(string(_text)));
 
     _fit_scale = min(_fit_scale, _max_w / _tw);
     _fit_scale = min(_fit_scale, _max_h / _th);
@@ -269,7 +270,7 @@ function battle_ui_draw_text_center_fit(_x, _y, _text, _max_w, _max_h, _scale, _
     draw_set_color(_color);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
-    draw_text_transformed(_x, _y, string(_text), _fit_scale, _fit_scale, 0);
+    i18n_draw_text_transformed(_x, _y, string(_text), _fit_scale, _fit_scale, 0);
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
 }
@@ -396,10 +397,10 @@ function battle_ui_draw_skill_summary(_skill, _x, _y, _w, _show_description) {
     battle_ui_font_title();
     battle_ui_draw_text_fit(_x + 62, _y, _skill.Nome, _w - 66, 0.72, _text_color);
     battle_ui_font_body();
-    draw_text(_x + 62, _y + 30, battle_ui_skill_damage_text(_skill));
+    i18n_draw_text(_x + 62, _y + 30, battle_ui_skill_damage_text(_skill));
 
     if (variable_struct_exists(_skill, "TipoOpcao") && _skill.TipoOpcao == "upgrade") {
-        draw_text_ext(_x, _y + 68, "Evolui esta habilidade, aumentando dano, efeito ou reduzindo recarga.", 24, _w);
+        i18n_draw_text_ext(_x, _y + 68, "Evolui esta habilidade, aumentando dano, efeito ou reduzindo recarga.", 24, _w);
 
         if (_show_description) {
             var _upgrade_note = "Upgrade de tier da habilidade equipada.";
@@ -408,13 +409,13 @@ function battle_ui_draw_skill_summary(_skill, _x, _y, _w, _show_description) {
                 _upgrade_note = criatura_habilidade_tier_nome(_skill.TierAtual) + " > " + criatura_habilidade_tier_nome(_skill.ProximoTier);
             }
 
-            draw_text_ext(_x, _y + 128, _upgrade_note, 24, _w);
+            i18n_draw_text_ext(_x, _y + 128, _upgrade_note, 24, _w);
         }
 
         return undefined;
     }
 
-    draw_text(_x + 164, _y + 30, "CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s");
+    i18n_draw_text(_x + 164, _y + 30, "CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s");
 
     if (_show_description) {
         var _mx = device_mouse_x_to_gui(0);
@@ -463,7 +464,7 @@ function battle_ui_draw_skill_slot(_skill, _x, _y, _w, _h, _is_next) {
     draw_set_color(_text_color);
     var _ready_text = _cooldown <= 0.05 ? "PRONTO" : string_format(_cooldown, 1, 1) + "s";
     draw_set_halign(fa_right);
-    draw_text_transformed(_x + _w - 32, _y + _h - 42, _ready_text, 0.66, 0.66, 0);
+    i18n_draw_text_transformed(_x + _w - 32, _y + _h - 42, _ready_text, 0.66, 0.66, 0);
     draw_set_halign(fa_left);
 
     // Selo de sinergia cruzada ativa (scr_combate_extras).
@@ -473,7 +474,7 @@ function battle_ui_draw_skill_slot(_skill, _x, _y, _w, _h, _is_next) {
     if (_sinergia != "") {
         draw_set_color(make_color_rgb(120, 230, 255));
         draw_set_halign(fa_right);
-        draw_text_transformed(_x + _w - 14, _y + 6, "SINERGIA", 0.5, 0.5, 0);
+        i18n_draw_text_transformed(_x + _w - 14, _y + 6, "SINERGIA", 0.5, 0.5, 0);
         draw_set_halign(fa_left);
     }
 
@@ -593,9 +594,9 @@ function battle_float_text_draw_gui() {
         var _alpha = clamp(_item.Timer / _item.Duracao, 0, 1);
         draw_set_alpha(_alpha);
         draw_set_color(c_black);
-        draw_text(_item.X + 2, _item.Y + 2, _item.Texto);
+        i18n_draw_text(_item.X + 2, _item.Y + 2, _item.Texto);
         draw_set_color(_item.Cor);
-        draw_text(_item.X, _item.Y, _item.Texto);
+        i18n_draw_text(_item.X, _item.Y, _item.Texto);
     }
 
     draw_set_alpha(1);
@@ -826,7 +827,7 @@ function battle_status_draw_icon(_status_id, _x, _y, _size) {
     var _data = battle_status_visual_data(_status_id);
     var _spr = battle_status_effect_sprite_get(_data.Asset);
     var _label = string(_data.Label);
-    var _w = max(_size + 12, string_width(_label) * 0.50 + 12);
+    var _w = max(_size + 12, i18n_string_width(_label) * 0.50 + 12);
     var _h = max(18, _size + 4);
     var _mx = device_mouse_x_to_gui(0);
     var _my = device_mouse_y_to_gui(0);
@@ -1196,7 +1197,7 @@ function battle_ui_draw_status_box(_inst) {
 
     draw_set_color(_text_color);
     draw_set_halign(fa_right);
-    draw_text_transformed(_x + _w - (_is_ally ? 26 : 36), _y + 11, "Lv." + string(_inst.level), 0.76, 0.76, 0);
+    i18n_draw_text_transformed(_x + _w - (_is_ally ? 26 : 36), _y + 11, "Lv." + string(_inst.level), 0.76, 0.76, 0);
     draw_set_halign(fa_left);
 
     var _hp_pct = clamp(_inst.hp_atual / max(1, _inst.hp_max), 0, 1);
@@ -1439,8 +1440,8 @@ function battle_ui_draw_bag_overlay() {
 
     battle_ui_draw_nineslice_panel(56, 84, _gw - 112, _gh - 140);
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-    draw_text(84, 112, "MOCHILA");
-    draw_text(84, 136, "Combate pausado. Clique em um item para usar.");
+    i18n_draw_text(84, 112, "MOCHILA");
+    i18n_draw_text(84, 136, "Combate pausado. Clique em um item para usar.");
 
     battle_ui_draw_button("FECHAR", _gw - 224, 112, 160, 42, battle_ui_button_hit(_mx, _my, _gw - 224, 112, 160, 42));
 
@@ -1453,7 +1454,7 @@ function battle_ui_draw_bag_overlay() {
     if (array_length(_bag_ids) <= 0) {
         var _empty_text = "Mochila vazia";
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-        draw_text((_gw * 0.5) - (string_width(_empty_text) * 0.5), _gh * 0.5, _empty_text);
+        i18n_draw_text((_gw * 0.5) - (i18n_string_width(_empty_text) * 0.5), _gh * 0.5, _empty_text);
     }
 
     for (var _bag_i = 0; _bag_i < array_length(_bag_ids); _bag_i += 1) {
@@ -1483,10 +1484,10 @@ function battle_ui_draw_bag_overlay() {
 
         demo_draw_item_icon(_bag_id, _item_x + 26, _item_y + (_bag_row_h * 0.5), 30);
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-        draw_text(_item_x + 54, _item_y + 7, _bag_item.Nome);
-        draw_text(_item_x + 228, _item_y + 7, "x" + string(_bag_qty));
+        i18n_draw_text(_item_x + 54, _item_y + 7, _bag_item.Nome);
+        i18n_draw_text(_item_x + 228, _item_y + 7, "x" + string(_bag_qty));
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(80, 72, 66) : c_white);
-        draw_text_ext(_item_x + 54, _item_y + 27, _bag_item.Descricao, 12, _bag_col_w - 66);
+        i18n_draw_text_ext(_item_x + 54, _item_y + 27, _bag_item.Descricao, 12, _bag_col_w - 66);
     }
 }
 
@@ -1513,8 +1514,8 @@ function battle_ui_draw_switch_overlay() {
 
     battle_ui_draw_nineslice_panel(96, 96, _gw - 192, _gh - 192);
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-    draw_text(128, 126, "TROCAR MONSTRO");
-    draw_text(128, 150, "Escolha um monstro capturado para entrar em campo.");
+    i18n_draw_text(128, 126, "TROCAR MONSTRO");
+    i18n_draw_text(128, 150, "Escolha um monstro capturado para entrar em campo.");
     battle_ui_draw_button("FECHAR", _gw - 256, 124, 160, 42, battle_ui_button_hit(_mx, _my, _gw - 256, 124, 160, 42));
 
     demo_party_garantir(_demo);
@@ -1547,7 +1548,7 @@ function battle_ui_draw_switch_overlay() {
 
         if (!is_struct(_criatura)) {
             draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(80, 72, 66) : c_white);
-            draw_text(_x + 24, _y + 42, "Slot vazio");
+            i18n_draw_text(_x + 24, _y + 42, "Slot vazio");
             continue;
         }
 
@@ -1560,16 +1561,16 @@ function battle_ui_draw_switch_overlay() {
 
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
         var _name = (variable_struct_exists(_criatura, "IsShiny") && _criatura.IsShiny ? "CROMATICO " : "") + _criatura.Nome;
-        draw_text(_x + 112, _y + 18, _name + "  Lv." + string(_criatura.Level));
+        i18n_draw_text(_x + 112, _y + 18, _name + "  Lv." + string(_criatura.Level));
         var _hp = variable_struct_exists(_criatura, "HpAtual") ? _criatura.HpAtual : _criatura.HpMax;
         var _hp_pct = clamp(_hp / max(1, _criatura.HpMax), 0, 1);
-        draw_text(_x + 112, _y + 44, "HP");
+        i18n_draw_text(_x + 112, _y + 44, "HP");
         draw_set_color(c_dkgray);
         draw_rectangle(_x + 148, _y + 48, _x + _card_w - 28, _y + 58, false);
         draw_set_color(battle_ui_hp_color(_hp_pct));
         draw_rectangle(_x + 148, _y + 48, _x + 148 + ((_card_w - 176) * _hp_pct), _y + 58, false);
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-        draw_text(_x + 112, _y + 72, _active ? "Em campo" : (_can_switch ? "Clique para trocar" : "Desmaiado"));
+        i18n_draw_text(_x + 112, _y + 72, _active ? "Em campo" : (_can_switch ? "Clique para trocar" : "Desmaiado"));
     }
 }
 

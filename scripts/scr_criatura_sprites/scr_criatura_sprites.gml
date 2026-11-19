@@ -23,6 +23,7 @@ function project_asset_permitido(_relative) {
 
     static _permitidos = [
         "data/",
+        "audio/",
         "fonts_jogo/",
         "sprites/criaturas/",
         "sprites/treinadores/",

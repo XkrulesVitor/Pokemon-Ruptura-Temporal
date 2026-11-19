@@ -152,9 +152,9 @@ function battle_combo_draw_gui() {
 
         draw_set_alpha(_alpha);
         draw_set_color(c_black);
-        draw_text_transformed(_item.X + 3, _item.Y + 3, _item.Texto, _escala, _escala, -4);
+        i18n_draw_text_transformed(_item.X + 3, _item.Y + 3, _item.Texto, _escala, _escala, -4);
         draw_set_color(_piscar);
-        draw_text_transformed(_item.X, _item.Y, _item.Texto, _escala, _escala, -4);
+        i18n_draw_text_transformed(_item.X, _item.Y, _item.Texto, _escala, _escala, -4);
     }
 
     draw_set_alpha(1);

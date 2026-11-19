@@ -15,6 +15,7 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"en.json","CopyToMask":-1,"filePath":"datafiles/data/idiomas","name":"en.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"treinadores.json","CopyToMask":-1,"filePath":"datafiles/data","name":"treinadores.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"rotas.json","CopyToMask":-1,"filePath":"datafiles/data","name":"rotas.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"itens.json","CopyToMask":-1,"filePath":"datafiles/data","name":"itens.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -87,6 +88,8 @@
   },
   "name":"PokemonRogueLike",
   "resources":[
+    {"id":{"name":"scr_idiomas","path":"scripts/scr_idiomas/scr_idiomas.yy",},},
+    {"id":{"name":"scr_audio","path":"scripts/scr_audio/scr_audio.yy",},},
     {"id":{"name":"scr_rejogabilidade","path":"scripts/scr_rejogabilidade/scr_rejogabilidade.yy",},},
     {"id":{"name":"scr_combate_extras","path":"scripts/scr_combate_extras/scr_combate_extras.yy",},},
     {"id":{"name":"scr_missoes","path":"scripts/scr_missoes/scr_missoes.yy",},},

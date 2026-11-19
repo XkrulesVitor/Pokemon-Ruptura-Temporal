@@ -359,7 +359,7 @@ function bestiario_ui_draw_overlay() {
 
     var _text_color = sprite_exists(global.ui_panel_sprite) ? c_black : c_white;
     draw_set_color(_text_color);
-    draw_text(56, 44, "BESTIARIO");
+    i18n_draw_text(56, 44, "BESTIARIO");
 
     var _ids = variable_struct_get_names(global.bestiario_estado);
     var _capturados_total = 0;
@@ -377,16 +377,16 @@ function bestiario_ui_draw_overlay() {
         }
     }
 
-    draw_text(56, 66, "Capturados: " + string(_capturados_total) + " / " + string(array_length(_ids)) + "   P: fechar");
+    i18n_draw_text(56, 66, "Capturados: " + string(_capturados_total) + " / " + string(array_length(_ids)) + "   P: fechar");
 
-    draw_text(56, 98, "Estagio");
+    i18n_draw_text(56, 98, "Estagio");
 
     for (var _g = 0; _g <= 3; _g += 1) {
         var _gen_label = _g == 0 ? "Todos" : "Est. " + string(_g);
         bestiario_ui_draw_filter_button(_gen_label, 144 + (_g * 72), 92, 66, 28, global.bestiario_filtro_geracao == _g);
     }
 
-    draw_text(56, 136, "Raridade");
+    i18n_draw_text(56, 136, "Raridade");
     var _rarities = bestiario_ui_raridade_filtros();
     var _rar_x = 144;
 
@@ -409,7 +409,7 @@ function bestiario_ui_draw_overlay() {
 
     if (_shown <= 0) {
         draw_set_color(_text_color);
-        draw_text(_start_x, _start_y + 24, "Nenhum monstro capturado neste filtro.");
+        i18n_draw_text(_start_x, _start_y + 24, "Nenhum monstro capturado neste filtro.");
         draw_text(_start_x, _start_y + 52, "Capture monstros nas rotas para liberar dados completos aqui.");
         draw_set_color(c_white);
         return;
@@ -442,7 +442,7 @@ function bestiario_ui_draw_overlay() {
         draw_set_color(c_white);
         battle_ui_draw_text_fit(_x + 40, _y + 9, "#" + string(_entry.ID) + " " + _entry.Nome, _cell_w - 116, 0.72, c_white);
         draw_set_halign(fa_right);
-        draw_text_transformed(_x + _cell_w - 14, _y + 10, "x" + string(max(1, _entry.Capturas)), 0.64, 0.64, 0);
+        i18n_draw_text_transformed(_x + _cell_w - 14, _y + 10, "x" + string(max(1, _entry.Capturas)), 0.64, 0.64, 0);
         draw_set_halign(fa_left);
 
         var _card_text = make_color_rgb(58, 42, 36); // corpo do card e claro
@@ -455,7 +455,7 @@ function bestiario_ui_draw_overlay() {
 
     if (array_length(_filtered) > _shown) {
         draw_set_color(_text_color);
-        draw_text(56, _gh - 42, "Mostrando " + string(_shown) + " de " + string(array_length(_filtered)) + ". Use os filtros para afinar a lista.");
+        i18n_draw_text(56, _gh - 42, "Mostrando " + string(_shown) + " de " + string(array_length(_filtered)) + ". Use os filtros para afinar a lista.");
     }
 
     draw_set_color(c_white);

@@ -64,3 +64,12 @@ if (global.bestiario_overlay_aberto) {
 
 global.velocidade_jogo = global.time_scale;
 autoteste_step();
+
+// Audio: musica conforme a tela, clique de interface e geracao das faixas aos poucos.
+audio_musica(audio_musica_para_jogo(instance_number(obj_demo_game) > 0 ? instance_find(obj_demo_game, 0) : noone));
+
+if (mouse_check_button_pressed(mb_left)) {
+    audio_sfx("clique");
+}
+
+audio_step();

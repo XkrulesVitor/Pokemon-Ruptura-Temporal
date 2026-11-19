@@ -50,6 +50,16 @@ FONTES -> datafiles/fonts_jogo/titulo.ttf e corpo.ttf
   Use fontes com licenca livre (ex.: OFL do Google Fonts). So os caracteres ASCII
   sao carregados, por isso os textos do jogo nao usam acento.
 
+AUDIO -> datafiles/audio/
+  O jogo sintetiza musicas e efeitos sozinho. Para trocar por arquivos, use .ogg com estes nomes:
+  musica_menu, musica_cidade, musica_rota, musica_batalha, musica_chefe, musica_buraco, musica_vitoria_final
+  sfx_clique, sfx_golpe, sfx_combo, sfx_cura, sfx_captura_lancar, sfx_captura_sucesso, sfx_captura_falha,
+  sfx_nivel, sfx_vitoria, sfx_derrota, sfx_conquista, sfx_missao
+  Use musica/efeitos com licenca livre (ex.: CC0) e anote a fonte em docs/creditos.
+
+IDIOMAS -> datafiles/data/idiomas/en.json (gerado por tools/gerar_idiomas.py)
+  "exatos" traduz a frase inteira; "trechos" traduz pedacos de frases montadas com nomes e numeros.
+
 ARTE QUE JA E DO PROJETO E CONTINUA EM USO
   datafiles/sprites/overworld/routes/  (temas, efeitos e elementos de rota)
   datafiles/sprites/cutscene/          (horizonte destruido da intro)

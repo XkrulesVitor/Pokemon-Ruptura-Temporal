@@ -57,14 +57,14 @@ if (_is_city_screen) {
     draw_set_color(make_color_rgb(66, 126, 210));
     draw_rectangle(room_width * 0.45, room_height * 0.20, room_width * 0.68, room_height * 0.28, false);
     draw_set_color(c_white);
-    draw_text(room_width * 0.525, room_height * 0.225, "MART");
+    i18n_draw_text(room_width * 0.525, room_height * 0.225, "MART");
 
     draw_set_color(make_color_rgb(216, 204, 160));
     draw_rectangle(room_width * 0.17, room_height * 0.63, room_width * 0.31, room_height * 0.78, false);
     draw_set_color(make_color_rgb(122, 86, 176));
     draw_rectangle(room_width * 0.15, room_height * 0.59, room_width * 0.33, room_height * 0.66, false);
     draw_set_color(c_white);
-    draw_text(room_width * 0.195, room_height * 0.615, "GYM");
+    i18n_draw_text(room_width * 0.195, room_height * 0.615, "GYM");
 
     var _town_x = room_width * 0.40;
     var _town_y = room_height * 0.58;

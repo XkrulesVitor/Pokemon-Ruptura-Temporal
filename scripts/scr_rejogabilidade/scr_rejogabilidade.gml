@@ -22,7 +22,9 @@ function progresso_padrao() {
         Contadores: { sinergias: 0, combos: 0 },
         Skin: "padrao",
         BuracoNegroLiberado: false,
-        BuracoNegroRecorde: 0
+        BuracoNegroRecorde: 0,
+        SomModo: 0,
+        Idioma: "pt"
     };
 }
 
@@ -190,6 +192,7 @@ function conquista_desbloquear(_id) {
             }
 
             array_push(global.conquista_avisos, { Texto: _lista[_i].Nome, Skin: _lista[_i].Skin, Timer: 4.0 });
+            audio_sfx("conquista");
             return true;
         }
     }
@@ -291,13 +294,13 @@ function conquista_avisos_draw() {
     draw_roundrect_ext(_x, _y, _x + _w, _y + _h, 10, 10, false);
     draw_set_color(make_color_rgb(255, 210, 90));
     draw_roundrect_ext(_x, _y, _x + _w, _y + _h, 10, 10, true);
-    draw_text_transformed(_x + 16, _y + 8, "CONQUISTA DESBLOQUEADA", 0.6, 0.6, 0);
+    i18n_draw_text_transformed(_x + 16, _y + 8, "CONQUISTA DESBLOQUEADA", 0.6, 0.6, 0);
     draw_set_color(c_white);
-    draw_text_transformed(_x + 16, _y + 26, _aviso.Texto, 0.85, 0.85, 0);
+    i18n_draw_text_transformed(_x + 16, _y + 26, _aviso.Texto, 0.85, 0.85, 0);
 
     if (_aviso.Skin != "") {
         draw_set_color(make_color_rgb(170, 230, 255));
-        draw_text_transformed(_x + 16, _y + 48, "Novo visual: " + skin_nome(_aviso.Skin), 0.58, 0.58, 0);
+        i18n_draw_text_transformed(_x + 16, _y + 48, "Novo visual: " + skin_nome(_aviso.Skin), 0.58, 0.58, 0);
     }
 
     draw_set_alpha(1);
@@ -473,9 +476,9 @@ function buraco_negro_draw_resultado() {
     battle_ui_draw_nineslice_panel(_x, _y, _w, 70);
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(190, 150, 255));
-    draw_text_transformed(_gw * 0.5, _y + 12, "BURACO NEGRO" + (_r.NovoRecorde ? " - NOVO RECORDE!" : ""), 0.82, 0.82, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _y + 12, "BURACO NEGRO" + (_r.NovoRecorde ? " - NOVO RECORDE!" : ""), 0.82, 0.82, 0);
     draw_set_color(c_white);
-    draw_text_transformed(_gw * 0.5, _y + 40, string(_r.Ondas) + " ondas vencidas  |  recorde: " + string(_r.Recorde), 0.72, 0.72, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _y + 40, string(_r.Ondas) + " ondas vencidas  |  recorde: " + string(_r.Recorde), 0.72, 0.72, 0);
     draw_set_halign(fa_left);
 }
 
@@ -485,7 +488,9 @@ function menu_opcoes_rects() {
     return [
         { X: 28, Y: 24, W: 270, H: 36 },
         { X: 28, Y: 66, W: 270, H: 36 },
-        { X: 28, Y: 108, W: 270, H: 36 }
+        { X: 28, Y: 108, W: 270, H: 36 },
+        { X: 28, Y: 150, W: 270, H: 36 },
+        { X: 28, Y: 192, W: 270, H: 36 }
     ];
 }
 
@@ -494,7 +499,9 @@ function menu_opcoes_draw(_mx, _my) {
     var _rotulos = [
         "DIFICULDADE: " + dificuldade_nome(progresso().Dificuldade),
         "CONQUISTAS " + string(conquistas_total_desbloqueadas()) + "/" + string(array_length(conquistas_lista())),
-        "VISUAL: " + string_upper(skin_nome(progresso().Skin))
+        "VISUAL: " + string_upper(skin_nome(progresso().Skin)),
+        "SOM: " + audio_modo_nome(),
+        "IDIOMA: " + idioma_nome()
     ];
 
     for (var _i = 0; _i < array_length(_r); _i += 1) {
@@ -509,7 +516,7 @@ function menu_opcoes_draw(_mx, _my) {
     }
 
     if (demo_hover_rect(_mx, _my, _r[0].X, _r[0].Y, _r[0].W, _r[0].H)) {
-        battle_ui_draw_text_fit(_r[0].X, _r[2].Y + 46, dificuldade_params(progresso().Dificuldade).Descricao, 440, 0.6, make_color_rgb(255, 238, 170));
+        battle_ui_draw_text_fit(_r[0].X, _r[4].Y + 46, dificuldade_params(progresso().Dificuldade).Descricao, 440, 0.6, make_color_rgb(255, 238, 170));
     }
 }
 
@@ -533,6 +540,16 @@ function menu_opcoes_clique(_controller, _mx, _my) {
         return true;
     }
 
+    if (demo_hover_rect(_mx, _my, _r[3].X, _r[3].Y, _r[3].W, _r[3].H)) {
+        audio_modo_alternar();
+        return true;
+    }
+
+    if (demo_hover_rect(_mx, _my, _r[4].X, _r[4].Y, _r[4].W, _r[4].H)) {
+        idioma_alternar();
+        return true;
+    }
+
     return false;
 }
 
@@ -544,7 +561,7 @@ function conquistas_draw_tela() {
     draw_rectangle_colour(0, 0, _gw, _gh, make_color_rgb(18, 20, 40), make_color_rgb(18, 20, 40), make_color_rgb(40, 30, 60), make_color_rgb(40, 30, 60), false);
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(255, 222, 120));
-    draw_text_transformed(_gw * 0.5, 34, "CONQUISTAS  " + string(conquistas_total_desbloqueadas()) + "/" + string(array_length(_lista)), 1.3, 1.3, 0);
+    i18n_draw_text_transformed(_gw * 0.5, 34, "CONQUISTAS  " + string(conquistas_total_desbloqueadas()) + "/" + string(array_length(_lista)), 1.3, 1.3, 0);
     draw_set_halign(fa_left);
 
     var _cols = 2;
@@ -570,6 +587,6 @@ function conquistas_draw_tela() {
 
     var _p = progresso();
     draw_set_color(make_color_rgb(190, 200, 230));
-    draw_text_transformed(_x0, _gh - 104, "Sinergias: " + string(_p.Contadores.sinergias) + "   Combos: " + string(_p.Contadores.combos) + "   Recorde do Buraco Negro: " + string(_p.BuracoNegroRecorde) + " ondas", 0.7, 0.7, 0);
+    i18n_draw_text_transformed(_x0, _gh - 104, "Sinergias: " + string(_p.Contadores.sinergias) + "   Combos: " + string(_p.Contadores.combos) + "   Recorde do Buraco Negro: " + string(_p.BuracoNegroRecorde) + " ondas", 0.7, 0.7, 0);
     demo_draw_choice_button("Voltar", "", 54, _gh - 76, 180, 58, demo_hover_rect(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), 54, _gh - 76, 180, 58));
 }

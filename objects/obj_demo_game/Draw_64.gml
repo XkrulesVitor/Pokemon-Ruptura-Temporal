@@ -34,8 +34,8 @@ if (estado_demo == DemoEstado.MENU) {
 
     draw_set_color(c_white);
     draw_set_halign(fa_center);
-    draw_text(_gw * 0.5, 76, "ESCOLHA SEU MONSTRO INICIAL");
-    draw_text(_gw * 0.5, 110, "Clique em um card ou pressione 1, 2 ou 3");
+    i18n_draw_text(_gw * 0.5, 76, "ESCOLHA SEU MONSTRO INICIAL");
+    i18n_draw_text(_gw * 0.5, 110, "Clique em um card ou pressione 1, 2 ou 3");
     draw_set_halign(fa_left);
 
     var _card_w = 350;
@@ -74,9 +74,9 @@ if (estado_demo == DemoEstado.MENU) {
         draw_rectangle(_x + 18, _card_y + 18, _x + 32, _card_y + 32, false);
 
         draw_set_color(c_white);
-        draw_text(_x + 42, _card_y + 20, string(_i + 1) + ". " + demo_criatura_nome(_id));
+        i18n_draw_text(_x + 42, _card_y + 20, string(_i + 1) + ". " + demo_criatura_nome(_id));
         draw_set_halign(fa_right);
-        draw_text(_x + _card_w - 78, _card_y + 20, "Lv. 5");
+        i18n_draw_text(_x + _card_w - 78, _card_y + 20, "Lv. 5");
         draw_set_halign(fa_left);
         var _raridade_card = is_struct(_criatura_preview) && variable_struct_exists(_criatura_preview, "RaridadePadrao") ? _criatura_preview.RaridadePadrao : CriaturaRaridade.COMMON;
         var _raridade_icon_x = _x + _card_w - 44;
@@ -144,7 +144,7 @@ if (estado_demo == DemoEstado.MENU) {
         draw_line_width(_x + 28, _skill_panel_y + 36, _x + _card_w - 28, _skill_panel_y + 36, 1);
 
         draw_set_color(make_color_rgb(50, 36, 34));
-        draw_text(_x + 30, _skill_panel_y + 12, "Ataque inicial");
+        i18n_draw_text(_x + 30, _skill_panel_y + 12, "Ataque inicial");
 
         for (var _s = 0; _s < min(1, array_length(_skills)); _s += 1) {
             var _skill = _skills[_s];
@@ -152,8 +152,8 @@ if (estado_demo == DemoEstado.MENU) {
             if (is_struct(_skill)) {
                 battle_ui_draw_type_icon(_skill.TipoElementar, _x + 30, _skill_panel_y + 50, 0.66);
                 draw_set_color(make_color_rgb(36, 30, 28));
-                draw_text(_x + 96, _skill_panel_y + 48, _skill.Nome);
-                draw_text(_x + 96, _skill_panel_y + 72, battle_ui_skill_damage_text(_skill) + "   CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s");
+                i18n_draw_text(_x + 96, _skill_panel_y + 48, _skill.Nome);
+                i18n_draw_text(_x + 96, _skill_panel_y + 72, battle_ui_skill_damage_text(_skill) + "   CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s");
                 var _tooltip_atual = demo_draw_habilidade_descricao_rica(_skill, _x + 30, _skill_panel_y + 98, _card_w - 60, _mx_hover, _my_hover, 1);
 
                 if (is_struct(_tooltip_atual)) {
@@ -164,7 +164,7 @@ if (estado_demo == DemoEstado.MENU) {
 
         draw_set_color(c_white);
         draw_set_halign(fa_center);
-        draw_text_transformed(_x + _card_w - 106, _card_y + 48, battle_ui_string_fit(criatura_raridade_nome(_raridade_card), 76, 0.48), 0.48, 0.48, 0);
+        i18n_draw_text_transformed(_x + _card_w - 106, _card_y + 48, battle_ui_string_fit(criatura_raridade_nome(_raridade_card), 76, 0.48), 0.48, 0.48, 0);
         draw_set_halign(fa_left);
     }
 
@@ -189,7 +189,7 @@ if (estado_demo == DemoEstado.MENU) {
     draw_set_color(c_white);
     battle_ui_font_title();
     draw_set_valign(fa_middle);
-    draw_text(58, 46, string_upper(_cidade_titulo));
+    i18n_draw_text(58, 46, string_upper(_cidade_titulo));
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(36, 30, 28));
     var _cidade_subtitulo = "Escolha um ponto no mapa";
@@ -243,7 +243,7 @@ if (estado_demo == DemoEstado.MENU) {
         draw_set_color(make_color_rgb(108, 82, 68));
         draw_rectangle(70, 152, 650, 612, true);
         draw_set_color(make_color_rgb(36, 30, 28));
-        draw_text(98, 176, "Clique em um item para comprar.");
+        i18n_draw_text(98, 176, "Clique em um item para comprar.");
 
         var _shop_items = demo_shop_items_cidade(cidade_index);
         var _shop_x = 88;
@@ -251,7 +251,7 @@ if (estado_demo == DemoEstado.MENU) {
         var _shop_w = 520;
         var _shop_row_h = 58;
         draw_set_color(make_color_rgb(86, 68, 58));
-        draw_text(_shop_x + 418, _shop_y - 20, "Estoque");
+        i18n_draw_text(_shop_x + 418, _shop_y - 20, "Estoque");
 
         for (var _shop_i = 0; _shop_i < array_length(_shop_items); _shop_i += 1) {
             var _shop_id = _shop_items[_shop_i];
@@ -270,12 +270,12 @@ if (estado_demo == DemoEstado.MENU) {
             demo_draw_item_icon(_shop_id, _shop_x + 28, _row_y + 29, 32);
             draw_set_color(make_color_rgb(36, 30, 28));
             battle_ui_font_title();
-            draw_text(_shop_x + 58, _row_y + 9, _shop_item.Nome);
-            draw_text(_shop_x + 302, _row_y + 9, "M$ " + string(_shop_item.Preco));
-            draw_text(_shop_x + 432, _row_y + 9, "x" + string(demo_inventario_quantidade(inventario, _shop_id)));
+            i18n_draw_text(_shop_x + 58, _row_y + 9, _shop_item.Nome);
+            i18n_draw_text(_shop_x + 302, _row_y + 9, "M$ " + string(_shop_item.Preco));
+            i18n_draw_text(_shop_x + 432, _row_y + 9, "x" + string(demo_inventario_quantidade(inventario, _shop_id)));
             draw_set_color(make_color_rgb(86, 68, 58));
             battle_ui_font_body();
-            draw_text_ext(_shop_x + 58, _row_y + 31, _shop_item.Descricao, 14, _shop_w - 76);
+            i18n_draw_text_ext(_shop_x + 58, _row_y + 31, _shop_item.Descricao, 14, _shop_w - 76);
             battle_ui_font_title();
         }
 
@@ -289,9 +289,9 @@ if (estado_demo == DemoEstado.MENU) {
         demo_draw_dialog_character(professor_sprite, 70, 150, 820, 430);
         draw_set_color(make_color_rgb(36, 30, 28));
         battle_ui_font_title();
-        draw_text(98, 176, "Lab. do Prof. Sabia");
+        i18n_draw_text(98, 176, "Lab. do Prof. Sabia");
         battle_ui_font_body();
-        draw_text_ext(98, 212, message, 24, 520);
+        i18n_draw_text_ext(98, 212, message, 24, 520);
         battle_ui_font_title();
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.MOCHILA) {
@@ -301,7 +301,7 @@ if (estado_demo == DemoEstado.MENU) {
         draw_rectangle(70, 136, 742, 620, true);
         draw_set_color(make_color_rgb(36, 30, 28));
         battle_ui_font_body();
-        draw_text_ext(98, 166, "Armazenamento de todos os seus itens. Para usar ou equipar nos seus monstros entre as rotas, basta clicar no item.", 24, 560);
+        i18n_draw_text_ext(98, 166, "Armazenamento de todos os seus itens. Para usar ou equipar nos seus monstros entre as rotas, basta clicar no item.", 24, 560);
         battle_ui_font_title();
 
         var _bag_ids = demo_item_ids_possuidos(inventario);
@@ -313,7 +313,7 @@ if (estado_demo == DemoEstado.MENU) {
         if (array_length(_bag_ids) <= 0) {
             var _empty_text = "Mochila vazia";
             draw_set_color(make_color_rgb(86, 68, 58));
-            draw_text(406 - (string_width(_empty_text) * 0.5), 368, _empty_text);
+            i18n_draw_text(406 - (i18n_string_width(_empty_text) * 0.5), 368, _empty_text);
         }
 
         for (var _bag_i = 0; _bag_i < array_length(_bag_ids); _bag_i += 1) {
@@ -337,10 +337,10 @@ if (estado_demo == DemoEstado.MENU) {
             draw_rectangle(_bag_item_x, _row_bag_y, _bag_item_x + _bag_col_w, _row_bag_y + _bag_row_h, true);
             demo_draw_item_icon(_bag_id, _bag_item_x + 28, _row_bag_y + (_bag_row_h * 0.5), 30);
             draw_set_color(make_color_rgb(36, 30, 28));
-            draw_text(_bag_item_x + 58, _row_bag_y + 8, _bag_item.Nome);
-            draw_text(_bag_item_x + 244, _row_bag_y + 8, "x" + string(_bag_qty));
+            i18n_draw_text(_bag_item_x + 58, _row_bag_y + 8, _bag_item.Nome);
+            i18n_draw_text(_bag_item_x + 244, _row_bag_y + 8, "x" + string(_bag_qty));
             draw_set_color(make_color_rgb(86, 68, 58));
-            draw_text(_bag_item_x + 58, _row_bag_y + 30, _bag_item.Tipo);
+            i18n_draw_text(_bag_item_x + 58, _row_bag_y + 30, _bag_item.Tipo);
         }
 
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
@@ -353,9 +353,9 @@ if (estado_demo == DemoEstado.MENU) {
         demo_draw_dialog_character(_ginasio_speaker, 70, 170, 680, 386);
         draw_set_color(make_color_rgb(36, 30, 28));
         battle_ui_font_title();
-        draw_text(98, 196, demo_cidade_tem_ginasio(cidade_index) ? "Ginasio de " + demo_cidade_nome(cidade_index) : "Sem ginasio");
+        i18n_draw_text(98, 196, demo_cidade_tem_ginasio(cidade_index) ? "Ginasio de " + demo_cidade_nome(cidade_index) : "Sem ginasio");
         battle_ui_font_body();
-        draw_text_ext(98, 232, message, 24, 410);
+        i18n_draw_text_ext(98, 232, message, 24, 410);
         battle_ui_font_title();
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.CASA_MAE) {
@@ -367,9 +367,9 @@ if (estado_demo == DemoEstado.MENU) {
         demo_draw_dialog_character(_evento_speaker, 70, 170, 680, 386);
         draw_set_color(make_color_rgb(36, 30, 28));
         battle_ui_font_title();
-        draw_text(98, 196, cidade_index == 0 ? "Casa da Mae" : (evento_titulo != "" ? evento_titulo : demo_cidade_atual().Evento));
+        i18n_draw_text(98, 196, cidade_index == 0 ? "Casa da Mae" : (evento_titulo != "" ? evento_titulo : demo_cidade_atual().Evento));
         battle_ui_font_body();
-        draw_text_ext(98, 232, message, 24, 410);
+        i18n_draw_text_ext(98, 232, message, 24, 410);
         battle_ui_font_title();
         demo_draw_choice_button("Voltar", "", 54, _gh - 96, 180, 58, demo_hover_rect(_mx_city_ui, _my_city_ui, 54, _gh - 96, 180, 58));
     } else if (estado_demo == DemoEstado.SAIR_CIDADE) {
@@ -387,7 +387,7 @@ if (estado_demo == DemoEstado.MENU) {
             _prompt_rota = "Escolha a rota para " + demo_cidade_nome(_destino_rota_ui);
         }
 
-        draw_text((_gw * 0.5) - (string_width(_prompt_rota) * 0.5), 238, _prompt_rota);
+        i18n_draw_text((_gw * 0.5) - (i18n_string_width(_prompt_rota) * 0.5), 238, _prompt_rota);
 
         var _route_w_ui = 360;
         var _route_h_ui = 132;
@@ -442,7 +442,7 @@ if (estado_demo == DemoEstado.MENU) {
     battle_ui_font_title();
     var _route_inner_x = _route_panel_x + 42;
     var _route_inner_w = _route_panel_w - 84;
-    draw_text(_route_inner_x, _route_panel_y + 20, string_upper(_route_title));
+    i18n_draw_text(_route_inner_x, _route_panel_y + 20, string_upper(_route_title));
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(74, 62, 54) : c_white);
     battle_ui_font_body();
     var _route_from = demo_cidade_nome(rota_origem_index);
@@ -452,7 +452,7 @@ if (estado_demo == DemoEstado.MENU) {
     var _route_summary = "Estagio da rota: " + string(route_steps) + " / " + string(route_steps_needed) + "\n"
         + _route_from + " -> " + _route_to + "\n"
         + _route_name + " - " + _route_desc;
-    draw_text_ext(_route_inner_x, _route_panel_y + 56, _route_summary, 25, _route_inner_w);
+    i18n_draw_text_ext(_route_inner_x, _route_panel_y + 56, _route_summary, 25, _route_inner_w);
     battle_ui_font_title();
 
     var _route_progress = clamp(route_steps / max(1, route_steps_needed), 0, 1);
@@ -462,7 +462,7 @@ if (estado_demo == DemoEstado.MENU) {
     var _bar_h = 9;
     var _encounter_text = "Encontros do caminho: " + string(route_steps) + " / " + string(route_steps_needed);
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
-    draw_text(_bar_x, _bar_y - 25, _encounter_text);
+    i18n_draw_text(_bar_x, _bar_y - 25, _encounter_text);
     draw_set_color(make_color_rgb(184, 172, 138));
     draw_rectangle(_bar_x, _bar_y, _bar_x + _bar_w, _bar_y + _bar_h, false);
     draw_set_color(make_color_rgb(84, 78, 70));
@@ -507,9 +507,9 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
     }
 
     draw_set_color(c_white);
-    draw_text(_gw * 0.5 - (string_width(_draft_title) * 0.5), 184, _draft_title);
+    i18n_draw_text(_gw * 0.5 - (i18n_string_width(_draft_title) * 0.5), 184, _draft_title);
     battle_ui_font_body();
-    draw_text(_gw * 0.5 - (string_width(_draft_subtitle) * 0.5), 222, _draft_subtitle);
+    i18n_draw_text(_gw * 0.5 - (i18n_string_width(_draft_subtitle) * 0.5), 222, _draft_subtitle);
     battle_ui_font_title();
 
     var _draft_tooltip = undefined;

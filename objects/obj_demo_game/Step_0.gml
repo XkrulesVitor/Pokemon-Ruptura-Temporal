@@ -422,6 +422,7 @@ switch (estado_demo) {
             var _pos_battle_heal = demo_party_curar_pos_batalha(id);
             estado_demo = DemoEstado.VITORIA;
             diario_registrar_vitoria();
+            audio_sfx("vitoria");
 
             if (battle_context == "treinador" || battle_context == "ginasio") {
                 missao_evento(id, "treinador", undefined);
@@ -480,6 +481,7 @@ switch (estado_demo) {
             }
 
             estado_demo = DemoEstado.DERROTA;
+            audio_sfx("derrota");
             result_timer = 1.5;
             message = "Todos os monstros da equipe foram derrotados.";
             battle_result_info = demo_resultado_criar("derrota", "Game Over", message, 0, [], undefined);
@@ -509,6 +511,7 @@ switch (estado_demo) {
                     dinheiro += _money_capture_reward;
                     estado_demo = DemoEstado.VITORIA;
                     diario_registrar_captura();
+                    audio_sfx("captura_sucesso");
                     missao_evento(id, "captura", enemy_criatura_data);
                     conquista_evento("captura", enemy_criatura_data);
                     result_timer = 1.0;
@@ -534,6 +537,7 @@ switch (estado_demo) {
                 } else {
                     estado_demo = DemoEstado.BATALHA;
                     battle_time_scale_restore_preferido();
+                    audio_sfx("captura_falha");
                     message = enemy_criatura_data.Nome + " escapou da Capsula!";
                     battle_log_force(message);
                 }

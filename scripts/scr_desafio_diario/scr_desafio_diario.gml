@@ -377,9 +377,9 @@ function diario_draw_menu(_mx, _my) {
 
     draw_set_halign(fa_center);
     draw_set_color(c_black);
-    draw_text_transformed(_rect.X + (_rect.W * 0.5) + 1, _rect.Y - 21, _linha, 0.72, 0.72, 0);
+    i18n_draw_text_transformed(_rect.X + (_rect.W * 0.5) + 1, _rect.Y - 21, _linha, 0.72, 0.72, 0);
     draw_set_color(make_color_rgb(255, 238, 150));
-    draw_text_transformed(_rect.X + (_rect.W * 0.5), _rect.Y - 22, _linha, 0.72, 0.72, 0);
+    i18n_draw_text_transformed(_rect.X + (_rect.W * 0.5), _rect.Y - 22, _linha, 0.72, 0.72, 0);
     draw_set_halign(fa_left);
     draw_set_color(c_white);
 }
@@ -391,7 +391,7 @@ function diario_draw_hud() {
 
     var _texto = "DESAFIO DIARIO " + diario_chave_legivel(global.diario.Chave) + (global.diario.Oficial ? "" : " - TREINO");
     var _gw = display_get_gui_width();
-    var _w = string_width(_texto) * 0.62 + 24;
+    var _w = i18n_string_width(_texto) * 0.62 + 24;
 
     draw_set_alpha(0.78);
     draw_set_color(make_color_rgb(24, 28, 46));
@@ -399,7 +399,7 @@ function diario_draw_hud() {
     draw_set_alpha(1);
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(255, 222, 120));
-    draw_text_transformed(_gw * 0.5, 0, _texto, 0.62, 0.62, 0);
+    i18n_draw_text_transformed(_gw * 0.5, 0, _texto, 0.62, 0.62, 0);
     draw_set_halign(fa_left);
     draw_set_color(c_white);
 }
@@ -425,9 +425,9 @@ function diario_draw_resultado_game_over(_controller) {
     battle_ui_draw_nineslice_panel(_x, _y, _w, _h);
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(255, 222, 120));
-    draw_text_transformed(_gw * 0.5, _y + 14, "DESAFIO DIARIO " + diario_chave_legivel(global.diario.Chave) + (global.diario.ChefeDerrotado ? " - RASGO FECHADO!" : "") + (_r.Oficial ? "" : " (treino, nao conta)"), 0.82, 0.82, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _y + 14, "DESAFIO DIARIO " + diario_chave_legivel(global.diario.Chave) + (global.diario.ChefeDerrotado ? " - RASGO FECHADO!" : "") + (_r.Oficial ? "" : " (treino, nao conta)"), 0.82, 0.82, 0);
     draw_set_color(c_white);
-    draw_text_transformed(_gw * 0.5, _y + 42, string(_r.Pontos) + " pontos  |  " + string(_r.Insignias) + " insignias  |  " + string(_r.Vitorias) + " vitorias  |  " + string(_r.Capturas) + " capturas", 0.72, 0.72, 0);
-    draw_text_transformed(_gw * 0.5, _y + 64, "Melhor marca: " + string(_r.Melhor) + "   Sequencia de dias: " + string(_r.Sequencia), 0.68, 0.68, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _y + 42, string(_r.Pontos) + " pontos  |  " + string(_r.Insignias) + " insignias  |  " + string(_r.Vitorias) + " vitorias  |  " + string(_r.Capturas) + " capturas", 0.72, 0.72, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _y + 64, "Melhor marca: " + string(_r.Melhor) + "   Sequencia de dias: " + string(_r.Sequencia), 0.68, 0.68, 0);
     draw_set_halign(fa_left);
 }

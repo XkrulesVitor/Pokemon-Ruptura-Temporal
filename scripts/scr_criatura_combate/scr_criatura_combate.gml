@@ -1156,6 +1156,7 @@ function criatura_combate_executar_habilidade(_atacante, _habilidade) {
 
     criatura_combate_aplicar_efeitos(_atacante, _alvo, _habilidade, _dano);
     var _sinergias = sinergia_aplicar(_atacante, _alvo, _habilidade);
+    audio_sfx((_houve_combo || _bonus_tipo >= 0.05 || _sinergias > 0) ? "combo" : "golpe");
 
     // Aviso na tela: combo de marca > dano sinergico (tipo x status) > sinergia cruzada.
     if (_houve_combo) {

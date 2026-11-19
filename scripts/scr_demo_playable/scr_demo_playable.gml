@@ -330,7 +330,7 @@ function demo_draw_title_button(_rect, _label, _hover) {
 
     draw_set_color(make_color_rgb(36, 30, 28));
     draw_set_valign(fa_middle);
-    draw_text(_draw_rect.X + ((_draw_rect.W - string_width(_label)) * 0.5), _draw_rect.Y + (_draw_rect.H * 0.5), _label);
+    i18n_draw_text(_draw_rect.X + ((_draw_rect.W - i18n_string_width(_label)) * 0.5), _draw_rect.Y + (_draw_rect.H * 0.5), _label);
     draw_set_valign(fa_top);
 }
 
@@ -683,7 +683,7 @@ function demo_criatura_stat_pct(_criatura, _stat) {
 
 function demo_draw_stat_bar(_label, _pct, _x, _y, _w, _color_fill) {
     draw_set_color(make_color_rgb(60, 50, 46));
-    draw_text(_x, _y - 2, _label);
+    i18n_draw_text(_x, _y - 2, _label);
     draw_set_color(make_color_rgb(190, 184, 166));
     draw_rectangle(_x + 44, _y, _x + 44 + _w, _y + 10, false);
     draw_set_color(make_color_rgb(96, 82, 74));
@@ -712,12 +712,12 @@ function demo_draw_criatura_stat_bars(_criatura, _x, _y, _w, _compact) {
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
         draw_set_color(make_color_rgb(36, 30, 28));
-        draw_text_transformed(_x, _y, "Foco: " + demo_criatura_focus_label(_criatura), 0.70, 0.70, 0);
+        i18n_draw_text_transformed(_x, _y, "Foco: " + demo_criatura_focus_label(_criatura), 0.70, 0.70, 0);
 
         for (var _si = 0; _si < 4; _si += 1) {
             var _yy = _y + 24 + (_si * 14);
             draw_set_color(make_color_rgb(60, 50, 46));
-            draw_text_transformed(_x, _yy - 3, _labels[_si], 0.54, 0.54, 0);
+            i18n_draw_text_transformed(_x, _yy - 3, _labels[_si], 0.54, 0.54, 0);
             draw_set_color(make_color_rgb(190, 184, 166));
             draw_rectangle(_bar_x, _yy, _bar_x + _bar_w_compact, _yy + 8, false);
             draw_set_color(make_color_rgb(96, 82, 74));
@@ -735,7 +735,7 @@ function demo_draw_criatura_stat_bars(_criatura, _x, _y, _w, _compact) {
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(_x, _y, "Foco: " + demo_criatura_focus_label(_criatura));
+    i18n_draw_text(_x, _y, "Foco: " + demo_criatura_focus_label(_criatura));
 
     var _bar_y = _y + (_compact ? 17 : 22);
     demo_draw_stat_bar("HP", demo_criatura_stat_pct(_criatura, "hp"), _x, _bar_y, _bar_w, make_color_rgb(104, 210, 96));
@@ -914,13 +914,14 @@ function demo_meta_shop_card_rect(_index) {
 }
 
 function demo_string_fit(_text, _max_w, _scale) {
+    _text = i18n_t(_text);
     var _out = string(_text);
 
-    if (string_width(_out) * _scale <= _max_w) {
+    if (i18n_string_width(_out) * _scale <= _max_w) {
         return _out;
     }
 
-    while (string_length(_out) > 4 && string_width(_out + "...") * _scale > _max_w) {
+    while (string_length(_out) > 4 && i18n_string_width(_out + "...") * _scale > _max_w) {
         _out = string_delete(_out, string_length(_out), 1);
     }
 
@@ -929,7 +930,7 @@ function demo_string_fit(_text, _max_w, _scale) {
 
 function demo_draw_text_fit(_x, _y, _text, _max_w, _scale, _color) {
     draw_set_color(_color);
-    draw_text_transformed(_x, _y, demo_string_fit(_text, _max_w, _scale), _scale, _scale, 0);
+    i18n_draw_text_transformed(_x, _y, demo_string_fit(_text, _max_w, _scale), _scale, _scale, 0);
 }
 
 function demo_criatura_focus_short(_criatura) {
@@ -963,7 +964,7 @@ function demo_draw_criatura_stat_mini(_criatura, _x, _y, _w) {
     for (var _i = 0; _i < 4; _i += 1) {
         var _yy = _y + (_i * _line_h);
         draw_set_color(make_color_rgb(60, 50, 46));
-        draw_text_transformed(_x, _yy - 3, _labels[_i], _scale, _scale, 0);
+        i18n_draw_text_transformed(_x, _yy - 3, _labels[_i], _scale, _scale, 0);
         draw_set_color(make_color_rgb(196, 190, 170));
         draw_rectangle(_x + _label_w, _yy, _x + _w, _yy + _bar_h, false);
         draw_set_color(make_color_rgb(82, 70, 62));
@@ -1013,7 +1014,7 @@ function demo_draw_meta_starter_preview(_entry, _rect) {
 
         draw_set_halign(fa_center);
         draw_set_color(make_color_rgb(36, 30, 28));
-        draw_text_transformed(_slot_x + (_slot_w * 0.5), _slot_y + 9, demo_string_fit(demo_criatura_nome(_id), _slot_w - 20, 0.60), 0.60, 0.60, 0);
+        i18n_draw_text_transformed(_slot_x + (_slot_w * 0.5), _slot_y + 9, demo_string_fit(demo_criatura_nome(_id), _slot_w - 20, 0.60), 0.60, 0.60, 0);
         draw_set_halign(fa_left);
 
         demo_draw_criatura_sprite(_id, _slot_x + 44, _slot_y + 88, 0.86, 1, 0);
@@ -1067,14 +1068,14 @@ function demo_draw_meta_shop_card(_entry, _rect, _level, _cost, _maxed, _can_buy
 
     draw_set_color(make_color_rgb(86, 68, 58));
     var _desc_line_sep = _is_starter_entry ? 20 : 23;
-    draw_text_ext(_rect.X + 28, _rect.Y + (_is_starter_entry ? 34 : 40), demo_meta_entry_description(_entry, _level), _desc_line_sep, _rect.W - 200);
+    i18n_draw_text_ext(_rect.X + 28, _rect.Y + (_is_starter_entry ? 34 : 40), demo_meta_entry_description(_entry, _level), _desc_line_sep, _rect.W - 200);
 
     draw_set_color(make_color_rgb(36, 30, 28));
     var _level_text = _entry.Max == 1 ? (_level > 0 ? "Comprado" : "Unico") : "Nv. " + string(_level) + " / " + string(_entry.Max);
-    draw_text(_rect.X + _rect.W - 138, _rect.Y + 8, _level_text);
+    i18n_draw_text(_rect.X + _rect.W - 138, _rect.Y + 8, _level_text);
     draw_set_color(_maxed ? make_color_rgb(56, 154, 88) : (_can_buy ? make_color_rgb(124, 72, 152) : make_color_rgb(132, 76, 76)));
     var _cost_text = _maxed ? "MAX" : "Custo " + string(_cost);
-    draw_text(_rect.X + _rect.W - 138, _rect.Y + (_is_starter_entry ? 28 : 34), _cost_text);
+    i18n_draw_text(_rect.X + _rect.W - 138, _rect.Y + (_is_starter_entry ? 28 : 34), _cost_text);
 
     if (_is_starter_entry) {
         draw_set_color(make_color_rgb(184, 174, 154));
@@ -1161,7 +1162,7 @@ function demo_draw_starter_skill_tooltip(_tooltip) {
     var _body_line_sep = 24;
     var _body_y = 106;
     battle_ui_font_body();
-    var _body_h = string_height_ext(_desc, _body_line_sep, _inner_w);
+    var _body_h = i18n_string_height_ext(_desc, _body_line_sep, _inner_w);
     var _th = clamp(_body_y + _body_h + 30, 172, 252);
     var _safe_x = variable_struct_exists(_tooltip, "SafeX") ? _tooltip.SafeX : 18;
     var _safe_y = variable_struct_exists(_tooltip, "SafeY") ? _tooltip.SafeY : 18;
@@ -1177,18 +1178,18 @@ function demo_draw_starter_skill_tooltip(_tooltip) {
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(36, 30, 28));
     battle_ui_font_title();
-    draw_text(_tx + 16, _ty + 20, _criatura_name);
+    i18n_draw_text(_tx + 16, _ty + 20, _criatura_name);
 
     battle_ui_draw_type_icon(_skill.TipoElementar, _tx + 16, _ty + 52, 0.58);
     battle_ui_font_title();
     demo_draw_text_fit(_tx + 76, _ty + 49, _skill.Nome, _inner_w - 70, 0.76, make_color_rgb(36, 30, 28));
     draw_set_color(make_color_rgb(86, 68, 58));
     battle_ui_font_body();
-    draw_text_transformed(_tx + 76, _ty + 76, battle_ui_skill_damage_text(_skill) + "  CD " + string_format(_skill_cd, 1, 1) + "s", 0.62, 0.62, 0);
+    i18n_draw_text_transformed(_tx + 76, _ty + 76, battle_ui_skill_damage_text(_skill) + "  CD " + string_format(_skill_cd, 1, 1) + "s", 0.62, 0.62, 0);
 
     draw_set_color(make_color_rgb(72, 56, 50));
     battle_ui_font_body();
-    draw_text_ext(_tx + 16, _ty + _body_y, _desc, _body_line_sep, _inner_w);
+    i18n_draw_text_ext(_tx + 16, _ty + _body_y, _desc, _body_line_sep, _inner_w);
     battle_ui_font_title();
 }
 
@@ -1230,7 +1231,7 @@ function demo_draw_gold_button(_rect, _label, _hover) {
     draw_set_color(make_color_rgb(36, 30, 28));
     draw_set_valign(fa_middle);
     draw_set_halign(fa_center);
-    draw_text(_draw_rect.X + (_draw_rect.W * 0.5), _draw_rect.Y + (_draw_rect.H * 0.5), _label);
+    i18n_draw_text(_draw_rect.X + (_draw_rect.W * 0.5), _draw_rect.Y + (_draw_rect.H * 0.5), _label);
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
 }
@@ -1295,7 +1296,7 @@ function demo_draw_space_fragment_icon(_cx, _cy, _size) {
 
 function demo_draw_space_fragment_badge(_x, _y, _valor, _icon_sprite) {
     var _value_text = string(max(0, floor(_valor)));
-    var _w = max(104, 74 + string_width(_value_text));
+    var _w = max(104, 74 + i18n_string_width(_value_text));
     var _h = 44;
     var _mx = device_mouse_x_to_gui(0);
     var _my = device_mouse_y_to_gui(0);
@@ -1318,7 +1319,7 @@ function demo_draw_space_fragment_badge(_x, _y, _valor, _icon_sprite) {
     draw_set_color(make_color_rgb(255, 246, 214));
     draw_set_halign(fa_right);
     draw_set_valign(fa_middle);
-    draw_text(_x + _w - 18, _y + (_h * 0.5), _value_text);
+    i18n_draw_text(_x + _w - 18, _y + (_h * 0.5), _value_text);
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
 
@@ -1347,7 +1348,7 @@ function demo_draw_space_fragment_tooltip(_tooltip) {
     var _body_line_sep = 18;
     var _tw = min(270, _gw - 36);
     var _inner_w = _tw - 30;
-    var _body_h = string_height_ext(_body, _body_line_sep, _inner_w / _scale_body) * _scale_body;
+    var _body_h = i18n_string_height_ext(_body, _body_line_sep, _inner_w / _scale_body) * _scale_body;
     var _th = clamp(54 + _body_h, 82, 132);
     var _tx = clamp(_tooltip.X - (_tw * 0.5), 18, _gw - _tw - 18);
     var _ty = _tooltip.Y + 8;
@@ -1363,10 +1364,10 @@ function demo_draw_space_fragment_tooltip(_tooltip) {
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(30, 24, 22));
     battle_ui_font_title();
-    draw_text(_tx + 16, _ty + 11, _title);
+    i18n_draw_text(_tx + 16, _ty + 11, _title);
     draw_set_color(make_color_rgb(72, 56, 50));
     battle_ui_font_body();
-    draw_text_ext_transformed(_tx + 16, _ty + 38, _body, _body_line_sep, _inner_w / _scale_body, _scale_body, _scale_body, 0);
+    i18n_draw_text_ext_transformed(_tx + 16, _ty + 38, _body, _body_line_sep, _inner_w / _scale_body, _scale_body, _scale_body, 0);
     battle_ui_font_title();
 }
 
@@ -1409,11 +1410,11 @@ function demo_draw_meta_loja(_controller) {
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(82, 58, "LOJA DO ESPACO");
+    i18n_draw_text(82, 58, "LOJA DO ESPACO");
     draw_set_color(make_color_rgb(86, 68, 58));
-    draw_text(82, 88, "Compre melhorias permanentes para futuras runs.");
+    i18n_draw_text(82, 88, "Compre melhorias permanentes para futuras runs.");
     var _fragment_icon = instance_exists(_controller) ? _controller.space_fragment_icon_sprite : -1;
-    var _fragment_badge_w = max(104, 74 + string_width(string(max(0, floor(_meta.FragmentosEspaco)))));
+    var _fragment_badge_w = max(104, 74 + i18n_string_width(string(max(0, floor(_meta.FragmentosEspaco)))));
     var _fragment_tooltip = demo_draw_space_fragment_badge(_panel_x + _panel_w - _fragment_badge_w - 18, 52, _meta.FragmentosEspaco, _fragment_icon);
 
     var _entries = demo_meta_shop_entries();
@@ -1590,11 +1591,11 @@ function demo_draw_menu_titulo(_controller) {
     draw_set_color(c_white);
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
-    draw_text_transformed(_gw * 0.5 + 3, 92 + 3, "RASGO TEMPORAL", 2.15, 2.15, 0);
+    i18n_draw_text_transformed(_gw * 0.5 + 3, 92 + 3, "RASGO TEMPORAL", 2.15, 2.15, 0);
     draw_set_color(make_color_rgb(255, 238, 118));
-    draw_text_transformed(_gw * 0.5, 92, "RASGO TEMPORAL", 2.15, 2.15, 0);
+    i18n_draw_text_transformed(_gw * 0.5, 92, "RASGO TEMPORAL", 2.15, 2.15, 0);
     draw_set_color(c_white);
-    draw_text_transformed(_gw * 0.5, 144, "O ESPACO ESTILHACADO", 1.28, 1.28, 0);
+    i18n_draw_text_transformed(_gw * 0.5, 144, "O ESPACO ESTILHACADO", 1.28, 1.28, 0);
     draw_set_valign(fa_top);
 
     var _btn = demo_menu_start_button_rect();
@@ -1611,7 +1612,7 @@ function demo_draw_menu_titulo(_controller) {
     var _fragment_tooltip_title = undefined;
 
     if (instance_exists(_controller) && is_struct(_controller.meta_progresso)) {
-        var _title_frag_w = max(104, 74 + string_width(string(max(0, floor(_controller.meta_progresso.FragmentosEspaco)))));
+        var _title_frag_w = max(104, 74 + i18n_string_width(string(max(0, floor(_controller.meta_progresso.FragmentosEspaco)))));
         _fragment_tooltip_title = demo_draw_space_fragment_badge(_gw - _title_frag_w - 46, 44, _controller.meta_progresso.FragmentosEspaco, _controller.space_fragment_icon_sprite);
     }
 
@@ -2388,7 +2389,7 @@ function demo_draw_intro_contexto(_controller) {
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
         battle_ui_font_body();
-        draw_text_ext(96, _gh - 118, _caption, 24, _gw - 218);
+        i18n_draw_text_ext(96, _gh - 118, _caption, 24, _gw - 218);
 
         var _continue_txt = _step >= demo_intro_step_max() ? "ENTER / clique: comecar" : "ENTER / clique: continuar";
         var _blink_continue = 0.58 + (sin(current_time * 0.008) * 0.22);
@@ -2396,7 +2397,7 @@ function demo_draw_intro_contexto(_controller) {
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(72, 66, 58) : make_color_rgb(220, 236, 238));
         draw_set_halign(fa_right);
         battle_ui_font_body();
-        draw_text(_gw - 82, _gh - 94, _continue_txt);
+        i18n_draw_text(_gw - 82, _gh - 94, _continue_txt);
         draw_set_alpha(1);
         draw_set_halign(fa_left);
         battle_ui_font_title();
@@ -2410,17 +2411,17 @@ function demo_draw_intro_contexto(_controller) {
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
         draw_set_color(c_white);
-        draw_text_transformed((_gw * 0.5) + 3, 96 + 3, "RASGO TEMPORAL", 2.10, 2.10, 0);
+        i18n_draw_text_transformed((_gw * 0.5) + 3, 96 + 3, "RASGO TEMPORAL", 2.10, 2.10, 0);
         draw_set_color(make_color_rgb(255, 238, 118));
-        draw_text_transformed(_gw * 0.5, 96, "RASGO TEMPORAL", 2.10, 2.10, 0);
+        i18n_draw_text_transformed(_gw * 0.5, 96, "RASGO TEMPORAL", 2.10, 2.10, 0);
         draw_set_color(c_white);
-        draw_text_transformed(_gw * 0.5, 146, "O ESPACO ESTILHACADO", 1.25, 1.25, 0);
+        i18n_draw_text_transformed(_gw * 0.5, 146, "O ESPACO ESTILHACADO", 1.25, 1.25, 0);
 
         if (_step >= demo_intro_step_max()) {
             var _blink = 0.68 + (sin(current_time * 0.006) * 0.24);
             draw_set_alpha(_blink);
             draw_set_color(make_color_rgb(220, 236, 238));
-            draw_text(_gw * 0.5, _gh - 86, "ENTER / clique para continuar");
+            i18n_draw_text(_gw * 0.5, _gh - 86, "ENTER / clique para continuar");
         }
 
         draw_set_alpha(1);
@@ -2518,7 +2519,7 @@ function demo_draw_game_over_stat_mini(_criatura, _x, _y, _w) {
     for (var _i = 0; _i < 4; _i += 1) {
         var _yy = _y + (_i * 14);
         draw_set_color(make_color_rgb(50, 42, 38));
-        draw_text_transformed(_x, _yy - 4, _labels[_i], 0.42, 0.42, 0);
+        i18n_draw_text_transformed(_x, _yy - 4, _labels[_i], 0.42, 0.42, 0);
         draw_set_color(make_color_rgb(190, 184, 166));
         draw_rectangle(_bar_x, _yy, _bar_x + _bar_w, _yy + 7, false);
         draw_set_color(make_color_rgb(96, 82, 74));
@@ -2531,7 +2532,7 @@ function demo_draw_game_over_stat_mini(_criatura, _x, _y, _w) {
 function demo_draw_game_over_skill_line(_skill, _x, _y, _w) {
     if (!is_struct(_skill)) {
         draw_set_color(make_color_rgb(104, 92, 82));
-        draw_text_transformed(_x, _y, "Vazio", 0.42, 0.42, 0);
+        i18n_draw_text_transformed(_x, _y, "Vazio", 0.42, 0.42, 0);
         return;
     }
 
@@ -2559,13 +2560,13 @@ function demo_draw_game_over_party_card(_criatura, _x, _y, _w, _h, _slot, _fille
     draw_set_color(_has_criatura ? make_color_rgb(132, 24, 36) : make_color_rgb(86, 80, 78));
     draw_rectangle(_x + 8, _y + 8, _x + _w - 8, _y + 36, false);
     draw_set_color(c_white);
-    draw_text_transformed(_x + 16, _y + 16, string(_slot + 1) + "/4", 0.46, 0.46, 0);
+    i18n_draw_text_transformed(_x + 16, _y + 16, string(_slot + 1) + "/4", 0.46, 0.46, 0);
 
     if (!_has_criatura) {
         draw_set_color(make_color_rgb(72, 64, 58));
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
-        draw_text_transformed(_x + (_w * 0.5), _y + (_h * 0.5), "Slot vazio", 0.62, 0.62, 0);
+        i18n_draw_text_transformed(_x + (_w * 0.5), _y + (_h * 0.5), "Slot vazio", 0.62, 0.62, 0);
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
         return;
@@ -2574,7 +2575,7 @@ function demo_draw_game_over_party_card(_criatura, _x, _y, _w, _h, _slot, _fille
     draw_set_color(make_color_rgb(36, 30, 28));
     battle_ui_draw_text_fit(_x + 16, _y + 46, _criatura.Nome, _w - 88, 0.66, make_color_rgb(36, 30, 28));
     draw_set_halign(fa_right);
-    draw_text_transformed(_x + _w - 16, _y + 46, "Lv." + string(_criatura.Level), 0.56, 0.56, 0);
+    i18n_draw_text_transformed(_x + _w - 16, _y + 46, "Lv." + string(_criatura.Level), 0.56, 0.56, 0);
     draw_set_halign(fa_left);
 
     var _raridade = variable_struct_exists(_criatura, "RaridadeEfetiva") ? _criatura.RaridadeEfetiva : (variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON);
@@ -2606,7 +2607,7 @@ function demo_draw_game_over_party_card(_criatura, _x, _y, _w, _h, _slot, _fille
     draw_set_color(make_color_rgb(184, 166, 132));
     draw_line_width(_x + 16, _skills_y - 8, _x + _w - 16, _skills_y - 8, 1);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text_transformed(_x + 16, _skills_y - 2, "Habilidades", 0.46, 0.46, 0);
+    i18n_draw_text_transformed(_x + 16, _skills_y - 2, "Habilidades", 0.46, 0.46, 0);
 
     var _skill_col_w = ((_w - 34) * 0.5) - 4;
 
@@ -2626,7 +2627,7 @@ function demo_draw_game_over_party_card(_criatura, _x, _y, _w, _h, _slot, _fille
     draw_set_color(make_color_rgb(184, 166, 132));
     draw_line_width(_x + 16, _passive_y - 8, _x + _w - 16, _passive_y - 8, 1);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text_transformed(_x + 16, _passive_y - 2, "Passivas", 0.46, 0.46, 0);
+    i18n_draw_text_transformed(_x + 16, _passive_y - 2, "Passivas", 0.46, 0.46, 0);
 
     var _p1_unlocked = variable_struct_exists(_criatura, "Passiva1Desbloqueada") && _criatura.Passiva1Desbloqueada;
     var _p2_unlocked = variable_struct_exists(_criatura, "Passiva2Desbloqueada") && _criatura.Passiva2Desbloqueada;
@@ -2676,12 +2677,12 @@ function demo_draw_game_over(_controller) {
 
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(196, 46, 54));
-    draw_text_transformed(_gw * 0.5, _panel_y + 24, "GAME OVER", 1.95, 1.95, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _panel_y + 24, "GAME OVER", 1.95, 1.95, 0);
 
     draw_set_halign(fa_left);
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
     battle_ui_font_body();
-    draw_text_ext(
+    i18n_draw_text_ext(
         _panel_x + 42,
         _panel_y + 76,
         "A ultima Capsula caiu na grama enquanto a fenda continuava rasgando Cronaria. A run acabou, mas o eco dessa equipe ainda fica preso no tempo.",
@@ -2703,7 +2704,7 @@ function demo_draw_game_over(_controller) {
     var _cards_x = (_gw - _party_w) * 0.5;
 
     draw_set_color(c_white);
-    draw_text_transformed(_cards_x, _cards_y - 30, "Equipe final: " + string(_filled_total) + "/4", 0.74, 0.74, 0);
+    i18n_draw_text_transformed(_cards_x, _cards_y - 30, "Equipe final: " + string(_filled_total) + "/4", 0.74, 0.74, 0);
 
     for (var _i = 0; _i < _slots; _i += 1) {
         var _criatura = undefined;
@@ -3433,12 +3434,12 @@ function demo_status_tooltip_texto(_status) {
 function demo_draw_status_term(_status, _x, _y, _mx, _my) {
     var _label = demo_status_nome_visual(_status);
     battle_ui_font_title();
-    var _w = string_width(_label);
+    var _w = i18n_string_width(_label);
     var _h = 18;
     var _hover = demo_hover_rect(_mx, _my, _x - 2, _y - 2, _w + 4, _h + 4);
 
     draw_set_color(demo_status_cor(_status));
-    draw_text(_x, _y, _label);
+    i18n_draw_text(_x, _y, _label);
     draw_line_width(_x, _y + 18, _x + _w, _y + 18, 1);
 
     if (_hover) {
@@ -3671,28 +3672,28 @@ function demo_draw_effect_line(_effect, _x, _y, _mx, _my) {
     var _prefix = _parts.Prefix;
     battle_ui_font_body();
     draw_set_color(make_color_rgb(50, 36, 34));
-    draw_text(_x, _y, _prefix);
+    i18n_draw_text(_x, _y, _prefix);
 
     var _term_label = demo_status_nome_visual(_effect.Status);
-    var _term_x = _x + string_width(_prefix);
+    var _term_x = _x + i18n_string_width(_prefix);
     var _term_y = _y;
 
-    if (_prefix != "" && (string_width(_prefix) + string_width(_term_label)) > _max_w) {
+    if (_prefix != "" && (i18n_string_width(_prefix) + i18n_string_width(_term_label)) > _max_w) {
         _term_x = _x;
         _term_y = _y + 22;
     }
 
     var _tooltip = demo_draw_status_term(_effect.Status, _term_x, _term_y, _mx, _my);
     var _suffix = _parts.Suffix;
-    var _suffix_x = _term_x + string_width(_term_label) + 8;
+    var _suffix_x = _term_x + i18n_string_width(_term_label) + 8;
     battle_ui_font_body();
 
-    if (_suffix != "" && (_suffix_x + string_width(_suffix) - _x) <= _max_w) {
+    if (_suffix != "" && (_suffix_x + i18n_string_width(_suffix) - _x) <= _max_w) {
         draw_set_color(make_color_rgb(50, 36, 34));
-        draw_text(_suffix_x, _term_y, _suffix);
+        i18n_draw_text(_suffix_x, _term_y, _suffix);
     } else if (_suffix != "") {
         draw_set_color(make_color_rgb(50, 36, 34));
-        draw_text_ext(_x, _term_y + 22, _suffix, 22, _max_w);
+        i18n_draw_text_ext(_x, _term_y + 22, _suffix, 22, _max_w);
     }
 
     battle_ui_font_title();
@@ -3725,7 +3726,7 @@ function demo_draw_habilidade_descricao_rica(_skill, _x, _y, _w, _mx, _my) {
         if (array_length(_effects) > _max_lines && _max_lines > 1) {
             battle_ui_font_body();
             draw_set_color(make_color_rgb(90, 72, 64));
-            draw_text(_x, _y + (_line_count * _effect_gap), "+" + string(array_length(_effects) - _max_lines) + " efeito");
+            i18n_draw_text(_x, _y + (_line_count * _effect_gap), "+" + string(array_length(_effects) - _max_lines) + " efeito");
         }
 
         battle_ui_font_title();
@@ -3734,7 +3735,7 @@ function demo_draw_habilidade_descricao_rica(_skill, _x, _y, _w, _mx, _my) {
 
     var _desc = habilidade_descricao_curta(_skill);
     battle_ui_font_body();
-    draw_text_ext(_x, _y, _desc, 22, _w);
+    i18n_draw_text_ext(_x, _y, _desc, 22, _w);
     battle_ui_font_title();
     return undefined;
 }
@@ -3752,13 +3753,13 @@ function demo_draw_status_tooltip(_tooltip) {
     var _title = _split > 0 ? string_copy(_texto, 1, _split) : "";
     var _body = _split > 0 ? string_delete(_texto, 1, _split + 1) : _texto;
     battle_ui_font_title();
-    var _title_w = _title != "" ? string_width(_title) : 0;
+    var _title_w = _title != "" ? i18n_string_width(_title) : 0;
     battle_ui_font_body();
-    var _body_w = string_width(_body);
+    var _body_w = i18n_string_width(_body);
     var _tw = min(_max_w, max(210, max(_title_w, _body_w) + 34));
     var _inner_w = _tw - 32;
     var _title_h = _title != "" ? 22 : 0;
-    var _body_h = string_height_ext(_body, 22, _inner_w);
+    var _body_h = i18n_string_height_ext(_body, 22, _inner_w);
     var _th = clamp(_title_h + _body_h + 28, 56, 148);
     var _tx = clamp(_tooltip.X - (_tw * 0.5), 18, _gw - _tw - 18);
     var _ty = _tooltip.Y - _th - 8;
@@ -3773,10 +3774,10 @@ function demo_draw_status_tooltip(_tooltip) {
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
     if (_title != "") {
         battle_ui_font_title();
-        draw_text(_tx + 16, _ty + 12, _title);
+        i18n_draw_text(_tx + 16, _ty + 12, _title);
     }
     battle_ui_font_body();
-    draw_text_ext(_tx + 16, _ty + 12 + _title_h, _body, 22, _inner_w);
+    i18n_draw_text_ext(_tx + 16, _ty + 12 + _title_h, _body, 22, _inner_w);
     battle_ui_font_title();
 }
 
@@ -4121,7 +4122,7 @@ function demo_city_marker_hit(_mx, _my, _x, _y) {
 function demo_draw_city_marker(_symbol, _label, _x, _y, _hover) {
     var _text = _hover ? _label : _symbol;
     var _pad_x = _hover ? 14 : 0;
-    var _w = max(34, string_width(_text) + (_pad_x * 2));
+    var _w = max(34, i18n_string_width(_text) + (_pad_x * 2));
     var _h = 34;
 
     draw_set_alpha(_hover ? 0.34 : 0.22);
@@ -4135,7 +4136,7 @@ function demo_draw_city_marker(_symbol, _label, _x, _y, _hover) {
     draw_rectangle(_x - (_w * 0.5), _y - _h, _x + (_w * 0.5), _y, true);
     draw_rectangle(_x - (_w * 0.5) + 3, _y - _h + 3, _x + (_w * 0.5) - 3, _y - 3, true);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(_x - (string_width(_text) * 0.5), _y - 25, _text);
+    i18n_draw_text(_x - (i18n_string_width(_text) * 0.5), _y - 25, _text);
 }
 
 function demo_draw_choice_button(_label, _subtitle, _x, _y, _w, _h, _hover) {
@@ -4163,12 +4164,12 @@ function demo_draw_choice_button(_label, _subtitle, _x, _y, _w, _h, _hover) {
 
     if (_subtitle == "") {
         draw_set_valign(fa_middle);
-        draw_text(_dx + 28, _dy + (_dh * 0.5), _label);
+        i18n_draw_text(_dx + 28, _dy + (_dh * 0.5), _label);
         draw_set_valign(fa_top);
     } else {
-        draw_text(_dx + 28, _dy + 12, _label);
+        i18n_draw_text(_dx + 28, _dy + 12, _label);
         draw_set_color(make_color_rgb(86, 68, 58));
-        draw_text_ext(_dx + 28, _dy + 38, _subtitle, 16, _dw - 56);
+        i18n_draw_text_ext(_dx + 28, _dy + 38, _subtitle, 16, _dw - 56);
     }
 }
 
@@ -4197,11 +4198,11 @@ function demo_draw_route_choice_button(_rota, _label_prefix, _x, _y, _w, _h, _ho
     draw_rectangle(_dx + 15, _dy + 3, _dx + _dw - 3, _dy + _dh - 3, true);
 
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(_dx + 28, _dy + 14, _label_prefix + _rota.Nome);
+    i18n_draw_text(_dx + 28, _dy + 14, _label_prefix + _rota.Nome);
     draw_set_color(make_color_rgb(72, 60, 54));
-    draw_text(_dx + 28, _dy + 40, demo_rota_descricao_visual(_rota));
-    draw_text_ext(_dx + 28, _dy + 64, "Biomas: " + demo_rota_biomas_texto(_rota), 14, _dw - 52);
-    draw_text(_dx + 28, _dy + _dh - 28, demo_rota_encontros_range_texto(_rota));
+    i18n_draw_text(_dx + 28, _dy + 40, demo_rota_descricao_visual(_rota));
+    i18n_draw_text_ext(_dx + 28, _dy + 64, "Biomas: " + demo_rota_biomas_texto(_rota), 14, _dw - 52);
+    i18n_draw_text(_dx + 28, _dy + _dh - 28, demo_rota_encontros_range_texto(_rota));
     draw_set_alpha(1);
 }
 
@@ -4213,9 +4214,9 @@ function demo_draw_money_badge(_x, _y, _valor) {
     draw_set_color(make_color_rgb(248, 228, 104));
     draw_circle(_x + 24, _y + 21, 12, false);
     draw_set_color(make_color_rgb(88, 64, 34));
-    draw_text(_x + 15, _y + 13, "M$");
+    i18n_draw_text(_x + 15, _y + 13, "M$");
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(_x + 48, _y + 13, string(_valor));
+    i18n_draw_text(_x + 48, _y + 13, string(_valor));
 }
 
 function ItemData(_id, _nome, _tipo, _valor_efeito, _preco, _descricao) constructor {
@@ -4481,7 +4482,7 @@ function demo_capture_replace_handle_click(_controller) {
 function demo_capture_replace_draw_skill(_skill, _x, _y, _w, _mx, _my) {
     if (!is_struct(_skill)) {
         draw_set_color(make_color_rgb(96, 82, 74));
-        draw_text_transformed(_x, _y, "Vazio", 0.48, 0.48, 0);
+        i18n_draw_text_transformed(_x, _y, "Vazio", 0.48, 0.48, 0);
         return undefined;
     }
 
@@ -4498,7 +4499,7 @@ function demo_capture_replace_draw_skill(_skill, _x, _y, _w, _mx, _my) {
     draw_set_color(make_color_rgb(36, 30, 28));
     battle_ui_draw_text_fit(_x + 46, _y, _skill.Nome, _w - 48, 0.48, make_color_rgb(36, 30, 28));
     draw_set_color(make_color_rgb(74, 58, 52));
-    draw_text_transformed(_x + 46, _y + 13, battle_ui_skill_damage_text(_skill) + "  CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s", 0.36, 0.36, 0);
+    i18n_draw_text_transformed(_x + 46, _y + 13, battle_ui_skill_damage_text(_skill) + "  CD " + string_format(_skill.TempoRecargaMax, 1, 1) + "s", 0.36, 0.36, 0);
 
     if (_hover) {
         return {
@@ -4535,12 +4536,12 @@ function demo_draw_capture_replace_card(_criatura, _rect, _label, _clickable, _m
     draw_set_color(_label == "NOVO" ? make_color_rgb(56, 154, 88) : make_color_rgb(196, 46, 54));
     draw_rectangle(_rect.X + 8, _rect.Y + 8, _rect.X + _rect.W - 8, _rect.Y + 42, false);
     draw_set_color(c_white);
-    draw_text_transformed(_rect.X + 18, _rect.Y + 18, _label, 0.52, 0.52, 0);
+    i18n_draw_text_transformed(_rect.X + 18, _rect.Y + 18, _label, 0.52, 0.52, 0);
 
     draw_set_color(make_color_rgb(36, 30, 28));
     battle_ui_draw_text_fit(_rect.X + 16, _rect.Y + 54, _criatura.Nome, _rect.W - 80, 0.62, make_color_rgb(36, 30, 28));
     draw_set_halign(fa_right);
-    draw_text_transformed(_rect.X + _rect.W - 18, _rect.Y + 54, "Lv." + string(_criatura.Level), 0.52, 0.52, 0);
+    i18n_draw_text_transformed(_rect.X + _rect.W - 18, _rect.Y + 54, "Lv." + string(_criatura.Level), 0.52, 0.52, 0);
     draw_set_halign(fa_left);
 
     var _raridade = variable_struct_exists(_criatura, "RaridadeEfetiva") ? _criatura.RaridadeEfetiva : (variable_struct_exists(_criatura, "RaridadePadrao") ? _criatura.RaridadePadrao : CriaturaRaridade.COMMON);
@@ -4572,7 +4573,7 @@ function demo_draw_capture_replace_card(_criatura, _rect, _label, _clickable, _m
     draw_set_color(make_color_rgb(204, 188, 158));
     draw_line_width(_rect.X + 16, _skills_y - 10, _rect.X + _rect.W - 16, _skills_y - 10, 1);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text_transformed(_rect.X + 16, _skills_y - 2, "Habilidades", 0.48, 0.48, 0);
+    i18n_draw_text_transformed(_rect.X + 16, _skills_y - 2, "Habilidades", 0.48, 0.48, 0);
 
     for (var _s = 0; _s < 4; _s += 1) {
         var _skill = _criatura.HabilidadesEquipadas[_s];
@@ -4586,7 +4587,7 @@ function demo_draw_capture_replace_card(_criatura, _rect, _label, _clickable, _m
     if (_clickable) {
         draw_set_color(_hover ? make_color_rgb(36, 30, 28) : make_color_rgb(92, 72, 58));
         draw_set_halign(fa_center);
-        draw_text_transformed(_rect.X + (_rect.W * 0.5), _rect.Y + _rect.H - 30, "SUBSTITUIR", 0.58, 0.58, 0);
+        i18n_draw_text_transformed(_rect.X + (_rect.W * 0.5), _rect.Y + _rect.H - 30, "SUBSTITUIR", 0.58, 0.58, 0);
         draw_set_halign(fa_left);
     }
 
@@ -4614,9 +4615,9 @@ function demo_draw_capture_replace_overlay(_controller) {
 
     battle_ui_draw_nineslice_panel(_panel_x, _panel_y, _panel_w, _panel_h);
     draw_set_color(make_color_rgb(36, 30, 28));
-    draw_text(_panel_x + 28, _panel_y + 20, "EQUIPE CHEIA");
+    i18n_draw_text(_panel_x + 28, _panel_y + 20, "EQUIPE CHEIA");
     battle_ui_font_body();
-    draw_text_ext(_panel_x + 28, _panel_y + 52, "Escolha um monstro da equipe para dar lugar a " + _controller.capture_replace_criatura.Nome + ".", 24, _panel_w - 56);
+    i18n_draw_text_ext(_panel_x + 28, _panel_y + 52, "Escolha um monstro da equipe para dar lugar a " + _controller.capture_replace_criatura.Nome + ".", 24, _panel_w - 56);
     battle_ui_font_title();
 
     var _tooltip = undefined;
@@ -4641,7 +4642,7 @@ function demo_draw_capture_replace_overlay(_controller) {
 
     draw_set_color(make_color_rgb(92, 72, 58));
     battle_ui_font_body();
-    draw_text(_panel_x + 28, _panel_y + _panel_h - 34, "Passe o mouse nas habilidades para ver a descricao. Clique em um monstro do time para substituir.");
+    i18n_draw_text(_panel_x + 28, _panel_y + _panel_h - 34, "Passe o mouse nas habilidades para ver a descricao. Clique em um monstro do time para substituir.");
     battle_ui_font_title();
     demo_draw_status_tooltip(_tooltip);
 }
@@ -4972,6 +4973,7 @@ function demo_capture_anim_criar(_item_id, _success) {
 }
 
 function demo_capture_iniciar(_controller, _id_item) {
+    audio_sfx("captura_lancar");
     if (!instance_exists(_controller)) {
         return false;
     }
@@ -5117,6 +5119,7 @@ function demo_item_usar(_controller, _id_item, _em_batalha) {
 
         demo_inventario_adicionar(inventario, _id_item, -1);
         message = "Voce usou " + _item.Nome + ".";
+        audio_sfx("cura");
 
         if (_em_batalha) {
             battle_log_push("Voce usou " + string_upper(_item.Nome) + "!");
@@ -6402,17 +6405,17 @@ function demo_draw_vitoria_final(_controller) {
 
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(255, 222, 120));
-    draw_text_transformed(_gw * 0.5, _panel_y + 24, "O RASGO FOI FECHADO", 1.75, 1.75, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _panel_y + 24, "O RASGO FOI FECHADO", 1.75, 1.75, 0);
     draw_set_halign(fa_left);
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
     battle_ui_font_body();
-    draw_text_ext(_panel_x + 42, _panel_y + 72, conteudo_mundo_texto("texto_vitoria", ""), 25, _panel_w - 84);
+    i18n_draw_text_ext(_panel_x + 42, _panel_y + 72, conteudo_mundo_texto("texto_vitoria", ""), 25, _panel_w - 84);
     battle_ui_font_title();
 
     var _frag = instance_exists(_controller) ? _controller.vitoria_final_fragmentos : 0;
     draw_set_halign(fa_center);
     draw_set_color(make_color_rgb(190, 170, 255));
-    draw_text_transformed(_gw * 0.5, _panel_y + _panel_h - 30, _frag > 0 ? "+" + string(_frag) + " Fragmentos do Espaco" : "Treino do desafio: sem fragmentos", 0.8, 0.8, 0);
+    i18n_draw_text_transformed(_gw * 0.5, _panel_y + _panel_h - 30, _frag > 0 ? "+" + string(_frag) + " Fragmentos do Espaco" : "Treino do desafio: sem fragmentos", 0.8, 0.8, 0);
 
     // Creditos em faixa rolando.
     var _creditos = conteudo_struct_get(_mundo, "creditos", []);
@@ -6424,7 +6427,7 @@ function demo_draw_vitoria_final(_controller) {
 
     var _cards_y = max(_panel_y + _panel_h + 150, _gh - 370);
     var _ticker_y = _cards_y - 66;
-    var _largura = string_width(_linha) * 0.8;
+    var _largura = i18n_string_width(_linha) * 0.8;
     var _desloc = (_t * 70) mod max(1, _largura + _gw);
     draw_set_alpha(0.65);
     draw_set_color(c_black);
@@ -6432,7 +6435,7 @@ function demo_draw_vitoria_final(_controller) {
     draw_set_alpha(1);
     draw_set_halign(fa_left);
     draw_set_color(make_color_rgb(255, 238, 180));
-    draw_text_transformed(_gw - _desloc, _ticker_y, _linha, 0.8, 0.8, 0);
+    i18n_draw_text_transformed(_gw - _desloc, _ticker_y, _linha, 0.8, 0.8, 0);
 
     // Equipe vencedora.
     var _filled_total = 0;
@@ -6453,7 +6456,7 @@ function demo_draw_vitoria_final(_controller) {
     var _cards_x = (_gw - _party_w) * 0.5;
 
     draw_set_color(c_white);
-    draw_text_transformed(_cards_x, _cards_y - 30, "Equipe vencedora: " + string(_filled_total) + "/4", 0.74, 0.74, 0);
+    i18n_draw_text_transformed(_cards_x, _cards_y - 30, "Equipe vencedora: " + string(_filled_total) + "/4", 0.74, 0.74, 0);
 
     for (var _i = 0; _i < _slots; _i += 1) {
         var _membro = undefined;
@@ -7545,11 +7548,11 @@ function demo_draw_result_panel(_controller) {
     }
 
     draw_set_color(_accent);
-    draw_text(_inner_x, _top_y, string_upper(_title));
+    i18n_draw_text(_inner_x, _top_y, string_upper(_title));
     draw_line_width(_inner_x, _top_y + 30, _inner_x + _inner_w, _top_y + 30, 3);
 
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
-    draw_text_ext(_inner_x, _top_y + 46, _summary, 24, _inner_w);
+    i18n_draw_text_ext(_inner_x, _top_y + 46, _summary, 24, _inner_w);
 
     var _content_y = _top_y + 106;
 
@@ -7565,8 +7568,8 @@ function demo_draw_result_panel(_controller) {
         }
 
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
-        draw_text(_inner_x + 88, _content_y + 16, (_is_shiny ? "CROMATICO " : "") + _capturado.Nome + " entrou na equipe");
-        draw_text(_inner_x + 88, _content_y + 44, "Lv." + string(_capturado.Level) + "   Time: " + string(array_length(_controller.player_party)) + " / 4");
+        i18n_draw_text(_inner_x + 88, _content_y + 16, (_is_shiny ? "CROMATICO " : "") + _capturado.Nome + " entrou na equipe");
+        i18n_draw_text(_inner_x + 88, _content_y + 44, "Lv." + string(_capturado.Level) + "   Time: " + string(array_length(_controller.player_party)) + " / 4");
         _content_y += 96;
     }
 
@@ -7585,10 +7588,10 @@ function demo_draw_result_panel(_controller) {
         battle_ui_draw_nineslice_panel(_inner_x, _content_y, _inner_w, _reward_h);
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
         var _reward_text = variable_struct_exists(_info, "Dinheiro") && _info.Dinheiro > 0 ? "M$ " + string(_info.Dinheiro) + " recebidos" : "Sem dinheiro nesta luta";
-        draw_text(_inner_x + 24, _content_y + 16, _reward_text);
+        i18n_draw_text(_inner_x + 24, _content_y + 16, _reward_text);
 
         if (_info.XPBase > 0) {
-            draw_text(_inner_x + 260, _content_y + 16, "EXP base " + string(_info.XPBase));
+            i18n_draw_text(_inner_x + 260, _content_y + 16, "EXP base " + string(_info.XPBase));
         }
 
         _content_y += 48;
@@ -7603,7 +7606,7 @@ function demo_draw_result_panel(_controller) {
             var _criatura = _gain.Criatura;
             var _label = _gain.Participou ? "100%" : "50%";
             var _level_txt = _gain.LevelDepois > _gain.LevelAntes ? "  Lv." + string(_gain.LevelAntes) + " > " + string(_gain.LevelDepois) : "";
-            draw_text(_inner_x + 24, _content_y, _criatura.Nome + ": +" + string(_gain.XP) + " EXP (" + _label + ")" + _level_txt);
+            i18n_draw_text(_inner_x + 24, _content_y, _criatura.Nome + ": +" + string(_gain.XP) + " EXP (" + _label + ")" + _level_txt);
             _content_y += 24;
 
             if (variable_struct_exists(_gain, "Evolucoes") && is_array(_gain.Evolucoes)) {
@@ -7611,7 +7614,7 @@ function demo_draw_result_panel(_controller) {
                     var _evo = _gain.Evolucoes[_ev];
 
                     if (is_struct(_evo)) {
-                        draw_text(_inner_x + 44, _content_y, "Evoluiu: " + _evo.DeNome + " -> " + _evo.ParaNome);
+                        i18n_draw_text(_inner_x + 44, _content_y, "Evoluiu: " + _evo.DeNome + " -> " + _evo.ParaNome);
                         _content_y += 24;
                     }
                 }
@@ -7623,7 +7626,7 @@ function demo_draw_result_panel(_controller) {
         var _drops_h = 48 + (min(4, _drop_count) * 30);
         battle_ui_draw_nineslice_panel(_inner_x, _content_y + 12, _inner_w, _drops_h);
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
-        draw_text(_inner_x + 24, _content_y + 28, "Itens recebidos");
+        i18n_draw_text(_inner_x + 24, _content_y + 28, "Itens recebidos");
         _content_y += 58;
 
         for (var _drop_i = 0; _drop_i < min(4, _drop_count); _drop_i += 1) {
@@ -7637,7 +7640,7 @@ function demo_draw_result_panel(_controller) {
             var _nome_item = is_struct(_item) ? _item.Nome : string(_drop.ID);
             demo_draw_item_icon(_drop.ID, _inner_x + 38, _content_y + 12, 24);
             draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
-            draw_text(_inner_x + 68, _content_y + 4, _nome_item + " x" + string(_drop.Qtd));
+            i18n_draw_text(_inner_x + 68, _content_y + 4, _nome_item + " x" + string(_drop.Qtd));
             _content_y += 30;
         }
     }
@@ -7646,13 +7649,13 @@ function demo_draw_result_panel(_controller) {
         battle_ui_draw_nineslice_panel(_inner_x, _content_y + 12, _inner_w, 50);
         demo_draw_space_fragment_icon(_inner_x + 40, _content_y + 38, 32);
         draw_set_color(sprite_exists(global.ui_panel_sprite) ? make_color_rgb(36, 30, 28) : c_white);
-        draw_text(_inner_x + 72, _content_y + 28, "Fragmento temporal +" + string(_frag_count));
+        i18n_draw_text(_inner_x + 72, _content_y + 28, "Fragmento temporal +" + string(_frag_count));
         _content_y += 66;
     }
 
     draw_set_color(sprite_exists(global.ui_panel_sprite) ? c_black : c_white);
     var _continue = "Clique ou pressione ENTER para continuar";
-    draw_text(_x + (_w - string_width(_continue)) * 0.5, _continue_y, _continue);
+    i18n_draw_text(_x + (_w - i18n_string_width(_continue)) * 0.5, _continue_y, _continue);
 }
 
 function demo_inicializar_globals() {

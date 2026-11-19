@@ -320,7 +320,7 @@ function placeholder_predio(_cx, _base_y, _w, _h, _telhado, _parede, _detalhe) {
         draw_set_color(_telhado);
         draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
-        draw_text_transformed(_cx, _y1 + (_h * 0.19), _detalhe, 0.55, 0.55, 0);
+        i18n_draw_text_transformed(_cx, _y1 + (_h * 0.19), _detalhe, 0.55, 0.55, 0);
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
     }

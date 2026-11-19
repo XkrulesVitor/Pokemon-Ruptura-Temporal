@@ -153,6 +153,7 @@ function missao_conceder(_controller, _estado) {
     var _texto = "Missao concluida (" + _def.npc + ")! Recompensa: " + missao_recompensa_texto(_def);
     missao_toast(_texto);
     battle_log_push(_texto);
+    audio_sfx("missao");
 }
 
 function missao_toast(_texto) {
@@ -280,7 +281,7 @@ function missoes_draw_lista(_controller) {
     draw_roundrect_ext(_x, _y, _x + _w, _y + _h, 8, 8, false);
     draw_set_alpha(1);
     draw_set_color(make_color_rgb(255, 222, 120));
-    draw_text_transformed(_x + 12, _y + 6, "MISSOES", 0.7, 0.7, 0);
+    i18n_draw_text_transformed(_x + 12, _y + 6, "MISSOES", 0.7, 0.7, 0);
 
     for (var _i = 0; _i < array_length(_ativas); _i += 1) {
         battle_ui_draw_text_fit(_x + 12, _y + 26 + (_i * 22), "- " + missao_objetivo_texto(_ativas[_i]), _w - 24, 0.62, c_white);
@@ -303,7 +304,7 @@ function missao_toast_draw() {
 
     var _gw = display_get_gui_width();
     var _alpha = clamp(global.missao_toast_atual.Timer, 0, 1);
-    var _w = min(_gw - 80, string_width(global.missao_toast_atual.Texto) * 0.72 + 40);
+    var _w = min(_gw - 80, i18n_string_width(global.missao_toast_atual.Texto) * 0.72 + 40);
     var _x = (_gw - _w) * 0.5;
     var _y = 70;
 
