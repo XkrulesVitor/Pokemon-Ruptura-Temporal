@@ -627,12 +627,21 @@ function battle_ui_draw_nineslice_panel(_x, _y, _w, _h) {
     }
 
     // Painel escuro de reserva: sem a arte do painel, a interface escreve em branco por cima.
+    var _alpha_painel = draw_get_alpha();
     draw_set_color(make_color_rgb(196, 204, 230));
     draw_roundrect_ext(_x, _y, _x + _w, _y + _h, 10, 10, false);
-    draw_set_color(make_color_rgb(24, 28, 46));
-    draw_roundrect_ext(_x + 2, _y + 2, _x + _w - 2, _y + _h - 2, 8, 8, false);
-    draw_set_color(make_color_rgb(64, 72, 108));
+    draw_rectangle_colour(_x + 3, _y + 3, _x + _w - 3, _y + _h - 3, make_color_rgb(34, 40, 66), make_color_rgb(34, 40, 66), make_color_rgb(20, 22, 38), make_color_rgb(20, 22, 38), false);
+    draw_set_alpha(_alpha_painel * 0.35);
+    draw_set_color(c_white);
+    draw_line(_x + 8, _y + 4, _x + _w - 8, _y + 4);
+    draw_set_alpha(_alpha_painel);
+    draw_set_color(make_color_rgb(70, 80, 120));
     draw_roundrect_ext(_x + 5, _y + 5, _x + _w - 5, _y + _h - 5, 6, 6, true);
+    draw_set_color(make_color_rgb(255, 222, 120));
+    draw_rectangle(_x + 3, _y + 3, _x + 5, _y + 5, false);
+    draw_rectangle(_x + _w - 5, _y + 3, _x + _w - 3, _y + 5, false);
+    draw_rectangle(_x + 3, _y + _h - 5, _x + 5, _y + _h - 3, false);
+    draw_rectangle(_x + _w - 5, _y + _h - 5, _x + _w - 3, _y + _h - 3, false);
 }
 
 function battle_ui_hp_color(_percent) {

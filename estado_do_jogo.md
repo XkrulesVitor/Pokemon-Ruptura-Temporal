@@ -59,7 +59,12 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Sinergia cruzada (`datafiles/data/sinergias.json`, 21 regras): um golpe do tipo X ganha um efeito quando a criatura tem OUTRA habilidade equipada do tipo Y (ex.: Inseto + Veneno = envenena). Selo "SINERGIA" no slot e explicacao no tooltip.
   - Aviso grande e pulsante na tela: COMBO! (marca consumida), DANO SINERGICO! (golpe de tipo contra alvo enfraquecido, +X% no log), SINERGIA! (efeito cruzado), com tremida de tela.
   - VFX: projetil desenhado por tipo e particulas de impacto por tipo (sistema de particulas proprio).
-- [ ] **Sprint 6: Gráficos (tudo que não é criatura)**: elementos de rota em PNG com transparência, os 15 elementos que faltam do catálogo de biomas, kit de UI (9-slice, botões, ícones), transições e easing, mapas de cidade, áreas de clique compartilhadas entre Step e Draw.
+- [x] **Sprint 6: Graficos (tudo que nao e criatura)**
+  - Elementos de rota recortados em PNG com transparencia (`tools/recortar_elementos.py`; os JPG originais continuam la).
+  - Biomas montados: chao + ate 16 elementos espalhados fora da trilha (posicoes fixas por rota), com sombra e balanco leve nas plantas. O personagem anda sobre a trilha de cada chao. O segundo personagem parado foi removido.
+  - Cidades geradas a partir dos marcadores: predio certo embaixo de cada um (ginasio na cor do tipo do lider, centro, loja, laboratorio, casa, barraca dos NPCs de missao), trilhas ligando tudo e casas de enfeite so nos espacos livres.
+  - Interface: painel de reserva com degrade, brilho e cantos; botoes crescem com easing e afundam ao clicar; fade curto ao trocar de tela principal.
+  - Pendente: os 15 elementos do catalogo que ainda nao existem (precisam de arte), e unificar as areas de clique entre Step e Draw.
 - [x] **Sprint 7: Rejogabilidade** (`scripts/scr_rejogabilidade`, progresso permanente em `progresso.json`)
   - Dificuldade (botao no canto do menu): Facil (-2 niveis, dano inimigo -15%, captura +15%), Normal, Dificil (+2 niveis, dano +15%, +20% dinheiro, +50% fragmentos), Hardcore (+3 niveis, dano +35%, captura -40%, rotas sem tipos visiveis, treinadores/lideres/chefe usam uma cura forte por batalha, fragmentos x2). O Desafio Diario sempre roda no Normal.
   - Modo Buraco Negro: liberado ao vencer Aeonox; botao "MERGULHAR NO RASGO" na tela de vitoria (fora do Desafio Diario). Ondas infinitas no nivel 30, com +10% de forca por onda e ate 4 inimigos; a equipe recupera 35% entre ondas. Recorde salvo e mostrado no game over.

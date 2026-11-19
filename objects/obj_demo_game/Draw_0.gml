@@ -138,6 +138,14 @@ if (estado_demo == DemoEstado.ROTA) {
     var _walk_x = lerp(room_width * 0.18, room_width * 0.72, _progress);
     var _walk_y = room_height * 0.605;
 
+    // Nos biomas montados, o personagem segue a trilha desenhada no chao.
+    if (variable_global_exists("rota_caminho") && is_array(global.rota_caminho)) {
+        var _cam = global.rota_caminho;
+        var _t_cam = lerp(0.16, 0.66, _progress);
+        _walk_x = lerp(_cam[0], _cam[2], _t_cam);
+        _walk_y = clamp(lerp(_cam[1], _cam[3], _t_cam) + 16, 150, room_height * 0.70);
+    }
+
     if (sprite_exists(route_trainer_sprite)) {
         var _frame = floor(current_time / 140) mod 4;
         var _row = 2;

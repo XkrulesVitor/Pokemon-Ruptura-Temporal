@@ -290,7 +290,47 @@ function placeholder_andarilho_folha() {
 }
 
 // Mapa de cidade visto de cima: chao, ruas, casas e arvores. Cada cidade tem sua paleta.
+function placeholder_predio(_cx, _base_y, _w, _h, _telhado, _parede, _detalhe) {
+    var _x1 = _cx - (_w * 0.5);
+    var _y1 = _base_y - _h;
+    draw_set_alpha(0.25);
+    draw_set_color(c_black);
+    draw_rectangle(_x1 + 4, _base_y - 2, _x1 + _w + 6, _base_y + 6, false);
+    draw_set_alpha(1);
+    draw_set_color(make_color_rgb(40, 36, 44));
+    draw_rectangle(_x1 - 2, _y1 - 2, _x1 + _w + 2, _base_y + 2, false);
+    draw_set_color(_parede);
+    draw_rectangle(_x1, _y1 + (_h * 0.36), _x1 + _w, _base_y, false);
+    draw_set_color(_telhado);
+    draw_rectangle(_x1, _y1, _x1 + _w, _y1 + (_h * 0.38), false);
+    draw_set_color(merge_color(_telhado, c_white, 0.25));
+    draw_rectangle(_x1, _y1, _x1 + _w, _y1 + 4, false);
+    draw_set_color(make_color_rgb(110, 78, 56));
+    draw_rectangle(_cx - 7, _base_y - 18, _cx + 7, _base_y, false);
+    draw_set_color(make_color_rgb(150, 200, 236));
+
+    for (var _j = 0; _j < max(1, floor(_w / 40)); _j += 1) {
+        var _jx = _x1 + 8 + (_j * 40);
+        if (abs(_jx + 6 - _cx) > 14) draw_rectangle(_jx, _y1 + (_h * 0.48), _jx + 12, _y1 + (_h * 0.48) + 10, false);
+    }
+
+    if (_detalhe != "") {
+        draw_set_color(c_white);
+        draw_circle(_cx, _y1 + (_h * 0.19), 7, false);
+        draw_set_color(_telhado);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+        draw_text_transformed(_cx, _y1 + (_h * 0.19), _detalhe, 0.55, 0.55, 0);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_top);
+    }
+}
+
+// Mapa de cidade visto de cima. Com a lista de marcadores, desenha o predio certo embaixo de
+// cada um (loja, centro, ginasio...) e liga tudo por trilhas; o resto vira casas e arvores.
 function placeholder_cidade_sprite(_indice, _nome) {
+    var _markers = argument_count >= 3 && is_array(argument[2]) ? argument[2] : [];
+    var _tipo = argument_count >= 4 ? argument[3] : PokemonTipo.NONE;
     var _w = 768;
     var _h = 413;
     var _paletas = [
@@ -305,52 +345,99 @@ function placeholder_cidade_sprite(_indice, _nome) {
     var _pal = _paletas[clamp(_indice, 0, array_length(_paletas) - 1)];
     var _estado = placeholder_estado_salvar();
     var _surf = surface_create(_w, _h);
+    var _rua_y = _h * 0.54;
 
     surface_set_target(_surf);
     draw_clear_alpha(_pal[0], 1);
     draw_set_alpha(1);
 
-    // Textura leve do chao.
     for (var _t = 0; _t < 260; _t += 1) {
         var _hx = placeholder_hash(_t * 3 + _indice * 1000);
         draw_set_color(merge_color(_pal[0], (_t mod 2 == 0) ? c_white : c_black, 0.08));
         draw_rectangle(_hx mod _w, (_hx div _w) mod _h, (_hx mod _w) + 3, ((_hx div _w) mod _h) + 2, false);
     }
 
-    // Ruas em cruz.
+    // Rua principal e trilhas ate cada marcador.
     draw_set_color(_pal[1]);
-    draw_rectangle(0, _h * 0.52, _w, (_h * 0.52) + 34, false);
-    draw_rectangle(_w * 0.46, 0, (_w * 0.46) + 34, _h, false);
+    draw_rectangle(0, _rua_y - 14, _w, _rua_y + 14, false);
     draw_set_color(merge_color(_pal[1], c_black, 0.15));
-    draw_rectangle(0, (_h * 0.52) + 30, _w, (_h * 0.52) + 34, false);
+    draw_rectangle(0, _rua_y + 11, _w, _rua_y + 14, false);
+    var _ocupados = [];
 
-    // Casas.
+    for (var _m = 0; _m < array_length(_markers); _m += 1) {
+        var _mk = _markers[_m];
+        var _mx = _mk.NX * _w;
+        var _my = _mk.NY * _h;
+        draw_set_color(_pal[1]);
+
+        if (_mk.Action == "leave") {
+            draw_rectangle(min(_mx, _w * 0.5) - 10, _my - 10, max(_mx, _w * 0.5) + 10, _my + 10, false);
+            draw_rectangle(_mx - 10, min(_my, _rua_y), _mx + 10, max(_my, _rua_y), false);
+        } else {
+            draw_rectangle(_mx - 7, min(_my, _rua_y), _mx + 7, max(_my, _rua_y), false);
+        }
+    }
+
+    // Predios dos marcadores (a porta fica onde o marcador aparece).
+    var _cor_ginasio = _tipo != PokemonTipo.NONE ? battle_ui_type_color(_tipo) : make_color_rgb(180, 90, 70);
+
+    for (var _m2 = 0; _m2 < array_length(_markers); _m2 += 1) {
+        var _mk2 = _markers[_m2];
+        var _bx = _mk2.NX * _w;
+        var _by = (_mk2.NY * _h) + 10;
+
+        switch (_mk2.Action) {
+            case "gym": placeholder_predio(_bx, _by, 128, 74, _cor_ginasio, make_color_rgb(232, 226, 214), "G"); break;
+            case "center": placeholder_predio(_bx, _by, 96, 60, make_color_rgb(206, 64, 70), make_color_rgb(244, 240, 232), "+"); break;
+            case "mart": placeholder_predio(_bx, _by, 92, 56, make_color_rgb(70, 116, 200), make_color_rgb(232, 228, 214), "$"); break;
+            case "lab": placeholder_predio(_bx, _by, 116, 66, make_color_rgb(140, 146, 160), make_color_rgb(226, 230, 236), "L"); break;
+            case "mom": placeholder_predio(_bx, _by, 82, 54, make_color_rgb(214, 150, 70), make_color_rgb(240, 230, 210), ""); break;
+            case "event":
+                // Barraca listrada do NPC.
+                draw_set_color(make_color_rgb(40, 36, 44));
+                draw_triangle(_bx - 26, _by - 6, _bx + 26, _by - 6, _bx, _by - 44, false);
+                draw_set_color(make_color_rgb(236, 210, 120));
+                draw_triangle(_bx - 23, _by - 8, _bx + 23, _by - 8, _bx, _by - 40, false);
+                draw_set_color(make_color_rgb(200, 80, 70));
+                draw_triangle(_bx - 8, _by - 8, _bx + 8, _by - 8, _bx, _by - 40, false);
+                break;
+            default:
+                continue;
+        }
+
+        array_push(_ocupados, [_bx, _by]);
+    }
+
+    // Casas de enfeite onde nao ha nada.
     var _telhados = [make_color_rgb(196, 78, 66), make_color_rgb(70, 116, 196), make_color_rgb(84, 150, 90), make_color_rgb(214, 160, 60), make_color_rgb(140, 90, 170)];
-    var _casas = [[0.10, 0.16], [0.26, 0.20], [0.62, 0.14], [0.80, 0.22], [0.12, 0.70], [0.30, 0.74], [0.64, 0.70], [0.82, 0.74]];
+    var _vagas = [[0.14, 0.30], [0.30, 0.26], [0.62, 0.24], [0.84, 0.30], [0.14, 0.86], [0.32, 0.88], [0.64, 0.86], [0.84, 0.88]];
 
-    for (var _c = 0; _c < array_length(_casas); _c += 1) {
-        var _bx = _casas[_c][0] * _w;
-        var _by = _casas[_c][1] * _h;
-        var _cw = 72 + ((placeholder_hash(_c + _indice * 17) mod 3) * 12);
-        var _ch = 54;
-        draw_set_color(make_color_rgb(40, 36, 44));
-        draw_rectangle(_bx - 2, _by - 2, _bx + _cw + 2, _by + _ch + 2, false);
-        draw_set_color(make_color_rgb(226, 220, 206));
-        draw_rectangle(_bx, _by + 18, _bx + _cw, _by + _ch, false);
-        draw_set_color(_telhados[(_c + _indice) mod array_length(_telhados)]);
-        draw_rectangle(_bx, _by, _bx + _cw, _by + 20, false);
-        draw_set_color(make_color_rgb(110, 78, 56));
-        draw_rectangle(_bx + (_cw * 0.5) - 6, _by + 36, _bx + (_cw * 0.5) + 6, _by + _ch, false);
-        draw_set_color(make_color_rgb(140, 190, 230));
-        draw_rectangle(_bx + 8, _by + 26, _bx + 20, _by + 36, false);
-        draw_rectangle(_bx + _cw - 20, _by + 26, _bx + _cw - 8, _by + 36, false);
+    for (var _c = 0; _c < array_length(_vagas); _c += 1) {
+        var _vx = _vagas[_c][0] * _w;
+        var _vy = _vagas[_c][1] * _h;
+        var _livre = true;
+
+        for (var _o = 0; _o < array_length(_ocupados); _o += 1) {
+            if (point_distance(_vx, _vy, _ocupados[_o][0], _ocupados[_o][1]) < 120) _livre = false;
+        }
+
+        for (var _m3 = 0; _m3 < array_length(_markers); _m3 += 1) {
+            if (point_distance(_vx, _vy, _markers[_m3].NX * _w, _markers[_m3].NY * _h) < 70) _livre = false;
+        }
+
+        if (_livre) {
+            placeholder_predio(_vx, _vy, 70 + ((placeholder_hash(_c + _indice * 17) mod 3) * 10), 48, _telhados[(_c + _indice) mod array_length(_telhados)], make_color_rgb(226, 220, 206), "");
+        }
     }
 
     // Arvores nas bordas.
     for (var _a = 0; _a < 22; _a += 1) {
         var _ha = placeholder_hash(_a * 11 + _indice * 101);
-        var _ax = (_a mod 2 == 0) ? (_ha mod 60) + 10 : _w - 70 + (_ha mod 60);
+        var _ax = (_a mod 2 == 0) ? (_ha mod 50) + 10 : _w - 60 + (_ha mod 50);
         var _ay = 20 + ((_ha div 7) mod (_h - 40));
+
+        if (abs(_ay - _rua_y) < 26) continue;
+
         draw_set_color(make_color_rgb(34, 70, 40));
         draw_circle(_ax, _ay, 15, false);
         draw_set_color(merge_color(_pal[0], make_color_rgb(30, 110, 50), 0.6));

@@ -3776,11 +3776,22 @@ function demo_hover_rect(_mx, _my, _x, _y, _w, _h) {
     return _mx >= _x && _mx <= _x + _w && _my >= _y && _my <= _y + _h;
 }
 
+// Crescimento suave no hover (o estado de cada botao fica guardado pela posicao).
 function demo_hover_grow_rect(_x, _y, _w, _h, _hover, _amount) {
-    var _grow = _hover ? _amount : 0;
+    if (!variable_global_exists("ui_hover_ease") || !is_struct(global.ui_hover_ease)) {
+        global.ui_hover_ease = {};
+    }
+
+    var _chave = string(floor(_x)) + ":" + string(floor(_y));
+    var _atual = variable_struct_exists(global.ui_hover_ease, _chave) ? variable_struct_get(global.ui_hover_ease, _chave) : 0;
+    _atual = lerp(_atual, _hover ? 1 : 0, 0.28);
+    variable_struct_set(global.ui_hover_ease, _chave, _atual);
+
+    var _apertado = _hover && mouse_check_button(mb_left) ? 1 : 0;
+    var _grow = (_amount * _atual) - _apertado;
     return {
         X: _x - _grow,
-        Y: _y - _grow,
+        Y: _y - _grow + _apertado,
         W: _w + (_grow * 2),
         H: _h + (_grow * 2)
     };
@@ -3858,7 +3869,7 @@ function demo_city_sprite_get(_controller, _city_index) {
     }
 
     if (!sprite_exists(_sprite)) {
-        _sprite = placeholder_cidade_sprite(_city_index, is_struct(_cidade) ? _cidade.Nome : "");
+        _sprite = placeholder_cidade_sprite(_city_index, is_struct(_cidade) ? _cidade.Nome : "", demo_city_markers(_controller), is_struct(_cidade) ? _cidade.Tipo : PokemonTipo.NONE);
     }
 
     _controller.city_sprites[_city_index] = _sprite;
@@ -7073,6 +7084,7 @@ function demo_draw_route_sheet_effect(_spr, _frames, _x, _y, _scale, _alpha, _bl
 }
 
 function demo_draw_route_sprite_scene(_controller, _tema, _w, _h) {
+    global.rota_caminho = undefined;
     if (_tema == "chuva") _tema = "pantano";
     if (_tema == "usina") _tema = "sucata";
     
@@ -7213,63 +7225,115 @@ function demo_load_external_sprite(_path) {
     return ds_map_find_value(_cache, _path);
 }
 
+// Direcao da trilha desenhada em cada chao (inicio x,y -> fim x,y, normalizado).
+function demo_rota_caminho_floor(_bg_path) {
+    if (string_pos("lama", _bg_path) > 0) return [0.02, 0.92, 0.98, 0.10];
+    if (string_pos("pedra", _bg_path) > 0) return [0.06, 0.98, 0.94, 0.04];
+    if (string_pos("escuro", _bg_path) > 0) return [0.02, 0.12, 0.98, 0.88];
+    return [0.02, 0.04, 0.95, 0.98];
+}
+
+function demo_rota_elemento_altura(_path) {
+    if (string_pos("arvore", _path) > 0) return 190;
+    if (string_pos("estalagmite", _path) > 0 || string_pos("pedra_pontiaguda", _path) > 0) return 140;
+    if (string_pos("carrinho", _path) > 0 || string_pos("teia", _path) > 0) return 110;
+    if (string_pos("cogumelo", _path) > 0 || string_pos("espinhos", _path) > 0) return 100;
+    if (string_pos("cerca", _path) > 0 || string_pos("tronco", _path) > 0 || string_pos("pedregulho", _path) > 0) return 82;
+    if (string_pos("poca", _path) > 0) return 64;
+    return 72;
+}
+
+function demo_distancia_ponto_segmento(_px, _py, _x1, _y1, _x2, _y2) {
+    var _dx = _x2 - _x1;
+    var _dy = _y2 - _y1;
+    var _len2 = max(0.0001, (_dx * _dx) + (_dy * _dy));
+    var _t = clamp((((_px - _x1) * _dx) + ((_py - _y1) * _dy)) / _len2, 0, 1);
+    return point_distance(_px, _py, _x1 + (_t * _dx), _y1 + (_t * _dy));
+}
+
+// Desenha o chao do bioma e espalha os elementos (PNG com transparencia) fora da trilha.
 function demo_draw_route_procedural_grid(_controller, _w, _h, _bg_path, _elements_array) {
     var _bg = demo_load_external_sprite("datafiles/" + _bg_path);
+
     if (sprite_exists(_bg)) {
         demo_draw_route_cover_sprite(_bg, _w, _h, 1);
     }
+
+    var _c = demo_rota_caminho_floor(_bg_path);
+    global.rota_caminho = [_c[0] * _w, _c[1] * _h, _c[2] * _w, _c[3] * _h];
+
+    if (!is_array(_elements_array) || array_length(_elements_array) <= 0) {
+        return;
+    }
+
+    var _rota_id = instance_exists(_controller) && is_struct(_controller.rota_atual) ? _controller.rota_atual.ID : "";
+    var _semente = placeholder_hash_texto(_bg_path + "|" + _rota_id);
+    var _chave = string(_semente) + ":" + string(_w) + "x" + string(_h);
+    static _cache = {};
+
+    if (!variable_struct_exists(_cache, _chave)) {
+        var _lista = [];
+        var _tentativas = 0;
+
+        while (array_length(_lista) < 16 && _tentativas < 260) {
+            _tentativas += 1;
+            var _hx = placeholder_hash(_semente + (_tentativas * 7919));
+            var _ex = 40 + (_hx mod max(1, floor(_w - 80)));
+            var _ey = 130 + ((_hx div 7) mod max(1, floor((_h * 0.74) - 130)));
+
+            if (demo_distancia_ponto_segmento(_ex, _ey, global.rota_caminho[0], global.rota_caminho[1], global.rota_caminho[2], global.rota_caminho[3]) < _h * 0.14) {
+                continue;
+            }
+
+            var _livre = true;
+
+            for (var _o = 0; _o < array_length(_lista); _o += 1) {
+                if (point_distance(_ex, _ey, _lista[_o].X, _lista[_o].Y) < 86) {
+                    _livre = false;
+                    break;
+                }
+            }
+
+            if (_livre) {
+                var _path = _elements_array[(_hx div 13) mod array_length(_elements_array)];
+                array_push(_lista, { X: _ex, Y: _ey, Path: string_replace(_path, ".jpg", ".png"), Fase: _hx mod 628 });
+            }
+        }
+
+        array_sort(_lista, function(_a, _b) { return _a.Y - _b.Y; });
+        variable_struct_set(_cache, _chave, _lista);
+    }
+
+    var _itens = variable_struct_get(_cache, _chave);
+
+    for (var _i = 0; _i < array_length(_itens); _i += 1) {
+        var _it = _itens[_i];
+        var _spr = demo_load_external_sprite("datafiles/" + _it.Path);
+
+        if (!sprite_exists(_spr)) {
+            continue;
+        }
+
+        var _escala = demo_rota_elemento_altura(_it.Path) / max(1, sprite_get_height(_spr));
+        var _sw = sprite_get_width(_spr) * _escala;
+        var _sh = sprite_get_height(_spr) * _escala;
+        var _balanco = (string_pos("arvore", _it.Path) > 0 || string_pos("arbusto", _it.Path) > 0 || string_pos("flores", _it.Path) > 0) ? sin((current_time * 0.0016) + (_it.Fase * 0.01)) * 2.2 : 0;
+
+        draw_set_alpha(0.28);
+        draw_set_color(c_black);
+        draw_ellipse(_it.X - (_sw * 0.38), _it.Y - 8, _it.X + (_sw * 0.38), _it.Y + 8, false);
+        draw_set_alpha(1);
+        draw_sprite_ext(_spr, 0, _it.X - (_sw * 0.5) + _balanco, _it.Y - _sh, _escala, _escala, 0, c_white, 1);
+    }
+
+    draw_set_color(c_white);
 }
 
 function demo_draw_route_travel_background(_controller, _w, _h) {
     var _rota = instance_exists(_controller) ? _controller.rota_atual : undefined;
     var _tema = demo_rota_visual_tema(_rota);
     demo_draw_route_sprite_scene(_controller, _tema, _w, _h);
-
-    // Logica do Jogador no Grid Top-Down
-    var _progress = 0;
-    if (instance_exists(_controller) && variable_instance_exists(_controller, "run") && is_struct(_controller.run) && variable_struct_exists(_controller.run, "NoAtual")) {
-        _progress = clamp(_controller.run.NoAtual / 15, 0, 1);
-    }
-    
-    // Fallback: se nao achou o nó, anima com o tempo para demonstrar
-    if (_progress == 0) _progress = clamp(((current_time / 1000) mod 15) / 15, 0, 1);
-
-    var _start_x = _w * 0.20;
-    var _start_y = _h * 0.20;
-    var _end_x = _w * 0.80;
-    var _end_y = _h * 0.80;
-    
-    // Sentido da Viagem
-    var _is_returning = false;
-
-    var _walk_x = _is_returning ? lerp(_end_x, _start_x, _progress) : lerp(_start_x, _end_x, _progress);
-    var _walk_y = _is_returning ? lerp(_end_y, _start_y, _progress) : lerp(_start_y, _end_y, _progress);
-
-    // Carregar Sprite do Jogador
-    var _spr_player = instance_exists(_controller) && variable_instance_exists(_controller, "route_trainer_sprite") ? _controller.route_trainer_sprite : -1;
-    if (sprite_exists(_spr_player)) {
-        var _fw = sprite_get_width(_spr_player) / 4;
-        var _fh = sprite_get_height(_spr_player) / 4;
-        
-        // Animacao: 4 frames
-        var _anim_speed = 0.008;
-        var _frame = floor(current_time * _anim_speed) mod 4;
-        
-        // Direção: 0 = Baixo, 1 = Cima, 2 = Esquerda, 3 = Direita
-        var _dir_row = 2; // Right
-        if (_is_returning) {
-            _dir_row = 1; // Left
-        }
-        
-        // Sombra simples
-        draw_set_color(c_black);
-        draw_set_alpha(0.3);
-        draw_ellipse(_walk_x - 12, _walk_y - 6, _walk_x + 12, _walk_y + 6, false);
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-
-        draw_sprite_part_ext(_spr_player, 0, _frame * _fw, _dir_row * _fh, _fw, _fh, _walk_x - (_fw/2), _walk_y - _fh + 4, 1.2, 1.2, c_white, 1);
-    }
+    // O personagem andando e desenhado pelo Draw do obj_demo_game, seguindo global.rota_caminho.
 }
 
 function demo_draw_gym_trainer(_spr, _base_x, _base_y) {

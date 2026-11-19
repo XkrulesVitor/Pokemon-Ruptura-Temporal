@@ -309,7 +309,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   ARQUIVO                                                            LINHAS +ADICIONADAS -REMOVIDAS
   .agents/AGENTS.md                                                  +2 -1
   .gitignore                                                         +6 -0
-  PokemonRogueLike.yyp                                               +11 -786
+  PokemonRogueLike.yyp                                               +25 -786
   datafiles/data/criaturas.json                                      +2149 -0
   datafiles/data/mundo.json                                          +317 -0
   datafiles/data/sinergias.json                                      +152 -0
@@ -340,6 +340,20 @@ ARQUIVOS ALTERADOS (desde o commit base)
   datafiles/sprites/items/super_potion.png                           +- --
   datafiles/sprites/items/ultra_ball.png                             +- --
   datafiles/sprites/overworld/route_bg.png                           +- --
+  datafiles/sprites/overworld/routes/elements/spr_arbusto_espinhos.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_arbusto_pequeno.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_arvore_frondosa.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_arvore_morta.png   +- --
+  datafiles/sprites/overworld/routes/elements/spr_carrinho_mina.png  +- --
+  datafiles/sprites/overworld/routes/elements/spr_cerca_madeira.png  +- --
+  datafiles/sprites/overworld/routes/elements/spr_cogumelo_venenoso.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_estalagmite_cristal.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_flores_coloridas.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_pedra_pontiaguda.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_pedregulho_comum.png +- --
+  datafiles/sprites/overworld/routes/elements/spr_poca_toxica.png    +- --
+  datafiles/sprites/overworld/routes/elements/spr_teia_aranha.png    +- --
+  datafiles/sprites/overworld/routes/elements/spr_tronco_caido.png   +- --
   datafiles/sprites/overworld/trainer_run.png                        +- --
   datafiles/sprites/pokemon/001.png                                  +- --
   datafiles/sprites/pokemon/001_atk.png                              +- --
@@ -1098,9 +1112,10 @@ ARQUIVOS ALTERADOS (desde o commit base)
   datafiles/sprites/ui/battle/overlay_message.png                    +- --
   datafiles/sprites/ui/types.png                                     +- --
   docs/como_adicionar_artes.txt                                      +55 -0
-  estado_do_jogo.md                                                  +67 -82
+  estado_do_jogo.md                                                  +72 -82
   objects/obj_demo_game/Create_0.gml                                 +57 -57
-  objects/obj_demo_game/Draw_64.gml                                  +28 -9
+  objects/obj_demo_game/Draw_0.gml                                   +8 -0
+  objects/obj_demo_game/Draw_64.gml                                  +42 -9
   objects/obj_demo_game/Step_0.gml                                   +109 -20
   objects/obj_game_manager/Create_0.gml                              +1 -2
   objects/obj_game_manager/Draw_75.gml                               +1 -0
@@ -1118,18 +1133,18 @@ ARQUIVOS ALTERADOS (desde o commit base)
   options/windows/options_windows.yy                                 +3 -3
   scripts/scr_autoteste/scr_autoteste.gml                            +559 -0
   scripts/{scr_event_manager/scr_event_manager.yy => scr_autoteste/scr_autoteste.yy} +2 -2
-  scripts/scr_battle_ui/scr_battle_ui.gml                            +97 -59
+  scripts/scr_battle_ui/scr_battle_ui.gml                            +105 -58
   scripts/scr_combate_extras/scr_combate_extras.gml                  +370 -0
   scripts/scr_combate_extras/scr_combate_extras.yy                   +13 -0
   scripts/scr_conteudo/scr_conteudo.gml                              +227 -0
   scripts/{scr_roguelike_run/scr_roguelike_run.yy => scr_conteudo/scr_conteudo.yy} +2 -2
-  scripts/scr_demo_playable/scr_demo_playable.gml                    +656 -455
+  scripts/scr_demo_playable/scr_demo_playable.gml                    +766 -501
   scripts/scr_desafio_diario/scr_desafio_diario.gml                  +433 -0
   scripts/scr_desafio_diario/scr_desafio_diario.yy                   +13 -0
   scripts/scr_event_manager/scr_event_manager.gml                    +0 -331
   scripts/scr_missoes/scr_missoes.gml                                +318 -0
   scripts/scr_missoes/scr_missoes.yy                                 +13 -0
-  scripts/scr_placeholders/scr_placeholders.gml                      +448 -0
+  scripts/scr_placeholders/scr_placeholders.gml                      +535 -0
   scripts/scr_placeholders/scr_placeholders.yy                       +13 -0
   scripts/scr_pokedex/scr_pokedex.gml                                +18 -20
   scripts/scr_pokemon_combate/scr_pokemon_combate.gml                +29 -1
@@ -1150,6 +1165,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   injetar_passivas.py => tools/legacy/injetar_passivas.py            +0 -0
   injetar_passivas_fix.ps1 => tools/legacy/injetar_passivas_fix.ps1  +0 -0
   limpar_passivas.ps1 => tools/legacy/limpar_passivas.ps1            +0 -0
+  tools/recortar_elementos.py                                        +124 -0
   tools/renomear_habilidades.py                                      +39 -0
   tools/trocar_textos.py                                             +142 -0
   tools/yyp_util.py                                                  +90 -0

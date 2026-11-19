@@ -544,3 +544,17 @@ if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU && est
 
 missao_toast_draw();
 conquista_avisos_draw();
+
+// Transicao: escurece rapido ao trocar de tela principal e volta (scr_placeholders nao interfere).
+var _grupo_tela = estado_demo;
+if (estado_demo == DemoEstado.POKESTORE || estado_demo == DemoEstado.MOCHILA || estado_demo == DemoEstado.CASA_MAE || estado_demo == DemoEstado.LAB_CARVALHO || estado_demo == DemoEstado.GINASIO || estado_demo == DemoEstado.SAIR_CIDADE) _grupo_tela = DemoEstado.CIDADE;
+if (estado_demo == DemoEstado.VITORIA || estado_demo == DemoEstado.DERROTA || estado_demo == DemoEstado.CAPTURA) _grupo_tela = DemoEstado.BATALHA;
+if (!variable_instance_exists(id, "ui_tela_anterior")) { ui_tela_anterior = _grupo_tela; ui_fade = 0; }
+if (_grupo_tela != ui_tela_anterior) { ui_tela_anterior = _grupo_tela; ui_fade = 1; }
+if (ui_fade > 0) {
+    draw_set_alpha(ui_fade * ui_fade);
+    draw_set_color(c_black);
+    draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
+    draw_set_alpha(1);
+    ui_fade = max(0, ui_fade - ((delta_time / 1000000) / 0.32));
+}
