@@ -40,11 +40,11 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Revisar `docs/*_balance_report*` e `docs/type_archetype_skill_catalog.txt`, que ainda citam as espécies antigas.
   - Arte original de criaturas, treinadores, cidades, itens e interface (o usuário adiciona; o jogo já procura os arquivos).
   - Fontes com licença livre em `datafiles/fonts_jogo/`.
-- [ ] **Sprint 3: Fechar a run**
+- [x] **Sprint 3: Fechar a run**
   - [x] Chefe final: depois de vencer o último líder, aparece o marcador "Rasgo Temporal" (X) na última cidade. Aeonox luta em 3 fases (`chefe_fases` em `mundo.json`, todas no nível 30, que é o máximo do jogo). Entre fases a criatura ativa recupera 25% do HP. Usa o mesmo sistema de time dos treinadores (`battle_context == "chefe"`).
   - [x] Tela de vitória (`DemoEstado.VITORIA_FINAL`): céu com a fenda se fechando, equipe vencedora, créditos rolando (`creditos` em `mundo.json`), +12 Fragmentos. No Desafio Diário, vencer o chefe vale +5000 pontos.
   - [x] Save no meio da run (`scripts/scr_run_save`): autosave sempre que o estado vira CIDADE (`run_save_step`), botão "CONTINUAR" (ou tecla C) no menu com resumo, um slot só (`run_salva.json`), apagado no game over e na vitória final. Runs do Desafio Diário salvam o estado do diário junto. Ao carregar, `static_set` religa as criaturas ao construtor `PokemonData`.
-  - [ ] Missões de NPC nas cidades (portar `scr_event_manager`, hoje sem uso).
+  - [x] Missões de NPC (`scripts/scr_missoes`, dados em `mundo.json` -> `missoes`): 12 missões, uma sorteada por cidade a cada run (segue a semente no Desafio Diário). O marcador de evento mostra "!" quando há missão nova. Tipos: capturar tipo, capturar qualquer, vencer tipo, vencer treinadores, entregar e nível. Até 3 ativas, lista na tela da cidade, recompensa na hora com aviso. Vai junto no save. O sistema antigo (`scr_event_manager`, `scr_roguelike_run`) foi removido.
 - [x] **Sprint 4: Desafio Diário** (`scripts/scr_desafio_diario`)
   - Botão "DESAFIO DIARIO" no menu (ou tecla D). Semente = data em UTC (AAAAMMDD); para testar outra data use `RASGO_DIARIO_DATA=AAAAMMDD`.
   - Inicial do dia: criatura em estágio inicial de raridade comum, incomum ou rara (60 candidatas), escolhida por hash da data.

@@ -209,7 +209,12 @@ if (estado_demo == DemoEstado.MENU) {
         _cidade_subtitulo = "Saida da cidade";
     }
 
-    draw_text(58, 72, _cidade_subtitulo);
+    battle_ui_draw_text_fit(58, 72, _cidade_subtitulo, 350, 1, make_color_rgb(36, 30, 28));
+
+    if (estado_demo == DemoEstado.CIDADE) {
+        missoes_draw_lista(id);
+    }
+
     demo_draw_money_badge(_gw - 208, 38, dinheiro);
 
     if (estado_demo == DemoEstado.CIDADE) {
@@ -359,7 +364,7 @@ if (estado_demo == DemoEstado.MENU) {
         demo_draw_dialog_character(_evento_speaker, 70, 170, 680, 386);
         draw_set_color(make_color_rgb(36, 30, 28));
         battle_ui_font_title();
-        draw_text(98, 196, cidade_index == 0 ? "Casa da Mae" : demo_cidade_atual().Evento);
+        draw_text(98, 196, cidade_index == 0 ? "Casa da Mae" : (evento_titulo != "" ? evento_titulo : demo_cidade_atual().Evento));
         battle_ui_font_body();
         draw_text_ext(98, 232, message, 24, 410);
         battle_ui_font_title();
@@ -533,3 +538,5 @@ if (variable_global_exists("estado_jogo") && global.estado_jogo == EstadoJogo.DR
 if (estado_demo != DemoEstado.GAME_OVER && estado_demo != DemoEstado.MENU && estado_demo != DemoEstado.VITORIA_FINAL) {
     diario_draw_hud();
 }
+
+missao_toast_draw();

@@ -70,6 +70,7 @@ function run_save_gravar(_controller) {
             RotaEscolhas: rota_escolhas,
             MaePresenteEntregue: mae_presente_entregue,
             ProfessorVisto: professor_carvalho_visto,
+            Missoes: missoes,
             Diario: diario_ativo() ? global.diario : undefined,
             Resumo: {
                 Cidade: demo_cidade_nome(cidade_index),
@@ -172,6 +173,7 @@ function run_save_carregar(_controller) {
         rota_escolhas = is_array(_dados.RotaEscolhas) ? _dados.RotaEscolhas : rota_escolhas;
         mae_presente_entregue = _dados.MaePresenteEntregue;
         professor_carvalho_visto = _dados.ProfessorVisto;
+        missoes = variable_struct_exists(_dados, "Missoes") && is_struct(_dados.Missoes) ? _dados.Missoes : {};
         meta_inicio_aplicado = true;
         estado_demo = DemoEstado.CIDADE;
         estado_anterior_save = DemoEstado.CIDADE;

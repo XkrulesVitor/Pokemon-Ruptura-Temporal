@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_roguelike_run",
+  "%Name":"scr_missoes",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_roguelike_run",
+  "name":"scr_missoes",
   "parent":{
     "name":"PokemonRogueLike",
     "path":"PokemonRogueLike.yyp",

@@ -6,8 +6,6 @@ if (instance_number(obj_game_manager) > 1) {
     exit;
 }
 
-// Inicializa flags, eventos e rastreamento de missoes da run.
-event_manager_init();
 battle_ui_init();
 autoteste_iniciar();
 

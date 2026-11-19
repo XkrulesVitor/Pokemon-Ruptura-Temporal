@@ -395,6 +395,8 @@ switch (estado_demo) {
 
             var _money_reward = demo_meta_dinheiro_aplicar(id, pokemon_recompensa_dinheiro(enemy_pokemon_data, _money_tipo));
             demo_battle_reward_adicionar(id, _xp_reward, _xp_ganhos, _money_reward);
+            missao_evento(id, "vitoria", enemy_pokemon_data);
+            missao_evento(id, "checar", undefined);
 
             if ((battle_context == "treinador" || battle_context == "chefe") && demo_trainer_tem_proximo(id)) {
                 demo_trainer_enviar_proximo(id);
@@ -416,6 +418,10 @@ switch (estado_demo) {
             var _pos_battle_heal = demo_party_curar_pos_batalha(id);
             estado_demo = DemoEstado.VITORIA;
             diario_registrar_vitoria();
+
+            if (battle_context == "treinador" || battle_context == "ginasio") {
+                missao_evento(id, "treinador", undefined);
+            }
             result_timer = 1.5;
             if (battle_context == "chefe") {
                 message = conteudo_mundo_texto("chefe_final", "Aeonox") + " caiu! O Rasgo Temporal esta se fechando. Pressione ENTER ou clique.";
@@ -496,6 +502,7 @@ switch (estado_demo) {
                     dinheiro += _money_capture_reward;
                     estado_demo = DemoEstado.VITORIA;
                     diario_registrar_captura();
+                    missao_evento(id, "captura", enemy_pokemon_data);
                     result_timer = 1.0;
                     battle_result_info = demo_resultado_criar("captura", "Monstro capturado!", message, _xp_capture_reward, _xp_capture_ganhos, enemy_pokemon_data, _money_capture_reward);
 

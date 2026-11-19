@@ -3900,18 +3900,9 @@ function demo_city_marker_pos(_controller, _marker, _view_w, _view_h) {
     };
 }
 
+// "!" no marcador de evento = tem missao nova nesta cidade (scr_missoes).
 function demo_city_event_seen(_controller, _city_index) {
-    if (!instance_exists(_controller) || !variable_instance_exists(_controller, "cidade_eventos_vistos")) {
-        return false;
-    }
-
-    var _seen = variable_instance_get(_controller, "cidade_eventos_vistos");
-
-    if (!is_array(_seen) || _city_index < 0 || _city_index >= array_length(_seen)) {
-        return false;
-    }
-
-    return _seen[_city_index];
+    return missao_tem_novidade(_controller, _city_index);
 }
 
 function demo_city_markers(_controller) {
@@ -4025,6 +4016,7 @@ function demo_city_marker_ativar(_controller, _marker) {
         switch (_marker.Action) {
             case "mom":
                 estado_demo = DemoEstado.CASA_MAE;
+                evento_titulo = "";
 
                 if (!mae_presente_entregue) {
                     dinheiro += 100 + demo_meta_dinheiro_inicial_bonus(meta_progresso);
@@ -4086,7 +4078,7 @@ function demo_city_marker_ativar(_controller, _marker) {
                     cidade_eventos_vistos[cidade_index] = true;
                 }
 
-                message = demo_cidade_atual().Evento + ": moradores relatam que as rotas mudaram durante a noite. Algumas ficaram curtas, outras parecem nunca acabar.";
+                message = missao_interagir(id, cidade_index, _marker.Label);
                 break;
 
             case "leave":
@@ -4924,6 +4916,8 @@ function demo_run_resetar(_controller, _estado_destino) {
         game_over_timer = 0;
         vitoria_final_timer = 0;
         vitoria_final_fragmentos = 0;
+        missoes = {};
+        evento_titulo = "";
         estado_demo = _estado_destino;
         message = _estado_destino == DemoEstado.MENU ? "Menu inicial" : "Escolha seu monstro inicial";
 
@@ -6557,6 +6551,8 @@ function demo_cidade_chegar(_index) {
     rota_destino_index = cidade_index;
     estado_demo = DemoEstado.CIDADE;
     message = "Voce chegou a " + cidade_nome + ".";
+    missao_evento(id, "chegada", cidade_index);
+    missao_evento(id, "checar", undefined);
 }
 
 function demo_gym_enemy_id(_cidade_index) {

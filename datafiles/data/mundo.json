@@ -40,6 +40,183 @@
    "fala": "Aeonox: Entao veja o fim de todas as eras!"
   }
  ],
+ "missoes": [
+  {
+   "id": "peixes_sumidos",
+   "cidade": 1,
+   "npc": "Pescadora Ilana",
+   "tipo": "capturar_tipo",
+   "alvo": "agua",
+   "quantidade": 1,
+   "fala": "Os peixes sumiram desde que o rasgo abriu. Me traz um monstro de agua pra eu estudar?",
+   "recompensa": {
+    "dinheiro": 150,
+    "itens": {
+     "great_ball": 2
+    }
+   }
+  },
+  {
+   "id": "encomenda_pedralia",
+   "cidade": 1,
+   "npc": "Carteiro Nilo",
+   "tipo": "entregar",
+   "destino_relativo": 1,
+   "quantidade": 1,
+   "fala": "A estrada ficou perigosa e eu nao saio daqui. Leva esta encomenda pra frente?",
+   "recompensa": {
+    "dinheiro": 200,
+    "itens": {
+     "potion": 2
+    }
+   }
+  },
+  {
+   "id": "pedras_agitadas",
+   "cidade": 2,
+   "npc": "Curadora Basa",
+   "tipo": "vencer_tipo",
+   "alvo": "pedra",
+   "quantidade": 3,
+   "fala": "Os monstros de pedra do museu fugiram e estao agitados. Acalma uns tres deles?",
+   "recompensa": {
+    "dinheiro": 150,
+    "itens": {
+     "super_potion": 2
+    }
+   }
+  },
+  {
+   "id": "trilha_bloqueada",
+   "cidade": 2,
+   "npc": "Minerador Rui",
+   "tipo": "vencer_treinadores",
+   "quantidade": 2,
+   "fala": "Uns treinadores fecharam a trilha da mina. Tira dois deles do caminho pra mim.",
+   "recompensa": {
+    "dinheiro": 120,
+    "itens": {
+     "great_ball": 3
+    }
+   }
+  },
+  {
+   "id": "ponte_vazia",
+   "cidade": 3,
+   "npc": "Guarda da Ponte",
+   "tipo": "capturar_tipo",
+   "alvo": "voador",
+   "quantidade": 1,
+   "fala": "Nenhuma ave passa mais pela ponte. Captura um voador pra provar que ainda existem?",
+   "recompensa": {
+    "dinheiro": 220,
+    "itens": {
+     "oran_berry": 2
+    }
+   }
+  },
+  {
+   "id": "casa_suspeita",
+   "cidade": 3,
+   "npc": "Morador assustado",
+   "tipo": "vencer_treinadores",
+   "quantidade": 3,
+   "fala": "Agentes do Eclipse rondam esta casa toda noite. Venca tres treinadores e eles vao pensar duas vezes.",
+   "recompensa": {
+    "dinheiro": 200,
+    "itens": {
+     "full_heal": 2
+    }
+   }
+  },
+  {
+   "id": "geradores_parados",
+   "cidade": 4,
+   "npc": "Capataz do Cais",
+   "tipo": "vencer_tipo",
+   "alvo": "eletrico",
+   "quantidade": 3,
+   "fala": "Monstros eletricos estao sugando a energia do porto. Derruba tres deles?",
+   "recompensa": {
+    "dinheiro": 250,
+    "itens": {
+     "hyper_potion": 2
+    }
+   }
+  },
+  {
+   "id": "mapa_da_ilha",
+   "cidade": 4,
+   "npc": "Marinheira Tess",
+   "tipo": "entregar",
+   "destino_relativo": 1,
+   "quantidade": 1,
+   "fala": "Meu barco nao sai com esse mar. Leva este mapa ate a proxima cidade?",
+   "recompensa": {
+    "dinheiro": 250,
+    "itens": {
+     "ultra_ball": 2
+    }
+   }
+  },
+  {
+   "id": "dados_de_campo",
+   "cidade": 5,
+   "npc": "Pesquisador Orin",
+   "tipo": "nivel",
+   "quantidade": 25,
+   "fala": "Preciso medir um monstro bem treinado. Volta quando tiver um no nivel 25.",
+   "recompensa": {
+    "dinheiro": 300,
+    "itens": {
+     "rare_candy": 1
+    }
+   }
+  },
+  {
+   "id": "amostras",
+   "cidade": 5,
+   "npc": "Assistente do Laboratorio",
+   "tipo": "capturar_qualquer",
+   "quantidade": 2,
+   "fala": "O laboratorio rachou e perdemos as amostras. Captura dois monstros quaisquer?",
+   "recompensa": {
+    "itens": {
+     "leppa_berry": 2,
+     "ultra_ball": 2
+    }
+   }
+  },
+  {
+   "id": "desertor",
+   "cidade": 6,
+   "npc": "Desertor do Eclipse",
+   "tipo": "vencer_tipo",
+   "alvo": "sombrio",
+   "quantidade": 4,
+   "fala": "Eu sai do Sindicato. Derruba quatro monstros sombrios deles e eu te dou o que sobrou do meu estoque.",
+   "recompensa": {
+    "dinheiro": 400,
+    "itens": {
+     "full_restore": 1
+    }
+   }
+  },
+  {
+   "id": "vigia_da_fenda",
+   "cidade": 6,
+   "npc": "Vigia da Fenda",
+   "tipo": "vencer_treinadores",
+   "quantidade": 3,
+   "fala": "Ninguem enfrenta Vesper sem estar pronto. Venca tres treinadores primeiro.",
+   "recompensa": {
+    "itens": {
+     "full_restore": 1,
+     "master_ball": 1
+    }
+   }
+  }
+ ],
  "chefe_cura_entre_fases": 0.25,
  "chefe_recompensa_fragmentos": 12,
  "texto_vitoria": "Aeonox foi selado e o tempo voltou a correr no Vale de Cronaria. Lumis e Brotempo guardam a fenda agora, e o eco desta equipe fica gravado em todas as eras.",

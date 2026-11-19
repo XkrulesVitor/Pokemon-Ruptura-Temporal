@@ -312,6 +312,61 @@ function autoteste_passos() {
             game_over_timer = 0;
             diario_finalizar(id);
             autoteste_log("diario pontos: " + string(global.diario.Resultado.Pontos));
+        } },
+        { Nome: "missao: cidade", Espera: 1.5, Foto: "37_missao_cidade", Acao: function() {
+            demo_run_resetar(id, DemoEstado.ROTA);
+            var _p = demo_criar_pokemon_data(conteudo_pacote_iniciais("base")[0], 12, true);
+            _p.Capturado = true;
+            player_party = [_p];
+            player_pokemon_data = _p;
+            dinheiro = 100;
+            cidade_index = 1;
+            message = demo_cidade_nome(1);
+            estado_demo = DemoEstado.CIDADE;
+            autoteste_log("missao sorteada em " + demo_cidade_nome(1) + ": " + missao_da_cidade(id, 1).Id + " | marcador com novidade: " + string(missao_tem_novidade(id, 1)));
+        } },
+        { Nome: "missao: aceitar", Espera: 1.5, Foto: "38_missao_dialogo", Acao: function() {
+            var _markers = demo_city_markers(id);
+
+            for (var _i = 0; _i < array_length(_markers); _i += 1) {
+                if (_markers[_i].Action == "event") {
+                    demo_city_marker_ativar(id, _markers[_i]);
+                    break;
+                }
+            }
+
+            autoteste_log("estado da missao: " + missao_da_cidade(id, 1).Estado + " | " + message);
+        } },
+        { Nome: "missao: lista na cidade", Espera: 1.2, Foto: "39_missao_lista", Acao: function() {
+            estado_demo = DemoEstado.CIDADE;
+            message = demo_cidade_nome(cidade_index);
+        } },
+        { Nome: "missao: concluir", Espera: 1.5, Foto: "40_missao_concluida", Acao: function() {
+            var _m = missao_da_cidade(id, 1);
+            var _def = missao_def(_m.Id);
+            var _antes = dinheiro;
+            var _qtd = conteudo_struct_get(_def, "quantidade", 1);
+            var _alvo = conteudo_tipo_de_texto(conteudo_struct_get(_def, "alvo", ""));
+            var _modelo = undefined;
+            var _ids = criatura_ids();
+
+            for (var _i = 0; _i < array_length(_ids); _i += 1) {
+                var _info = criatura_info(_ids[_i]);
+                if (_alvo == PokemonTipo.NONE || _info.Tipo1 == _alvo || _info.Tipo2 == _alvo) { _modelo = demo_criar_pokemon_data(_ids[_i], 5, false); break; }
+            }
+
+            for (var _n = 0; _n < _qtd + 1; _n += 1) {
+                switch (_def.tipo) {
+                    case "capturar_tipo": case "capturar_qualquer": missao_evento(id, "captura", _modelo); break;
+                    case "vencer_tipo": missao_evento(id, "vitoria", _modelo); break;
+                    case "vencer_treinadores": missao_evento(id, "treinador", undefined); break;
+                    case "entregar": demo_cidade_chegar(_m.Destino); break;
+                }
+            }
+
+            autoteste_log("missao " + _m.Id + " -> " + _m.Estado + " | dinheiro " + string(_antes) + " -> " + string(dinheiro));
+            autoteste_log(_m.Estado == "concluida" ? "MISSAO OK" : "MISSAO NAO CONCLUIU");
+            estado_demo = DemoEstado.CIDADE;
         } }
     ];
 }
