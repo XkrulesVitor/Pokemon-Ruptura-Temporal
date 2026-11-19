@@ -3697,13 +3697,18 @@ function demo_draw_effect_line(_effect, _x, _y, _mx, _my) {
 
     var _tooltip = demo_draw_status_term(_effect.Status, _term_x, _term_y, _mx, _my);
     var _suffix = _parts.Suffix;
-    var _suffix_x = _term_x + i18n_string_width(_term_label) + 8;
+    var _pontuacao = _suffix != "" && string_pos(string_char_at(_suffix, 1), ".,;:!?") > 0;
+    var _suffix_x = _term_x + i18n_string_width(_term_label) + (_pontuacao ? 2 : 8);
     battle_ui_font_body();
 
     if (_suffix != "" && (_suffix_x + i18n_string_width(_suffix) - _x) <= _max_w) {
         draw_set_color(ui_tinta_contexto());
         i18n_draw_text(_suffix_x, _term_y, _suffix);
     } else if (_suffix != "") {
+        while (string_char_at(_suffix, 1) == " ") {
+            _suffix = string_delete(_suffix, 1, 1);
+        }
+
         draw_set_color(ui_tinta_contexto());
         i18n_draw_text_ext(_x, _term_y + 22, _suffix, 22, _max_w);
     }

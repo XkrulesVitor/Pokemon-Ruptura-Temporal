@@ -15,6 +15,9 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"OFL.txt","CopyToMask":-1,"filePath":"datafiles/fonts_jogo","name":"OFL.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"corpo.ttf","CopyToMask":-1,"filePath":"datafiles/fonts_jogo","name":"corpo.ttf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"titulo.ttf","CopyToMask":-1,"filePath":"datafiles/fonts_jogo","name":"titulo.ttf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"en.json","CopyToMask":-1,"filePath":"datafiles/data/idiomas","name":"en.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"treinadores.json","CopyToMask":-1,"filePath":"datafiles/data","name":"treinadores.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"rotas.json","CopyToMask":-1,"filePath":"datafiles/data","name":"rotas.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

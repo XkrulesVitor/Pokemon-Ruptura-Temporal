@@ -121,8 +121,9 @@ vencer treinadores, entregar item e atingir nível. Até 3 ativas; recompensa na
 * **Draft de habilidade**: cartões com borda de seleção; texto da descrição claro sobre o painel escuro.
 * **Confirmação**: começar uma run nova ou o Diário com uma run salva pede confirmação (Enter confirma, Esc cancela).
 * **Pausa na cidade**: botão Menu (ou Esc) salva a run e volta ao menu inicial; ela continua pelo botão CONTINUAR.
-* **Texto**: fontes do sistema (Segoe UI) até chegarem fontes livres. Texto pequeno ou grande não é mais esticado:
-  o jogo gera a fonte no tamanho final (com cache) e desenha nela, por isso etiquetas e selos ficam nítidos.
+* **Texto**: Fira Sans Bold (títulos e rótulos) e Regular (descrições), licença OFL, em `datafiles/fonts_jogo/`.
+  Texto pequeno ou grande não é esticado: o jogo gera a fonte no tamanho final (com cache) e desenha nela,
+  por isso etiquetas e selos ficam nítidos.
 
 ## 6. Direção de arte
 
@@ -159,7 +160,7 @@ Prioridade: **A** = bloqueia lançamento, **B** = importante, **C** = desejável
 | # | Prio | Lacuna | Proposta |
 |---|---|---|---|
 | 1 | A | **Arte final**: as 129 criaturas (frente, costas, ícone), treinadores, cidades, interface e os 15 elementos de rota que faltam no catálogo. | O usuário adiciona aos poucos; o jogo já troca o placeholder pelo arquivo. |
-| 2 | A | **Fontes livres**: hoje usa Segoe UI do Windows, que não pode ser distribuída e não existe fora do Windows. | Colocar uma fonte OFL legível (título e corpo) em `datafiles/fonts_jogo/`. Precisa da autorização do usuário para baixar. |
+| 2 | ~~A~~ | ~~**Fontes livres**~~: resolvido em 19/11/2026 com Fira Sans (OFL), créditos em `docs/creditos.md`. | Opcional: uma fonte de display só para o logotipo do menu. |
 | 3 | A | **Balanceamento jogando**: curva de níveis por cidade, preços, chance de captura e força dos líderes só foram checados por autoteste. | 5 a 10 runs completas por dificuldade; anotar onde a run trava ou fica fácil. |
 | 4 | A | **Exportar o .exe**: a licença de convidado não empacota. | O usuário entra com a conta GameMaker e roda o package. |
 | 5 | B | **Tutorial / primeira run**: nada explica auto-battle, draft, sinergia e status. | Dicas contextuais na primeira vez de cada tela (draft, captura, sinergia), com opção de desligar. |

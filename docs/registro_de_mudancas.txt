@@ -327,16 +327,19 @@ ARQUIVOS ALTERADOS (desde o commit base)
   ARQUIVO                                                            LINHAS +ADICIONADAS -REMOVIDAS
   .agents/AGENTS.md                                                  +2 -1
   .gitignore                                                         +6 -0
-  PokemonRogueLike.yyp                                               +39 -793
+  PokemonRogueLike.yyp                                               +42 -793
   datafiles/data/criaturas.json                                      +2149 -0
   datafiles/data/idiomas/en.json                                     +818 -0
   datafiles/data/itens.json                                          +252 -0
-  datafiles/data/mundo.json                                          +317 -0
+  datafiles/data/mundo.json                                          +318 -0
   datafiles/data/rotas.json                                          +643 -0
   datafiles/data/sinergias.json                                      +152 -0
   datafiles/data/treinadores.json                                    +164 -0
   datafiles/fonts/power_clear_bold.ttf                               +- --
   datafiles/fonts/power_red_blue.ttf                                 +- --
+  datafiles/fonts_jogo/OFL.txt                                       +93 -0
+  datafiles/fonts_jogo/corpo.ttf                                     +- --
+  datafiles/fonts_jogo/titulo.ttf                                    +- --
   datafiles/sprites/background.png                                   +- --
   datafiles/sprites/cities/celadon.png                               +- --
   datafiles/sprites/cities/cerulean.png                              +- --
@@ -1133,8 +1136,9 @@ ARQUIVOS ALTERADOS (desde o commit base)
   datafiles/sprites/ui/battle/icon_ball_empty.png                    +- --
   datafiles/sprites/ui/battle/overlay_message.png                    +- --
   datafiles/sprites/ui/types.png                                     +- --
-  docs/GDD.md                                                        +174 -0
-  docs/como_adicionar_artes.txt                                      +65 -0
+  docs/GDD.md                                                        +175 -0
+  docs/como_adicionar_artes.txt                                      +68 -0
+  docs/creditos.md                                                   +26 -0
   docs/legado/LEIA-ME.txt                                            +6 -0
   docs/{ => legado}/bug_balance_report.md                            +0 -0
   docs/{ => legado}/dark_balance_report.md                           +0 -0
@@ -1187,7 +1191,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   scripts/scr_autoteste/scr_autoteste.gml                            +632 -0
   scripts/{scr_pokemon_data/scr_pokemon_data.yy => scr_autoteste/scr_autoteste.yy} +2 -2
   scripts/scr_battle_ui/scr_battle_ui.gml                            +302 -200
-  scripts/{scr_pokedex/scr_pokedex.gml => scr_bestiario/scr_bestiario.gml} +128 -130
+  scripts/scr_bestiario/scr_bestiario.gml                            +464 -0
   scripts/{scr_event_manager/scr_event_manager.yy => scr_bestiario/scr_bestiario.yy} +2 -2
   scripts/scr_combate_extras/scr_combate_extras.gml                  +370 -0
   scripts/scr_combate_extras/scr_combate_extras.yy                   +13 -0
@@ -1203,7 +1207,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   scripts/{scr_pokemon_batalha_api/scr_pokemon_batalha_api.yy => scr_criatura_progressao/scr_criatura_progressao.yy} +2 -2
   scripts/scr_criatura_sprites/scr_criatura_sprites.gml              +202 -0
   scripts/scr_criatura_sprites/scr_criatura_sprites.yy               +13 -0
-  scripts/scr_demo_playable/scr_demo_playable.gml                    +1223 -1074
+  scripts/scr_demo_playable/scr_demo_playable.gml                    +1228 -1074
   scripts/scr_desafio_diario/scr_desafio_diario.gml                  +433 -0
   scripts/scr_desafio_diario/scr_desafio_diario.yy                   +13 -0
   scripts/scr_event_manager/scr_event_manager.gml                    +0 -331
@@ -1213,6 +1217,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   scripts/scr_missoes/scr_missoes.yy                                 +13 -0
   scripts/scr_placeholders/scr_placeholders.gml                      +535 -0
   scripts/scr_placeholders/scr_placeholders.yy                       +13 -0
+  scripts/scr_pokedex/scr_pokedex.gml                                +0 -464
   scripts/scr_pokemon_batalha_api/scr_pokemon_batalha_api.gml        +0 -165
   scripts/scr_pokemon_data/scr_pokemon_data.gml                      +0 -5514
   scripts/scr_pokemon_progressao/scr_pokemon_progressao.yy           +0 -13
@@ -1226,7 +1231,7 @@ ARQUIVOS ALTERADOS (desde o commit base)
   scripts/scr_ui_kit/scr_ui_kit.gml                                  +549 -0
   scripts/scr_ui_kit/scr_ui_kit.yy                                   +13 -0
   tools/autoteste.ps1                                                +14 -0
-  tools/gerar_conteudo.py                                            +313 -0
+  tools/gerar_conteudo.py                                            +314 -0
   tools/gerar_idiomas.py                                             +188 -0
   tools/gerar_registro.py                                            +228 -0
   tools/gml_patch.py                                                 +67 -0

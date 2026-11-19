@@ -47,8 +47,11 @@ EFEITOS -> datafiles/sprites/efeitos/
   eletrico1.png, eletrico2.png, e os efeitos de status da batalha.
 
 FONTES -> datafiles/fonts_jogo/titulo.ttf e corpo.ttf
-  Use fontes com licenca livre (ex.: OFL do Google Fonts). So os caracteres ASCII
-  sao carregados, por isso os textos do jogo nao usam acento.
+  Hoje: Fira Sans Bold e Regular (licenca OFL, texto em OFL.txt; veja docs/creditos.md).
+  Para trocar, use outra fonte com licenca livre (ex.: OFL do Google Fonts) e mantenha
+  o arquivo de licenca junto. O jogo carrega no tamanho 14; se a fonte nova for bem mais
+  larga ou estreita, ajuste _font_size em battle_ui_init (scr_battle_ui). So os caracteres
+  ASCII sao carregados, por isso os textos do jogo nao usam acento.
 
 AUDIO -> datafiles/audio/
   O jogo sintetiza musicas e efeitos sozinho. Para trocar por arquivos, use .ogg com estes nomes:

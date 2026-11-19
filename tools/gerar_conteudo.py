@@ -195,6 +195,7 @@ MUNDO = {
         "Codigo e conteudo feitos com IA (Claude e Codex) no GameMaker",
         "Arte de rotas e cenarios gerada para o projeto",
         "Criaturas, mundo e historia originais",
+        "Fonte Fira Sans (Mozilla e Telefonica), licenca SIL OFL 1.1",
         "Obrigado por jogar!",
     ],
     "cidades": [

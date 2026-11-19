@@ -81,7 +81,7 @@ vence os líderes das cidades e precisa fechar o rasgo.
   - Kit de UI (`scripts/scr_ui_kit`): paleta unica, painel de papel, faixa de titulo, cartoes (claro e escuro), etiquetas, selo de moedas, caixa de confirmacao e borda de selecao (brilho dourado pulsante com cantoneiras) em tudo que e clicavel.
   - Mercado, mochila da cidade e mochila da batalha refeitos em cartoes com categoria, quantidade e descricao curta; o mesmo retangulo serve para desenho e clique (`demo_loja_rect`, `demo_mochila_rect`, `battle_ui_bag_rect`). Dialogos da cidade com titulo e retrato.
   - Draft de habilidade: nome em destaque, descricao legivel no painel escuro, upgrade sem texto repetido. Slots fechados mostram em que nivel abrem.
-  - Fontes: texto desenhado com escala usa uma fonte gerada no tamanho final (`ui_fonte_escalada`, com cache), entao fica nitido. SDF nao da: exige o pacote `io.gamemaker.sdfshaders`, que a licenca de convidado nao tem.
+  - Fontes: Fira Sans Bold/Regular (OFL) em `datafiles/fonts_jogo/` com `OFL.txt`, carregadas no tamanho 14 (mesma largura da Segoe UI 14 usada antes); creditos em `docs/creditos.md` e nos creditos do jogo. Texto desenhado com escala usa uma fonte gerada no tamanho final (`ui_fonte_escalada`, com cache), entao fica nitido. SDF nao da: exige o pacote `io.gamemaker.sdfshaders`, que a licenca de convidado nao tem.
   - Confirmacao antes de comecar run nova ou Diario com run salva; botao Menu/Esc na cidade salva e volta ao menu inicial.
   - Corrigido: patch anterior tinha apagado os marcadores do mapa da cidade; resumo do CONTINUAR dizia "e mais 0".
   - Autoteste com 58 fotos (inclui draft, mochila da batalha, confirmacao e pausa).

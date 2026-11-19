@@ -454,8 +454,10 @@ function bestiario_ui_draw_overlay() {
     }
 
     if (array_length(_filtered) > _shown) {
+        battle_ui_font_body();
         draw_set_color(_text_color);
-        i18n_draw_text(56, _gh - 42, "Mostrando " + string(_shown) + " de " + string(array_length(_filtered)) + ". Use os filtros para afinar a lista.");
+        i18n_draw_text(56, _gh - 62, "Mostrando " + string(_shown) + " de " + string(array_length(_filtered)) + ". Use os filtros para afinar a lista.");
+        battle_ui_font_title();
     }
 
     draw_set_color(c_white);

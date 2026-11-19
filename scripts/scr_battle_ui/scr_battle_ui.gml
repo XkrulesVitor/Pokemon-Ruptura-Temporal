@@ -98,15 +98,15 @@ function battle_ui_init() {
         global.ui_ball_sprite = demo_asset_sprite("datafiles/sprites/interface/icone_capsula.png");
         global.ui_types_sprite = demo_asset_sprite("datafiles/sprites/interface/tipos.png");
 
-        // Fontes do jogo: coloque titulo.ttf e corpo.ttf em datafiles/fonts_jogo/.
+        // Fontes do jogo: datafiles/fonts_jogo/titulo.ttf e corpo.ttf (Fira Sans, licenca OFL).
         // Sem elas, usa uma fonte do proprio Windows so para desenvolvimento.
+        // Os layouts foram medidos com 14: Fira Sans 14 ocupa a mesma largura que Segoe UI 14.
         var _font_path = project_asset_path("datafiles/fonts_jogo/titulo.ttf");
         var _font_body_path = project_asset_path("datafiles/fonts_jogo/corpo.ttf");
-        var _font_size = 18;
+        var _font_size = 14;
 
         if (_font_path == "") {
             _font_path = battle_ui_fonte_sistema(["segoeuib.ttf", "verdanab.ttf", "arialbd.ttf"]);
-            _font_size = 14;
         }
 
         if (_font_body_path == "") {
